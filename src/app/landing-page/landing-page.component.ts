@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'prt-landing-page',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-    constructor() { }
+    isCollapsed = true;
+
+    constructor(config: NgbDropdownConfig) { 
+        config.placement = 'bottom-left';
+    }
 
     ngOnInit(): void { }
 }

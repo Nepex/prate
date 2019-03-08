@@ -2,12 +2,28 @@
 
     <div class="row no-pad-margin">
         <div class="col-12 header-container">
-            <img src="../../assets/images/prt-logo.png" />
-            <span class="header-link"><a href="#">Why Prate?</a></span>
-            <span class="header-link"><a href="#">Download</a></span>
-            <span class="header-link"><a href="#">Developers</a></span>
+            <img class="d-none d-lg-inline d-xl-inline" src="../../assets/images/prt-logo.png" />
+            <img class="d-lg-none d-xl-none menu-logo-sm" src="../../assets/images/prt-icon.png" />
 
-            <div class="float-right login-link-div">
+            <nav class="navbar-expand-lg">
+                <a class="navbar-brand d-block d-lg-none" href="#"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed">
+                    <i class="fas fa-bars nav-icon"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
+                    <ul class="navbar-nav mr-auto nav-items">
+                        <li class="header-link"><a href="#">Why Prate?</a></li>
+                        <li class="header-link"><a href="#">Download</a></li>
+                        <li class="header-link"><a href="#">Developers</a></li>
+                        <li class="header-link d-block d-lg-none"><a href="#">Login</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="float-right login-link-div d-none d-lg-block d-xl-block">
                 <a href="#">Login</a>
             </div>
         </div>
@@ -16,11 +32,11 @@
     <div class="row no-pad-margin text-center" style="height: 84%;">
         <div class="col-12 my-auto">
             <div class="heading">Chat with people of similar interests.</div>
-            <div class="sub-heading">Prate will match to the people you want to chat with.</div>
+            <div class="sub-heading">Prate will match you with the people you want to chat with.</div>
 
             <button class="btn open-btn">Open Prate in your browser</button>
             <br />
-            <img class="prt-icon" src="../../assets/images/prt-icon.png" />
+            <img class="img-fluid" src="../../assets/images/prt-icon.png" />
         </div>
     </div>
 
