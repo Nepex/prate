@@ -1,5 +1,6 @@
+import { SignUpModalComponent } from './../sign-up/sign-up-modal.component';
 import { Component, OnInit } from '@angular/core';
-import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'prt-landing-page',
@@ -7,11 +8,12 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-    isCollapsed = true;
-
-    constructor(config: NgbDropdownConfig) { 
-        config.placement = 'bottom-left';
+    constructor(private modal: NgbModal) {
     }
 
     ngOnInit(): void { }
+
+    openSignUp() {
+        this.modal.open(SignUpModalComponent, { windowClass: 'signup-modal' });
+    }
 }

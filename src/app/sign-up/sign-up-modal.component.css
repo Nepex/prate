@@ -1,0 +1,25 @@
+
+
+.modal-header {
+    background-color: #00AFF0;
+    border-bottom: 0;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+
+}
+
+.modal-footer {
+    background-color: #00AFF0;
+    border-top: 0;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+}
+
+.modal-body {
+    background-color: #00AFF0;
+}
+
+.signup-modal .modal-content {
+    border: 0;
+    border-radius: 35px;
+}   

@@ -4,19 +4,6 @@
     background-size: cover;
 }
 
-a {
-    color: #666766
-}
-
-.login-link-div {
-    border: 5px solid #00AFF0;
-    border-radius: 25px;
-    margin-top: 8px;
-    font-size: 20px;
-    font-weight: 600;
-    padding: 0px 23px 5px 23px;
-}
-
 .heading {
     color: #666666;
     font-size: 35px;
@@ -35,75 +22,4 @@ a {
     margin-top: 50px;
     padding: 20px 30px 20px 30px;
     border-radius: 20px;
-}
-
-.menu-logo-sm {
-    height: 50px;
-    width: 50px;
-    padding: 5px;
-    float: right;
-}
-
-.nav-icon {
-    position: relative;
-    top: -5px;
-}
-
-nav {
-    display: inline-block;
-}
-
-@media (min-width: 344px) {
-    .header-container {
-        padding: 5px;
-    }
-
-    .nav-items {
-        position: absolute;
-        background-color: #eee;
-        z-index: 1;
-        padding: 15px;
-        box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
-        margin-left: 27px;
-    }
-
-    .header-link {
-        padding: 0;
-    }
-
-    a:hover {
-        text-decoration: none;
-    }
-}
-
-@media (min-width: 992px) {
-    .nav-items{
-        background-color: #fff;
-        position: relative;
-        padding: 0;
-        box-shadow: none;
-        margin-left: 0;
-    }
-    .header-container {
-        padding: 40px 80px 40px 80px;
-    }
-
-    .header-link {
-        font-size: 18px;
-        font-weight: 600;
-        padding-left: 50px;
-        position: relative;
-        top: -8px;
-    }
-
-    a:hover {
-        color: #ffffff;
-        text-decoration: none;
-        -webkit-animation: glow 1s ease-in-out infinite alternate;
-        -moz-animation: glow 1s ease-in-out infinite alternate;
-        animation: glow 1s ease-in-out infinite alternate;
-        transition: .5s;
-        text-shadow: 0 0 10px #eee, 0 0 20px #00AFF0, 0 0 30px #00AFF0, 0 0 40px #00AFF0, 0 0 50px #00AFF0, 0 0 60px #00AFF0, 0 0 70px #00AFF0;
-    
-    }
 }
