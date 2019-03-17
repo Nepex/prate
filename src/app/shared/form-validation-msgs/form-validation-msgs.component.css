@@ -1,11 +1,27 @@
-.form-control-feedback { 
-    font-size: 10px; 
-    color: #bb0000;
-    float: right; 
-    position: absolute;
+.form-control-feedback {
+    font-size: 22px;
+    color: lightcoral;
 }
 
 .checkmark {
-    font-size: 20px;
+    font-size: 22px;
     color: #00bf00;
+}
+
+@media (min-width: 344px) {
+    .checkmark, .form-control-feedback {
+        position: absolute;
+        z-index: 50;
+        left: 85%;
+        top: 17.5%;
+    }
+}
+
+@media (min-width: 375px) {
+    .checkmark, .form-control-feedback  {
+        position: absolute;
+        z-index: 50;
+        left: 89%;
+        top: 17.5%;
+    }
 }
