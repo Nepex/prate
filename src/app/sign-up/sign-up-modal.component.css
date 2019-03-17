@@ -1,11 +1,8 @@
-
-
 .modal-header {
     background-color: #00AFF0;
     border-bottom: 0;
     border-top-left-radius: 35px;
     border-top-right-radius: 35px;
-
 }
 
 .modal-footer {
@@ -13,13 +10,77 @@
     border-top: 0;
     border-bottom-left-radius: 35px;
     border-bottom-right-radius: 35px;
+    padding-top: 0;
+    justify-content: center;
 }
 
 .modal-body {
     background-color: #00AFF0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-.signup-modal .modal-content {
+.close-btn {
+    color: rgba(255, 255, 255, .7);
+    position: absolute;
+    left: 93%;
+    top: 5%;
+    font-size: 20px;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.submit-btn {
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+    padding: 10px 50px 10px 50px;
+    font-weight: 600;
+    font-size: 18px;
+    background-color: #ffffff;
+    color: #666666;
+    border: 0;
+}
+
+.submit-btn:hover {
+    background-color: #dddddd;
+    transition: .5s;
+}
+
+.prt-icon {
+    height: 50%;
+    width: 50%;
+}
+
+.footer-text {
+    font-size: 14px;
+    padding-bottom: 5px;
+    font-weight: 300;
+}
+
+.text-input {
+    border-radius: 10px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #666666;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+a {
+    color: #ffffff;
+}
+
+a:hover {
+    color: #dddddd;
+    transition: .5s;
+    text-decoration: none;
+}
+
+::ng-deep>>>.modal-content {
     border: 0;
     border-radius: 35px;
-}   
+    margin-top: auto;
+}

@@ -14,6 +14,6 @@ export class LandingPageComponent implements OnInit {
     ngOnInit(): void { }
 
     openSignUp() {
-        this.modal.open(SignUpModalComponent, { windowClass: 'signup-modal' });
+        this.modal.open(SignUpModalComponent);
     }
 }

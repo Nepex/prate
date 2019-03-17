@@ -1,0 +1,11 @@
+.form-control-feedback { 
+    font-size: 10px; 
+    color: #bb0000;
+    float: right; 
+    position: absolute;
+}
+
+.checkmark {
+    font-size: 20px;
+    color: #00bf00;
+}

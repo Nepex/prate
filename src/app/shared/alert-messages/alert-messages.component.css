@@ -1,0 +1,17 @@
+.success div {
+    max-width: 200px;    
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #23A967;
+    color: #fff;
+    font-weight: bold;
+}
+
+.error div {
+    max-width: 200px;
+    padding: 10px;    
+    border: 1px solid #ddd;
+    background-color: lightcoral;
+    color: #fff;
+    font-weight: bold;    
+}
