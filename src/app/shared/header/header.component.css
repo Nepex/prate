@@ -3,9 +3,8 @@ a {
 }
 
 .menu-logo-sm {
-    height: 50px;
-    width: 50px;
-    padding: 5px;
+    height: 40px;
+    width: 40px;
     float: right;
 }
 
@@ -70,7 +69,7 @@ nav {
         top: -8px;
     }
 
-    a:hover {
+    .header-link:hover > a {
         color: #ffffff;
         text-decoration: none;
         -webkit-animation: glow 1s ease-in-out infinite alternate;
@@ -78,6 +77,5 @@ nav {
         animation: glow 1s ease-in-out infinite alternate;
         transition: .5s;
         text-shadow: 0 0 10px #eee, 0 0 20px #00AFF0, 0 0 30px #00AFF0, 0 0 40px #00AFF0, 0 0 50px #00AFF0, 0 0 60px #00AFF0, 0 0 70px #00AFF0;
-    
     }
 }

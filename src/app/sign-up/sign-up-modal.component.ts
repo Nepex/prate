@@ -19,7 +19,7 @@ export class SignUpModalComponent implements OnInit {
     signUpForm: FormGroup = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
-        password: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.minLength(5)]),
+        password: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(5)]),
         passwordConfirm: new FormControl('', [Validators.required])
     }, this.validateMatchingPasswords());
 
@@ -73,6 +73,9 @@ export class SignUpModalComponent implements OnInit {
             console.log(res);
 
             this.signUpForm.reset();
+        }, err => { 
+            console.log(err);
+            this.messages.push({ message: err.error.msg, type: 'danger' }); 
         });
     }
 }

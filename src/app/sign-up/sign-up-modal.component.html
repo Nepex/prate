@@ -3,6 +3,7 @@
     <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <div class="container modal-body">
+    <prt-alert-messages [messages]="messages"></prt-alert-messages>
     <div class="row">
         <div class="col-12 text-center">
             <form (ngSubmit)="createUser()" [formGroup]="signUpForm" novalidate>
