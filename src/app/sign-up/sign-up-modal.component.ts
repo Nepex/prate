@@ -21,29 +21,11 @@ export class SignUpModalComponent implements OnInit {
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
         password: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(5)]),
         passwordConfirm: new FormControl('', [Validators.required])
-    }, this.validateMatchingPasswords());
+    });
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService) { }
 
     ngOnInit(): void { }
-
-    validateMatchingPasswords() {
-        return (group: FormGroup): { [key: string]: any } => {
-            const password = group.controls['password'];
-            const passwordConfirm = group.controls['passwordConfirm'];
-
-            if (password.value !== passwordConfirm.value) {
-
-                passwordConfirm.setErrors({ match: 'Passwords must match' });
-
-                return {
-                    mismatchedPasswords: true
-                };
-            }
-
-            return null;
-        };
-    }
 
     createUser() {
         this.messages = [];
@@ -53,6 +35,10 @@ export class SignUpModalComponent implements OnInit {
             return;
         }
 
+        if (this.signUpForm.value.password !== this.signUpForm.value.passwordConfirm) {
+            this.messages.push({ message: 'Passwords do not match', type: 'error' }); 
+            return;
+        }
 
         if (this.loadingRequest) {
             return;
@@ -69,13 +55,13 @@ export class SignUpModalComponent implements OnInit {
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
             this.signUpForm['submitted'] = false;
-
-            console.log(res);
+            this.messages.push({ message: 'Account created', type: 'success' }); 
 
             this.signUpForm.reset();
         }, err => { 
-            console.log(err);
-            this.messages.push({ message: err.error.msg, type: 'danger' }); 
+            this.loadingRequest = null;
+            this.signUpForm['submitted'] = false;
+            this.messages.push({ message: err.error.msg, type: 'error' }); 
         });
     }
 }

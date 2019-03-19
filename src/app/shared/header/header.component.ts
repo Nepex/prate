@@ -1,4 +1,6 @@
+import { LoginModalComponent } from './../../login/login-modal.component';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'prt-header',
@@ -8,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
     isCollapsed = true;
 
-    constructor() { }
+    constructor(private modal: NgbModal) { }
 
     ngOnInit(): void { }
+
+    openLogin() {
+        this.modal.open(LoginModalComponent);
+    }
 }

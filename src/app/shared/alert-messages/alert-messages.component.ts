@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 @Component({
     selector: 'prt-alert-messages',
     template:
-    `<div class="text-center" style="padding-top: 20px;" *ngFor="let m of messages">
+    `<div class="text-center" style="padding-top: 10px; padding-bottom: 10px;" *ngFor="let m of messages">
         <div class="{{ m.type }}" *ngIf="m">
             
             <div style="position: relative; margin-left: auto; margin-right: auto;">

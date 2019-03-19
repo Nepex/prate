@@ -3,9 +3,10 @@
     <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <div class="container modal-body">
-    <prt-alert-messages [messages]="messages"></prt-alert-messages>
     <div class="row">
         <div class="col-12 text-center">
+    <prt-alert-messages [messages]="messages"></prt-alert-messages>
+
             <form (ngSubmit)="createUser()" [formGroup]="signUpForm" novalidate>
                 <div class="form-group position-relative">
                     <prt-form-validation-msgs [control]="signUpForm.controls.name" [submitted]="signUpForm.submitted">
