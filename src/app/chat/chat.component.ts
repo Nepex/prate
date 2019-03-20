@@ -1,4 +1,9 @@
+import { UserService } from './../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../services/session/session.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { User } from '../services/user/user';
 
 @Component({
     selector: 'prt-chat',
@@ -6,7 +11,20 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-    constructor() { }
+    constructor(private sessionService: SessionService, private router: Router, private userService: UserService) { }
 
-    ngOnInit(): void { }
+    loadingRequest: Observable<User>;
+
+    ngOnInit(): void {
+        this.loadingRequest = this.userService.getUser();
+
+        this.loadingRequest.subscribe(res => {
+            console.log(res);
+        });
+    }
+
+    logout() {
+        this.sessionService.logout();
+        this.router.navigateByUrl('/chat');
+    }
 }

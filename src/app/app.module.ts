@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth-guard.service';
 import { ServicesModule } from './services/services.module';
 import { ChatComponent } from './chat/chat.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,7 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     ServicesModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [
     LoginModalComponent,

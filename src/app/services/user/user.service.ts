@@ -1,3 +1,4 @@
+import { SessionService } from './../session/session.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -12,13 +13,27 @@ import { User } from './user';
 export class UserService {
     private apiUrl = `${environment.apiBaseUrl}/users`;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private sessionService: SessionService) {
     }
 
     create(user: User): Observable<User> {
         const url = `${this.apiUrl}`;
 
         const req = this.http.post<User>(url, user).pipe(map(res => res));
+
+        return req;
+    }
+
+    getUser(): Observable<User> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `${this.sessionService.getToken()}`);
+
+        const url = `${this.apiUrl}/me`;
+
+        const req = this.http.get<User>(url, {
+            headers: headers
+        }).pipe(map(res => res));
 
         return req;
     }

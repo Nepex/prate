@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { AlertMessages } from '../shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SessionService } from '../services/session/session.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'prt-login-modal',
@@ -19,11 +21,15 @@ export class LoginModalComponent implements OnInit {
         password: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(5)]),
     });
 
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal, private sessionService: SessionService, private router: Router) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        // if (this.sessionService.isAuthenticated()) {
+        //     this.router.navigateByUrl('/chat');
+        // }
+    }
 
-    createUser() {
+    attemptLogin() {
         this.messages = [];
         this.loginForm['submitted'] = true;
 
@@ -40,18 +46,22 @@ export class LoginModalComponent implements OnInit {
             password: this.loginForm.value.password
         };
 
-        // this.loadingRequest = this.userService.create(body);
+        this.loadingRequest = this.sessionService.login(body);
 
-        // this.loadingRequest.subscribe(res => {
-        //     this.loadingRequest = null;
-        //     this.loginForm['submitted'] = false;
-        //     this.messages.push({ message: 'Account created', type: 'success' }); 
+        this.loadingRequest.subscribe(res => {
+            this.loadingRequest = null;
+            this.loginForm['submitted'] = false;
+            this.messages.push({ message: 'Success! Redirecting...', type: 'success' });
+            this.loginForm.reset();
 
-        //     this.loginForm.reset();
-        // }, err => { 
-        //     this.loadingRequest = null;
-        //     this.loginForm['submitted'] = false;
-        //     this.messages.push({ message: err.error.msg, type: 'error' }); 
-        // });
+            setTimeout(() => {
+                this.activeModal.close();
+                this.router.navigateByUrl('/chat');
+            }, 500);
+        }, err => {
+            this.loadingRequest = null;
+            this.loginForm['submitted'] = false;
+            this.messages.push({ message: err.error.msg, type: 'error' });
+        });
     }
 }

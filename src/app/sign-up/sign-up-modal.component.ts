@@ -1,3 +1,4 @@
+import { SessionService } from './../services/session/session.service';
 import { UserService } from '../services/user/user.service';
 import { AlertMessages } from './../shared/alert-messages/alert-messages.component';
 import { Component, OnInit } from '@angular/core';
@@ -5,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../services/user/user';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'prt-sign-up-modal',
@@ -25,7 +27,7 @@ export class SignUpModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
     createUser() {
         this.messages = [];
