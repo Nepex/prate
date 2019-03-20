@@ -23,11 +23,7 @@ export class LoginModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private sessionService: SessionService, private router: Router) { }
 
-    ngOnInit(): void {
-        // if (this.sessionService.isAuthenticated()) {
-        //     this.router.navigateByUrl('/chat');
-        // }
-    }
+    ngOnInit(): void {}
 
     attemptLogin() {
         this.messages = [];
