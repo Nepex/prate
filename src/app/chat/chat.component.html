@@ -1,1 +1,42 @@
-<span (click)="logout()">logout</span>
+<div class="container-fluid h-100">
+
+    <div class="row header">
+        <div class="col-4">
+            <div class="float-left text-center">
+                <img class="menu-logo" src="../../assets/images/prt-icon.png" />
+            </div>
+        </div>
+
+        <div class="col-4 text-center">
+            <div>
+                <button class="btn match-btn" for="match-button">FIND A MATCH!</button>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="float-right text-center" style="font-size: 15px; padding-top: 20px">
+                <i class="fas fa-cog"></i> &nbsp;&nbsp;
+                <i class="fas fa-user-friends"></i> &nbsp;&nbsp;
+                <i class="fas fa-sign-out-alt" (click)="logout()"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row chat-area" style="height: 91.5%;">
+        <div class="col-12 no-pad-margin">
+            <div class="message-input-container">
+                <div class="float-left" style="margin-left: 10px;">
+                    <div class="speech-bubble-ds">
+                        <div class="float-left" style="color: #a7a7a7; font-size: 10px; font-weight: 600;">Dickhead Deguzman</div>
+
+                        <div class="float-right" style="color: #a7a7a7; font-size: 10px;">Today 4:20 pm</div><br />
+                        sakdlfjklasdjf sdjfhjaskfndjksdnaf
+                        <div class="speech-bubble-ds-arrow"></div>
+                    </div>
+                </div>
+                <input type="text" class="message-input" placeholder="Type something to send. . ." />
+            </div>
+        </div>
+    </div>
+
+</div>
