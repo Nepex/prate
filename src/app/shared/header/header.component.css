@@ -28,6 +28,7 @@ nav {
 
 @media (min-width: 344px) {
     .header-container {
+        height: 50px;
         padding: 5px;
     }
 
@@ -58,6 +59,7 @@ nav {
         margin-left: 0;
     }
     .header-container {
+        height: 162px;
         padding: 40px 80px 40px 80px;
     }
 
