@@ -15,6 +15,8 @@ export class ChatComponent implements OnInit {
 
     loadingRequest: Observable<User>;
 
+    chatArea = [{},{},{},{},{},{},{},{},{},];
+
     ngOnInit(): void {
         this.loadingRequest = this.userService.getUser();
 
