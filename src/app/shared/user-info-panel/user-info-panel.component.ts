@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
     styleUrls: ['./user-info-panel.component.css']
 })
 export class UserInfoPanelComponent implements OnInit {
+    isCollapsed = true;
+
     constructor(private sessionService: SessionService, private router: Router) { }
 
     ngOnInit(): void { }

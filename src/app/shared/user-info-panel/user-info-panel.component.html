@@ -1,26 +1,29 @@
-<div class="row">
-    <div class="col-2 my-auto">
-        <img src="https://www.musictalentindia.com/upload/default.png" class="img-fluid">
+<div class="row browser-container">
+    <div class="col-3 my-auto user-icon-container">
+        <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right" style="padding-bottom: 3px;">
     </div>
-    <div class="col-10">
+    <div class="col-9">
         <div class="row">
-            <div class="col-6 no-pad-margin">
+            <div class="col-12 no-pad-margin">
                 <div class="float-left">
                     <div class="no-pad-margin">
-                        <span class="username  no-pad-margin">PrateMaster1</span> <span class="user-status no-pad-margin">Online</span>
+                        <span class="username  no-pad-margin">PrateMaster1</span>
+                        <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
                     </div>
-                    <div class="no-pad-margin"  style="line-height: 15px;">
-                        <span class="user-level no-pad-margin">Level 2</span>
+                    <div class="no-pad-margin" style="line-height: 15px;">
+                        <span class="user-level no-pad-margin">Rookie - Level 2</span>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 my-auto">
-                <div class="float-right">
-                    <i class="fas fa-cog action-btn" (click)="openUserSettings()" title="User Profile"></i>
-                    <i class="fas fa-user-friends action-btn" click="openFriends()" title="Friends"></i>
-                    <i class="fas fa-times action-btn" (click)="logout()" title="Logout"></i>
+
+                <div class="float-right lg-nav-icon-container">
+                    <i class="fas fa-cog lg-nav-icon" (click)="openProfile()" title="User Profile"></i>
+                    <i class="fas fa-user-friends lg-nav-icon" (click)="openFriends()" title="Show Friends"></i>
+                    <i class="fas fa-times lg-nav-icon" (click)="logout()" title="Logout"></i>
                 </div>
             </div>
+            <!-- <div class="col-7 my-auto">
+               
+            </div> -->
         </div>
 
         <div class="row">
@@ -28,6 +31,26 @@
                 <ngb-progressbar type="success" [value]="25"></ngb-progressbar>
             </div>
         </div>
+    </div>
+</div>
 
+<div class="row mobile-container">
+    <div class="col-12 my-auto user-icon-container">
+        <div ngbDropdown class="d-inline-block float-right" [placement]="'bottom-right'">
+            <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right"
+                ngbDropdownToggle style="margin-right: 5px;">
+
+            <div ngbDropdownMenu>
+                <ul class="navbar-nav mr-auto">
+                    <!-- Inline padding to line up links-->
+                    <li class="sm-nav-link"><a href="#" (click)="openProfile()"><i
+                                class="fas fa-cog sm-nav-icon"></i>User Profile</a></li>
+                    <li class="sm-nav-link"><a href="#" (click)="openFriends()"><i class="fas fa-user sm-nav-icon"
+                                style="padding-right: 1px;"></i>Show Friends</a></li>
+                    <li class="sm-nav-link"><a href="#" (click)="logout()"><i class="fas fa-times sm-nav-icon"
+                                style="padding-left: 1px; padding-right: 3px;"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,18 +1,37 @@
 .user-icon {
-    height: 50px;
-    width: 55px;
+    height: 55px;
+    width: 60px;
+    /* position: relative;
+    top: -10px; */
 }
 
-.action-btn {
+.user-icon-container {
+    padding-right: 10px;
+}
+
+.lg-nav-icon {
     margin-right: 8px;
     font-size: 16px;
     cursor: pointer;
 }
 
-.action-btn:hover {
+.lg-nav-icon-container {
+    padding-right: 15px;
+    padding-top: 7px;
+}
+
+.lg-nav-icon:hover {
     color: #ffffff;
 }
 
+.sm-nav-icon {
+    margin-right: 10px;
+    color: #666666;
+}
+
+.action-btn:hover {
+    color: #ffffff;
+}
 
 .username {
     color: #ffffff;
@@ -25,8 +44,9 @@
     font-weight: 100;
     font-size: 9px;
     padding-left: 5px;
+    position: relative;
+    top: -1px;
 }
-
 
 .user-level {
     color: #ffffff;
@@ -37,4 +57,49 @@
 .progress-container {
     margin: 0;
     padding: 5px 18px 0px 0px;
+}
+
+.nav-items {
+    background-color: #eee;
+    z-index: 1;
+}
+
+.sm-nav-link>a {
+    color: #666666;
+    text-decoration: none;
+    padding-left: 10px;
+}
+
+::ng-deep>>>.dropdown-menu {
+    background-color: #eeeeee;
+    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
+    width: 50px !important;
+}
+
+@media (min-width: 344px) {
+    .browser-container {
+        display: none;
+        position: relative;
+        top: -3px;
+    }
+    .mobile-container {
+        display: flex;
+    }
+    .user-icon {
+        position: relative;
+        top: 0px;
+    }
+}
+
+@media (min-width: 992px) {
+    .browser-container {
+        display: flex;
+    }
+    .mobile-container {
+        display: none;
+    }
+    .user-icon {
+        position: relative;
+        top: 3px;
+    }
 }

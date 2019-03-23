@@ -22,20 +22,6 @@ html, body {
     background-color: rgb(1, 156, 212);
 }
 
-.btn:active {
-    animation-name: buttonsmash;
-    animation-duration: 2s;
-}
-
-@keyframes buttonsmash {
-    from {
-        box-shadow: inset 0px 2px 10px 0px rgba(0, 0, 0, 1);
-    }
-    to {
-        box-shadow: none;
-    }
-}
-
 .cursor-pointer {
     cursor: pointer;
 }
