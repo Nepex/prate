@@ -11,7 +11,7 @@ import { User } from '../services/user/user';
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-    constructor(private sessionService: SessionService, private router: Router, private userService: UserService) { }
+    constructor(private userService: UserService) { }
 
     loadingRequest: Observable<User>;
 
@@ -23,10 +23,5 @@ export class ChatComponent implements OnInit {
         this.loadingRequest.subscribe(res => {
             console.log(res);
         });
-    }
-
-    logout() {
-        this.sessionService.logout();
-        this.router.navigateByUrl('/');
     }
 }

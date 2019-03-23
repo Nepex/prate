@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-2 my-auto">
+        <img src="https://www.musictalentindia.com/upload/default.png" class="img-fluid">
+    </div>
+    <div class="col-10">
+        <div class="row">
+            <div class="col-6 no-pad-margin">
+                <div class="float-left">
+                    <div class="no-pad-margin">
+                        <span class="username  no-pad-margin">PrateMaster1</span> <span class="user-status no-pad-margin">Online</span>
+                    </div>
+                    <div class="no-pad-margin"  style="line-height: 15px;">
+                        <span class="user-level no-pad-margin">Level 2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 my-auto">
+                <div class="float-right">
+                    <i class="fas fa-cog action-btn" (click)="openUserSettings()" title="User Profile"></i>
+                    <i class="fas fa-user-friends action-btn" click="openFriends()" title="Friends"></i>
+                    <i class="fas fa-times action-btn" (click)="logout()" title="Logout"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 progress-container">
+                <ngb-progressbar type="success" [value]="25"></ngb-progressbar>
+            </div>
+        </div>
+
+    </div>
+</div>

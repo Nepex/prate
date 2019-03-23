@@ -4,12 +4,14 @@ import { HeaderComponent } from './header/header.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserInfoPanelComponent } from './user-info-panel/user-info-panel.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         FormValidationMsgsComponent,
-        AlertMessagesComponent
+        AlertMessagesComponent,
+        UserInfoPanelComponent
     ],
     imports: [
         CommonModule, 
@@ -18,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     exports: [
         HeaderComponent,
         FormValidationMsgsComponent,
-        AlertMessagesComponent
+        AlertMessagesComponent,
+        UserInfoPanelComponent
     ],
     providers: [],
 })
