@@ -5,13 +5,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserInfoPanelComponent } from './user-info-panel/user-info-panel.component';
+import { OffClickDirective } from './off-click-directive/off-click.directive';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         FormValidationMsgsComponent,
         AlertMessagesComponent,
-        UserInfoPanelComponent
+        UserInfoPanelComponent,
+        OffClickDirective
     ],
     imports: [
         CommonModule, 
@@ -21,7 +23,8 @@ import { UserInfoPanelComponent } from './user-info-panel/user-info-panel.compon
         HeaderComponent,
         FormValidationMsgsComponent,
         AlertMessagesComponent,
-        UserInfoPanelComponent
+        UserInfoPanelComponent,
+        OffClickDirective
     ],
     providers: [],
 })

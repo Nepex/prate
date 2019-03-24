@@ -13,7 +13,8 @@
 .close-btn {
     color: #00AFF0;
     position: absolute;
-    left: 92%;
+    /* left: 93.5%; */
+    right: 15px;
     top: 3%;
     font-size: 20px;
 }
@@ -78,9 +79,12 @@
 
 ::ng-deep>>>.modal-dialog {
     display: inline-block;
-    width: 95%;
     text-align: left;
     vertical-align: middle;
+    /* weird adjustment needed just for this modal? */
+    width: 99%;
+    margin-right: 0px;
+    margin-left: 4.5px;
 }
 
 /* header */
@@ -119,5 +123,5 @@
 
 .progress-container {
     margin: 0;
-    padding: 5px 18px 0px 0px;
+    padding: 15px 18px 0px 18px;
 }

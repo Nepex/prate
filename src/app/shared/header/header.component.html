@@ -7,7 +7,7 @@
             <a class="navbar-brand d-block d-lg-none" href="#"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed">
+                aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" (offClick)="isCollapsed ? isCollapsed : isCollapsed = !isCollapsed" >
                 <i class="fas fa-bars nav-icon"></i>
             </button>
 
