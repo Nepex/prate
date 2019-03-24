@@ -21,35 +21,43 @@
     <div class="row chat-area">
         <div class="col-12 no-pad-margin">
             <div class="chat-messages">
-                <div>
-                    <div class="sent-bubble">
-                        <div class="float-left" style="color: #a7a7a7; font-size: 10px; font-weight: 600;">
-                            Dickhead
-                            Deguzman</div>
 
-                        <div class="float-right" style="color: #a7a7a7; font-size: 10px;">Today 4:20 pm</div>
+                <div class="text-right position-relative">
+                    <div class="sent-bubble">
+                        <div class="float-left message-user">Someguy</div>
+
                         <br />
-                        sakdlfjklasdjf sdjfhjaskfndjksdnaf
-                        <div class="speech-bubble-ds-arrow"></div>
+                        Hey, What's up?ddddddddddddd
+                        Hey, What's up?ddddddddddddd
+                        Hey, What's up?ddddddddddddd
+                        Hey, What's up?ddddddddddddd
+                        <br />
+
+                        <div class="float-right message-time">Sent 5:20 pm</div>
                     </div>
                 </div>
 
-                <div>
+                <div class="position-relative">
                     <div class="rec-bubble">
-                        <div class="float-left" style="color: #a7a7a7; font-size: 10px; font-weight: 600;">
-                            Shithead
-                            Deguzman</div>
+                        <div class="float-left message-user">Someone Else</div>
 
-                        <div class="float-right" style="color: #a7a7a7; font-size: 10px;">Today 4:20 pm</div>
                         <br />
-                        sakdlfjklasdjf sdjfhjaskfndjksdnaf
-                        <div class="speech-bubble-ds-arrow"></div>
+                        Not much, how you been?
+                        Not much, how you been?
+                        Not much, how you been?
+                        Not much, how you been?
+                        Not much, how you been?
+                        <br />
+
+                        <div class="float-right message-time">Received 5:21 pm</div>
                     </div>
                 </div>
             </div>
 
             <div class="align-bottom">
                 <input type="text" class="message-input" placeholder="Type something to send. . ." />
+                <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
+                        src="../../assets/images/prt-send.png"></div>
             </div>
         </div>
     </div>
