@@ -46,7 +46,7 @@
     position: absolute;
     right: 35px;
     top: 18px;
-    z-index: 1000;
+    z-index: 900;
 }
 
 .chat-area {

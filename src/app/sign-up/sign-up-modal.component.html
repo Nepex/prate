@@ -5,13 +5,13 @@
 <div class="container modal-body">
     <div class="row">
         <div class="col-12 text-center">
-    <prt-alert-messages [messages]="messages"></prt-alert-messages>
+            <prt-alert-messages [messages]="messages"></prt-alert-messages>
 
             <form (ngSubmit)="createUser()" [formGroup]="signUpForm" novalidate>
                 <div class="form-group position-relative">
                     <prt-form-validation-msgs [control]="signUpForm.controls.name" [submitted]="signUpForm.submitted">
                     </prt-form-validation-msgs>
-                    <div class="cols-sm-10">
+                    <div class="col-12">
                         <div class="input-group">
                             <input type="text" class="form-control text-input" formControlName="name" autocomplete="off"
                                 spellcheck="false" autofocus placeholder="Enter your default name" />
@@ -22,10 +22,10 @@
                 <div class="form-group position-relative">
                     <prt-form-validation-msgs [control]="signUpForm.controls.email" [submitted]="signUpForm.submitted">
                     </prt-form-validation-msgs>
-                    <div class="cols-sm-10">
+                    <div class="col-12">
                         <div class="input-group">
-                            <input type="text" class="form-control text-input" formControlName="email" name="email" id="email"
-                                spellcheck="false" autocomplete="off" placeholder="Email" />
+                            <input type="text" class="form-control text-input" formControlName="email" name="email"
+                                id="email" spellcheck="false" autocomplete="off" placeholder="Email" />
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="form-group position-relative">
                     <prt-form-validation-msgs [control]="signUpForm.controls.password"
                         [submitted]="signUpForm.submitted"></prt-form-validation-msgs>
-                    <div class="cols-sm-10">
+                    <div class="col-12">
                         <div class="input-group">
                             <input type="password" class="form-control text-input" formControlName="password"
                                 placeholder="Password" />
@@ -44,7 +44,7 @@
                 <div class="form-group position-relative">
                     <prt-form-validation-msgs [control]="signUpForm.controls.passwordConfirm"
                         [submitted]="signUpForm.submitted"></prt-form-validation-msgs>
-                    <div class="cols-sm-10">
+                    <div class="col-12">
                         <div class="input-group">
                             <input type="password" class="form-control text-input" formControlName="passwordConfirm"
                                 placeholder="Confirm Password" />
@@ -61,5 +61,6 @@
     </div>
 </div>
 <div class="modal-footer text-center">
-    <span class="footer-text">By registering, you agree to Prate's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+    <span class="footer-text">By registering, you agree to Prate's <a href="#">Terms of Service</a> and <a
+            href="#">Privacy Policy</a>.</span>
 </div>

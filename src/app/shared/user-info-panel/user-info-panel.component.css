@@ -25,7 +25,7 @@
 }
 
 .sm-nav-icon {
-    margin-right: 10px;
+    margin-right: 5px;
     color: #666666;
 }
 
@@ -64,7 +64,7 @@
     z-index: 1;
 }
 
-.sm-nav-link>a {
+.sm-nav-link>span {
     color: #666666;
     text-decoration: none;
     padding-left: 10px;

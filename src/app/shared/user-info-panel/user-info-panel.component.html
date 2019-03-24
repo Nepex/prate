@@ -1,13 +1,14 @@
 <div class="row browser-container">
     <div class="col-3 my-auto user-icon-container">
-        <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right" style="padding-bottom: 3px;">
+        <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right"
+            style="padding-bottom: 3px;">
     </div>
     <div class="col-9">
         <div class="row">
             <div class="col-12 no-pad-margin">
                 <div class="float-left">
                     <div class="no-pad-margin">
-                        <span class="username  no-pad-margin">PrateMaster1</span>
+                        <span class="username no-pad-margin">PrateMaster1</span>
                         <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
                     </div>
                     <div class="no-pad-margin" style="line-height: 15px;">
@@ -21,9 +22,6 @@
                     <i class="fas fa-times lg-nav-icon" (click)="logout()" title="Logout"></i>
                 </div>
             </div>
-            <!-- <div class="col-7 my-auto">
-               
-            </div> -->
         </div>
 
         <div class="row">
@@ -33,22 +31,33 @@
         </div>
     </div>
 </div>
-
 <div class="row mobile-container">
     <div class="col-12 my-auto user-icon-container">
         <div ngbDropdown class="d-inline-block float-right" [placement]="'bottom-right'">
-            <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right"
+            <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right cursor-pointer"
                 ngbDropdownToggle style="margin-right: 5px;">
 
             <div ngbDropdownMenu>
                 <ul class="navbar-nav mr-auto">
                     <!-- Inline padding to line up links-->
-                    <li class="sm-nav-link"><a href="#" (click)="openProfile()"><i
-                                class="fas fa-cog sm-nav-icon"></i>User Profile</a></li>
-                    <li class="sm-nav-link"><a href="#" (click)="openFriends()"><i class="fas fa-user sm-nav-icon"
-                                style="padding-right: 1px;"></i>Show Friends</a></li>
-                    <li class="sm-nav-link"><a href="#" (click)="logout()"><i class="fas fa-times sm-nav-icon"
-                                style="padding-left: 1px; padding-right: 3px;"></i>Logout</a></li>
+                    <li class="sm-nav-link cursor-pointer" (click)="openProfile()">
+                        <span>
+                            <i class="fas fa-cog sm-nav-icon"></i>
+                            User Profile
+                        </span>
+                    </li>
+                    <li class="sm-nav-link cursor-pointer" (click)="openFriends()">
+                        <span>
+                            <i class="fas fa-user sm-nav-icon" style="padding-right: 1px;"></i>
+                            Show Friends
+                        </span>
+                    </li>
+                    <li class="sm-nav-link cursor-pointer" (click)="logout()">
+                        <span>
+                            <i class="fas fa-times sm-nav-icon" style="padding-left: 1px; padding-right: 3px;"></i>
+                            Logout
+                        </span>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,0 +1,123 @@
+.modal-header {
+    background-color: rgb(33, 37, 43);
+    border-bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.user-header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    color: #00AFF0;
+    position: absolute;
+    left: 92%;
+    top: 3%;
+    font-size: 20px;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.modal-body {
+    background-color: rgb(249, 253, 255);;
+    padding-top: 25px;
+    padding-bottom: 0;
+}
+
+.modal-footer {
+    background-color: rgb(249, 253, 255);
+    border-top: 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding-top: 0;
+    padding-bottom:0;
+    justify-content: center;
+}
+
+.text-input {
+    border-radius: 10px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #666666;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.submit-btn {
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+    padding: 10px 50px 10px 50px;
+    font-weight: 600;
+    font-size: 18px;
+    border: 0;
+}
+
+::ng-deep>>>.modal-content {
+    border: 0;
+    border-radius: 35px;
+}
+
+::ng-deep>>>.modal {
+    text-align: center;
+    padding: 0!important;
+
+}
+
+::ng-deep>>>.modal::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+::ng-deep>>>.modal-dialog {
+    display: inline-block;
+    width: 95%;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* header */
+
+.user-icon {
+    height: 55px;
+    width: 60px;
+    /* position: relative;
+    top: -10px; */
+}
+
+.user-icon-container {
+    padding-right: 10px;
+}
+
+.username {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.user-status {
+    color: green;
+    font-weight: 100;
+    font-size: 9px;
+    padding-left: 5px;
+    position: relative;
+    top: -1px;
+}
+
+.user-level {
+    color: #ffffff;
+    font-size: 11px;
+    padding-bottom: 3px;
+}
+
+.progress-container {
+    margin: 0;
+    padding: 5px 18px 0px 0px;
+}

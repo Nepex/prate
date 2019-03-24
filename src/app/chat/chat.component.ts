@@ -1,7 +1,5 @@
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../services/session/session.service';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../services/user/user';
 

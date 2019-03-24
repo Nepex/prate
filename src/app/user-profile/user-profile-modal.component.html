@@ -1,0 +1,72 @@
+<form (ngSubmit)="applyChanges()" [formGroup]="profileForm" novalidate>
+    <div class="modal-header no-pad-margin">
+        <div class="container user-header">
+            <div class="row">
+                <div class="col-3 my-auto user-icon-container">
+                    <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right"
+                        style="padding-bottom: 3px;">
+                </div>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-12 no-pad-margin">
+                            <div class="float-left">
+                                <div class="no-pad-margin">
+                                    <span class="username  no-pad-margin">PrateMaster1</span>
+                                    <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
+                                </div>
+                                <div class="no-pad-margin" style="line-height: 15px;">
+                                    <span class="user-level no-pad-margin">Rookie - Level 2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 progress-container">
+                            <ngb-progressbar type="success" [value]="25"></ngb-progressbar>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+    </div>
+    <div class="container modal-body">
+        <div class="row">
+            <div class="col-12 text-center">
+                <prt-alert-messages [messages]="messages"></prt-alert-messages>
+
+                <div class="form-group position-relative">
+                    <prt-form-validation-msgs [control]="profileForm.controls.name" [submitted]="profileForm.submitted">
+                    </prt-form-validation-msgs>
+                    <div class="col-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-input" formControlName="name" autocomplete="off"
+                                spellcheck="false" autofocus placeholder="Enter your default name" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group position-relative">
+                    <prt-form-validation-msgs [control]="profileForm.controls.name" [submitted]="profileForm.submitted">
+                    </prt-form-validation-msgs>
+                    <div class="col-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-input" formControlName="name" autocomplete="off"
+                                spellcheck="false" autofocus placeholder="Enter your default name" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer text-center">
+        <div class="form-group text-center">
+            <input type="submit" value="APPLY" class="btn submit-btn cursor-pointer" />
+        </div>
+    </div>
+</form>

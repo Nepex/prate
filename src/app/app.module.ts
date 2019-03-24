@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from './resources/privacy-policy/privacy-policy.component';
 import { DownloadComponent } from './resources/download/download.component';
 import { DevelopersComponent } from './resources/developers/developers.component';
@@ -35,6 +36,7 @@ import { TermsOfUseComponent } from './resources/terms-of-use/terms-of-use.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgbModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
