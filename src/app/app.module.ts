@@ -1,3 +1,7 @@
+import { PrivacyPolicyComponent } from './resources/privacy-policy/privacy-policy.component';
+import { DownloadComponent } from './resources/download/download.component';
+import { DevelopersComponent } from './resources/developers/developers.component';
+import { UserProfileModalComponent } from './user-profile/user-profile-modal.component';
 import { AuthGuard } from './auth-guard.service';
 import { ServicesModule } from './services/services.module';
 import { ChatComponent } from './chat/chat.component';
@@ -11,6 +15,8 @@ import { LoginModalComponent } from './login/login-modal.component';
 import { SignUpModalComponent } from './sign-up/sign-up-modal.component';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SummaryComponent } from './resources/summary/summary.component';
+import { TermsOfUseComponent } from './resources/terms-of-use/terms-of-use.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +24,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LandingPageComponent,
     ChatComponent,
     LoginModalComponent,
-    SignUpModalComponent
+    SignUpModalComponent,
+    UserProfileModalComponent,
+    DevelopersComponent,
+    DownloadComponent,
+    PrivacyPolicyComponent,
+    SummaryComponent,
+    TermsOfUseComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +44,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   bootstrap: [AppComponent],
   entryComponents: [
     LoginModalComponent,
-    SignUpModalComponent
+    SignUpModalComponent,
+    UserProfileModalComponent
 ]
 })
 export class AppModule { }
