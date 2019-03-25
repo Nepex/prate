@@ -69,24 +69,6 @@
 
 }
 
-::ng-deep>>>.modal::before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -4px;
-}
-
-::ng-deep>>>.modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
-    /* weird adjustment needed just for this modal? */
-    width: 99%;
-    margin-right: 0px;
-    margin-left: 4.5px;
-}
-
 /* header */
 
 .user-icon {

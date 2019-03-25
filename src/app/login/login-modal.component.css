@@ -23,8 +23,8 @@
 .close-btn {
     color: rgba(255, 255, 255, .7);
     position: absolute;
-    left: 92%;
-    top: 3%;
+    right: 18px;
+    top: 10px;
     font-size: 20px;
 }
 
@@ -88,18 +88,4 @@ a:hover {
 ::ng-deep>>>.modal {
     text-align: center;
     padding: 0!important;
-}
-
-::ng-deep>>>.modal::before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -4px;
-}
-
-::ng-deep>>>.modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
 }

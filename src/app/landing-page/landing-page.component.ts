@@ -17,9 +17,9 @@ export class LandingPageComponent implements OnInit {
         if (this.sessionService.isAuthenticated()) {
             this.router.navigateByUrl('/chat');
         }
-     }
+    }
 
     openSignUp() {
-        this.modal.open(SignUpModalComponent);
+        this.modal.open(SignUpModalComponent, { centered: true });
     }
 }

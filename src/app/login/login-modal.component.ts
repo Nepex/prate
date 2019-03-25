@@ -18,7 +18,7 @@ export class LoginModalComponent implements OnInit {
     emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
     loginForm: FormGroup = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
-        password: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(5)]),
+        password: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     });
 
     constructor(public activeModal: NgbActiveModal, private sessionService: SessionService, private router: Router) { }

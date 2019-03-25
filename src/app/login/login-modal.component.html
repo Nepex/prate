@@ -9,7 +9,9 @@
 
             <form (ngSubmit)="attemptLogin()" [formGroup]="loginForm" novalidate>
                 <div class="form-group position-relative">
-                    <div class="cols-sm-10">
+                    <prt-form-validation-msgs [control]="loginForm.controls.email" [submitted]="loginForm.submitted">
+                    </prt-form-validation-msgs>
+                    <div class="col-12">
                         <div class="input-group">
                             <input type="text" class="form-control text-input" formControlName="email" name="email"
                                 id="email" spellcheck="false" autocomplete="off" placeholder="Email" />
@@ -18,7 +20,9 @@
                 </div>
 
                 <div class="form-group position-relative">
-                    <div class="cols-sm-10">
+                    <prt-form-validation-msgs [control]="loginForm.controls.password" [submitted]="loginForm.submitted">
+                    </prt-form-validation-msgs>
+                    <div class="col-12">
                         <div class="input-group">
                             <input type="password" class="form-control text-input" formControlName="password"
                                 placeholder="Password" />

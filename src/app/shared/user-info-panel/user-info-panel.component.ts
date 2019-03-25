@@ -18,7 +18,7 @@ export class UserInfoPanelComponent implements OnInit {
 
     openProfile() {
         console.log('here')
-        this.modal.open(UserProfileModalComponent);
+        this.modal.open(UserProfileModalComponent, { centered: true });
     }
 
     logout() {

@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
             
             <div style="position: relative; margin-left: auto; margin-right: auto;">
             <p style="position: absolute;">
-                <i class="fa fa-times" style="cursor: pointer; position: absolute; top: -9px; left: 176px; font-size: 11px;" (click)="close(m)"></i>
+                <i class="fa fa-times" style="cursor: pointer; position: absolute; top: -9px; left: 179px; font-size: 11px;" (click)="close(m)"></i>
             </p>
                 {{ m.message }}
             </div>
