@@ -10,12 +10,14 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class UserProfileModalComponent implements OnInit {
     userRegex = /^[a-zA-Z0-9]*$/;
     profileForm: FormGroup = new FormGroup({
-        avatar: new FormControl('', [Validators.required]),
         name: new FormControl('PrateMaster1', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
-        interests: new FormControl(['general'], [Validators.required]),
-        fontColor: new FormControl('', [Validators.required, Validators.maxLength(25)]),
-        bubbleColor: new FormControl('', [Validators.required, Validators.maxLength(25)]),
-        fontFace: new FormControl('Lato', [Validators.required, Validators.maxLength(25)]),
+        interests: new FormControl([], [Validators.required]),
+        oldPassword: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(5)]),
+        newPassword: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(5)])
+    });
+
+    passwordForm: FormGroup = new FormGroup({
+
     });
 
     constructor(public activeModal: NgbActiveModal) { }
@@ -25,4 +27,14 @@ export class UserProfileModalComponent implements OnInit {
     applyChanges() {
         
     };
+
+    toggleInterest(val) {
+        const idx = this.profileForm.value.interests.indexOf(val);
+
+        if (idx > -1) {
+            this.profileForm.value.interests.splice(idx, 1);
+        } else {
+            this.profileForm.value.interests.push(val);
+        }
+    }
 }

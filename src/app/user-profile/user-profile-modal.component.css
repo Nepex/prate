@@ -13,9 +13,8 @@
 .close-btn {
     color: #00AFF0;
     position: absolute;
-    /* left: 93.5%; */
-    right: 15px;
-    top: 3%;
+    right: 13px;
+    top: 10px;
     font-size: 20px;
 }
 
@@ -25,7 +24,7 @@
 
 .modal-body {
     background-color: rgb(249, 253, 255);;
-    padding-top: 25px;
+    padding-top: 20px;
     padding-bottom: 0;
 }
 
@@ -37,6 +36,11 @@
     padding-top: 0;
     padding-bottom:0;
     justify-content: center;
+}
+
+.form-header {
+    padding-left: 37px;
+    font-weight: 600;
 }
 
 .text-input {
@@ -56,6 +60,15 @@
     font-weight: 600;
     font-size: 18px;
     border: 0;
+}
+
+.interest-container {
+    padding-left: 40px;
+    margin-bottom: 14px;
+}
+
+.interest-title {
+    margin-left: 3px;
 }
 
 ::ng-deep>>>.modal-content {
