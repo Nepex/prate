@@ -9,12 +9,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HeaderComponent implements OnInit {
     isCollapsed = true;
+    
 
     constructor(private modal: NgbModal) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+    }
 
     openLogin() {
-        this.modal.open(LoginModalComponent, {  centered: true });
+        this.modal.open(LoginModalComponent, { centered: true });
     }
 }

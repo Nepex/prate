@@ -24,6 +24,20 @@ export class UserService {
         return req;
     }
 
+    updateUser(user): Observable<User> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `${this.sessionService.getToken()}`);
+
+        const url = `${this.apiUrl}/${user.id}`;
+
+        const req = this.http.put<User>(url, user, {
+            headers: headers
+        }).pipe(map(res => res));
+
+        return req;
+    }
+
     getUser(): Observable<User> {
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');

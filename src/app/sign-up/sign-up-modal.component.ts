@@ -63,7 +63,10 @@ export class SignUpModalComponent implements OnInit {
         }, err => { 
             this.loadingRequest = null;
             this.signUpForm['submitted'] = false;
-            this.messages.push({ message: err.error.msg, type: 'error' }); 
+
+            err.error.forEach(error => {
+                this.messages.push({ message: error, type: 'error' });
+            });
         });
     }
 }

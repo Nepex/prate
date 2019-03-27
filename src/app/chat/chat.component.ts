@@ -13,13 +13,11 @@ export class ChatComponent implements OnInit {
 
     loadingRequest: Observable<User>;
 
-    chatArea = [{},{},{},{},{},{},{},{},{},];
-
     ngOnInit(): void {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
-            console.log(res);
+            this.loadingRequest = null;
         });
     }
 }

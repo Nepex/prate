@@ -57,7 +57,9 @@ export class LoginModalComponent implements OnInit {
         }, err => {
             this.loadingRequest = null;
             this.loginForm['submitted'] = false;
-            this.messages.push({ message: err.error.msg, type: 'error' });
+            err.error.forEach(error => {
+                this.messages.push({ message: error, type: 'error' });
+            });
         });
     }
 }
