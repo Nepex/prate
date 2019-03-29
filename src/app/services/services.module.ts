@@ -1,3 +1,4 @@
+import { ChatService } from './chat/chat.service';
 import { AuthInterceptor } from './auth-interceptor';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -21,6 +22,7 @@ import { SessionService } from './session/session.service';
     providers: [
         ParamSerializer,
         SessionService,
+        ChatService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,
