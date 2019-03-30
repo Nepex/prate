@@ -26,11 +26,10 @@
 
     <div class="row chat-area">
         <div class="col-12 no-pad-margin">
-            <div class="chat-messages">
-
+            <div class="chat-messages" id="chatMessages" (scroll)="onScroll()">
                 <div *ngFor="let m of chatMessages">
-                    <div class="position-relative" [ngClass]="{ 'text-right': m.type === 'sent' }" > 
-                        <div class="sent-bubble" [ngClass]="{ 'sent-bubble': m.type === 'sent', 'rec-bubble': m.type === 'received' }">
+                    <div class="position-relative" [ngClass]="{ 'text-right': m.type === 'sent' }">
+                        <div [ngClass]="{ 'sent-bubble': m.type === 'sent', 'rec-bubble': m.type === 'received' }">
                             <div class="float-left message-user">{{ m.sender }}</div>
 
 
@@ -46,7 +45,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate>

@@ -1,5 +1,5 @@
 import { UserService } from './../services/user/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../services/user/user';
 import { ChatService } from '../services/chat/chat.service';
@@ -18,19 +18,20 @@ export class ChatComponent implements OnInit {
     partner;
 
     chatMessages = [];
-    matching = false;
+    matching: boolean = false;
 
     loadingRequest: Observable<User>;
     partnerFoundSub: Subscription;
     messageReceivedSub: Subscription;
     messageSentSub: Subscription;
 
+    autoScroll: boolean = true;
 
     messageForm: FormGroup = new FormGroup({
         message: new FormControl('', []),
     });
 
-    constructor(private userService: UserService, private chatService: ChatService) {}
+    constructor(private userService: UserService, private chatService: ChatService) { }
 
 
     ngOnInit(): void {
@@ -59,15 +60,40 @@ export class ChatComponent implements OnInit {
 
     messageSent(msgObj) {
         this.chatMessages.push(msgObj);
+        this.scrollToBottom();
     }
 
     messageReceived(msgObj) {
         this.chatMessages.push(msgObj);
+        this.scrollToBottom();
     }
 
     setPartner(partner) {
         this.matching = false;
         this.partner = partner;
+    }
+
+    scrollToBottom() {
+        if (!this.autoScroll) {
+            return
+        }
+
+        // waits for html to render to array ; todo: find better way
+        setTimeout(() => {
+            let element = document.getElementById('chatMessages');
+
+            element.scrollTop = element.scrollHeight;
+        }, 100);
+    }
+
+    onScroll() {
+        let element = document.getElementById('chatMessages');
+        let atBottom = (element.scrollTop + element.offsetHeight) >= element.scrollHeight;
+        if (atBottom) {
+            this.autoScroll = true
+        } else {
+            this.autoScroll = false
+        }
     }
 
 }
