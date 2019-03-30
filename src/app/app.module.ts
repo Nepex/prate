@@ -8,6 +8,7 @@ import { ServicesModule } from './services/services.module';
 import { ChatComponent } from './chat/chat.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MomentModule } from 'ngx-moment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +41,8 @@ import { TermsOfUseComponent } from './resources/terms-of-use/terms-of-use.compo
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    ServicesModule
+    ServicesModule,
+    MomentModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

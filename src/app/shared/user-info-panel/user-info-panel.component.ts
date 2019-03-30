@@ -37,7 +37,6 @@ export class UserInfoPanelComponent implements OnInit {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
-            console.log(res)
             this.user = res;
             this.loadingRequest = null;
         });

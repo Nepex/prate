@@ -1,17 +1,12 @@
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User } from '../services/user/user';
 import { ChatService } from '../services/chat/chat.service';
 
 
-// import * as moment from 'moment';
-// import 'rxjs/add/operator/distinctUntilChanged';
-// import 'rxjs/add/operator/filter';
-// import 'rxjs/add/operator/skipWhile';
-// import 'rxjs/add/operator/scan';
-// import 'rxjs/add/operator/takeWhile';
-// import 'rxjs/add/operator/throttleTime';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'prt-chat',
@@ -19,14 +14,23 @@ import { ChatService } from '../services/chat/chat.service';
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-    chatMessages = [];
-    secretCode: string;
-    conversation: boolean = false;
-    loadingRequest: Observable<User>;
     user: User;
+    partner;
 
-    constructor(private userService: UserService, private chatService: ChatService) {
-    }
+    chatMessages = [];
+    matching = false;
+
+    loadingRequest: Observable<User>;
+    partnerFoundSub: Subscription;
+    messageReceivedSub: Subscription;
+    messageSentSub: Subscription;
+
+
+    messageForm: FormGroup = new FormGroup({
+        message: new FormControl('', []),
+    });
+
+    constructor(private userService: UserService, private chatService: ChatService) {}
 
 
     ngOnInit(): void {
@@ -37,29 +41,33 @@ export class ChatComponent implements OnInit {
             this.loadingRequest = null;
         });
 
-
-        // this.chatService
-        //     .getMessages()
-        //     .distinctUntilChanged()
-        //     .filter((message) => message.trim().length > 0)
-        //     .throttleTime(1000)
-        //     .takeWhile(() => this.conversation === true)
-        //     .scan((acc: string, message: string, index: number) =>
-        //         `${message}(${index + 1})`
-        //         , 1)
-        //     .subscribe((message: string) => {
-        //         const currentTime = moment().format('hh:mm:ss a');
-        //         const messageWithTimestamp = `${currentTime}: ${message}`;
-        //         this.chatMessages.push(messageWithTimestamp);
-        //     });
+        this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
+        this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
+        this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
     }
 
     searchForMatch() {
+        this.matching = true;
         this.chatService.intiateMatching(this.user);
     }
 
     sendMessage() {
-        // this.chatService.sendMessage('hello!');
+        const message = this.messageForm.value.message;
+        this.chatService.sendMessage(this.partner, this.user, message);
+        this.messageForm.reset();
+    }
+
+    messageSent(msgObj) {
+        this.chatMessages.push(msgObj);
+    }
+
+    messageReceived(msgObj) {
+        this.chatMessages.push(msgObj);
+    }
+
+    setPartner(partner) {
+        this.matching = false;
+        this.partner = partner;
     }
 
 }

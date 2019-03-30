@@ -1,3 +1,7 @@
+<div class="matching-mask" *ngIf="matching">
+    <img src="../../assets/images/prate-matching-animation.gif" class="matching-animation-img" />
+</div>
+
 <div class="container-fluid h-100">
 
     <div class="row header">
@@ -5,12 +9,14 @@
             <div class="float-left text-center">
                 <img class="menu-logo" src="../../assets/images/prt-icon.png" />
             </div>
-            <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()">FIND A MATCH!</button>
+            <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()"
+                *ngIf="partner || !matching">FIND A MATCH!</button>
 
         </div>
 
         <div class="col-lg-1 col-8 text-center my-auto mx-auto">
-            <button class="btn match-btn-sm" for="match-button" (click)="searchForMatch()">FIND A MATCH!</button>
+            <button class="btn match-btn-sm" for="match-button" (click)="searchForMatch()"
+                *ngIf="partner || !matching">FIND A MATCH!</button>
         </div>
 
         <div class="col-lg-3 col-2 my-auto">
@@ -22,36 +28,35 @@
         <div class="col-12 no-pad-margin">
             <div class="chat-messages">
 
-                <div class="text-right position-relative"> <!-- on ng-for make sure text-right and text-left staay on sent bubbles-->
-                    <div class="sent-bubble text-left"> 
-                        <div class="float-left message-user">Some Person</div>
+                <div *ngFor="let m of chatMessages">
+                    <div class="position-relative" [ngClass]="{ 'text-right': m.type === 'sent' }" > 
+                        <div class="sent-bubble" [ngClass]="{ 'sent-bubble': m.type === 'sent', 'rec-bubble': m.type === 'received' }">
+                            <div class="float-left message-user">{{ m.sender }}</div>
 
-                        <br />
-                        Hey, What's up?
-                        <br />
 
-                        <div class="float-right message-time">Sent 5:20 pm</div>
+                            <br />
+                            {{ m.message }}
+                            <br />
+
+                            <div class="float-right message-time">
+                                <span *ngIf="m.type === 'sent'">Sent</span>
+                                <span *ngIf="m.type === 'received'">Received</span>
+
+                                {{ m.datetime }}</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="position-relative">
-                    <div class="rec-bubble">
-                        <div class="float-left message-user">Someone Else</div>
+            </div>
 
-                        <br />
-                        Not much, how you been?
-                        <br />
-
-                        <div class="float-right message-time">Received 5:21 pm</div>
-                    </div>
+            <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate>
+                <div class="align-bottom">
+                    <input type="text" class="message-input" placeholder="Type something to send. . ."
+                        formControlName="message">
+                    <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
+                            src="../../assets/images/prt-send.png"></div>
                 </div>
-            </div>
-
-            <div class="align-bottom">
-                <input type="text" class="message-input" placeholder="Type something to send. . ." />
-                <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
-                        src="../../assets/images/prt-send.png"></div>
-            </div>
+            </form>
         </div>
     </div>
 

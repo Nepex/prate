@@ -1,7 +1,7 @@
 <form (ngSubmit)="applyChanges()" [formGroup]="profileForm" novalidate>
 
     <div class="modal-header no-pad-margin">
-        <div class="container user-header">
+        <div class="container user-header" *ngIf="user">
             <div class="row">
                 <div class="col-12 my-auto text-center user-icon-container">
                     <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon">
@@ -10,17 +10,17 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <div class="no-pad-margin">
-                        <span class="username no-pad-margin">PrateMaster1</span>
+                        <span class="username no-pad-margin">{{ user.name }}</span>
                     </div>
                     <div class="no-pad-margin" style="line-height: 15px;">
-                        <span class="user-level no-pad-margin">Rookie - Level 2</span>
+                        <span class="user-level no-pad-margin">Rookie - Level {{ user.level }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12 progress-container">
-                    <ngb-progressbar type="success" [value]="25"></ngb-progressbar>
+                    <ngb-progressbar type="success" [value]="user.experience"></ngb-progressbar>
                 </div>
             </div>
         </div>

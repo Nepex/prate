@@ -3,16 +3,16 @@
         <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right"
             style="padding-bottom: 3px;">
     </div>
-    <div class="col-9">
+    <div class="col-9" *ngIf="user">
         <div class="row">
             <div class="col-12 no-pad-margin">
                 <div class="float-left">
                     <div class="no-pad-margin">
-                        <span class="username no-pad-margin">PrateMaster1</span>
+                        <span class="username no-pad-margin">{{ user.name }}</span>
                         <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
                     </div>
                     <div class="no-pad-margin" style="line-height: 15px;">
-                        <span class="user-level no-pad-margin">Rookie - Level 2</span>
+                        <span class="user-level no-pad-margin">Rookie - Level {{ user.level }}</span>
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@
 
         <div class="row">
             <div class="col-12 progress-container">
-                <ngb-progressbar type="success" [value]="25"></ngb-progressbar>
+                <ngb-progressbar type="success" [value]="user.experience"></ngb-progressbar>
             </div>
         </div>
     </div>
