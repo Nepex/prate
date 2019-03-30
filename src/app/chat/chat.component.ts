@@ -1,5 +1,5 @@
 import { UserService } from './../services/user/user.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../services/user/user';
 import { ChatService } from '../services/chat/chat.service';
@@ -13,7 +13,7 @@ import { FormGroup, FormControl } from '@angular/forms';
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
     user: User;
     partner;
 
@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit {
     constructor(private userService: UserService, private chatService: ChatService) { }
 
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -43,8 +43,14 @@ export class ChatComponent implements OnInit {
         });
 
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
-        this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
         this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
+        this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
+    }
+
+    ngOnDestroy() {
+        this.partnerFoundSub.unsubscribe();
+        this.messageSentSub.unsubscribe();
+        this.messageReceivedSub.unsubscribe();
     }
 
     searchForMatch() {
@@ -60,12 +66,10 @@ export class ChatComponent implements OnInit {
 
     messageSent(msgObj) {
         this.chatMessages.push(msgObj);
-        this.scrollToBottom();
     }
 
     messageReceived(msgObj) {
         this.chatMessages.push(msgObj);
-        this.scrollToBottom();
     }
 
     setPartner(partner) {
@@ -73,27 +77,21 @@ export class ChatComponent implements OnInit {
         this.partner = partner;
     }
 
-    scrollToBottom() {
-        if (!this.autoScroll) {
-            return
-        }
-
-        // waits for html to render to array ; todo: find better way
-        setTimeout(() => {
-            let element = document.getElementById('chatMessages');
-
-            element.scrollTop = element.scrollHeight;
-        }, 100);
-    }
-
-    onScroll() {
+    chatScrolled() {
         let element = document.getElementById('chatMessages');
-        let atBottom = (element.scrollTop + element.offsetHeight) >= element.scrollHeight;
+        let atBottom = (element.scrollTop + element.offsetHeight + 100) >= element.scrollHeight;
         if (atBottom) {
-            this.autoScroll = true
+            this.autoScroll = true;
         } else {
-            this.autoScroll = false
+            this.autoScroll = false;
         }
     }
 
+    checkForAutoScroll() {
+        let element = document.getElementById('chatMessages');
+
+        if (this.autoScroll) {
+            element.scrollTop = element.scrollHeight;
+        }
+    }
 }

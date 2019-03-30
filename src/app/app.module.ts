@@ -9,6 +9,7 @@ import { ChatComponent } from './chat/chat.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MomentModule } from 'ngx-moment';
+import { AngularResizedEventModule } from 'angular-resize-event';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,7 +43,8 @@ import { TermsOfUseComponent } from './resources/terms-of-use/terms-of-use.compo
     FormsModule,
     ReactiveFormsModule,
     ServicesModule,
-    MomentModule
+    MomentModule,
+    AngularResizedEventModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

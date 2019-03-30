@@ -10,13 +10,13 @@
                 <img class="menu-logo" src="../../assets/images/prt-icon.png" />
             </div>
             <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()"
-                *ngIf="partner || !matching">FIND A MATCH!</button>
+                *ngIf="!partner || !matching">FIND A MATCH!</button>
 
         </div>
 
         <div class="col-lg-1 col-8 text-center my-auto mx-auto">
             <button class="btn match-btn-sm" for="match-button" (click)="searchForMatch()"
-                *ngIf="partner || !matching">FIND A MATCH!</button>
+                *ngIf="!partner || !matching">FIND A MATCH!</button>
         </div>
 
         <div class="col-lg-3 col-2 my-auto">
@@ -26,8 +26,8 @@
 
     <div class="row chat-area">
         <div class="col-12 no-pad-margin">
-            <div class="chat-messages" id="chatMessages" (scroll)="onScroll()">
-                <div *ngFor="let m of chatMessages">
+            <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
+                <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
                     <div class="position-relative" [ngClass]="{ 'text-right': m.type === 'sent' }">
                         <div [ngClass]="{ 'sent-bubble': m.type === 'sent', 'rec-bubble': m.type === 'received' }">
                             <div class="float-left message-user">{{ m.sender }}</div>
