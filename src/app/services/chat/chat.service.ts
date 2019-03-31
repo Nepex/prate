@@ -18,6 +18,7 @@ export class ChatService {
 
     constructor() { }
 
+    /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
     intiateMatching(user: User): void {
         this.socket = io.connect(environment.apiBaseUrl);
 
@@ -51,6 +52,12 @@ export class ChatService {
         });
     }
 
+    /** Emits to socket that user is looking for a match */
+    lookForMatch(): void {
+        this.socket.emit('searchForMatch');
+    }
+
+    /** Emits message sent to socket */
     sendMessage(partner: User, user: User, message: string): void {
         const msgObj: ChatMessage = {
             sender: user.name,
@@ -64,6 +71,7 @@ export class ChatService {
         this.messageSent.emit(msgObj);
     }
 
+    /** Listens for message received from socket */
     listenForMessageRecevied(): void {
         this.socket.on('message-received', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
@@ -73,10 +81,7 @@ export class ChatService {
         });
     }
 
-    lookForMatch(): void {
-        this.socket.emit('searchForMatch');
-    }
-
+    /** Emits to socket that user is currently typing */
     userIsTyping(isTyping: boolean, partner: User): void {
         const typingObj = {
             isTyping: isTyping,
@@ -86,21 +91,21 @@ export class ChatService {
         this.socket.emit('user-typed', typingObj);
     }
 
+    /** Listens for if partner is typing */
     listenForPartnerIsTyping(): void {
         this.socket.on('user-typed', typingObj => {
             this.isPartnerTyping.emit(typingObj);
         });
     }
 
+    /** Emits to socket when user is disconnected from chat */
     disconnect(partner: User): void {
-        console.log('disconnect called on service')
-
         this.socket.emit('disconnected', { receiver: partner.clientId })
     }
 
+    /** Listens for if partner disconnects */
     listenForPartnerDisconnect(): void {
         this.socket.on('partnerDisconnected', data => {
-            console.log('partner disconnected emit')
             this.partnerDisconnected.emit(true);
         });
     }

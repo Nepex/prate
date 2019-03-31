@@ -41,6 +41,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     constructor(private userService: UserService, private chatService: ChatService) { }
 
+    /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
         this.loadingRequest = this.userService.getUser();
 
@@ -55,6 +56,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
         this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
 
+        // if page is refreshed or browser is closed, disconnect the user
         window.onbeforeunload = () => {
             this.disconnect();
         };
@@ -62,6 +64,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.listenForUserDoneTyping();
     }
 
+    /** Unsubscribe from subscriptions on page destroy */
     ngOnDestroy(): void {
         this.partnerFoundSub.unsubscribe();
         this.messageSentSub.unsubscribe();
@@ -71,12 +74,20 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.partnerDisconnectSub.unsubscribe();
     }
 
+    /** Commences matching, looks for available partners */
     searchForMatch(): void {
         this.matching = true;
         this.disconnectMessage = null;
         this.chatService.intiateMatching(this.user);
     }
 
+    /** Sets partner object after a match is sucessfully made */
+    setPartner(partner: User): void {
+        this.matching = false;
+        this.partner = partner;
+    }
+
+    /** Attempt to send a message */
     sendMessage(): void {
         if (!this.messageForm.valid || !this.partner) {
             return;
@@ -87,19 +98,17 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.messageForm.reset();
     }
 
+    /** Listens for messages sucessfully sent by user */
     messageSent(msgObj: ChatMessage): void {
         this.chatMessages.push(msgObj);
     }
 
+    /** Listens for messages received from partner */
     messageReceived(msgObj: ChatMessage): void {
         this.chatMessages.push(msgObj);
     }
 
-    setPartner(partner: User): void {
-        this.matching = false;
-        this.partner = partner;
-    }
-
+    /** If host starts typin */
     listenForUserTyping(): void {
         if (!this.partner || this.userIsTyping) {
             return;
@@ -109,6 +118,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.chatService.userIsTyping(true, this.partner);
     }
 
+    /** Listens for last key up event, sets user as done typing after .5 seconds */
     listenForUserDoneTyping(): void {
         const input = document.getElementById('messageInput');
         const event = fromEvent(input, 'keyup').pipe(map(i => i.currentTarget['value']));
@@ -122,6 +132,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
+    /** If partner is typing, display a message */
     isPartnerTyping(typingObj: IsTyping): void {
         if (!this.partner) {
             return;
@@ -134,13 +145,14 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    /** If user leaves the chat or is disconnected - unmatch both user and partner */
     disconnect(): void {
-        console.log('disconnect called on component')
         this.chatService.disconnect(this.partner);
         this.disconnectMessage = 'Left the chat'
         this.partner = null;
     }
 
+    /** If partner is disconnected, unmatch user */
     partnerDisconnect(isDisconnected: boolean): void {
         if (isDisconnected) {
             this.partnerIsTyping = false;
@@ -149,6 +161,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    /** If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling. */
     chatScrolled() {
         let element = document.getElementById('chatMessages');
         let atBottom = (element.scrollTop + element.offsetHeight + 100) >= element.scrollHeight;
@@ -159,6 +172,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    /** If user is at the bottom, auto scroll chat with messages sent/received */
     checkForAutoScroll() {
         let element = document.getElementById('chatMessages');
 
