@@ -108,6 +108,13 @@
     bottom: 60px
 }
 
+.user-disconnected{
+    position: absolute;
+    z-index: 900;
+    left: 25px;
+    bottom: 60px
+}
+
 .rec-bubble {
     background: #efefef;
     -webkit-border-radius: 4px;

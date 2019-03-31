@@ -1,3 +1,4 @@
+import { ChatMessage } from './chat-message';
 import { User } from './../user/user';
 import { environment } from './../../../environments/environment';
 import { Injectable, EventEmitter, Output } from '@angular/core';
@@ -11,19 +12,20 @@ export class ChatService {
     @Output() public messageReceived = new EventEmitter();
     @Output() public messageSent = new EventEmitter();
     @Output() public isPartnerTyping = new EventEmitter();
+    @Output() public partnerDisconnected = new EventEmitter();
 
     private matchFindRefreshInterval: number;
 
     constructor() { }
 
-    intiateMatching(user: User) {
+    intiateMatching(user: User): void {
         this.socket = io.connect(environment.apiBaseUrl);
 
         this.socket.on('error', err => {
             console.log('Socket error: ' + err);
         });
 
-        const userInfo = {
+        const userInfo: User = {
             id: user.id,
             name: user.name,
             interests: user.interests
@@ -44,12 +46,13 @@ export class ChatService {
 
                 this.listenForMessageRecevied();
                 this.listenForPartnerIsTyping();
+                this.listenForPartnerDisconnect();
             }
         });
     }
 
-    sendMessage(partner, user, message) {
-        const msgObj = {
+    sendMessage(partner: User, user: User, message: string): void {
+        const msgObj: ChatMessage = {
             sender: user.name,
             receiver: partner.clientId,
             message: message,
@@ -61,7 +64,7 @@ export class ChatService {
         this.messageSent.emit(msgObj);
     }
 
-    listenForMessageRecevied() {
+    listenForMessageRecevied(): void {
         this.socket.on('message-received', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
             msgObj.type = 'received';
@@ -70,11 +73,11 @@ export class ChatService {
         });
     }
 
-    lookForMatch() {
+    lookForMatch(): void {
         this.socket.emit('searchForMatch');
     }
 
-    userIsTyping(isTyping, partner) {
+    userIsTyping(isTyping: boolean, partner: User): void {
         const typingObj = {
             isTyping: isTyping,
             receiver: partner.clientId
@@ -83,9 +86,22 @@ export class ChatService {
         this.socket.emit('user-typed', typingObj);
     }
 
-    listenForPartnerIsTyping() {
+    listenForPartnerIsTyping(): void {
         this.socket.on('user-typed', typingObj => {
             this.isPartnerTyping.emit(typingObj);
+        });
+    }
+
+    disconnect(partner: User): void {
+        console.log('disconnect called on service')
+
+        this.socket.emit('disconnected', { receiver: partner.clientId })
+    }
+
+    listenForPartnerDisconnect(): void {
+        this.socket.on('partnerDisconnected', data => {
+            console.log('partner disconnected emit')
+            this.partnerDisconnected.emit(true);
         });
     }
 }

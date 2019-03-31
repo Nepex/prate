@@ -11,12 +11,15 @@
             </div>
             <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()"
                 *ngIf="!partner && !matching">FIND A MATCH!</button>
-
+            <button class="btn match-btn-lg" for="match-button" (click)="disconnect()"
+                *ngIf="!partner">LEAVE CHAT</button>
         </div>
 
         <div class="col-lg-1 col-8 text-center my-auto mx-auto">
             <button class="btn match-btn-sm" for="match-button" (click)="searchForMatch()"
                 *ngIf="!partner && !matching">FIND A MATCH!</button>
+            <button class="btn match-btn-sm" for="match-button" (click)="disconnect()" *ngIf="partner">LEAVE
+                CHAT</button>
         </div>
 
         <div class="col-lg-3 col-2 my-auto">
@@ -49,6 +52,10 @@
 
             <div class="user-is-typing" [hidden]="!partnerIsTyping">
                 <span *ngIf="partner">{{ partner.name }} is typing...</span>
+            </div>
+
+            <div class="user-disconnected" [hidden]="!disconnectMessage">
+                {{ disconnectMessage }}
             </div>
 
             <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate>
