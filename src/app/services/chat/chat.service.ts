@@ -10,11 +10,13 @@ export class ChatService {
     @Output() public partner = new EventEmitter();
     @Output() public messageReceived = new EventEmitter();
     @Output() public messageSent = new EventEmitter();
+    @Output() public isPartnerTyping = new EventEmitter();
+
     private matchFindRefreshInterval: number;
 
-    constructor() {}
+    constructor() { }
 
-    intiateMatching(user: User) { 
+    intiateMatching(user: User) {
         this.socket = io.connect(environment.apiBaseUrl);
 
         this.socket.on('error', err => {
@@ -39,14 +41,10 @@ export class ChatService {
             } else {
                 clearTimeout(this.matchFindRefreshInterval);
                 this.partner.emit(partner);
+
+                this.listenForMessageRecevied();
+                this.listenForPartnerIsTyping();
             }
-        });
-
-        this.socket.on('message-received', msgObj => {
-            msgObj.datetime = moment().format('hh:mm a');
-            msgObj.type = 'received';
-
-            this.messageReceived.emit(msgObj);
         });
     }
 
@@ -63,8 +61,32 @@ export class ChatService {
         this.messageSent.emit(msgObj);
     }
 
+    listenForMessageRecevied() {
+        this.socket.on('message-received', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.messageReceived.emit(msgObj);
+        });
+    }
+
     lookForMatch() {
         this.socket.emit('searchForMatch');
+    }
+
+    userIsTyping(isTyping, partner) {
+        const typingObj = {
+            isTyping: isTyping,
+            receiver: partner.clientId
+        }
+
+        this.socket.emit('user-typed', typingObj);
+    }
+
+    listenForPartnerIsTyping() {
+        this.socket.on('user-typed', typingObj => {
+            this.isPartnerTyping.emit(typingObj);
+        });
     }
 }
 

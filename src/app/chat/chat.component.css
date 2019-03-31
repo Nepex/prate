@@ -44,7 +44,10 @@
 .matching-animation-img {
     margin: auto;
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 @keyframes buttonsmash {
@@ -96,6 +99,13 @@
     bottom: 0;
     width: 100%;
     padding: 10px 20px 20px 20px;
+}
+
+.user-is-typing {
+    position: absolute;
+    z-index: 900;
+    right: 25px;
+    bottom: 60px
 }
 
 .rec-bubble {

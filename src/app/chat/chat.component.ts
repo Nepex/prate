@@ -1,12 +1,12 @@
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { User } from '../services/user/user';
 import { ChatService } from '../services/chat/chat.service';
 
 
-import { distinctUntilChanged } from 'rxjs/operators';
-import { FormGroup, FormControl } from '@angular/forms';
+import { map, debounceTime } from 'rxjs/operators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'prt-chat',
@@ -15,7 +15,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class ChatComponent implements OnInit, OnDestroy {
     user: User;
-    partner;
+    partner = null;
 
     chatMessages = [];
     matching: boolean = false;
@@ -24,11 +24,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     partnerFoundSub: Subscription;
     messageReceivedSub: Subscription;
     messageSentSub: Subscription;
+    userDoneTypingSub: Subscription;
+    isPartnerTypingSub: Subscription;
 
     autoScroll: boolean = true;
+    userIsTyping: boolean = false;
+    partnerIsTyping: boolean = false;
 
     messageForm: FormGroup = new FormGroup({
-        message: new FormControl('', []),
+        message: new FormControl('', [Validators.maxLength(300), Validators.minLength(1), Validators.required]),
     });
 
     constructor(private userService: UserService, private chatService: ChatService) { }
@@ -45,12 +49,17 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
         this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
         this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
+        this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
+
+        this.listenForUserDoneTyping();
     }
 
     ngOnDestroy() {
         this.partnerFoundSub.unsubscribe();
         this.messageSentSub.unsubscribe();
         this.messageReceivedSub.unsubscribe();
+        this.userDoneTypingSub.unsubscribe();
+        this.isPartnerTypingSub.unsubscribe();
     }
 
     searchForMatch() {
@@ -59,6 +68,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
+        if (!this.messageForm.valid || !this.partner) {
+            return;
+        }
+
         const message = this.messageForm.value.message;
         this.chatService.sendMessage(this.partner, this.user, message);
         this.messageForm.reset();
@@ -75,6 +88,43 @@ export class ChatComponent implements OnInit, OnDestroy {
     setPartner(partner) {
         this.matching = false;
         this.partner = partner;
+    }
+
+    listenForUserTyping() {
+        if (!this.partner || this.userIsTyping) {
+            return;
+        }
+
+        console.log('user typing')
+
+
+        this.userIsTyping = true;
+        this.chatService.userIsTyping(true, this.partner);
+    }
+
+    listenForUserDoneTyping() {
+        const input = document.getElementById('messageInput');
+        const event = fromEvent(input, 'keyup').pipe(map(i => i.currentTarget['value']));
+        const debouncedInput = event.pipe(debounceTime(500));
+
+        this.userDoneTypingSub = debouncedInput.subscribe(val => {
+            if (this.partner) {
+                this.userIsTyping = false;
+                this.chatService.userIsTyping(false, this.partner);
+            }
+        });
+    }
+
+    isPartnerTyping(typingObj) {
+        if (!this.partner) {
+            return;
+        }
+
+        if (typingObj.isTyping) {
+            this.partnerIsTyping = true;
+        } else {
+            this.partnerIsTyping = false;
+        }
     }
 
     chatScrolled() {
