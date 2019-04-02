@@ -57,6 +57,11 @@ export class ChatService {
         this.socket.emit('searchForMatch');
     }
 
+    /** Emits to socket to stop looking for a match, clears partner if a match has already been made */
+    cancelMatching() {
+        this.socket.emit('cancelMatching');
+    }
+
     /** Emits message sent to socket */
     sendMessage(partner: User, user: User, message: string): void {
         const msgObj: ChatMessage = {

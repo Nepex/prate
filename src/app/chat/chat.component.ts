@@ -6,7 +6,7 @@ import { User } from '../services/user/user';
 import { ChatService } from '../services/chat/chat.service';
 
 
-import { map, debounceTime } from 'rxjs/operators';
+import { map, debounceTime, throttleTime } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IsTyping } from '../services/chat/is-typing';
 
@@ -33,7 +33,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     userIsTyping: boolean = false;
     partnerIsTyping: boolean = false;
 
+    chatTimerInterval: number;
+    inactivityTimer: number = 0;
+    chatTimer: number = 0;
+
     disconnectMessage: string;
+    warningMessage: string;
 
     messageForm: FormGroup = new FormGroup({
         message: new FormControl('', [Validators.maxLength(300), Validators.minLength(1), Validators.required]),
@@ -58,7 +63,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         // if page is refreshed or browser is closed, disconnect the user
         window.onbeforeunload = () => {
-            this.disconnect();
+            if (this.matching) {
+                this.cancelMatching();
+            } else {
+                this.disconnect();
+            }
         };
 
         this.listenForUserDoneTyping();
@@ -72,12 +81,15 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.userDoneTypingSub.unsubscribe();
         this.isPartnerTypingSub.unsubscribe();
         this.partnerDisconnectSub.unsubscribe();
+
+        clearTimeout(this.chatTimerInterval);
     }
 
     /** Commences matching, looks for available partners */
     searchForMatch(): void {
+        this.chatMessages = [];
         this.matching = true;
-        this.disconnectMessage = null;
+        this.warningMessage = null;
         this.chatService.intiateMatching(this.user);
     }
 
@@ -85,6 +97,28 @@ export class ChatComponent implements OnInit, OnDestroy {
     setPartner(partner: User): void {
         this.matching = false;
         this.partner = partner;
+
+        this.accumulateTime();
+    }
+
+    /** Accumulates chat time and kicks user if inactive for 10 minutes */
+    accumulateTime(): void {
+        this.chatTimerInterval = window.setTimeout(() => {
+            this.chatTimer = this.chatTimer + 10;
+            this.inactivityTimer = this.inactivityTimer + 10;
+
+            if (this.inactivityTimer >= 570) {
+                this.warningMessage = 'Inactivity detected, please send a message';
+            }
+
+            // disconnect user after 10 minutes of inactivity
+            if (this.inactivityTimer >= 600) {
+                this.disconnect();
+                return;
+            }
+
+            this.accumulateTime();
+        }, 10000);
     }
 
     /** Attempt to send a message */
@@ -95,6 +129,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         const message = this.messageForm.value.message;
         this.chatService.sendMessage(this.partner, this.user, message);
+        this.inactivityTimer = 0;
+        this.warningMessage = null;
         this.messageForm.reset();
     }
 
@@ -145,20 +181,44 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    /** On cancel button clicked, halt matching */
+    cancelMatching(): void {
+        if (this.partner) {
+            this.disconnect();
+            return;
+        }
+        this.chatService.cancelMatching();
+        this.matching = false;
+    }
+
     /** If user leaves the chat or is disconnected - unmatch both user and partner */
     disconnect(): void {
         this.chatService.disconnect(this.partner);
-        this.disconnectMessage = 'Left the chat'
+        this.warningMessage = 'Left the chat'
         this.partner = null;
+
+        this.stopTimerAndGiveExp();
     }
 
     /** If partner is disconnected, unmatch user */
     partnerDisconnect(isDisconnected: boolean): void {
         if (isDisconnected) {
             this.partnerIsTyping = false;
-            this.disconnectMessage = this.partner.name + ' has left';
+            this.warningMessage = this.partner.name + ' has left';
             this.partner = null;
+
+            this.stopTimerAndGiveExp();
         }
+    }
+
+    /** Resets timers and awards exp */
+    stopTimerAndGiveExp() {
+        clearTimeout(this.chatTimerInterval);
+
+        // award EXP here
+
+        this.chatTimer = 0;
+        this.inactivityTimer = 0;
     }
 
     /** If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling. */

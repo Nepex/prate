@@ -50,6 +50,16 @@
     right: 0;
 }
 
+.cancel-btn {
+    height: 35px;
+    margin: auto;
+    position: absolute;
+    top: 235px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
 @keyframes buttonsmash {
     from {
         box-shadow: inset 0px 2px 10px 0px rgba(0, 0, 0, 1);
@@ -108,7 +118,7 @@
     bottom: 60px
 }
 
-.user-disconnected{
+.user-warning-msg{
     position: absolute;
     z-index: 900;
     left: 25px;

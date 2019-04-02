@@ -1,5 +1,6 @@
 <div class="matching-mask" *ngIf="matching">
     <img src="../../assets/images/prate-matching-animation.gif" class="matching-animation-img" />
+    <button class="btn cancel-btn" for="cancel-button" (click)="cancelMatching()">CANCEL</button>
 </div>
 
 <div class="container-fluid h-100">
@@ -11,8 +12,8 @@
             </div>
             <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()"
                 *ngIf="!partner && !matching">FIND A MATCH!</button>
-            <button class="btn match-btn-lg" for="match-button" (click)="disconnect()"
-                *ngIf="!partner">LEAVE CHAT</button>
+            <button class="btn match-btn-lg" for="match-button" (click)="disconnect()" *ngIf="partner">LEAVE
+                CHAT</button>
         </div>
 
         <div class="col-lg-1 col-8 text-center my-auto mx-auto">
@@ -54,14 +55,14 @@
                 <span *ngIf="partner">{{ partner.name }} is typing...</span>
             </div>
 
-            <div class="user-disconnected" [hidden]="!disconnectMessage">
-                {{ disconnectMessage }}
+            <div class="user-warning-msg" [hidden]="!warningMessage">
+                {{ warningMessage }}
             </div>
 
             <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate>
                 <div class="align-bottom">
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
-                        formControlName="message" (input)="listenForUserTyping()">
+                        formControlName="message" (keypress)="listenForUserTyping()">
                     <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
                             src="../../assets/images/prt-send.png"></div>
                 </div>
