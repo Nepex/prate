@@ -10,12 +10,14 @@
             <div class="float-left text-center">
                 <img class="menu-logo" src="../../assets/images/prt-icon.png" />
             </div>
+            <!-- Desktop buttons -->
             <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()"
                 *ngIf="!partner && !matching">FIND A MATCH!</button>
             <button class="btn match-btn-lg" for="match-button" (click)="disconnect()" *ngIf="partner">LEAVE
                 CHAT</button>
         </div>
 
+        <!-- Mobile buttons -->
         <div class="col-lg-1 col-8 text-center my-auto mx-auto">
             <button class="btn match-btn-sm" for="match-button" (click)="searchForMatch()"
                 *ngIf="!partner && !matching">FIND A MATCH!</button>

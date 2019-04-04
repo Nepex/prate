@@ -1,5 +1,5 @@
 import { LoginModalComponent } from './../../login/login-modal.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -8,12 +8,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+    @Input() selectedTab: string;
     isCollapsed = true;
-    
 
     constructor(private modal: NgbModal) { }
 
     ngOnInit(): void {
+        console.log(this.selectedTab)
     }
 
     openLogin() {

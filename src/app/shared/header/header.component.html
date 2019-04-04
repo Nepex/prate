@@ -1,19 +1,21 @@
 <div class="row no-pad-margin">
     <div class="col-12 header-container">
-        <img class="d-none d-lg-inline d-xl-inline" src="../../assets/images/prt-logo.png" />
-        <img class="d-lg-none d-xl-none menu-logo-sm" src="../../assets/images/prt-icon.png" />
+        <a href="/"><img class="d-none d-lg-inline d-xl-inline" src="../../assets/images/prt-logo.png" /></a>
+        <a href="/"><img class="d-lg-none d-xl-none menu-logo-sm" src="../../assets/images/prt-icon.png" /></a>
 
         <nav class="navbar-expand-lg">
             <a class="navbar-brand d-block d-lg-none" href="#"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" (offClick)="isCollapsed ? isCollapsed : isCollapsed = !isCollapsed" >
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                (click)="isCollapsed = !isCollapsed"
+                (offClick)="isCollapsed ? isCollapsed : isCollapsed = !isCollapsed">
                 <i class="fas fa-bars nav-icon"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
                 <ul class="navbar-nav mr-auto nav-items">
-                    <li class="header-link"><a href="#">Why Prate?</a></li>
+                    <li class="header-link" [ngClass]="{ 'active': selectedTab === 'SUMMARY'}"><a href="/summary">Why
+                            Prate?</a></li>
                     <li class="header-link"><a href="#">Download</a></li>
                     <li class="header-link"><a href="#">Developers</a></li>
                     <li class="header-link d-block d-lg-none"><a href="#" (click)="openLogin();">Login</a></li>
