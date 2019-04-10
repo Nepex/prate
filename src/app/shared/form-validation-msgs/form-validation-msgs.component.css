@@ -8,20 +8,9 @@
     color: #00bf00;
 }
 
-@media (min-width: 344px) {
-    .checkmark, .form-control-feedback {
-        position: absolute;
-        z-index: 50;
-        left: 81%;
-        top: 16%;
-    }
-}
-
-@media (min-width: 375px) {
-    .checkmark, .form-control-feedback  {
-        position: absolute;
-        z-index: 50;
-        left: 85%;
-        top: 16%;
-    }
+.checkmark, .form-control-feedback  {
+    position: absolute;
+    z-index: 50;
+    right: 50px;
+    top: 16%;
 }

@@ -16,10 +16,10 @@ export class UserInfoPanelComponent implements OnInit {
     isCollapsed = true;
     loadingRequest: Observable<any>;
     user: User;
-    
+
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService) { }
 
-    ngOnInit(): void { 
+    ngOnInit(): void {
         this.getUser();
     }
 
@@ -30,7 +30,7 @@ export class UserInfoPanelComponent implements OnInit {
         modalRef.result.then(() => {
         }, () => {
             this.getUser();
-         });
+        });
     }
 
     getUser() {

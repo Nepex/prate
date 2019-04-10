@@ -18,13 +18,22 @@
                             Prate?</a></li>
                     <li class="header-link"><a href="#">Download</a></li>
                     <li class="header-link"><a href="#">Developers</a></li>
-                    <li class="header-link d-block d-lg-none"><a href="#" (click)="openLogin();">Login</a></li>
+                    <li class="header-link d-block d-lg-none" *ngIf="!userAuthed"><a href="#"
+                            (click)="openLogin();">Login</a></li>
+                    <li class="header-link d-block d-lg-none" *ngIf="userAuthed"><a href="/chat">Chat</a></li>
                 </ul>
             </div>
         </nav>
 
-        <div class="float-right login-link-div d-none d-lg-block d-xl-block">
-            <a href="#" (click)="openLogin();">Login</a>
+        <div class="float-right login-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="openLogin()"
+            *ngIf="!userAuthed">
+            Login
         </div>
+
+        <div class="float-right login-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="redirectToChat()"
+            *ngIf="userAuthed">
+            Chat
+        </div>
+
     </div>
 </div>

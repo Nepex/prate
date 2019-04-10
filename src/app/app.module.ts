@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './resources/errors/page-not-found.component.ts/page-not-found.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from './resources/privacy-policy/privacy-policy.component';
 import { DownloadComponent } from './resources/download/download.component';
@@ -33,7 +34,8 @@ import { TermsOfUseComponent } from './resources/terms-of-use/terms-of-use.compo
     DownloadComponent,
     PrivacyPolicyComponent,
     SummaryComponent,
-    TermsOfUseComponent
+    TermsOfUseComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

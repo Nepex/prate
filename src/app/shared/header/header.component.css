@@ -69,7 +69,7 @@ nav {
         position: relative;
         top: -8px;
     }
-    .header-link:hover>a {
+    .header-link > a:hover {
         color: #ffffff;
         text-decoration: none;
         -webkit-animation: glow 1s ease-in-out infinite alternate;
@@ -88,6 +88,10 @@ nav {
         text-shadow: 0 0 10px #eee, 0 0 20px #00AFF0, 0 0 30px #00AFF0, 0 0 40px #00AFF0, 0 0 50px #00AFF0, 0 0 60px #00AFF0, 0 0 70px #00AFF0;
     }
     .active > a {
+        color: #ffffff;
+    }
+    .login-link-div:hover {
+        background-color: #00AFF0;
         color: #ffffff;
     }
 }

@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { SessionService } from './../../services/session/session.service';
 import { LoginModalComponent } from './../../login/login-modal.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,15 +11,24 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HeaderComponent implements OnInit {
     @Input() selectedTab: string;
-    isCollapsed = true;
+    isCollapsed: boolean = true;
+    userAuthed: boolean = false;
 
-    constructor(private modal: NgbModal) { }
+    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router) { }
 
     ngOnInit(): void {
-        console.log(this.selectedTab)
+        if (this.sessionService.isAuthenticated()) {
+            this.userAuthed = true;
+        }
     }
 
     openLogin() {
         this.modal.open(LoginModalComponent, { centered: true });
+
+        return false;
+    }
+
+    redirectToChat() {
+        this.router.navigateByUrl('/chat');
     }
 }
