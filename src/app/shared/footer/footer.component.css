@@ -1,0 +1,16 @@
+
+.badges {
+    height: 35px;
+    width: 120px;
+}
+
+.mobile-badges {
+    float: right;
+    padding: 5px;
+}
+
+.copyright-container {
+    float: left;
+    padding: 5px;
+    font-size: 11px;
+}

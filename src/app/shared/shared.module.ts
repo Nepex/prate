@@ -1,3 +1,4 @@
+import { FooterComponent } from './footer/footer.component';
 import { ComingSoonModalComponent } from './coming-soon/coming-soon-modal.component';
 import { AlertMessagesComponent } from './alert-messages/alert-messages.component';
 import { FormValidationMsgsComponent } from './form-validation-msgs/form-validation-msgs.component';
@@ -15,7 +16,8 @@ import { OffClickDirective } from './off-click-directive/off-click.directive';
         AlertMessagesComponent,
         UserInfoPanelComponent,
         OffClickDirective,
-        ComingSoonModalComponent
+        ComingSoonModalComponent,
+        FooterComponent
     ],
     imports: [
         CommonModule,
@@ -27,7 +29,8 @@ import { OffClickDirective } from './off-click-directive/off-click.directive';
         AlertMessagesComponent,
         UserInfoPanelComponent,
         OffClickDirective,
-        ComingSoonModalComponent
+        ComingSoonModalComponent,
+        FooterComponent
     ],
     providers: [],
 })

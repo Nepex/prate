@@ -13,6 +13,6 @@ export class DownloadComponent implements OnInit {
     ngOnInit() {}
 
     openComingSoon() {
-        this.modal.open(ComingSoonModalComponent, { centered: true });
+        this.modal.open(ComingSoonModalComponent, { centered: true, size: 'sm' });
     }
 }
