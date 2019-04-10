@@ -27,7 +27,7 @@ export class SignUpModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     createUser() {
         this.messages = [];
@@ -38,7 +38,7 @@ export class SignUpModalComponent implements OnInit {
         }
 
         if (this.signUpForm.value.password !== this.signUpForm.value.passwordConfirm) {
-            this.messages.push({ message: 'Passwords do not match', type: 'error' }); 
+            this.messages.push({ message: 'Passwords do not match', type: 'error' });
             return;
         }
 
@@ -57,10 +57,10 @@ export class SignUpModalComponent implements OnInit {
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
             this.signUpForm['submitted'] = false;
-            this.messages.push({ message: 'Account created', type: 'success' }); 
+            this.messages.push({ message: 'Account created', type: 'success' });
 
             this.signUpForm.reset();
-        }, err => { 
+        }, err => {
             this.loadingRequest = null;
             this.signUpForm['submitted'] = false;
 

@@ -56,6 +56,7 @@
 
 @media (min-width: 992px) {
     .developers-content {
-        height: calc(100% - 162px);
+        height: calc(100% - 120px);
+        padding-top: 40px;
     }
 }
