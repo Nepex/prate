@@ -72,20 +72,14 @@ nav {
     .header-link:hover>a {
         color: #ffffff;
         text-decoration: none;
-        -webkit-animation: glow 1s ease-in-out infinite alternate;
-        -moz-animation: glow 1s ease-in-out infinite alternate;
-        animation: glow 1s ease-in-out infinite alternate;
         transition: .5s;
-        text-shadow: 0 0 10px #eee, 0 0 20px #00AFF0, 0 0 30px #00AFF0, 0 0 40px #00AFF0, 0 0 50px #00AFF0, 0 0 60px #00AFF0, 0 0 70px #00AFF0;
+        text-shadow: 0 0 10px #00AFF0, 0 0 10px #00AFF0;
     }
     .active {
         color: #ffffff;
         text-decoration: none;
-        -webkit-animation: glow 1s ease-in-out infinite alternate;
-        -moz-animation: glow 1s ease-in-out infinite alternate;
-        animation: glow 1s ease-in-out infinite alternate;
         transition: .5s;
-        text-shadow: 0 0 10px #eee, 0 0 20px #00AFF0, 0 0 30px #00AFF0, 0 0 40px #00AFF0, 0 0 50px #00AFF0, 0 0 60px #00AFF0, 0 0 70px #00AFF0;
+        text-shadow: 0 0 10px #00AFF0, 0 0 10px #00AFF0;
     }
     .active > a {
         color: #ffffff;
