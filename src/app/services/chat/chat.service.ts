@@ -91,7 +91,7 @@ export class ChatService {
         const typingObj = {
             isTyping: isTyping,
             receiver: partner.clientId
-        }
+        };
 
         this.socket.emit('user-typed', typingObj);
     }

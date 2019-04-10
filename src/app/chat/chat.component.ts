@@ -194,7 +194,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** If user leaves the chat or is disconnected - unmatch both user and partner */
     disconnect(): void {
         this.chatService.disconnect(this.partner);
-        this.warningMessage = 'Left the chat'
+        this.warningMessage = 'Left the chat';
         this.partner = null;
 
         this.stopTimerAndGiveExp();

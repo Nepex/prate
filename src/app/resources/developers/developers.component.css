@@ -1,0 +1,62 @@
+.page-container {
+    background-image: url("../../../assets/images/prt-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.heading {
+    font-size: 35px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    color: #00AFF0;
+}
+
+.page-heading {
+    margin-bottom: 20px;
+}
+
+.name-heading {
+    font-size: 25px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    color: #666666;
+}
+
+.sub-heading {
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+
+.sub-heading-2 {
+    font-size: 16px;
+    padding-bottom: 15px;
+}
+
+.statement {
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 10px;
+    text-align: left;
+}
+
+.block-container {
+    padding-bottom: 40px;
+}
+
+.avatar {
+    border-radius: 50%;
+}
+
+@media (min-width: 344px) {
+    .developers-content {
+        height: calc(100% - 50px - 45px);
+    }
+}
+
+@media (min-width: 992px) {
+    .developers-content {
+        height: calc(100% - 120px - 45px);
+        padding-top: 40px;
+    }
+}

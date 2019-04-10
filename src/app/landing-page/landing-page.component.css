@@ -16,3 +16,14 @@
     border-radius: 20px;
 }
 
+@media (min-width: 344px) {
+    .landing-content {
+        height: calc(100% - 50px - 45px);
+    }
+}
+
+@media (min-width: 992px) {
+    .landing-content {
+        height: calc(100% - 120px - 45px);
+    }
+}
