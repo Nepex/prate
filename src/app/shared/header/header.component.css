@@ -52,7 +52,7 @@ nav {
 
 @media (min-width: 992px) {
     .nav-items {
-        background-color: #fff;
+        background-color: transparent;
         position: relative;
         padding: 0;
         box-shadow: none;

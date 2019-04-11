@@ -22,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SummaryComponent } from './resources/summary/summary.component';
 import { TermsOfUseComponent } from './resources/terms-of-use/terms-of-use.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { TermsOfUseComponent } from './resources/terms-of-use/terms-of-use.compo
     ReactiveFormsModule,
     ServicesModule,
     MomentModule,
-    AngularResizedEventModule
+    AngularResizedEventModule,
+    BrowserAnimationsModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
