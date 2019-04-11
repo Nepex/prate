@@ -21,16 +21,3 @@
     padding: 20px 30px 20px 30px;
     border-radius: 20px;
 }
-
-
-@media (min-width: 344px) {
-    .download-content {
-        height: calc(100% - 50px - 45px);
-    }
-}
-
-@media (min-width: 992px) {
-    .download-content {
-        height: calc(100% - 120px - 45px);
-    }
-}

@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './resources/errors/page-not-found.component.ts/page-not-found.component';
 import { ComingSoonModalComponent } from './shared/coming-soon/coming-soon-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyComponent } from './resources/privacy-policy/privacy-policy.component';

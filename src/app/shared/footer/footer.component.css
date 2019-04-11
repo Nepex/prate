@@ -1,16 +1,33 @@
-
 .badges {
     height: 35px;
     width: 120px;
 }
 
-.mobile-badges {
-    float: right;
-    padding: 5px;
+.copyright-container {
+    font-size: 11px;
+    font-weight: 600;
 }
 
-.copyright-container {
-    float: left;
-    padding: 5px;
-    font-size: 11px;
+@media (min-width: 344px) {
+    .copyright-container {
+        margin-left: 5px;
+        position: absolute;
+        bottom: -2px;
+        left: 5px;
+    }
+    .mobile-badges {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .copyright-container {
+        margin-left: 75px;
+        position: absolute;
+        bottom: -2px;
+    }
+    .mobile-badges {
+        display: block;
+        margin-right: 65px;
+    }
 }

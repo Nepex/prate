@@ -25,7 +25,7 @@
     padding-bottom: 5px;
 }
 
-.summary-header-item {
+.summary-message {
     margin-bottom: 10px;
 }
 
@@ -33,15 +33,10 @@
     padding-bottom: 20px;
 }
 
-@media (min-width: 344px) {
-    .summary-content {
-        height: calc(100% - 50px - 45px);
-    }
+.final-block-container {
+    padding-bottom: 60px;
 }
 
-@media (min-width: 992px) {
-    .summary-content {
-        height: calc(100% - 120px - 45px);
-        padding-top: 40px;
-    }
+.page-heading {
+    margin-top: 40px;
 }
