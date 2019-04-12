@@ -15,3 +15,24 @@
     padding: 20px 30px 20px 30px;
     border-radius: 20px;
 }
+
+.badges {
+    height: 35px;
+    width: 120px;
+}
+
+.mobile-badges {
+    margin-top: 20px;
+}
+
+@media (min-width: 344px) {
+    .mobile-badges {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .mobile-badges {
+        display: block;
+    }
+}
