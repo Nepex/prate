@@ -1,8 +1,10 @@
+import { PrivacyPolicyModalComponent } from './../resources/privacy-policy/privacy-policy-modal.component';
+import { TermsModalComponent } from 'src/app/resources/terms/terms-modal.component';
 import { SessionService } from './../services/session/session.service';
 import { UserService } from '../services/user/user.service';
 import { AlertMessages } from './../shared/alert-messages/alert-messages.component';
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../services/user/user';
@@ -25,7 +27,7 @@ export class SignUpModalComponent implements OnInit {
         passwordConfirm: new FormControl('', [Validators.required])
     });
 
-    constructor(public activeModal: NgbActiveModal, private userService: UserService) { }
+    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
 
     ngOnInit(): void { }
 
@@ -68,5 +70,19 @@ export class SignUpModalComponent implements OnInit {
                 this.messages.push({ message: error, type: 'error' });
             });
         });
+    }
+
+    openTerms() {
+        this.activeModal.close();
+        this.modal.open(TermsModalComponent, { centered: true });
+
+        return false;
+    }
+
+    openPrivacyPolicy() {
+        this.activeModal.close();
+        this.modal.open(PrivacyPolicyModalComponent, { centered: true });
+
+        return false;
     }
 }

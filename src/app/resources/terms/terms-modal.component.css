@@ -1,0 +1,63 @@
+.modal-header {
+    background-color: #00AFF0;
+    border-bottom: 0;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+}
+
+.modal-footer {
+    background-color: #00AFF0;
+    border-top: 0;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+    padding-top: 0;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.modal-body {
+    background-color: #00AFF0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.text-box {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #ffffff;
+}
+
+.close-btn {
+    color: rgba(255, 255, 255, .7);
+    position: absolute;
+    right: 18px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.prt-icon {
+    height: 50%;
+    width: 50%;
+}
+
+a:hover {
+    color: #dddddd;
+    transition: .5s;
+    text-decoration: none;
+}
+
+::ng-deep>>>.modal-content {
+    border: 0;
+    border-radius: 35px;
+}
+
+::ng-deep>>>.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
