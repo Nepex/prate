@@ -16,7 +16,7 @@
                 <ul class="navbar-nav mr-auto nav-items">
                     <li class="header-link" [ngClass]="{ 'active': selectedTab === 'SUMMARY'}"><a href="/summary">Why
                             Prate?</a></li>
-                    <li class="header-link" [ngClass]="{ 'active': selectedTab === 'DOWNLOAD'}"><a href="/download">Download</a></li>
+                    <li class="header-link d-none d-lg-block d-xl-block" [ngClass]="{ 'active': selectedTab === 'DOWNLOAD'}"><a href="/download">Download</a></li>
                     <li class="header-link" [ngClass]="{ 'active': selectedTab === 'DEVELOPERS'}"><a href="/developers">Developers</a></li>
                     <li class="header-link d-block d-lg-none"><a href="#" (click)="openLogin();">Login</a></li>
                 </ul>
