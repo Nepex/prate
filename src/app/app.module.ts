@@ -23,6 +23,7 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SummaryComponent } from './resources/summary/summary.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChangeLogComponent } from './resources/change-log/change-log.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SummaryComponent,
     PageNotFoundComponent,
     TermsModalComponent,
-    PrivacyPolicyModalComponent
+    PrivacyPolicyModalComponent,
+    ChangeLogComponent
   ],
   imports: [
     BrowserModule,
