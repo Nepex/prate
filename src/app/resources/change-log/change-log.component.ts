@@ -6,7 +6,32 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./change-log.component.css']
 })
 export class ChangeLogComponent implements OnInit {
+    updates;
+
     constructor() { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.updates = [
+            {
+                title: 'v0.0.2-alpha',
+                date: 'April 13, 2019',
+                items: [
+                    'Some bug fixes',
+                ]
+            },
+            {
+                title: 'v0.0.1-alpha',
+                date: 'April 12, 2019',
+                items: [
+                    'Footer created',
+                    'Change log page created',
+                    'Terms of Use added',
+                    'Privacy Policy added',
+                    'Developers page created',
+                    'Why Prate? page created',
+                    'Download page created'
+                ]
+            }
+        ]
+    }
 }

@@ -1,3 +1,4 @@
+import { ChangeLogComponent } from './resources/change-log/change-log.component';
 import { DownloadComponent } from './resources/download/download.component';
 import { AuthGuard } from './auth-guard.service';
 import { ChatComponent } from './chat/chat.component';
@@ -15,6 +16,8 @@ export const routes: Routes = [
   { path: 'developers', component: DevelopersComponent },
   { path: 'download', component: DownloadComponent },
   { path: 'summary', component: SummaryComponent },
+  { path: 'changelog', component: ChangeLogComponent },
+
 
   // private
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },

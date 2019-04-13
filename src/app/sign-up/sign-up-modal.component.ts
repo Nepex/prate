@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../services/user/user';
 import { Router } from '@angular/router';
+import { LoginModalComponent } from '../login/login-modal.component';
 
 @Component({
     selector: 'prt-sign-up-modal',
@@ -30,6 +31,10 @@ export class SignUpModalComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
 
     ngOnInit(): void { }
+
+    openLogin() {
+        this.modal.open(LoginModalComponent, { centered: true });
+    }
 
     createUser() {
         this.messages = [];
@@ -59,9 +64,13 @@ export class SignUpModalComponent implements OnInit {
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
             this.signUpForm['submitted'] = false;
-            this.messages.push({ message: 'Account created', type: 'success' });
-
+            this.messages.push({ message: 'Account created! Redirecting...', type: 'success' });
             this.signUpForm.reset();
+
+            setTimeout(() => {
+                this.activeModal.close();
+                this.openLogin();
+            }, 500);
         }, err => {
             this.loadingRequest = null;
             this.signUpForm['submitted'] = false;
