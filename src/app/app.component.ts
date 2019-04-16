@@ -1,7 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Subscription } from 'rxjs';
+import { SessionService } from './services/session/session.service';
 
 @Component({
   selector: 'prt-root',
@@ -23,12 +24,12 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class AppComponent implements OnDestroy {
-  isLoadingRoute = true;
-  destroyElement = false;
+  isLoadingRoute;
   routerSub: Subscription;
 
   constructor(private router: Router) {
     this.routerSub = this.router.events.subscribe((event: any) => {
+      this.isLoadingRoute = true;
       this._navigationInterceptor(event);
     });
   }
@@ -38,21 +39,14 @@ export class AppComponent implements OnDestroy {
   }
 
   private _navigationInterceptor(event: Event): void {
-    this.isLoadingRoute = true;
-    this.destroyElement = false;
-
-    window.onload = () => {
-      this.isLoadingRoute = false;
-
-      setTimeout(() => {
-        this.destroyElement = true;
-      }, 250);
-    };
-    
     // if (event instanceof NavigationStart) {
     //   this.isLoadingRoute = true;
-    // } else if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
-    //   this.isLoadingRoute = false;
-    // }
+    // } else 
+
+    if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
+      setTimeout(() => {
+        this.isLoadingRoute = false;
+      }, 250);
+    }
   }
 }
