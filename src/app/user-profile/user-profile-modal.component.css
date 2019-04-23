@@ -53,6 +53,14 @@
     margin-right: 20px;
 }
 
+.color-input {
+    border-radius: 10px;
+    height: 25px;
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 .submit-btn {
     border-radius: 20px;
     margin: 10px 0 10px 0;

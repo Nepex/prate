@@ -5,4 +5,7 @@ export class User {
     password?: string;
     interests?: string[];
     clientId?: string;
+    font_face?: string;
+    font_color?: string;
+    bubble_color?: string;
 }

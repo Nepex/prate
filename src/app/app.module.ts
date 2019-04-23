@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SummaryComponent } from './resources/summary/summary.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChangeLogComponent } from './resources/change-log/change-log.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ChangeLogComponent } from './resources/change-log/change-log.component'
     ServicesModule,
     MomentModule,
     AngularResizedEventModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ColorPickerModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

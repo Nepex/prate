@@ -29,7 +29,10 @@ export class ChatService {
         const userInfo: User = {
             id: user.id,
             name: user.name,
-            interests: user.interests
+            interests: user.interests,
+            font_face: user.font_face,
+            font_color: user.font_color,
+            bubble_color: user.bubble_color
         };
 
         this.socket.emit('storeUserInfo', userInfo);

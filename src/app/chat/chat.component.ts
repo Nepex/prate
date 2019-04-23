@@ -52,6 +52,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
+            console.log(this.user);
             this.loadingRequest = null;
         });
 
@@ -195,6 +196,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     disconnect(): void {
         this.chatService.disconnect(this.partner);
         this.warningMessage = 'Left the chat';
+        this.chatMessages = [];
         this.partner = null;
 
         this.stopTimerAndGiveExp();
@@ -205,6 +207,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (isDisconnected) {
             this.partnerIsTyping = false;
             this.warningMessage = this.partner.name + ' has left';
+            this.chatMessages = [];
             this.partner = null;
 
             this.stopTimerAndGiveExp();

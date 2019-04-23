@@ -1,3 +1,10 @@
+<style>
+    .sent-bubble::after {
+    }
+
+    .rec-bubble::after {}
+</style>
+
 <div class="matching-mask" *ngIf="matching">
     <div class="matching-animation-container">
         <img src="../../assets/images/prate-matching-animation.gif" /><br />
@@ -37,7 +44,10 @@
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
                     <div class="position-relative" [ngClass]="{ 'text-right': m.type === 'sent' }">
-                        <div [ngClass]="{ 'sent-bubble': m.type === 'sent', 'rec-bubble': m.type === 'received' }">
+                        <div [ngClass]="{ 'sent-bubble': m.type === 'sent', 'rec-bubble': m.type === 'received' }"
+                            [ngStyle]="{'background-color': m.type === 'sent' ? '#' + user.bubble_color : '#' + partner.bubble_color,
+                                    'color': m.type === 'sent' ? '#' + user.font_color : '#' + partner.font_color,
+                                    'font-family': m.type === 'sent' ? user.font_face : partner.font_face}">
                             <div class="float-left message-user">{{ m.sender }}</div>
 
 
@@ -63,7 +73,7 @@
                 {{ warningMessage }}
             </div>
 
-            <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate>
+            <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate autocomplete="off">
                 <div class="align-bottom">
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
                         formControlName="message" (keypress)="listenForUserTyping()">

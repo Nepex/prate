@@ -18,6 +18,9 @@ export class UserProfileModalComponent implements OnInit {
     userRegex = /^[a-zA-Z0-9]*$/;
     profileForm: FormGroup = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
+        font_face: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+        font_color: new FormControl('', [Validators.required, Validators.maxLength(9)]),
+        bubble_color: new FormControl('', [Validators.required, Validators.maxLength(9)]),
         interests: new FormControl('', []),
         oldPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)]),
         newPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)])
@@ -26,7 +29,12 @@ export class UserProfileModalComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal, private userService: UserService) { }
 
     ngOnInit(): void {
+        console.log(this.user);
         this.profileForm.controls.name.setValue(this.user.name);
+        this.profileForm.controls.font_face.setValue(this.user.font_face);
+        this.profileForm.controls.font_color.setValue('#' + this.user.font_color);
+        this.profileForm.controls.bubble_color.setValue('#' + this.user.bubble_color);
+
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
     }
 
@@ -57,8 +65,13 @@ export class UserProfileModalComponent implements OnInit {
         const body: any = {
             id: this.user.id,
             name: this.profileForm.value.name,
+            font_face: this.profileForm.value.font_face,
+            font_color: this.profileForm.value.font_color.substring(1),
+            bubble_color: this.profileForm.value.bubble_color.substring(1),
             interests: this.profileForm.value.interests ? this.profileForm.value.interests : []
         };
+
+        console.log(body);
 
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {
             body.oldPassword = this.profileForm.value.oldPassword;
