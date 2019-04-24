@@ -1,10 +1,11 @@
 import { UserService } from './../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertMessages } from '../shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
 import { User } from '../services/user/user';
+import { MessageDisplayModalComponent } from '../shared/message-display/message-display-modal.component';
 
 @Component({
     selector: 'prt-user-profile-modal',
@@ -26,10 +27,9 @@ export class UserProfileModalComponent implements OnInit {
         newPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)])
     });
 
-    constructor(public activeModal: NgbActiveModal, private userService: UserService) { }
+    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
 
     ngOnInit(): void {
-        console.log(this.user);
         this.profileForm.controls.name.setValue(this.user.name);
         this.profileForm.controls.font_face.setValue(this.user.font_face);
         this.profileForm.controls.font_color.setValue('#' + this.user.font_color);
@@ -71,8 +71,6 @@ export class UserProfileModalComponent implements OnInit {
             interests: this.profileForm.value.interests ? this.profileForm.value.interests : []
         };
 
-        console.log(body);
-
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {
             body.oldPassword = this.profileForm.value.oldPassword;
             body.newPassword = this.profileForm.value.newPassword;
@@ -101,5 +99,12 @@ export class UserProfileModalComponent implements OnInit {
         } else {
             this.profileForm.value.interests.push(val);
         }
+    }
+
+    openEditUserIcon() {
+        this.activeModal.close();
+        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm' });
+
+        modalRef.componentInstance.message = "Coming soon...";
     }
 }

@@ -4,7 +4,12 @@
         <div class="container user-header" *ngIf="user">
             <div class="row">
                 <div class="col-12 my-auto text-center user-icon-container">
-                    <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon">
+                    <div class="user-icon-content" (click)="openEditUserIcon()">
+                        <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon">
+                        <div class="user-icon-edit-btn">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -67,8 +72,7 @@
                 <div class="form-group position-relative">
                     <div class="col-12">
                         <div class="input-group">
-                            <div class="color-input"
-                                [colorPicker]="profileForm.controls['font_color'].value"
+                            <div class="color-input" [colorPicker]="profileForm.controls['font_color'].value"
                                 (colorPickerChange)=" profileForm.controls['font_color'].setValue($event);"
                                 [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
                                 [style.background]="profileForm.controls['font_color'].value"> </div>
@@ -77,19 +81,18 @@
                 </div>
 
                 <div class="text-left">
-                        <h5 class="form-header">Bubble Color</h5>
-                    </div>
-                    <div class="form-group position-relative">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <div class="color-input"
-                                    [colorPicker]="profileForm.controls['bubble_color'].value"
-                                    (colorPickerChange)=" profileForm.controls['bubble_color'].setValue($event);"
-                                    [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
-                                    [style.background]="profileForm.controls['bubble_color'].value"> </div>
-                            </div>
+                    <h5 class="form-header">Bubble Color</h5>
+                </div>
+                <div class="form-group position-relative">
+                    <div class="col-12">
+                        <div class="input-group">
+                            <div class="color-input" [colorPicker]="profileForm.controls['bubble_color'].value"
+                                (colorPickerChange)=" profileForm.controls['bubble_color'].setValue($event);"
+                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
+                                [style.background]="profileForm.controls['bubble_color'].value"> </div>
                         </div>
                     </div>
+                </div>
 
                 <div class="text-left">
                     <h5 class="form-header">Interests</h5>

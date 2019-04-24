@@ -1,6 +1,6 @@
-import { ComingSoonModalComponent } from './../../shared/coming-soon/coming-soon-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
 
 @Component({
     selector: 'prt-download',
@@ -13,6 +13,8 @@ export class DownloadComponent implements OnInit {
     ngOnInit() {}
 
     openComingSoon() {
-        this.modal.open(ComingSoonModalComponent, { centered: true, size: 'sm' });
+        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm' });
+
+        modalRef.componentInstance.message = "Coming soon...";
     }
 }

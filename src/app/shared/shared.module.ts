@@ -1,5 +1,4 @@
 import { FooterComponent } from './footer/footer.component';
-import { ComingSoonModalComponent } from './coming-soon/coming-soon-modal.component';
 import { AlertMessagesComponent } from './alert-messages/alert-messages.component';
 import { FormValidationMsgsComponent } from './form-validation-msgs/form-validation-msgs.component';
 import { HeaderComponent } from './header/header.component';
@@ -8,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserInfoPanelComponent } from './user-info-panel/user-info-panel.component';
 import { OffClickDirective } from './off-click-directive/off-click.directive';
+import { MessageDisplayModalComponent } from './message-display/message-display-modal.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +16,7 @@ import { OffClickDirective } from './off-click-directive/off-click.directive';
         AlertMessagesComponent,
         UserInfoPanelComponent,
         OffClickDirective,
-        ComingSoonModalComponent,
+        MessageDisplayModalComponent,
         FooterComponent
     ],
     imports: [
@@ -29,7 +29,7 @@ import { OffClickDirective } from './off-click-directive/off-click.directive';
         AlertMessagesComponent,
         UserInfoPanelComponent,
         OffClickDirective,
-        ComingSoonModalComponent,
+        MessageDisplayModalComponent,
         FooterComponent
     ],
     providers: [],

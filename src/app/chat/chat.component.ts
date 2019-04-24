@@ -1,6 +1,6 @@
 import { ChatMessage } from './../services/chat/chat-message';
 import { UserService } from './../services/user/user.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { User } from '../services/user/user';
 import { ChatService } from '../services/chat/chat.service';
@@ -37,7 +37,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     inactivityTimer: number = 0;
     chatTimer: number = 0;
 
-    disconnectMessage: string;
     warningMessage: string;
 
     messageForm: FormGroup = new FormGroup({
@@ -48,13 +47,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
-        this.loadingRequest = this.userService.getUser();
-
-        this.loadingRequest.subscribe(res => {
-            this.user = res;
-            console.log(this.user);
-            this.loadingRequest = null;
-        });
+        this.getUser();
 
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
         this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
@@ -74,6 +67,15 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.listenForUserDoneTyping();
     }
 
+    getUser() {
+        this.loadingRequest = this.userService.getUser();
+
+        this.loadingRequest.subscribe(res => {
+            this.user = res;
+            this.loadingRequest = null;
+        });
+    }
+
     /** Unsubscribe from subscriptions on page destroy */
     ngOnDestroy(): void {
         this.partnerFoundSub.unsubscribe();
@@ -88,7 +90,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Commences matching, looks for available partners */
     searchForMatch(): void {
-        this.chatMessages = [];
+        // make sure user settings are updated
+        this.getUser();
+
         this.matching = true;
         this.warningMessage = null;
         this.chatService.intiateMatching(this.user);

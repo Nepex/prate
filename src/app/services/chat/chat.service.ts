@@ -13,6 +13,7 @@ export class ChatService {
     @Output() public messageSent = new EventEmitter();
     @Output() public isPartnerTyping = new EventEmitter();
     @Output() public partnerDisconnected = new EventEmitter();
+    @Output() public userDisconnected = new EventEmitter();
 
     private matchFindRefreshInterval: number;
 
@@ -109,6 +110,7 @@ export class ChatService {
     /** Emits to socket when user is disconnected from chat */
     disconnect(partner: User): void {
         this.socket.emit('disconnected', { receiver: partner.clientId })
+        this.userDisconnected.emit(true);
     }
 
     /** Listens for if partner disconnects */

@@ -1,7 +1,6 @@
 import { PrivacyPolicyModalComponent } from './resources/privacy-policy/privacy-policy-modal.component';
 import { TermsModalComponent } from './resources/terms/terms-modal.component';
 import { PageNotFoundComponent } from './resources/errors/page-not-found.component.ts/page-not-found.component';
-import { ComingSoonModalComponent } from './shared/coming-soon/coming-soon-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DownloadComponent } from './resources/download/download.component';
 import { DevelopersComponent } from './resources/developers/developers.component';
@@ -25,6 +24,7 @@ import { SummaryComponent } from './resources/summary/summary.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChangeLogComponent } from './resources/change-log/change-log.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { MessageDisplayModalComponent } from './shared/message-display/message-display-modal.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     LoginModalComponent,
     SignUpModalComponent,
     UserProfileModalComponent,
-    ComingSoonModalComponent,
+    MessageDisplayModalComponent,
     TermsModalComponent,
     PrivacyPolicyModalComponent
 ]
