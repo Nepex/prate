@@ -13,6 +13,14 @@ export class ChangeLogComponent implements OnInit {
     ngOnInit(): void {
         this.updates = [
             {
+                title: 'v0.0.3-alpha',
+                date: 'April 24, 2019',
+                items: [
+                    'Font color/face changing, Bubble color changing',
+                    'User setting editting updating properly'
+                ]
+            },
+            {
                 title: 'v0.0.2-alpha',
                 date: 'April 13, 2019',
                 items: [
