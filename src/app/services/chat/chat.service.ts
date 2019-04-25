@@ -15,6 +15,8 @@ export class ChatService {
     @Output() public partnerDisconnected = new EventEmitter();
     @Output() public userDisconnected = new EventEmitter();
 
+    user: User;
+
     private matchFindRefreshInterval: number;
 
     constructor() { }
@@ -27,7 +29,7 @@ export class ChatService {
             console.log('Socket error: ' + err);
         });
 
-        const userInfo: User = {
+        this.user = {
             id: user.id,
             name: user.name,
             interests: user.interests,
@@ -36,7 +38,7 @@ export class ChatService {
             bubble_color: user.bubble_color
         };
 
-        this.socket.emit('storeUserInfo', userInfo);
+        this.socket.emit('storeUserInfo', this.user);
 
         this.lookForMatch();
 
@@ -58,7 +60,7 @@ export class ChatService {
 
     /** Emits to socket that user is looking for a match */
     lookForMatch(): void {
-        this.socket.emit('searchForMatch');
+        this.socket.emit('searchForMatch', this.user);
     }
 
     /** Emits to socket to stop looking for a match, clears partner if a match has already been made */

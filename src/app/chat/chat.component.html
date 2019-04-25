@@ -1,15 +1,14 @@
-<style>
-    .sent-bubble::after {
-    }
-
-    .rec-bubble::after {}
-</style>
-
 <div class="matching-mask" *ngIf="matching">
     <div class="matching-animation-container">
         <img src="../../assets/images/prate-matching-animation.gif" /><br />
         <button class="btn cancel-btn" for="cancel-button" (click)="cancelMatching()">CANCEL</button>
     </div>
+</div>
+
+<div class="match-info-dialog" *ngIf="partner" [ngClass]="{'fade-out': chatTimer >= 10}">
+    <span class="match-info-dialog-text">
+        Matched with {{ partner.name }} based on {{ partner.matchedBasedOn | interestFormat }}
+    </span>
 </div>
 
 <div class="container-fluid h-100">

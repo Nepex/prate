@@ -13,6 +13,13 @@ export class ChangeLogComponent implements OnInit {
     ngOnInit(): void {
         this.updates = [
             {
+                title: 'v0.0.4-alpha',
+                date: 'April 25, 2019',
+                items: [
+                    'Interest based matching implemented'
+                ]
+            },
+            {
                 title: 'v0.0.3-alpha',
                 date: 'April 24, 2019',
                 items: [

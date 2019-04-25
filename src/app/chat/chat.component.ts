@@ -47,31 +47,29 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
-        this.getUser();
-
-        this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
-        this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
-        this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
-        this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
-        this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
-
-        // if page is refreshed or browser is closed, disconnect the user
-        window.onbeforeunload = () => {
-            if (this.matching) {
-                this.cancelMatching();
-            } else {
-                this.disconnect();
-            }
-        };
-
-        this.listenForUserDoneTyping();
-    }
-
-    getUser() {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
+            // set user
             this.user = res;
+
+            // set listeners
+            this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
+            this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
+            this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
+            this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
+            this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
+            this.listenForUserDoneTyping();
+
+            // if page is refreshed or browser is closed, disconnect the user
+            window.onbeforeunload = () => {
+                if (this.matching) {
+                    this.cancelMatching();
+                } else {
+                    this.disconnect();
+                }
+            };
+
             this.loadingRequest = null;
         });
     }
@@ -91,17 +89,24 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** Commences matching, looks for available partners */
     searchForMatch(): void {
         // make sure user settings are updated
-        this.getUser();
 
-        this.matching = true;
-        this.warningMessage = null;
-        this.chatService.intiateMatching(this.user);
+        this.loadingRequest = this.userService.getUser();
+
+        this.loadingRequest.subscribe(res => {
+            this.user = res;
+            this.loadingRequest = null;
+
+            this.matching = true;
+            this.warningMessage = null;
+            this.chatService.intiateMatching(this.user);
+        });
     }
 
     /** Sets partner object after a match is sucessfully made */
     setPartner(partner: User): void {
         this.matching = false;
         this.partner = partner;
+        console.log(this.partner)
 
         this.accumulateTime();
     }
@@ -149,7 +154,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.chatMessages.push(msgObj);
     }
 
-    /** If host starts typin */
+    /** If host starts typing */
     listenForUserTyping(): void {
         if (!this.partner || this.userIsTyping) {
             return;
@@ -188,6 +193,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** On cancel button clicked, halt matching */
     cancelMatching(): void {
+        // if a partner has been found, make sure to emit disconnection
         if (this.partner) {
             this.disconnect();
             return;

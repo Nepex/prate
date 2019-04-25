@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserInfoPanelComponent } from './user-info-panel/user-info-panel.component';
 import { OffClickDirective } from './off-click-directive/off-click.directive';
 import { MessageDisplayModalComponent } from './message-display/message-display-modal.component';
+import { InterestFormatPipe } from './interest-format-pipe/interest-format.pipe';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { MessageDisplayModalComponent } from './message-display/message-display-
         UserInfoPanelComponent,
         OffClickDirective,
         MessageDisplayModalComponent,
-        FooterComponent
+        FooterComponent,
+        InterestFormatPipe
     ],
     imports: [
         CommonModule,
@@ -30,7 +32,8 @@ import { MessageDisplayModalComponent } from './message-display/message-display-
         UserInfoPanelComponent,
         OffClickDirective,
         MessageDisplayModalComponent,
-        FooterComponent
+        FooterComponent,
+        InterestFormatPipe
     ],
     providers: [],
 })

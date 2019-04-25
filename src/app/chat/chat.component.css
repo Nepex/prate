@@ -97,6 +97,20 @@
     padding: 10px 20px 20px 20px;
 }
 
+.match-info-dialog {
+    position: absolute;
+    top: 85px;
+    z-index: 901;
+    /* width: 100%; */
+    /* text-align: center; */
+}
+
+.match-info-dialog-text {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 3px 0px 3px 15px;
+}
+
 .user-is-typing {
     position: absolute;
     z-index: 900;
@@ -186,6 +200,11 @@
 
 input:focus {
     outline: none;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: 1s ease;
 }
 
 @media (min-width: 344px) {
