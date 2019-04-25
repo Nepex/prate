@@ -1,12 +1,13 @@
 import { ChatMessage } from './chat-message';
 import { User } from './../user/user';
 import { environment } from './../../../environments/environment';
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable, EventEmitter, Output, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import * as io from 'socket.io-client';
+import { SessionService } from '../session/session.service';
 
 @Injectable()
-export class ChatService {
+export class ChatService implements OnDestroy {
     public socket: io.Socket;
     @Output() public partner = new EventEmitter();
     @Output() public messageReceived = new EventEmitter();
@@ -14,19 +15,20 @@ export class ChatService {
     @Output() public isPartnerTyping = new EventEmitter();
     @Output() public partnerDisconnected = new EventEmitter();
     @Output() public userDisconnected = new EventEmitter();
+    @Output() public matchingError = new EventEmitter();
 
     user: User;
 
     private matchFindRefreshInterval: number;
 
-    constructor() { }
+    constructor(private sessionService: SessionService) { }
 
     /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
     intiateMatching(user: User): void {
         this.socket = io.connect(environment.apiBaseUrl);
 
-        this.socket.on('error', err => {
-            console.log('Socket error: ' + err);
+        this.socket.on('matchError', err => {
+            this.matchingError.emit(err);
         });
 
         this.user = {
@@ -35,10 +37,12 @@ export class ChatService {
             interests: user.interests,
             font_face: user.font_face,
             font_color: user.font_color,
-            bubble_color: user.bubble_color
+            bubble_color: user.bubble_color,
+            webSocketAuth: '3346841372',
+            token: this.sessionService.getToken()
         };
 
-        this.socket.emit('storeUserInfo', this.user);
+        this.socket.emit('authAndStoreUserInfo', this.user);
 
         this.lookForMatch();
 
@@ -56,6 +60,11 @@ export class ChatService {
                 this.listenForPartnerDisconnect();
             }
         });
+    }
+
+    /** Stop match timer on destroy */
+    ngOnDestroy() {
+        clearTimeout(this.matchFindRefreshInterval);
     }
 
     /** Emits to socket that user is looking for a match */
@@ -111,7 +120,7 @@ export class ChatService {
 
     /** Emits to socket when user is disconnected from chat */
     disconnect(partner: User): void {
-        this.socket.emit('disconnected', { receiver: partner.clientId })
+        this.socket.emit('disconnected', { receiver: partner.clientId });
         this.userDisconnected.emit(true);
     }
 
@@ -120,6 +129,25 @@ export class ChatService {
         this.socket.on('partnerDisconnected', data => {
             this.partnerDisconnected.emit(true);
         });
+    }
+
+    /** Disconnects a user from socket */
+    killSocketConnection() {
+        this.socket.emit('killSocketConnection', null);
+    }
+
+    /** Awards exp */
+    awardExp(currentExp, secsSpentChatting) {
+        // assume users are disconnected at this point, so start a new brief connection to award exp
+        this.socket = io.connect(environment.apiBaseUrl);
+
+        const body = {
+            exp: currentExp + secsSpentChatting,
+            webSocketAuth: '3346841372',
+            token: this.sessionService.getToken()
+        };
+
+        this.socket.emit('awardExp', body);
     }
 }
 

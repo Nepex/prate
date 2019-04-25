@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     userDoneTypingSub: Subscription;
     isPartnerTypingSub: Subscription;
     partnerDisconnectSub: Subscription;
+    matchingErrorSub: Subscription;
 
     matching: boolean = false;
     autoScroll: boolean = true;
@@ -59,6 +60,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
             this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
             this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
+            this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
             this.listenForUserDoneTyping();
 
             // if page is refreshed or browser is closed, disconnect the user
@@ -106,7 +108,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     setPartner(partner: User): void {
         this.matching = false;
         this.partner = partner;
-        console.log(this.partner)
 
         this.accumulateTime();
     }
@@ -215,6 +216,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** If partner is disconnected, unmatch user */
     partnerDisconnect(isDisconnected: boolean): void {
         if (isDisconnected) {
+            this.chatService.killSocketConnection();
             this.partnerIsTyping = false;
             this.warningMessage = this.partner.name + ' has left';
             this.chatMessages = [];
@@ -228,10 +230,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     stopTimerAndGiveExp() {
         clearTimeout(this.chatTimerInterval);
 
-        // award EXP here
+        this.chatService.awardExp(this.user.experience, this.chatTimer);
 
         this.chatTimer = 0;
         this.inactivityTimer = 0;
+    }
+
+    /** If user is already matched/matching or auth failure */
+    matchError(err) {
+        this.matching = false;
+        this.warningMessage = err;
     }
 
     /** If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling. */
