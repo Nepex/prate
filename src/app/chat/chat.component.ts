@@ -9,6 +9,7 @@ import { ChatService } from '../services/chat/chat.service';
 import { map, debounceTime, throttleTime } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IsTyping } from '../services/chat/is-typing';
+import { LevelService } from '../services/level/level.service';
 
 @Component({
     selector: 'prt-chat',
@@ -44,7 +45,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         message: new FormControl('', [Validators.maxLength(300), Validators.minLength(1), Validators.required]),
     });
 
-    constructor(private userService: UserService, private chatService: ChatService) { }
+    constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService) { }
 
     /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
@@ -206,7 +207,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** If user leaves the chat or is disconnected - unmatch both user and partner */
     disconnect(): void {
         this.chatService.disconnect(this.partner);
-        this.warningMessage = 'Left the chat';
+        this.warningMessage = 'Left the chat.';
         this.chatMessages = [];
         this.partner = null;
 
@@ -218,7 +219,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (isDisconnected) {
             this.chatService.killSocketConnection();
             this.partnerIsTyping = false;
-            this.warningMessage = this.partner.name + ' has left';
+            this.warningMessage = this.partner.name + ' has left.';
             this.chatMessages = [];
             this.partner = null;
 
@@ -231,7 +232,16 @@ export class ChatComponent implements OnInit, OnDestroy {
         clearTimeout(this.chatTimerInterval);
 
         this.chatService.awardExp(this.user.experience, this.chatTimer);
+        this.warningMessage = this.warningMessage + ' You have been awarded ' + this.chatTimer + ' experience!'
 
+        const expNeeded = this.levelService.getExpNeeded(this.user.experience);
+        let levelUp = this.levelService.checkIfLevelUp(this.user.experience + this.chatTimer, expNeeded);
+
+        if (levelUp) {
+            this.warningMessage = this.warningMessage + ' Level up!';
+        }
+
+        this.user.experience = this.user.experience + this.chatTimer;
         this.chatTimer = 0;
         this.inactivityTimer = 0;
     }

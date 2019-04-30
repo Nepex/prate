@@ -18,14 +18,14 @@
                         <span class="username no-pad-margin">{{ user.name }}</span>
                     </div>
                     <div class="no-pad-margin" style="line-height: 15px;">
-                        <span class="user-level no-pad-margin">Rookie - Level {{ user.level }}</span>
+                        <span class="user-level no-pad-margin">{{ rank }} - Level {{ level }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12 progress-container">
-                    <ngb-progressbar type="success" [value]="user.experience"></ngb-progressbar>
+                    <ngb-progressbar type="success" [value]="user.experience" [max]="expNeeded"></ngb-progressbar>
                 </div>
             </div>
         </div>

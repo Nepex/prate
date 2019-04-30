@@ -6,6 +6,7 @@ import { AlertMessages } from '../shared/alert-messages/alert-messages.component
 import { Observable } from 'rxjs';
 import { User } from '../services/user/user';
 import { MessageDisplayModalComponent } from '../shared/message-display/message-display-modal.component';
+import { LevelService } from '../services/level/level.service';
 
 @Component({
     selector: 'prt-user-profile-modal',
@@ -16,6 +17,11 @@ export class UserProfileModalComponent implements OnInit {
     @Input() user: User;
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
+
+    expNeeded: number;
+    level: number;
+    rank: string;
+
     userRegex = /^[a-zA-Z0-9]*$/;
     profileForm: FormGroup = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
@@ -27,7 +33,8 @@ export class UserProfileModalComponent implements OnInit {
         newPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)])
     });
 
-    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
+    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal,
+        private levelService: LevelService) { }
 
     ngOnInit(): void {
         this.profileForm.controls.name.setValue(this.user.name);
@@ -36,6 +43,10 @@ export class UserProfileModalComponent implements OnInit {
         this.profileForm.controls.bubble_color.setValue('#' + this.user.bubble_color);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
+
+        this.expNeeded = this.levelService.getExpNeeded(this.user.experience);
+        this.level = this.levelService.getLevel(this.user.experience);
+        this.rank = this.levelService.getRank(this.user.experience);
     }
 
     applyChanges() {

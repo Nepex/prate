@@ -10,19 +10,23 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { ParamSerializer } from './generic/param-serializer';
 import { UserService } from './user/user.service';
 import { SessionService } from './session/session.service';
+import { LevelService } from './level/level.service';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+    ],
     imports: [
         CommonModule,
         HttpClientModule,
         NgxWebstorageModule.forRoot()
     ],
-    exports: [],
+    exports: [
+    ],
     providers: [
         ParamSerializer,
         SessionService,
         ChatService,
+        LevelService,
         UserService,
         {
             provide: HTTP_INTERCEPTORS,

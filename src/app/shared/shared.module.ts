@@ -9,6 +9,7 @@ import { UserInfoPanelComponent } from './user-info-panel/user-info-panel.compon
 import { OffClickDirective } from './off-click-directive/off-click.directive';
 import { MessageDisplayModalComponent } from './message-display/message-display-modal.component';
 import { InterestFormatPipe } from './interest-format-pipe/interest-format.pipe';
+import { ServicesModule } from '../services/services.module';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { InterestFormatPipe } from './interest-format-pipe/interest-format.pipe'
     ],
     imports: [
         CommonModule,
-        NgbModule
+        NgbModule,
+        ServicesModule
     ],
     exports: [
         HeaderComponent,

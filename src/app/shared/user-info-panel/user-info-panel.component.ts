@@ -8,6 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/services/user/user';
 import { ChatService } from 'src/app/services/chat/chat.service';
 import { MessageDisplayModalComponent } from '../message-display/message-display-modal.component';
+import { LevelService } from 'src/app/services/level/level.service';
 
 @Component({
     selector: 'prt-user-info-panel',
@@ -19,19 +20,22 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     loadingRequest: Observable<any>;
     user: User;
     partner: User;
+    expNeeded: number;
+    level: number;
+    rank: string;
 
     partnerFoundSub: Subscription;
     userDisconnectSub: Subscription;
     partnerDisconnectSub: Subscription;
 
-    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService, 
-        private chatService: ChatService) { }
+    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService,
+        private chatService: ChatService, private levelService: LevelService) { }
 
     ngOnInit(): void {
         this.getUser();
-        this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
-        this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.partner = null);
-        this.userDisconnectSub = this.chatService.userDisconnected.subscribe(() => this.partner = null);
+        this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner);
+        this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());
+        this.userDisconnectSub = this.chatService.userDisconnected.subscribe(() => this.updateExpAndClearPartner());
     }
 
     ngOnDestroy() {
@@ -67,8 +71,21 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
+            this.expNeeded = this.levelService.getExpNeeded(this.user.experience);
+            this.level = this.levelService.getLevel(this.user.experience);
+            this.rank = this.levelService.getRank(this.user.experience);
+
             this.loadingRequest = null;
         });
+    }
+
+    updateExpAndClearPartner() {
+        this.partner = null;
+
+        // find a better way to wait for exp reward
+        setTimeout(() => {
+            this.getUser();
+        }, 1000);
     }
 
     logout() {
