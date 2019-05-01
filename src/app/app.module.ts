@@ -25,6 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChangeLogComponent } from './resources/change-log/change-log.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MessageDisplayModalComponent } from './shared/message-display/message-display-modal.component';
+import { UserInfoPanelComponent } from './chat/user-info-panel/user-info-panel.component';
+import { ChangeAvatarModalComponent } from './user-profile/change-avatar/change-avatar-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { MessageDisplayModalComponent } from './shared/message-display/message-d
     PageNotFoundComponent,
     TermsModalComponent,
     PrivacyPolicyModalComponent,
-    ChangeLogComponent
+    ChangeLogComponent,
+    UserInfoPanelComponent,
+    ChangeAvatarModalComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,8 @@ import { MessageDisplayModalComponent } from './shared/message-display/message-d
     UserProfileModalComponent,
     MessageDisplayModalComponent,
     TermsModalComponent,
-    PrivacyPolicyModalComponent
+    PrivacyPolicyModalComponent,
+    ChangeAvatarModalComponent
 ]
 })
 export class AppModule { }

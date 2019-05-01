@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { User } from '../services/user/user';
 import { MessageDisplayModalComponent } from '../shared/message-display/message-display-modal.component';
 import { LevelService } from '../services/level/level.service';
+import { ChangeAvatarModalComponent } from './change-avatar/change-avatar-modal.component';
 
 @Component({
     selector: 'prt-user-profile-modal',
@@ -112,10 +113,8 @@ export class UserProfileModalComponent implements OnInit {
         }
     }
 
-    openEditUserIcon() {
+    openEditAvatar() {
         this.activeModal.close();
-        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm' });
-
-        modalRef.componentInstance.message = "Coming soon...";
+        this.modal.open(ChangeAvatarModalComponent, { centered: true, size: 'sm' });
     }
 }

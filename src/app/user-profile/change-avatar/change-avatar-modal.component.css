@@ -1,0 +1,76 @@
+.modal-header {
+    background-color: rgb(33, 37, 43);
+    border-bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.avatar-header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.close-btn {
+    color: #00AFF0;
+    position: absolute;
+    right: 13px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.modal-body {
+    background-color: rgb(249, 253, 255);
+    ;
+    padding-top: 20px;
+    padding-bottom: 0;
+}
+
+.modal-footer {
+    background-color: rgb(249, 253, 255);
+    border-top: 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding-top: 0;
+    padding-bottom: 0;
+    justify-content: center;
+}
+
+.form-header {
+    padding-left: 37px;
+    font-weight: 600;
+}
+
+.text-input {
+    border-radius: 10px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #666666;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.submit-btn {
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+    padding: 10px 50px 10px 50px;
+    font-weight: 600;
+    font-size: 18px;
+    border: 0;
+}
+
+::ng-deep>>>.modal-content {
+    border: 0;
+    border-radius: 35px;
+}
+
+::ng-deep>>>.modal {
+    text-align: center;
+    padding: 0!important;
+}
+

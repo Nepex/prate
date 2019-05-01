@@ -1,0 +1,28 @@
+<form (ngSubmit)="applyChanges()" [formGroup]="profileForm" novalidate>
+
+    <div class="modal-header no-pad-margin">
+        <div class="container avatar-header">
+            <div class="row">
+                <div class="col-12 my-auto text-center">
+                    Change Avatar
+                </div>
+            </div>
+        </div>
+
+        <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+    </div>
+
+    <div class="container modal-body">
+        <div class="row">
+            <div class="col-12 text-center">
+                <prt-alert-messages [messages]="messages"></prt-alert-messages>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer text-center no-pad-margin">
+        <div class="form-group text-center">
+            <input type="submit" value="APPLY" class="btn submit-btn cursor-pointer" />
+        </div>
+    </div>
+</form>

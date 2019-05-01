@@ -68,8 +68,8 @@
                 <span *ngIf="partner">{{ partner.name }} is typing...</span>
             </div>
 
-            <div class="user-warning-msg" [hidden]="!warningMessage">
-                {{ warningMessage }}
+            <div class="user-warning-msg" [hidden]="!statusMessage">
+                {{ statusMessage }}
             </div>
 
             <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate autocomplete="off">

@@ -60,9 +60,9 @@ export class LevelService {
     checkIfLevelUp(experience, experienceNeeded) {
         if (experience > experienceNeeded) {
             return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 }
 

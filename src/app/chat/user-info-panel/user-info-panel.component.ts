@@ -1,4 +1,4 @@
-import { UserService } from './../../services/user/user.service';
+import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SessionService } from 'src/app/services/session/session.service';
 import { Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/services/user/user';
 import { ChatService } from 'src/app/services/chat/chat.service';
-import { MessageDisplayModalComponent } from '../message-display/message-display-modal.component';
+import { MessageDisplayModalComponent } from '../../shared/message-display/message-display-modal.component';
 import { LevelService } from 'src/app/services/level/level.service';
 
 @Component({
@@ -33,7 +33,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getUser();
-        this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner);
+        this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
         this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());
         this.userDisconnectSub = this.chatService.userDisconnected.subscribe(() => this.updateExpAndClearPartner());
     }
