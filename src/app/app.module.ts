@@ -4,7 +4,7 @@ import { PageNotFoundComponent } from './resources/errors/page-not-found.compone
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DownloadComponent } from './resources/download/download.component';
 import { DevelopersComponent } from './resources/developers/developers.component';
-import { UserProfileModalComponent } from './user-profile/user-profile-modal.component';
+import { UserProfileModalComponent } from './chat/user-profile/user-profile-modal.component';
 import { AuthGuard } from './auth-guard.service';
 import { ServicesModule } from './services/services.module';
 import { ChatComponent } from './chat/chat.component';
@@ -26,7 +26,7 @@ import { ChangeLogComponent } from './resources/change-log/change-log.component'
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MessageDisplayModalComponent } from './shared/message-display/message-display-modal.component';
 import { UserInfoPanelComponent } from './chat/user-info-panel/user-info-panel.component';
-import { ChangeAvatarModalComponent } from './user-profile/change-avatar/change-avatar-modal.component';
+import { ChangeAvatarModalComponent } from './chat/change-avatar/change-avatar-modal.component';
 
 @NgModule({
   declarations: [

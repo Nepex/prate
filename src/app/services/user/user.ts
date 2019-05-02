@@ -8,6 +8,7 @@ export class User {
     font_face?: string;
     font_color?: string;
     bubble_color?: string;
+    avatar?: string;
     webSocketAuth?: string;
     token?: string;
     experience?: number;

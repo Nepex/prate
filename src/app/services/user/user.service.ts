@@ -1,6 +1,6 @@
 import { SessionService } from './../session/session.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 
 import { tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { User } from './user';
 
 @Injectable()
 export class UserService {
+    @Output() public avatarChanged = new EventEmitter();
     private apiUrl = `${environment.apiBaseUrl}/users`;
 
     constructor(private http: HttpClient, private sessionService: SessionService) {
@@ -32,6 +33,24 @@ export class UserService {
         const url = `${this.apiUrl}/${user.id}`;
 
         const req = this.http.put<User>(url, user, {
+            headers: headers
+        }).pipe(map(res => res));
+
+        return req;
+    }
+
+    updateUserAvatar(user): Observable<User> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `${this.sessionService.getToken()}`);
+
+        const url = `${this.apiUrl}/avatar/${user.id}`;
+
+        const body = {
+            avatar: user.avatar
+        };
+
+        const req = this.http.put<User>(url, body, {
             headers: headers
         }).pipe(map(res => res));
 

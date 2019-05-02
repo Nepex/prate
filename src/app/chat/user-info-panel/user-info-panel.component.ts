@@ -2,7 +2,7 @@ import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SessionService } from 'src/app/services/session/session.service';
 import { Router } from '@angular/router';
-import { UserProfileModalComponent } from 'src/app/user-profile/user-profile-modal.component';
+import { UserProfileModalComponent } from 'src/app/chat/user-profile/user-profile-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/services/user/user';
@@ -27,6 +27,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     partnerFoundSub: Subscription;
     userDisconnectSub: Subscription;
     partnerDisconnectSub: Subscription;
+    avatarChangedSub: Subscription;
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService,
         private chatService: ChatService, private levelService: LevelService) { }
@@ -36,12 +37,14 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
         this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());
         this.userDisconnectSub = this.chatService.userDisconnected.subscribe(() => this.updateExpAndClearPartner());
+        this.avatarChangedSub = this.userService.avatarChanged.subscribe(() => this.getUser());
     }
 
     ngOnDestroy() {
         this.partnerFoundSub.unsubscribe();
         this.partnerDisconnectSub.unsubscribe();
         this.userDisconnectSub.unsubscribe();
+        this.avatarChangedSub.unsubscribe();
     }
 
     openProfile() {
@@ -71,6 +74,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
+            
             this.expNeeded = this.levelService.getExpNeeded(this.user.experience);
             this.level = this.levelService.getLevel(this.user.experience);
             this.rank = this.levelService.getRank(this.user.experience);

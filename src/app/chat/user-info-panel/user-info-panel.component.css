@@ -1,6 +1,7 @@
 .user-icon {
     height: 55px;
     width: 60px;
+    border-radius: 50%;
     /* position: relative;
     top: -10px; */
 }

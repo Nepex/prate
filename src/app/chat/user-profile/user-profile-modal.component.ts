@@ -1,13 +1,13 @@
-import { UserService } from './../services/user/user.service';
+import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertMessages } from '../shared/alert-messages/alert-messages.component';
+import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
-import { User } from '../services/user/user';
-import { MessageDisplayModalComponent } from '../shared/message-display/message-display-modal.component';
-import { LevelService } from '../services/level/level.service';
-import { ChangeAvatarModalComponent } from './change-avatar/change-avatar-modal.component';
+import { User } from '../../services/user/user';
+import { MessageDisplayModalComponent } from '../../shared/message-display/message-display-modal.component';
+import { LevelService } from '../../services/level/level.service';
+import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
 
 @Component({
     selector: 'prt-user-profile-modal',
@@ -115,6 +115,8 @@ export class UserProfileModalComponent implements OnInit {
 
     openEditAvatar() {
         this.activeModal.close();
-        this.modal.open(ChangeAvatarModalComponent, { centered: true, size: 'sm' });
+        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, size: 'sm' });
+
+        modalRef.componentInstance.user = this.user;
     }
 }

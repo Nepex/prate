@@ -1,6 +1,6 @@
 <div class="row browser-container">
-    <div class="col-3 my-auto user-icon-container">
-        <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right"
+    <div class="col-3 my-auto user-icon-container" *ngIf="user">
+        <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right"
             style="padding-bottom: 3px;">
     </div>
     <div class="col-9" *ngIf="user">
@@ -32,8 +32,8 @@
     </div>
 </div>
 <div class="row mobile-container">
-    <div class="col-12 my-auto user-icon-container">
-        <img src="https://www.musictalentindia.com/upload/default.png" class="user-icon float-right cursor-pointer"
+    <div class="col-12 my-auto user-icon-container" *ngIf="user">
+        <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right cursor-pointer"
             style="margin-right: 5px;" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" (offClick)="isCollapsed ? isCollapsed : isCollapsed = !isCollapsed" />
 
