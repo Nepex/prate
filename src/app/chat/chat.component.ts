@@ -256,7 +256,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         const expNeeded = this.levelService.getExpNeeded(this.user.experience);
         let levelUp = this.levelService.checkIfLevelUp(this.user.experience + this.chatTimer, expNeeded);
 
-        this.expMessage = 'You have been awarded ' + this.chatTimer + ' experience!'
+        this.expMessage = this.chatTimer + ' exp!';
 
         if (levelUp) {
             this.expMessage = this.expMessage + ' Level up!';
