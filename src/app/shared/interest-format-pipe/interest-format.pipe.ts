@@ -10,31 +10,31 @@ export class InterestFormatPipe implements PipeTransform {
 
         switch (item) {
             case 'movies/tv':
-                result = 'Movies/TV. What have you guys been watching on Netflix?'
+                result = 'Movies/TV'
                 break;
             case 'music':
-                result = 'Music. Rock out Prater!'
+                result = 'Music'
                 break;
             case 'gaming':
-                result = 'Gaming. PC > Console, right?'
+                result = 'Gaming'
                 break;
             case 'books':
-                result = 'Books. What yall been reading son?'
+                result = 'Books'
                 break;
             case 'education':
-                result = 'Education. Nerd it up.'
+                result = 'Education'
                 break;
             case 'sports':
-                result = 'Sports. Manly men stuff. Go throw a ball for all I care.'
+                result = 'Sports'
                 break;
             case 'life':
-                result = 'Life. It just got deep.'
+                result = 'Life'
                 break;
             case 'dating':
-                result = 'Dating ;).'
+                result = 'Dating ;)'
                 break;
             default:
-                result = 'no common interests. Just chat about anything!'
+                result = 'No common interests'
         }
 
         return result;

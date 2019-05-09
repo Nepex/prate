@@ -1,15 +1,51 @@
 <div class="matching-mask" *ngIf="matching">
     <div class="matching-animation-container">
-        <img src="../../assets/images/prate-matching-animation.gif" /><br />
-        <button class="btn cancel-btn" for="cancel-button" (click)="cancelMatching()">CANCEL</button>
+        <img src="../../assets/images/prate-matching-animation.gif" />
+        <br />
+        <button class="btn matching-btn" for="matching-button" (click)="cancelMatching()">CANCEL</button>
     </div>
 </div>
 
-<div class="match-info-dialog" *ngIf="partner" [ngClass]="{'fade-out': chatTimer >= 10}">
-    <span class="match-info-dialog-text">
-        Matched with {{ partner.name }} based on {{ partner.matchedBasedOn | interestFormat }}
-    </span>
+<div class="matching-mask" *ngIf="matchFoundAnimation">
+    <div class="matching-animation-container">
+        <img src="../../assets/images/prate-matched-animation.gif" />
+    </div>
 </div>
+
+<div class="matching-mask" *ngIf="matchedWithOverlay">
+    <div class="matching-animation-container">
+        <img src="../../assets/images/prate-matchedwith-background.png" />
+
+        <div class="matched-info-dialog-text text-center">
+            <img src="../../assets/images/prate-match-info-animation.gif" />
+            <br />
+            Matched with <br /><strong style="color: #00AFF0;">{{ partner.name }}</strong><br /><br />
+            Based on:<br /> {{ partner.matchedBasedOn | interestFormat }}
+        </div>
+
+        <button class="btn matching-btn" for="matching-button" (click)="approveMatch()">SAY HI!</button>
+    </div>
+</div>
+
+<div class="matching-mask" *ngIf="chatFinishedOverlay">
+    <div class="matching-animation-container">
+        <img src="../../assets/images/prate-matchedwith-background.png" />
+
+        <div class="match-finished-info-dialog-text text-center">
+            <img src="../../assets/images/prate-match-info-animation.gif" />
+            <br />
+            <strong style="color: #00AFF0;">{{ this.partnerLeftName }}</strong><br />
+            {{ this.statusMessage }} <br /><br />
+            {{ this.expMessage }}
+        </div>
+
+        <button class="btn matching-btn" for="matching-button" (click)="approveChatFinished()">OK</button>
+    </div>
+</div>
+
+<!-- <div class="match-info-dialog" *ngIf="partner" [ngClass]="{'fade-out': chatTimer >= 10}">
+
+</div> -->
 
 <div class="container-fluid h-100">
 

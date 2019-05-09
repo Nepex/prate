@@ -34,12 +34,17 @@ export class ChatComponent implements OnInit, OnDestroy {
     autoScroll: boolean = true;
     userIsTyping: boolean = false;
     partnerIsTyping: boolean = false;
+    matchFoundAnimation: boolean = false;
+    matchedWithOverlay: boolean = false;
+    chatFinishedOverlay: boolean = false;
+    partnerLeftName: string;
 
     chatTimerInterval: number;
     inactivityTimer: number = 0;
     chatTimer: number = 0;
 
     statusMessage: string;
+    expMessage: string;
 
     messageForm: FormGroup = new FormGroup({
         message: new FormControl('', [Validators.maxLength(300), Validators.minLength(1), Validators.required]),
@@ -109,8 +114,22 @@ export class ChatComponent implements OnInit, OnDestroy {
     setPartner(partner: User): void {
         this.matching = false;
         this.partner = partner;
+        this.matchFoundAnimation = true;
+
+        setTimeout(() => {
+            this.matchFoundAnimation = false;
+            this.matchedWithOverlay = true;
+        }, 1100);
 
         this.accumulateTime();
+    }
+
+    approveMatch() {
+        this.matchedWithOverlay = false;
+    }
+
+    approveChatFinished() {
+        this.chatFinishedOverlay = false;
     }
 
     /** Accumulates chat time and kicks user if inactive for 10 minutes */
@@ -207,10 +226,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** If user leaves the chat or is disconnected - unmatch both user and partner */
     disconnect(): void {
         this.chatService.disconnect(this.partner);
-        this.statusMessage = 'Left the chat.';
+        this.statusMessage = 'You left the chat';
         this.chatMessages = [];
         this.partner = null;
 
+        this.chatFinishedOverlay = true;
         this.stopTimerAndGiveExp();
     }
 
@@ -219,10 +239,13 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (isDisconnected) {
             this.chatService.killSocketConnection();
             this.partnerIsTyping = false;
-            this.statusMessage = this.partner.name + ' has left.';
+            this.partnerLeftName = this.partner.name;
+            this.statusMessage = 'has left the chat';
             this.chatMessages = [];
             this.partner = null;
 
+            this.matchedWithOverlay = false;
+            this.chatFinishedOverlay = true;
             this.stopTimerAndGiveExp();
         }
     }
@@ -233,10 +256,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         const expNeeded = this.levelService.getExpNeeded(this.user.experience);
         let levelUp = this.levelService.checkIfLevelUp(this.user.experience + this.chatTimer, expNeeded);
 
-        this.statusMessage = this.statusMessage + ' You have been awarded ' + this.chatTimer + ' experience!'
+        this.expMessage = 'You have been awarded ' + this.chatTimer + ' experience!'
 
         if (levelUp) {
-            this.statusMessage = this.statusMessage + ' Level up!';
+            this.expMessage = this.expMessage + ' Level up!';
         }
 
         this.chatService.awardExp(this.user.experience, this.chatTimer);

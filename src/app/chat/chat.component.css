@@ -45,7 +45,7 @@
     position: relative;
 }
 
-.cancel-btn {
+.matching-btn {
     height: 25px;
     padding: 0px 5px 0px 5px;
     position: absolute;
@@ -97,19 +97,32 @@
     padding: 10px 20px 20px 20px;
 }
 
-.match-info-dialog {
+.matched-info-dialog-text {
+    /* height: 25px; */
+    padding: 0px 5px 0px 5px;
     position: absolute;
-    top: 85px;
-    z-index: 901;
-    /* width: 100%; */
-    /* text-align: center; */
-    padding-left: 15px;
-    padding-top: 3px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    color: #ffffff;
+    z-index: 902;
+    width: 190px;
+    bottom: 60px;
+    font-size: 17px;
 }
 
-.match-info-dialog-text {
-    border-radius: 10px;
-    font-weight: 600;
+.match-finished-info-dialog-text {
+    /* height: 25px; */
+    padding: 0px 5px 0px 5px;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    color: #ffffff;
+    z-index: 902;
+    width: 190px;
+    bottom: 60px;
+    font-size: 17px;
 }
 
 .user-is-typing {
