@@ -43,6 +43,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     inactivityTimer: number = 0;
     chatTimer: number = 0;
 
+    leaveMessage: string;
     statusMessage: string;
     expMessage: string;
 
@@ -226,7 +227,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** If user leaves the chat or is disconnected - unmatch both user and partner */
     disconnect(): void {
         this.chatService.disconnect(this.partner);
-        this.statusMessage = 'You left the chat';
+        this.leaveMessage = 'You left the chat';
         this.chatMessages = [];
         this.partner = null;
 
@@ -240,7 +241,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.chatService.killSocketConnection();
             this.partnerIsTyping = false;
             this.partnerLeftName = this.partner.name;
-            this.statusMessage = 'has left the chat';
+            this.leaveMessage = 'has left the chat';
             this.chatMessages = [];
             this.partner = null;
 
