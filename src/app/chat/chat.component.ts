@@ -102,6 +102,19 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
+            // mysql compliance :/
+            const interests = [];
+
+            if (res.interests !== '') {
+                const interestsParts = res.interests.split(',');
+
+                for (let i = 0; i < interestsParts.length; i++) {
+                    interests.push(interestsParts[i]);
+                }
+            }
+
+            res.interests = interests;
+
             this.user = res;
             this.loadingRequest = null;
 
@@ -263,7 +276,11 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.expMessage = this.expMessage + ' Level up!';
         }
 
-        this.chatService.awardExp(this.user.experience, this.chatTimer);
+        this.loadingRequest = this.userService.awardExp(this.user, this.chatTimer);
+        this.loadingRequest.subscribe(res => {
+            this.loadingRequest = null;
+        });
+
         this.user.experience = this.user.experience + this.chatTimer;
         this.chatTimer = 0;
         this.inactivityTimer = 0;

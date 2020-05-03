@@ -39,6 +39,27 @@ export class UserService {
         return req;
     }
 
+    /** Awards exp */
+    awardExp(user, secsSpentChatting) {
+        user.experience = user.experience + secsSpentChatting;
+
+        delete user.email;
+        delete user.level;
+        delete user.avatar;
+
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `${this.sessionService.getToken()}`);
+
+        const url = `${this.apiUrl}/${user.id}`;
+
+        const req = this.http.put<User>(url, user, {
+            headers: headers
+        }).pipe(map(res => res));
+
+        return req;
+    }
+
     updateUserAvatar(user): Observable<User> {
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');

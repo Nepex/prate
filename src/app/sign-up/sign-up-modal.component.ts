@@ -10,6 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../services/user/user';
 import { Router } from '@angular/router';
 import { LoginModalComponent } from '../login/login-modal.component';
+import { SubmittableFormGroup } from '../shared/submittable-form-group/submittable-form-group';
 
 @Component({
     selector: 'prt-sign-up-modal',
@@ -21,7 +22,7 @@ export class SignUpModalComponent implements OnInit {
     loadingRequest: Observable<any>;
     userRegex = /^[a-zA-Z0-9]*$/;
     emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
-    signUpForm: FormGroup = new FormGroup({
+    signUpForm: SubmittableFormGroup = new SubmittableFormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
         password: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(5)]),

@@ -8,6 +8,7 @@ import { User } from '../../services/user/user';
 import { MessageDisplayModalComponent } from '../../shared/message-display/message-display-modal.component';
 import { LevelService } from '../../services/level/level.service';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
+import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
 
 @Component({
     selector: 'prt-user-profile-modal',
@@ -24,7 +25,7 @@ export class UserProfileModalComponent implements OnInit {
     rank: string;
 
     userRegex = /^[a-zA-Z0-9]*$/;
-    profileForm: FormGroup = new FormGroup({
+    profileForm: SubmittableFormGroup = new SubmittableFormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
         font_face: new FormControl('', [Validators.required, Validators.maxLength(25)]),
         font_color: new FormControl('', [Validators.required, Validators.maxLength(9)]),
@@ -80,7 +81,8 @@ export class UserProfileModalComponent implements OnInit {
             font_face: this.profileForm.value.font_face,
             font_color: this.profileForm.value.font_color.substring(1),
             bubble_color: this.profileForm.value.bubble_color.substring(1),
-            interests: this.profileForm.value.interests ? this.profileForm.value.interests : []
+            interests:  this.profileForm.value.interests ? this.profileForm.value.interests : [],
+            experience: this.user.experience
         };
 
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {

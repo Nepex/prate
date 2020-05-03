@@ -21,11 +21,16 @@ export class ChatService implements OnDestroy {
 
     private matchFindRefreshInterval: number;
 
-    constructor(private sessionService: SessionService) { }
+    constructor(private sessionService: SessionService) {
+        this.socket = io('http://prate.club', {
+            path: '/api/socket.io'
+          });
+     }
 
     /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
     intiateMatching(user: User): void {
-        this.socket = io.connect(environment.apiBaseUrl);
+        // this.socket = io.connect(environment.apiBaseUrl);
+        console.log(this.socket, environment.apiBaseUrl);
 
         this.socket.on('matchError', err => {
             this.matchingError.emit(err);
@@ -41,6 +46,8 @@ export class ChatService implements OnDestroy {
             webSocketAuth: '3346841372',
             token: this.sessionService.getToken()
         };
+
+        console.log(this.user);
 
         this.socket.emit('authAndStoreUserInfo', this.user);
 
@@ -134,20 +141,6 @@ export class ChatService implements OnDestroy {
     /** Disconnects a user from socket */
     killSocketConnection() {
         this.socket.emit('killSocketConnection', null);
-    }
-
-    /** Awards exp */
-    awardExp(currentExp, secsSpentChatting) {
-        // assume users are disconnected at this point, so start a new brief connection to award exp
-        this.socket = io.connect(environment.apiBaseUrl);
-
-        const body = {
-            exp: currentExp + secsSpentChatting,
-            webSocketAuth: '3346841372',
-            token: this.sessionService.getToken()
-        };
-
-        this.socket.emit('awardExp', body);
     }
 }
 

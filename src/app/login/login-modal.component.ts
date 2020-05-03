@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SessionService } from '../services/session/session.service';
 import { Router } from '@angular/router';
+import { SubmittableFormGroup } from '../shared/submittable-form-group/submittable-form-group';
 
 @Component({
     selector: 'prt-login-modal',
@@ -16,7 +17,7 @@ export class LoginModalComponent implements OnInit {
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
     emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
-    loginForm: FormGroup = new FormGroup({
+    loginForm: SubmittableFormGroup = new SubmittableFormGroup({
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
         password: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     });
