@@ -102,19 +102,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
-            // mysql compliance :/
-            const interests = [];
-
-            if (res.interests !== '') {
-                const interestsParts = res.interests.split(',');
-
-                for (let i = 0; i < interestsParts.length; i++) {
-                    interests.push(interestsParts[i]);
-                }
-            }
-
-            res.interests = interests;
-
             this.user = res;
             this.loadingRequest = null;
 
