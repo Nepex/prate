@@ -22,7 +22,7 @@ export class ChatService implements OnDestroy {
     private matchFindRefreshInterval: number;
 
     constructor(private sessionService: SessionService) {
-        this.socket = io('http://prate.club', {
+        this.socket = io('http://138.197.6.166', {
             path: '/api/socket.io'
           });
      }
