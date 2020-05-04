@@ -22,10 +22,14 @@ export class ChatService implements OnDestroy {
     private matchFindRefreshInterval: number;
 
     constructor(private sessionService: SessionService) {
-        this.socket = io('http://138.197.6.166', {
-            path: '/api/socket.io'
-          });
-     }
+        // this.socket = io('http://138.197.6.166', {
+        //     path: '/api/socket.io'
+        // });
+
+        this.socket = io('http://localhost:3000', {
+            path: '/socket.io'
+        });
+    }
 
     /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
     intiateMatching(user: User): void {
