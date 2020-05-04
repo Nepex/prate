@@ -74,7 +74,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
-            
+
             this.expNeeded = this.levelService.getExpNeeded(this.user.experience);
             this.level = this.levelService.getLevel(this.user.experience);
             this.rank = this.levelService.getRank(this.user.experience);
@@ -93,6 +93,9 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     }
 
     logout() {
+        if (this.partner) {
+            this.chatService.disconnect(this.partner);
+        }
         this.sessionService.logout();
         this.router.navigateByUrl('/');
     }
