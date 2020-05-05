@@ -10,6 +10,17 @@
     padding-right: 10px;
 }
 
+.user-badge-desktop {
+    height: 10px;
+    width: 10px;
+    margin-right: 3px;
+    position: relative;
+    top: 1px;
+    /* position: absolute;
+    right: 12px;
+    bottom: 0px; */
+}
+
 .lg-nav-icon {
     margin-right: 8px;
     font-size: 16px;

@@ -20,6 +20,7 @@ export class UserProfileModalComponent implements OnInit {
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
 
+    showBubblePreview: boolean = false;
     expNeeded: number;
     level: number;
     rank: string;
@@ -117,7 +118,7 @@ export class UserProfileModalComponent implements OnInit {
 
     openEditAvatar() {
         this.activeModal.close();
-        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, size: 'sm' });
+        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false });
 
         modalRef.componentInstance.user = this.user;
     }

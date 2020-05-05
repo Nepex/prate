@@ -10,6 +10,7 @@ import { map, debounceTime, throttleTime } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IsTyping } from '../services/chat/is-typing';
 import { LevelService } from '../services/level/level.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'prt-chat',
@@ -51,7 +52,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         message: new FormControl('', [Validators.maxLength(500), Validators.minLength(1), Validators.required]),
     });
 
-    constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService) { }
+    constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService, private router: Router) { }
 
     /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
@@ -281,6 +282,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     matchError(err) {
         this.matching = false;
         this.statusMessage = err;
+    }
+
+    // Go home when logo is clicked
+    goToHome() {
+        this.router.navigateByUrl('/');
     }
 
     /** If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling. */

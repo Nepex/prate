@@ -58,9 +58,14 @@
                     <div class="col-12">
                         <div class="input-group">
                             <select class="form-control text-input" formControlName="font_face">
+                                <option value="Calibri">Calibri</option>
+                                <option value="Comic Sans MS">Comic Sans MS</option>
+                                <option value="Futura">Futura</option>
                                 <option value="Lato">Lato</option>
-                                <option value="Verdana">Verdana</option>
+                                <option value="Open Sans">Open Sans</option>
                                 <option value="Tahoma">Tahoma</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Verdana">Verdana</option>
                             </select>
                         </div>
                     </div>
@@ -74,7 +79,7 @@
                         <div class="input-group">
                             <div class="color-input" [colorPicker]="profileForm.controls['font_color'].value"
                                 (colorPickerChange)=" profileForm.controls['font_color'].setValue($event);"
-                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
+                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'top'"
                                 [style.background]="profileForm.controls['font_color'].value"> </div>
                         </div>
                     </div>
@@ -88,9 +93,31 @@
                         <div class="input-group">
                             <div class="color-input" [colorPicker]="profileForm.controls['bubble_color'].value"
                                 (colorPickerChange)=" profileForm.controls['bubble_color'].setValue($event);"
-                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
+                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'top'"
                                 [style.background]="profileForm.controls['bubble_color'].value"> </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="text-left" style="margin-bottom: 13px;">
+                    <span class="show-preview-link" (click)="showBubblePreview = !showBubblePreview"
+                        *ngIf="!showBubblePreview">Show Preview</span>
+                    <span class="show-preview-link" (click)="showBubblePreview = !showBubblePreview"
+                        *ngIf="showBubblePreview">Hide Preview</span>
+                </div>
+                <div class="position-relative text-right" *ngIf="showBubblePreview">
+                    <div class="sent-bubble" [ngStyle]="{'background-color': profileForm.value.bubble_color,
+                                        'color': profileForm.value.font_color,
+                                        'font-family': profileForm.value.font_face }">
+                        <div class="float-left message-user">{{ profileForm.value.name }}</div>
+
+
+                        <br />
+                        <span>Hey! How's it going? What would you like to chat about?</span>
+                        <br />
+
+                        <div class="float-right message-time">
+                            Sent 5:02 pm</div>
                     </div>
                 </div>
 

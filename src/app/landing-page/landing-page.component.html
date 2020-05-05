@@ -7,7 +7,9 @@
             <div class="heading">Chat with people of similar interests.</div>
             <div class="sub-heading">Prate will match you with the people you want to chat with.</div>
 
-            <button class="btn open-btn" (click)="openSignUp()">Sign Up Now!</button>
+            <button class="btn open-btn" (click)="openSignUp()" *ngIf="!userAuthed">Sign Up Now!</button>
+            <button class="btn open-btn" (click)="goToChat()" *ngIf="userAuthed">Start Chatting!</button>
+
             <br />
             <img class="img-fluid" src="../../assets/images/prt-icon.png" />
 

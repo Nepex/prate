@@ -2,12 +2,15 @@
     <div class="col-3 my-auto user-icon-container" *ngIf="user">
         <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right"
             style="padding-bottom: 3px;">
+
+        <!-- <img src="../../../assets/images/badges/ruby.png" class="user-badge-desktop"> -->
     </div>
     <div class="col-9" *ngIf="user">
         <div class="row">
             <div class="col-12 no-pad-margin">
                 <div class="float-left">
                     <div class="no-pad-margin">
+
                         <span class="username no-pad-margin">{{ user.name }}</span>
                         <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
                     </div>

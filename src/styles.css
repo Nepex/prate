@@ -1,5 +1,18 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,500,700');
+@import url(//db.onlinewebfonts.com/c/fd6e6c30c7d355528ba9428eea942445?family=Futura);
+@import url(//db.onlinewebfonts.com/c/7cc6719bd5f0310be3150ba33418e72e?family=Comic+Sans+MS);
+@import url(//db.onlinewebfonts.com/c/a78cfad3beb089a6ce86d4e280fa270b?family=Calibri);
+@import url(//db.onlinewebfonts.com/c/32441506567156636049eb850b53f02a?family=Times+New+Roman);
+@import url(//db.onlinewebfonts.com/c/cd0381aa3322dff4babd137f03829c8c?family=Tahoma);
+@import url(//db.onlinewebfonts.com/c/562fa31bba08b3f71cb71257ddb880d5?family=Verdana);
+@import url(//db.onlinewebfonts.com/c/629a55a7e793da068dc580d184cc0e31?family=Open+Sans);
+
+@font-face {
+    font-family: 'Futura';
+    src: url('assets/fonts/Futura.ttf')  format('truetype');
+}
+
 html, body {
     height: 100%;
     min-height: 100%;

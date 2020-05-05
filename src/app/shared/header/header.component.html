@@ -1,4 +1,4 @@
-<div class="row no-pad-margin">
+<div class="row no-pad-margin" style="position: relative;">
     <div class="col-12 header-container">
         <a href="/"><img class="d-none d-lg-inline d-xl-inline" src="../../assets/images/prt-logo.png" /></a>
         <a href="/"><img class="d-lg-none d-xl-none menu-logo-sm" src="../../assets/images/prt-icon.png" /></a>
@@ -14,23 +14,30 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
                 <ul class="navbar-nav mr-auto nav-items">
+                    <li class="header-link d-block d-lg-none" *ngIf="userAuthed"><a
+                        href="/chat">Chat</a></li>
                     <li class="header-link" [ngClass]="{ 'active': selectedTab === 'SUMMARY'}"><a href="/summary">Why
                             Prate?</a></li>
-                    <li class="header-link d-none d-lg-block d-xl-block" [ngClass]="{ 'active': selectedTab === 'DOWNLOAD'}"><a href="/download">Download</a></li>
-                    <li class="header-link" [ngClass]="{ 'active': selectedTab === 'DEVELOPERS'}"><a href="/developers">Developers</a></li>
-                    <li class="header-link d-block d-lg-none"><a href="#" (click)="openLogin();">Login</a></li>
+                    <li class="header-link d-none d-lg-block d-xl-block"
+                        [ngClass]="{ 'active': selectedTab === 'DOWNLOAD'}"><a href="/download">Download</a></li>
+                    <li class="header-link" [ngClass]="{ 'active': selectedTab === 'DEVELOPERS'}"><a
+                            href="/developers">Developers</a></li>
+                    <li class="header-link d-block d-lg-none" *ngIf="!userAuthed"><a href="#"
+                            (click)="openLogin();">Login</a></li>
+                    <li class="header-link d-block d-lg-none cursor-pointer" *ngIf="userAuthed"><a
+                            (click)="logout();">Logout</a></li>
                 </ul>
             </div>
         </nav>
 
-        <div class="float-right login-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="openLogin()"
+        <div class="log-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="openLogin()"
             *ngIf="!userAuthed">
             Login
         </div>
 
-        <div class="float-right login-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="redirectToChat()"
+        <div class="log-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="logout()"
             *ngIf="userAuthed">
-            Chat
+            Logout
         </div>
 
     </div>

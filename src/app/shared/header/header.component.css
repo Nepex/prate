@@ -13,13 +13,18 @@ a {
     top: -5px;
 }
 
-.login-link-div {
+.log-link-div {
     border: 5px solid #00AFF0;
     border-radius: 25px;
     margin-top: 8px;
     font-size: 20px;
     font-weight: 600;
     padding: 0px 23px 5px 23px;
+
+    position: absolute;
+    right: 85px;
+    top: 40px;
+    z-index: 2;
 }
 
 nav {
@@ -84,7 +89,7 @@ nav {
     .active > a {
         color: #ffffff;
     }
-    .login-link-div:hover {
+    .log-link-div:hover {
         background-color: #00AFF0;
         color: #ffffff;
     }
