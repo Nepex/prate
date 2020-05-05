@@ -60,7 +60,7 @@
                             <select class="form-control text-input" formControlName="font_face">
                                 <option value="Calibri">Calibri</option>
                                 <option value="Comic Sans MS">Comic Sans MS</option>
-                                <option value="Futura">Futura</option>
+                                <option value="Futura Book">Futura</option>
                                 <option value="Lato">Lato</option>
                                 <option value="Open Sans">Open Sans</option>
                                 <option value="Tahoma">Tahoma</option>
@@ -105,7 +105,7 @@
                     <span class="show-preview-link" (click)="showBubblePreview = !showBubblePreview"
                         *ngIf="showBubblePreview">Hide Preview</span>
                 </div>
-                <div class="position-relative text-right" *ngIf="showBubblePreview">
+                <div class="position-relative text-right preview-bubble-container" *ngIf="showBubblePreview">
                     <div class="sent-bubble" [ngStyle]="{'background-color': profileForm.value.bubble_color,
                                         'color': profileForm.value.font_color,
                                         'font-family': profileForm.value.font_face }">

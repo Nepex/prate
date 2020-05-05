@@ -104,6 +104,10 @@
     text-decoration: underline;
 }
 
+.preview-bubble-container {
+        margin-left: 15px;
+        margin-right: 25px;
+}
 
 .sent-bubble {
     background: #efefef;
