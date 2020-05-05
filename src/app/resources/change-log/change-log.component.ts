@@ -13,6 +13,15 @@ export class ChangeLogComponent implements OnInit {
     ngOnInit(): void {
         this.updates = [
             {
+                title: 'v0.0.8-alpha',
+                date: 'May 5, 2020',
+                items: [
+                    'Home page no longer redirects to chat if logged in',
+                    'Chat bubble preview option added to user profile edit',
+                    'New fonts added'
+                ]
+            },
+            {
                 title: 'v0.0.7-alpha',
                 date: 'May 4, 2020',
                 items: [
