@@ -20,6 +20,6 @@ export class LandingPageComponent implements OnInit {
     }
 
     openSignUp() {
-        this.modal.open(SignUpModalComponent, { centered: true });
+        this.modal.open(SignUpModalComponent, { centered: true, backdrop : 'static', keyboard : false });
     }
 }

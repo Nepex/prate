@@ -49,12 +49,12 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
     openProfile() {
         if (this.partner) {
-            const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true });
+            const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop : 'static', keyboard : false });
             modalRef.componentInstance.message = 'User settings cannot be editted while chatting.';
             return;
         }
 
-        const modalRef = this.modal.open(UserProfileModalComponent, { centered: true });
+        const modalRef = this.modal.open(UserProfileModalComponent, { centered: true, backdrop : 'static', keyboard : false });
         modalRef.componentInstance.user = this.user;
 
         modalRef.result.then(() => {
@@ -64,7 +64,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     }
 
     openFriends() {
-        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm' });
+        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false });
 
         modalRef.componentInstance.message = "Coming soon...";
     }

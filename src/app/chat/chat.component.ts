@@ -48,7 +48,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     expMessage: string;
 
     messageForm: FormGroup = new FormGroup({
-        message: new FormControl('', [Validators.maxLength(300), Validators.minLength(1), Validators.required]),
+        message: new FormControl('', [Validators.maxLength(500), Validators.minLength(1), Validators.required]),
     });
 
     constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService) { }
@@ -168,11 +168,15 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Listens for messages sucessfully sent by user */
     messageSent(msgObj: ChatMessage): void {
+        msgObj.message = this.linkify(msgObj.message);
+
         this.chatMessages.push(msgObj);
     }
 
     /** Listens for messages received from partner */
     messageReceived(msgObj: ChatMessage): void {
+        msgObj.message = this.linkify(msgObj.message);
+
         this.chatMessages.push(msgObj);
     }
 
@@ -297,5 +301,13 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (this.autoScroll) {
             element.scrollTop = element.scrollHeight;
         }
+    }
+
+    /** Checks message for links then turns them into HREFs */
+    linkify(plainTextMessage) {
+        let urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        return plainTextMessage.replace(urlRegex, url => {
+            return '<a href="' + url + '" target="_blank">' + url + '</a>';
+        });
     }
 }

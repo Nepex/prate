@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     }
 
     openLogin() {
-        this.modal.open(LoginModalComponent, { centered: true });
+        this.modal.open(LoginModalComponent, { centered: true, backdrop : 'static', keyboard : false });
 
         return false;
     }

@@ -34,7 +34,7 @@ export class SignUpModalComponent implements OnInit {
     ngOnInit(): void { }
 
     openLogin() {
-        this.modal.open(LoginModalComponent, { centered: true });
+        this.modal.open(LoginModalComponent, { centered: true, backdrop : 'static', keyboard : false });
     }
 
     createUser() {
@@ -84,14 +84,14 @@ export class SignUpModalComponent implements OnInit {
 
     openTerms() {
         this.activeModal.close();
-        this.modal.open(TermsModalComponent, { centered: true });
+        this.modal.open(TermsModalComponent, { centered: true, backdrop : 'static', keyboard : false });
 
         return false;
     }
 
     openPrivacyPolicy() {
         this.activeModal.close();
-        this.modal.open(PrivacyPolicyModalComponent, { centered: true });
+        this.modal.open(PrivacyPolicyModalComponent, { centered: true, backdrop : 'static', keyboard : false });
 
         return false;
     }

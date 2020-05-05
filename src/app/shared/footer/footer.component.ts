@@ -14,13 +14,13 @@ export class FooterComponent implements OnInit {
     ngOnInit(): void { }
 
     openTerms() {
-        this.modal.open(TermsModalComponent, { centered: true });
+        this.modal.open(TermsModalComponent, { centered: true, backdrop : 'static', keyboard : false });
 
         return false;
     }
 
     openPrivacyPolicy() {
-        this.modal.open(PrivacyPolicyModalComponent, { centered: true });
+        this.modal.open(PrivacyPolicyModalComponent, { centered: true, backdrop : 'static', keyboard : false });
 
         return false;
     }
