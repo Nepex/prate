@@ -19,6 +19,7 @@ export class UserProfileModalComponent implements OnInit {
     @Input() user: User;
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
+    showPasswordFields: boolean = false;
 
     showBubblePreview: boolean = false;
     expNeeded: number;
@@ -32,6 +33,8 @@ export class UserProfileModalComponent implements OnInit {
         font_color: new FormControl('', [Validators.required, Validators.maxLength(9)]),
         bubble_color: new FormControl('', [Validators.required, Validators.maxLength(9)]),
         interests: new FormControl('', []),
+        show_avatars: new FormControl('', [Validators.required]),
+        bubble_layout: new FormControl('', [Validators.required, Validators.maxLength(20)]),
         oldPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)]),
         newPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)])
     });
@@ -44,6 +47,8 @@ export class UserProfileModalComponent implements OnInit {
         this.profileForm.controls.font_face.setValue(this.user.font_face);
         this.profileForm.controls.font_color.setValue('#' + this.user.font_color);
         this.profileForm.controls.bubble_color.setValue('#' + this.user.bubble_color);
+        this.profileForm.controls.show_avatars.setValue(this.user.show_avatars);
+        this.profileForm.controls.bubble_layout.setValue(this.user.bubble_layout);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
 
@@ -83,7 +88,9 @@ export class UserProfileModalComponent implements OnInit {
             font_color: this.profileForm.value.font_color.substring(1),
             bubble_color: this.profileForm.value.bubble_color.substring(1),
             interests:  this.profileForm.value.interests ? this.profileForm.value.interests : [],
-            experience: this.user.experience
+            experience: this.user.experience,
+            show_avatars: this.profileForm.value.show_avatars,
+            bubble_layout:  this.profileForm.value.bubble_layout
         };
 
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {

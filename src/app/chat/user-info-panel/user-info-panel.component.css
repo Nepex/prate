@@ -11,14 +11,14 @@
 }
 
 .user-badge-desktop {
-    height: 10px;
-    width: 10px;
-    margin-right: 3px;
+    height: 20px;
+    width: 20px;
+    /* margin-right: 3px;
     position: relative;
-    top: 1px;
-    /* position: absolute;
+    top: 1px; */
+    position: absolute;
     right: 12px;
-    bottom: 0px; */
+    bottom: 0px;
 }
 
 .lg-nav-icon {

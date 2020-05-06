@@ -139,7 +139,16 @@
     bottom: 60px
 }
 
-.rec-bubble {
+.user-icon {
+    height: 55px;
+    width: 60px;
+    border-radius: 50%;
+    position: relative;
+    top: 2px;
+    left: -3px;
+}
+
+.left-bubble {
     background: #efefef;
     -webkit-border-radius: 4px;
     border-radius: 4px;
@@ -155,7 +164,7 @@
     overflow-wrap: break-word;
 }
 
-.sent-bubble {
+.right-bubble {
     background: #efefef;
     -webkit-border-radius: 4px;
     border-radius: 4px;
@@ -172,7 +181,7 @@
     overflow-wrap: break-word;
 }
 
-.rec-bubble::after {
+.left-bubble::after {
     background-color: inherit;
     box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .2);
     content: "\00a0";
@@ -189,7 +198,7 @@
     width: 20px;
 }
 
-.sent-bubble::after {
+.right-bubble::after {
     background-color: inherit;
     box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .3);
     content: "\00a0";

@@ -78,23 +78,30 @@
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
-                    <div class="position-relative" [ngClass]="{ 'text-right': m.type === 'sent' }">
-                        <div [ngClass]="{ 'sent-bubble': m.type === 'sent', 'rec-bubble': m.type === 'received' }"
-                            [ngStyle]="{'background-color': m.type === 'sent' ? '#' + user.bubble_color : '#' + partner.bubble_color,
-                                    'color': m.type === 'sent' ? '#' + user.font_color : '#' + partner.font_color,
-                                    'font-family': m.type === 'sent' ? user.font_face : partner.font_face}">
-                            <div class="float-left message-user">{{ m.sender }}</div>
+                    <div class="position-relative"
+                        [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
+                        <div [ngClass]="{ 'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating', 
+                        'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': m.type === 'sent' ? '#' + user.bubble_color : '#' + partner.bubble_color,
+                                    'color': m.type === 'sent' ? '#' + user.font_color : '#' + partner.font_color }">
+                            <div class="float-left" *ngIf="user.show_avatars">
+                                <img [src]="m.type === 'sent' ? '../../../assets/images/avatars/' + user.avatar : '../../../assets/images/avatars/' + partner.avatar" class="user-icon">
+                            </div>
+                            <div [ngStyle]="{'margin-left': user.show_avatars ? '65px' : '0px' }">
+                                <div class="float-left message-user">{{ m.sender }}</div>
 
+                                <br />
+                                <span [innerHTML]="m.message"
+                                    [ngStyle]="{'font-family': m.type === 'sent' ? user.font_face : partner.font_face }"></span>
+                                <br />
 
-                            <br />
-                            <span [innerHTML]="m.message"></span>
-                            <br />
+                                <div class="float-right message-time">
+                                    <span *ngIf="m.type === 'sent'">Sent</span>
+                                    <span *ngIf="m.type === 'received'">Received</span>
 
-                            <div class="float-right message-time">
-                                <span *ngIf="m.type === 'sent'">Sent</span>
-                                <span *ngIf="m.type === 'received'">Received</span>
+                                    {{ m.datetime }}
+                                </div>
 
-                                {{ m.datetime }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

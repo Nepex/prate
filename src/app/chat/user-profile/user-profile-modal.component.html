@@ -58,14 +58,13 @@
                     <div class="col-12">
                         <div class="input-group">
                             <select class="form-control text-input" formControlName="font_face">
-                                <option value="Calibri">Calibri</option>
-                                <option value="Comic Sans MS">Comic Sans MS</option>
-                                <option value="Futura Book">Futura</option>
+                                <option value="Abril Fatface">Abril Fatface</option>
+                                <option value="Indie Flower">Indie Flower</option>
+                                <option value="Josefin Sans">Josefin Sans</option>
+                                <option value="Jost">Jost</option>
                                 <option value="Lato">Lato</option>
                                 <option value="Open Sans">Open Sans</option>
-                                <option value="Tahoma">Tahoma</option>
-                                <option value="Times New Roman">Times New Roman</option>
-                                <option value="Verdana">Verdana</option>
+                                <option value="Righteous">Righteous</option>
                             </select>
                         </div>
                     </div>
@@ -79,7 +78,7 @@
                         <div class="input-group">
                             <div class="color-input" [colorPicker]="profileForm.controls['font_color'].value"
                                 (colorPickerChange)=" profileForm.controls['font_color'].setValue($event);"
-                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'top'"
+                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'left'"
                                 [style.background]="profileForm.controls['font_color'].value"> </div>
                         </div>
                     </div>
@@ -93,31 +92,47 @@
                         <div class="input-group">
                             <div class="color-input" [colorPicker]="profileForm.controls['bubble_color'].value"
                                 (colorPickerChange)=" profileForm.controls['bubble_color'].setValue($event);"
-                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'top'"
+                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'left'"
                                 [style.background]="profileForm.controls['bubble_color'].value"> </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-left" style="margin-bottom: 13px;">
-                    <span class="show-preview-link" (click)="showBubblePreview = !showBubblePreview"
-                        *ngIf="!showBubblePreview">Show Preview</span>
-                    <span class="show-preview-link" (click)="showBubblePreview = !showBubblePreview"
-                        *ngIf="showBubblePreview">Hide Preview</span>
+                <div class="text-left">
+                    <h5 class="form-header">Layout</h5>
                 </div>
-                <div class="position-relative text-right preview-bubble-container" *ngIf="showBubblePreview">
-                    <div class="sent-bubble" [ngStyle]="{'background-color': profileForm.value.bubble_color,
-                                        'color': profileForm.value.font_color,
-                                        'font-family': profileForm.value.font_face }">
-                        <div class="float-left message-user">{{ profileForm.value.name }}</div>
-
-
-                        <br />
-                        <span>Hey! How's it going? What would you like to chat about?</span>
-                        <br />
-
-                        <div class="float-right message-time">
-                            Sent 5:02 pm</div>
+                <div class="form-group position-relative">
+                    <div class="row">
+                        <div class="col-5 layout-options-container text-left">
+                            Show Avatars
+                        </div>
+                        <div class="col-5 text-left">
+                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
+                                formControlName="show_avatars">
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="true"> Yes
+                                </label>
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="false"> No
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
+                            Bubble Positions
+                        </div>
+                        <div class="col-5 text-left">
+                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
+                                formControlName="bubble_layout" style="padding-top: 5px;">
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="'alternating'"> Alternate
+                                </label>
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="'all_left'"> All Left
+                                </label>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -227,10 +242,46 @@
                         </div>
                     </div>
 
-                    <div class="text-left">
-                        <h5 class="form-header">Change Password</h5>
+                    <div class="text-left" style="padding-top: 10px;">
+                        <h6 class="show-preview-link" (click)="showBubblePreview = !showBubblePreview"
+                            *ngIf="!showBubblePreview">Show Preview</h6>
+                        <h6 class="show-preview-link" (click)="showBubblePreview = !showBubblePreview"
+                            *ngIf="showBubblePreview">Hide Preview</h6>
                     </div>
-                    <div class="form-group position-relative">
+                    <div class="position-relative preview-bubble-container" [ngClass]="{ 'text-right': profileForm.value.bubble_layout === 'alternating', 
+                    'text-left': profileForm.value.bubble_layout === 'all_left' }" *ngIf="showBubblePreview"
+                        style="padding-top: 5px;">
+                        <div [ngClass]="{ 'right-bubble': profileForm.value.bubble_layout === 'alternating', 'left-bubble': profileForm.value.bubble_layout === 'all_left'}"
+                            [ngStyle]="{'background-color': profileForm.value.bubble_color,
+                                            'color': profileForm.value.font_color }">
+
+                            <div class="float-left" *ngIf="profileForm.value.show_avatars">
+                                <img [src]="'../../../assets/images/avatars/' + user.avatar"
+                                    class="user-icon">
+                            </div>
+                            <div [ngStyle]="{'margin-left': profileForm.value.show_avatars ? '65px' : '0px' }">
+                                <div class="float-left message-user">{{ profileForm.value.name }}</div>
+
+
+                                <br />
+                                <span [ngStyle]="{'font-family': profileForm.value.font_face }">Hey! How's it going?
+                                    What
+                                    would
+                                    you like to chat about?</span>
+                                <br />
+
+                                <div class="float-right message-time">
+                                    Sent 5:02 pm</div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-left">
+                        <h6 class="cursor-pointer show-preview-link" (click)="showPasswordFields = !showPasswordFields">
+                            Change Password</h6>
+                    </div>
+                    <div class="form-group position-relative" *ngIf="showPasswordFields">
                         <prt-form-validation-msgs [control]="profileForm.controls.oldPassword"
                             [submitted]="profileForm.submitted">
                         </prt-form-validation-msgs>
@@ -242,7 +293,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group position-relative">
+                    <div class="form-group position-relative" *ngIf="showPasswordFields">
                         <prt-form-validation-msgs [control]="profileForm.controls.newPassword"
                             [submitted]="profileForm.submitted">
                         </prt-form-validation-msgs>
