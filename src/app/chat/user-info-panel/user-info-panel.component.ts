@@ -9,6 +9,7 @@ import { User } from 'src/app/services/user/user';
 import { ChatService } from 'src/app/services/chat/chat.service';
 import { MessageDisplayModalComponent } from '../../shared/message-display/message-display-modal.component';
 import { LevelService } from 'src/app/services/level/level.service';
+import { LevelInfo } from 'src/app/services/level/level-info';
 
 @Component({
     selector: 'prt-user-info-panel',
@@ -20,9 +21,6 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     loadingRequest: Observable<any>;
     user: User;
     partner: User;
-    expNeeded: number;
-    level: number;
-    rank: string;
 
     partnerFoundSub: Subscription;
     userDisconnectSub: Subscription;
@@ -74,10 +72,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
-
-            this.expNeeded = this.levelService.getExpNeeded(this.user.experience);
-            this.level = this.levelService.getLevel(this.user.experience);
-            this.rank = this.levelService.getRank(this.user.experience);
+            this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
 
             this.loadingRequest = null;
         });

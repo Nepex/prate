@@ -32,11 +32,15 @@
         <img src="../../assets/images/prate-matchedwith-background.png" />
 
         <div class="match-finished-info-dialog-text text-center">
-            <img src="../../assets/images/prate-match-info-animation.gif" />
-            <br />
-            <strong style="color: #00AFF0;">{{ this.partnerLeftName }}</strong><br />
-            {{ this.leaveMessage }} <br /><br />
-            <span style="font-size: 14px;">You've been awarded: <br />{{ this.expMessage }}</span>
+            <div>
+                <img src="../../assets/images/prate-match-info-animation.gif" />
+                <br />
+                <strong style="color: #00AFF0;">{{ this.partnerLeftName }}</strong><br />
+                {{ this.leaveMessage }}
+            </div>
+
+            <div style="font-size: 12px;" [ngStyle]="{'padding-top': rankUpMessage ? '12px' : '35px'}" [innerHTML]="expMessage"></div>
+            <div style="font-size: 12px; padding-top: 10px;" [innerHTML]="rankUpMessage" *ngIf="rankUpMessage"></div>
         </div>
 
         <button class="btn matching-btn" for="matching-button" (click)="approveChatFinished()">OK</button>
@@ -84,7 +88,12 @@
                         'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': m.type === 'sent' ? '#' + user.bubble_color : '#' + partner.bubble_color,
                                     'color': m.type === 'sent' ? '#' + user.font_color : '#' + partner.font_color }">
                             <div class="float-left" *ngIf="user.show_avatars">
-                                <img [src]="m.type === 'sent' ? '../../../assets/images/avatars/' + user.avatar : '../../../assets/images/avatars/' + partner.avatar" class="user-icon">
+                                <div class="position-relative">
+                                    <img [src]="m.type === 'sent' ? '../../../assets/images/avatars/' + user.avatar : '../../../assets/images/avatars/' + partner.avatar"
+                                        class="user-icon">
+                                    <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
+                                        class="user-badge">
+                                </div>
                             </div>
                             <div [ngStyle]="{'margin-left': user.show_avatars ? '65px' : '0px' }">
                                 <div class="float-left message-user">{{ m.sender }}</div>

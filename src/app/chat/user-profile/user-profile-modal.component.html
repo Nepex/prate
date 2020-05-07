@@ -7,25 +7,28 @@
                     <div class="user-icon-content" (click)="openEditAvatar()">
                         <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon">
                         <div class="user-icon-edit-btn">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-edit user-edit-icon"></i>
                         </div>
+
+                        <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <div class="no-pad-margin">
+                    <div class="no-pad-margin" style="padding-top: 5px;">
                         <span class="username no-pad-margin">{{ user.name }}</span>
                     </div>
                     <div class="no-pad-margin" style="line-height: 15px;">
-                        <span class="user-level no-pad-margin">{{ rank }} - Level {{ level }}</span>
+                        <span class="user-level no-pad-margin">{{ user.levelInfo.rank }} - Level {{ user.levelInfo.level }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12 progress-container">
-                    <ngb-progressbar type="success" [value]="user.experience" [max]="expNeeded"></ngb-progressbar>
+                    <ngb-progressbar type="success" [value]="user.experience" [max]="user.levelInfo.experienceNeeded">
+                    </ngb-progressbar>
                 </div>
             </div>
         </div>
@@ -256,8 +259,7 @@
                                             'color': profileForm.value.font_color }">
 
                             <div class="float-left" *ngIf="profileForm.value.show_avatars">
-                                <img [src]="'../../../assets/images/avatars/' + user.avatar"
-                                    class="user-icon">
+                                <img [src]="'../../../assets/images/avatars/' + user.avatar" class="user-icon">
                             </div>
                             <div [ngStyle]="{'margin-left': profileForm.value.show_avatars ? '65px' : '0px' }">
                                 <div class="float-left message-user">{{ profileForm.value.name }}</div>

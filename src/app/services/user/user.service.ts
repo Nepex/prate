@@ -46,6 +46,7 @@ export class UserService {
         delete user.email;
         delete user.level;
         delete user.avatar;
+        delete user.levelInfo;
 
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');

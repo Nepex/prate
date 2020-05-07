@@ -5,6 +5,7 @@ import { Injectable, EventEmitter, Output, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import * as io from 'socket.io-client';
 import { SessionService } from '../session/session.service';
+import { LevelInfo } from '../level/level-info';
 
 @Injectable()
 export class ChatService implements OnDestroy {
@@ -49,7 +50,8 @@ export class ChatService implements OnDestroy {
             avatar: user.avatar,
             experience: user.experience,
             webSocketAuth: '3346841372',
-            token: this.sessionService.getToken()
+            token: this.sessionService.getToken(),
+            levelInfo: user.levelInfo
         };
 
         this.socket.emit('authAndStoreUserInfo', this.user);

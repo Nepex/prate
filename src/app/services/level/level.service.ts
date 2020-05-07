@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { LevelInfo } from './level-info';
 
 @Injectable()
 export class LevelService {
-    levelInfo = [
+    levelInfo: LevelInfo[] = [
         { level: 1, experienceNeeded: 0, rank: 'Pebble', badge: 'pebble.png', rankUp: false },
         { level: 2, experienceNeeded: 300, rank: 'Pebble', badge: 'pebble.png', rankUp: false }, // 5 min - 5 min increment onward
         { level: 3, experienceNeeded: 600, rank: 'Pebble', badge: 'pebble.png', rankUp: false }, // 10 min
@@ -113,62 +114,37 @@ export class LevelService {
         { level: 98, experienceNeeded: 1122000, rank: 'Diamond', badge: 'diamond.png', rankUp: false }, // 18700 min 
         { level: 99, experienceNeeded: 1237200, rank: 'Diamond', badge: 'diamond.png', rankUp: false }, // 20620 min - 3840 min onward
 
-        { level: 100, experienceNeeded: 1467600, rank: 'Prismatic', badge: 'prismatic.png', rankUp: false }, // 24460 min - 407.67 HR to max level
+        { level: 100, experienceNeeded: 1467600, rank: 'Prismatic', badge: 'prismatic.png', rankUp: true }, // 24460 min - 407 hr to soft cap
+
+        // 13045 hr to max level
+        { level: 101, experienceNeeded: 2935200, rank: 'Prismatic', badge: 'prismatic.png', rankUp: false },
+        { level: 102, experienceNeeded: 5870400, rank: 'Prismatic', badge: 'prismatic.png', rankUp: false },
+        { level: 103, experienceNeeded: 11740800, rank: 'Prismatic', badge: 'prismatic.png', rankUp: false },
+        { level: 104, experienceNeeded: 23481600, rank: 'Prismatic', badge: 'prismatic.png', rankUp: false },
+        { level: 105, experienceNeeded: 46963200, rank: 'Prismatic', badge: 'prismatic.png', rankUp: false }
     ];
 
     constructor() { }
 
-    getExpNeeded(experience) {
-        if (experience < 60) { // lvl 1
-            return 60;
-        }
-        else if (experience < 600) { // lvl 2
-            return 600;
-        }
-        else if (experience < 3600) { // lvl 3
-            return 3600;
-        }
-        else if (experience < 7200) { // lvl 4
-            return 7200;
-        }
-        else if (experience < 10800) { // lvl 5
-            return 10800;
+    getLevelInfo(experience) {
+        for (let i = 0; i < this.levelInfo.length; i++) {
+            if (experience < this.levelInfo[i].experienceNeeded) {
+                return this.levelInfo[i];
+            }
         }
     }
 
-    getLevel(experience) {
-        if (experience >= 0 && experience < 60) { // 0
-            return 1;
-        }
-        else if (experience >= 60 && experience < 600) { // over 1 minute
-            return 2;
-        }
-        else if (experience >= 600 && experience < 3600) { // over 10 minutes
-            return 3;
-        }
-        else if (experience >= 3600 && experience < 7200) { // over 1 hour
-            return 4;
-        }
-        else if (experience >= 7200 && experience < 10800) { // over 2 hours
-            return 5;
-        }
-    }
+    checkIfLevelUp(newExpValue, levelInfo) {
+        console.log(newExpValue, levelInfo);
 
-    getRank(experience) {
-        if (experience >= 0 && experience < 7200) { // level 1-5
-            return 'Rookie';
-        }
-        if (experience >= 7200) { // level 5
-            return 'Prater';
-
-        }
-    }
-
-    checkIfLevelUp(experience, experienceNeeded) {
-        if (experience > experienceNeeded) {
-            return true;
-        } else {
-            return false;
+        for (let i = 0; i < this.levelInfo.length; i++) {
+            if (levelInfo.level === this.levelInfo[i].level) { // find user's level on map
+                if (newExpValue >= this.levelInfo[i + 1].experienceNeeded) { // if new exp is greater than next level, return a level up
+                    return levelInfo[i + 1];
+                } else {
+                    return false;
+                }
+            }
         }
     }
 }

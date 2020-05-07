@@ -147,6 +147,17 @@
     left: -3px;
 }
 
+.user-badge {
+    height: 20px;
+    width: 20px;
+    /* margin-right: 3px;
+    position: relative;
+    top: 1px; */
+    position: absolute;
+    right: 4px;
+    bottom: -2px;
+}
+
 .left-bubble {
     background: #efefef;
     -webkit-border-radius: 4px;
@@ -254,19 +265,35 @@
 .user-icon-edit-btn {
     transition: .5s ease;
     opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     text-align: center;
     color: #dddddd;
     font-size: 16px;
+    height: 55px;
+    width: 60px;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: -3px;
+    background-color: rgba(0,0,0,.5);
 }
 
-.user-icon-content:hover .user-icon {
+.user-edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-55%, -50%);
+    -ms-transform: translate(-55%, -50%);
+}
+
+.user-icon-content .user-badge {
     transition: .5s ease;
-    opacity: 0.4;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.user-icon-content:hover .user-badge {
+    transition: .5s ease;
+    opacity: 0;
     cursor: pointer;
 }
 

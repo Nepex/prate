@@ -1,3 +1,5 @@
+import { LevelInfo } from '../level/level-info';
+
 export class User {
     id?: string;
     name: string;
@@ -14,4 +16,5 @@ export class User {
     webSocketAuth?: string;
     token?: string;
     experience?: number;
+    levelInfo?: LevelInfo;
 }

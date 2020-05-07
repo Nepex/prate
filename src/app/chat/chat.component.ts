@@ -11,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IsTyping } from '../services/chat/is-typing';
 import { LevelService } from '../services/level/level.service';
 import { Router } from '@angular/router';
+import { LevelInfo } from '../services/level/level-info';
 
 @Component({
     selector: 'prt-chat',
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
 })
 export class ChatComponent implements OnInit, OnDestroy {
     user: User;
+    levelInfo: LevelInfo;
     partner: User = null;
     chatMessages: ChatMessage[] = [];
 
@@ -47,6 +49,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     leaveMessage: string;
     statusMessage: string;
     expMessage: string;
+    rankUpMessage: string;
 
     messageForm: FormGroup = new FormGroup({
         message: new FormControl('', [Validators.maxLength(500), Validators.minLength(1), Validators.required]),
@@ -61,6 +64,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.loadingRequest.subscribe(res => {
             // set user
             this.user = res;
+            this.levelInfo = this.levelService.getLevelInfo(res.experience);
 
             // set listeners
             this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
@@ -104,6 +108,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
+            this.user.levelInfo = this.levelInfo;
             this.loadingRequest = null;
 
             this.matching = true;
@@ -259,13 +264,17 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** Resets timers and awards exp */
     stopTimerAndGiveExp() {
         clearTimeout(this.chatTimerInterval);
-        const expNeeded = this.levelService.getExpNeeded(this.user.experience);
-        let levelUp = this.levelService.checkIfLevelUp(this.user.experience + this.chatTimer, expNeeded);
+        let levelUpInfo = this.levelService.checkIfLevelUp(this.user.experience + this.chatTimer, this.user.levelInfo);
 
-        this.expMessage = this.chatTimer + ' exp!';
+        this.expMessage = 'Gained ' + this.chatTimer + ' experience!';
 
-        if (levelUp) {
-            this.expMessage = this.expMessage + ' Level up!';
+
+        if (levelUpInfo) {
+            this.expMessage = this.expMessage + '- Level up!';
+
+            if (levelUpInfo.rankUp) {
+                this.rankUpMessage = '<img src="../../assets/images/badges/' + levelUpInfo.badge + '" height="20" width="20"> <br />Ranked up to ' + levelUpInfo.rank + '!'
+            }
         }
 
         this.loadingRequest = this.userService.awardExp(this.user, this.chatTimer);

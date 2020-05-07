@@ -9,6 +9,7 @@ import { MessageDisplayModalComponent } from '../../shared/message-display/messa
 import { LevelService } from '../../services/level/level.service';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
 import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
+import { LevelInfo } from 'src/app/services/level/level-info';
 
 @Component({
     selector: 'prt-user-profile-modal',
@@ -20,11 +21,7 @@ export class UserProfileModalComponent implements OnInit {
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
     showPasswordFields: boolean = false;
-
     showBubblePreview: boolean = false;
-    expNeeded: number;
-    level: number;
-    rank: string;
 
     userRegex = /^[a-zA-Z0-9]*$/;
     profileForm: SubmittableFormGroup = new SubmittableFormGroup({
@@ -51,10 +48,6 @@ export class UserProfileModalComponent implements OnInit {
         this.profileForm.controls.bubble_layout.setValue(this.user.bubble_layout);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
-
-        this.expNeeded = this.levelService.getExpNeeded(this.user.experience);
-        this.level = this.levelService.getLevel(this.user.experience);
-        this.rank = this.levelService.getRank(this.user.experience);
     }
 
     applyChanges() {
