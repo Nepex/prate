@@ -20,7 +20,6 @@ import { LevelInfo } from '../services/level/level-info';
 })
 export class ChatComponent implements OnInit, OnDestroy {
     user: User;
-    levelInfo: LevelInfo;
     partner: User = null;
     chatMessages: ChatMessage[] = [];
 
@@ -64,7 +63,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.loadingRequest.subscribe(res => {
             // set user
             this.user = res;
-            this.levelInfo = this.levelService.getLevelInfo(res.experience);
+            this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
 
             // set listeners
             this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
@@ -103,12 +102,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** Commences matching, looks for available partners */
     searchForMatch(): void {
         // make sure user settings are updated
-
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
-            this.user.levelInfo = this.levelInfo;
+            this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
+
             this.loadingRequest = null;
 
             this.matching = true;
@@ -264,15 +263,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** Resets timers and awards exp */
     stopTimerAndGiveExp() {
         clearTimeout(this.chatTimerInterval);
+        this.rankUpMessage = null;
         let levelUpInfo = this.levelService.checkIfLevelUp(this.user.experience + this.chatTimer, this.user.levelInfo);
 
         this.expMessage = 'Gained ' + this.chatTimer + ' experience!';
 
-
         if (levelUpInfo) {
-            this.expMessage = this.expMessage + '- Level up!';
+            this.expMessage = this.expMessage + ' - Level up!';
 
-            if (levelUpInfo.rankUp) {
+            if (this.levelService.checkIfRankUp(this.user.experience + this.chatTimer, this.user.levelInfo)) {
                 this.rankUpMessage = '<img src="../../assets/images/badges/' + levelUpInfo.badge + '" height="20" width="20"> <br />Ranked up to ' + levelUpInfo.rank + '!'
             }
         }
@@ -283,6 +282,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
 
         this.user.experience = this.user.experience + this.chatTimer;
+
+        this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
+        
         this.chatTimer = 0;
         this.inactivityTimer = 0;
     }

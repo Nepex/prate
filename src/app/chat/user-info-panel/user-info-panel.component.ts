@@ -22,6 +22,9 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     user: User;
     partner: User;
 
+    expMaxValue: number;
+    expCurValue: number;
+
     partnerFoundSub: Subscription;
     userDisconnectSub: Subscription;
     partnerDisconnectSub: Subscription;
@@ -73,7 +76,9 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.loadingRequest.subscribe(res => {
             this.user = res;
             this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
-
+            this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
+            this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
+            
             this.loadingRequest = null;
         });
     }

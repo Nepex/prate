@@ -28,8 +28,9 @@
 
             <div class="row">
                 <div class="col-12 progress-container">
-                    <ngb-progressbar type="success" [value]="user.experience" [max]="user.levelInfo.experienceNeeded">
+                    <ngb-progressbar class="progress-bar-container" type="success" [value]="expCurValue" [max]="expMaxValue">
                     </ngb-progressbar>
+                    <div class="exp-text-container">{{ expCurValue }} / {{ expMaxValue }}</div>
                 </div>
             </div>
         </div>

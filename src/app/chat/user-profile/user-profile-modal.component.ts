@@ -23,6 +23,9 @@ export class UserProfileModalComponent implements OnInit {
     showPasswordFields: boolean = false;
     showBubblePreview: boolean = false;
 
+    expCurValue: number;
+    expMaxValue: number;
+
     userRegex = /^[a-zA-Z0-9]*$/;
     profileForm: SubmittableFormGroup = new SubmittableFormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
@@ -48,6 +51,9 @@ export class UserProfileModalComponent implements OnInit {
         this.profileForm.controls.bubble_layout.setValue(this.user.bubble_layout);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
+
+        this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
+        this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
     }
 
     applyChanges() {
@@ -80,10 +86,10 @@ export class UserProfileModalComponent implements OnInit {
             font_face: this.profileForm.value.font_face,
             font_color: this.profileForm.value.font_color.substring(1),
             bubble_color: this.profileForm.value.bubble_color.substring(1),
-            interests:  this.profileForm.value.interests ? this.profileForm.value.interests : [],
+            interests: this.profileForm.value.interests ? this.profileForm.value.interests : [],
             experience: this.user.experience,
             show_avatars: this.profileForm.value.show_avatars,
-            bubble_layout:  this.profileForm.value.bubble_layout
+            bubble_layout: this.profileForm.value.bubble_layout
         };
 
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {

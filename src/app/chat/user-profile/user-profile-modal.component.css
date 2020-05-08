@@ -328,6 +328,22 @@
     padding: 15px 18px 0px 18px;
 }
 
+.exp-text-container {
+    opacity: 0;
+    font-size: 11px;
+    color: #111111;
+    position: absolute;
+    top: 13px;
+    left: 50%;
+    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+}
+
+.progress-container:hover .exp-text-container {
+    transition: .5s ease;
+    opacity: 1;
+}
+
 ::ng-deep>>>.color-picker .arrow.arrow-bottom {
     display: none !important;
 }

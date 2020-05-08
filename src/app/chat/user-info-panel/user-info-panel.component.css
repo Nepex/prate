@@ -83,6 +83,22 @@
     padding: 5px 18px 0px 0px;
 }
 
+.exp-text-container {
+    opacity: 0;
+    font-size: 11px;
+    color: #111111;
+    position: absolute;
+    top: 3px;
+    left: 45%;
+    transform: translateX(-45%);
+    -ms-transform: translateX(-45%);
+}
+
+.progress-container:hover .exp-text-container {
+    transition: .5s ease;
+    opacity: 1;
+}
+
 .nav-items {
     background-color: #eee;
     z-index: 1;

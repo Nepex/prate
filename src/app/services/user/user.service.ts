@@ -40,7 +40,9 @@ export class UserService {
     }
 
     /** Awards exp */
-    awardExp(user, secsSpentChatting) {
+    awardExp(userInfo, secsSpentChatting) {
+        const user = Object.assign({}, userInfo);
+        
         user.experience = user.experience + secsSpentChatting;
 
         delete user.email;

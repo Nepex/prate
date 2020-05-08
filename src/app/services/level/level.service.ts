@@ -128,20 +128,80 @@ export class LevelService {
 
     getLevelInfo(experience) {
         for (let i = 0; i < this.levelInfo.length; i++) {
-            if (experience < this.levelInfo[i].experienceNeeded) {
-                return this.levelInfo[i];
+            if (experience < this.levelInfo[i + 1].experienceNeeded) {
+                const levelInfo = Object.assign({}, this.levelInfo[i]); // copy or else it will modify the original array
+                levelInfo.experienceNeeded = this.levelInfo[i + 1].experienceNeeded; // get exp needed for next level
+
+                return levelInfo;
             }
         }
     }
 
-    checkIfLevelUp(newExpValue, levelInfo) {
+    checkIfLevelUp(newExpValue, userLevelInfo) {
         for (let i = 0; i < this.levelInfo.length; i++) {
-            if (levelInfo.level === this.levelInfo[i].level) { // find user's level on map
-                if (newExpValue >= this.levelInfo[i + 1].experienceNeeded) { // if new exp is greater than next level, return a level up
-                    return levelInfo[i + 1];
+            // future case: make sure array doesn't break
+            if (i + 1 > this.levelInfo.length || i + 2 > this.levelInfo.length) {
+                return false;
+            }
+
+            // no level up
+            if (newExpValue < userLevelInfo.experienceNeeded) {
+                return false;
+            }
+
+            // level up detected
+            if (newExpValue >= userLevelInfo.experienceNeeded && newExpValue < this.levelInfo[i + 1].experienceNeeded) {
+                return this.levelInfo[i + 1];
+            }
+        }
+    }
+
+    checkIfRankUp(newExpValue, userLevelInfo) {
+        let isRankUp: boolean = false;
+
+        for (let i = userLevelInfo.level - 1; i < this.levelInfo.length; i++) {
+            // future case: make sure array doesn't break
+            if (i + 1 > this.levelInfo.length || i + 2 > this.levelInfo.length) {
+                return false;
+            }
+
+            if (newExpValue >= this.levelInfo[i + 1].experienceNeeded && newExpValue < this.levelInfo[i + 2].experienceNeeded) {
+                if (this.levelInfo[i + 1].rankUp) {
+                    isRankUp = true;
+
+                    return isRankUp;
                 } else {
-                    return false;
+                    return isRankUp;
                 }
+            } else if (this.levelInfo[i + 1].rankUp) {
+                isRankUp = true;
+            }
+        }
+    }
+
+    getMaxExpBarValue(userLevelInfo) {
+        for (let i = 0; i < this.levelInfo.length; i++) {
+            if (userLevelInfo.level === 1) {
+                return userLevelInfo.experienceNeeded;
+            }
+
+            if (userLevelInfo.level === this.levelInfo[i].level) {
+                let value = userLevelInfo.experienceNeeded - this.levelInfo[i].experienceNeeded;
+                return value;
+            }
+        }
+    }
+
+    getCurExpBarValue(userLevelInfo, curExp) {
+        for (let i = 0; i < this.levelInfo.length; i++) {
+            if (userLevelInfo.level === 1) {
+                return curExp;
+            }
+
+            if (userLevelInfo.level === this.levelInfo[i].level) {
+                let value = curExp - this.levelInfo[i].experienceNeeded;
+
+                return value;
             }
         }
     }
