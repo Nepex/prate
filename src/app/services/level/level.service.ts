@@ -135,8 +135,6 @@ export class LevelService {
     }
 
     checkIfLevelUp(newExpValue, levelInfo) {
-        console.log(newExpValue, levelInfo);
-
         for (let i = 0; i < this.levelInfo.length; i++) {
             if (levelInfo.level === this.levelInfo[i].level) { // find user's level on map
                 if (newExpValue >= this.levelInfo[i + 1].experienceNeeded) { // if new exp is greater than next level, return a level up

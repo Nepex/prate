@@ -13,6 +13,16 @@ export class ChangeLogComponent implements OnInit {
     ngOnInit(): void {
         this.updates = [
             {
+                title: 'v0.0.9-alpha',
+                date: 'May 7, 2020',
+                items: [
+                    'Level badges added and levels fully mapped',
+                    'Avatars now show while chatting',
+                    'New options: Show Avatar and Chat Bubble Positions',
+                    'Fonts swapped to open source'
+                ]
+            },
+            {
                 title: 'v0.0.8-alpha',
                 date: 'May 5, 2020',
                 items: [
