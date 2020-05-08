@@ -26,13 +26,13 @@ export class ChatService implements OnDestroy {
 
     /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
     intiateMatching(user: User): void {
-        // this.socket = io('http://localhost:3000', {
-        //     path: '/socket.io'
-        // });
-
-        this.socket = io('https://prate.club', {
-            path: '/api/socket.io'
+        this.socket = io(environment.apiServer, {
+            path: environment.socketIoServer
         });
+
+        // this.socket = io('https://prate.club', {
+        //     path: '/api/socket.io'
+        // });
 
         // this.socket = io.connect(environment.apiBaseUrl);
 

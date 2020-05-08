@@ -327,3 +327,7 @@
     margin: 0;
     padding: 15px 18px 0px 18px;
 }
+
+::ng-deep>>>.color-picker .arrow.arrow-bottom {
+    display: none !important;
+}

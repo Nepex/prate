@@ -20,7 +20,8 @@
                         <span class="username no-pad-margin">{{ user.name }}</span>
                     </div>
                     <div class="no-pad-margin" style="line-height: 15px;">
-                        <span class="user-level no-pad-margin">{{ user.levelInfo.rank }} - Level {{ user.levelInfo.level }}</span>
+                        <span class="user-level no-pad-margin">{{ user.levelInfo.rank }} - Level
+                            {{ user.levelInfo.level }}</span>
                     </div>
                 </div>
             </div>
@@ -80,9 +81,10 @@
                     <div class="col-12">
                         <div class="input-group">
                             <div class="color-input" [colorPicker]="profileForm.controls['font_color'].value"
-                                (colorPickerChange)=" profileForm.controls['font_color'].setValue($event);"
-                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'left'"
-                                [style.background]="profileForm.controls['font_color'].value"> </div>
+                                (colorPickerChange)="profileForm.controls['font_color'].setValue($event);"
+                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
+                                [style.background]="profileForm.controls['font_color'].value" [cpOKButtonClass]="'btn'"
+                                [cpDisableInput]="true"> </div>
                         </div>
                     </div>
                 </div>
@@ -94,9 +96,10 @@
                     <div class="col-12">
                         <div class="input-group">
                             <div class="color-input" [colorPicker]="profileForm.controls['bubble_color'].value"
-                                (colorPickerChange)=" profileForm.controls['bubble_color'].setValue($event);"
-                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'left'"
-                                [style.background]="profileForm.controls['bubble_color'].value"> </div>
+                                (colorPickerChange)="profileForm.controls['bubble_color'].setValue($event);"
+                                [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
+                                [style.background]="profileForm.controls['bubble_color'].value"
+                                [cpOKButtonClass]="'btn'" [cpDisableInput]="true"> </div>
                         </div>
                     </div>
                 </div>
@@ -123,7 +126,7 @@
                     </div>
                     <div class="row">
                         <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
-                            Bubble Positions
+                            Bubbles
                         </div>
                         <div class="col-5 text-left">
                             <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
@@ -132,7 +135,7 @@
                                     <input ngbButton type="radio" [value]="'alternating'"> Alternate
                                 </label>
                                 <label ngbButtonLabel class="selection-btn">
-                                    <input ngbButton type="radio" [value]="'all_left'"> All Left
+                                    <input ngbButton type="radio" [value]="'all_left'"> Left
                                 </label>
                             </span>
                         </div>

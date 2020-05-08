@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:3000'
+  apiBaseUrl: 'http://localhost:3000',
+  apiServer: 'http://localhost:3000',
+  socketIoServer: '/socket.io'
 };
 
 /*
