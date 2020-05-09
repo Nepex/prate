@@ -40,8 +40,9 @@
 }
 
 .lg-nav-icon-container {
-    padding-right: 15px;
-    padding-top: 7px;
+    position: absolute;
+    right: 15px;
+    top: 4px;
 }
 
 .lg-nav-icon:hover {

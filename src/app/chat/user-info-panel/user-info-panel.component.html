@@ -18,9 +18,11 @@
                     </div>
                 </div>
 
-                <div class="float-right lg-nav-icon-container">
+                <div class="lg-nav-icon-container">
                     <i class="fas fa-cog lg-nav-icon" (click)="openProfile()" title="User Profile"></i>
                     <i class="fas fa-user-friends lg-nav-icon" (click)="openFriends()" title="Show Friends"></i>
+                    <i class="fas fa-question-circle lg-nav-icon" (click)="openHelp()" title="Help"></i>
+                    <i class="fas fas fa-bug lg-nav-icon" (click)="openBugReport()" title="Bug Report"></i>
                     <i class="fas fa-times lg-nav-icon" (click)="logout()" title="Logout"></i>
                 </div>
             </div>
@@ -57,6 +59,18 @@
                         <span>
                             <i class="fas fa-user sm-nav-icon" style="padding-right: 1px;"></i>
                             Show Friends
+                        </span>
+                    </li>
+                    <li class="sm-nav-link cursor-pointer" (click)="openHelp()">
+                        <span>
+                            <i class="fas fa-question-circle sm-nav-icon" style="padding-right: 0px;"></i>
+                            Help
+                        </span>
+                    </li>
+                    <li class="sm-nav-link cursor-pointer" (click)="openBugReport()">
+                        <span>
+                            <i class="fas fa-bug sm-nav-icon" style="padding-right: 0px;"></i>
+                            Bug Report
                         </span>
                     </li>
                     <li class="sm-nav-link cursor-pointer" (click)="logout()">

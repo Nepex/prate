@@ -10,6 +10,7 @@ import { ChatService } from 'src/app/services/chat/chat.service';
 import { MessageDisplayModalComponent } from '../../shared/message-display/message-display-modal.component';
 import { LevelService } from 'src/app/services/level/level.service';
 import { LevelInfo } from 'src/app/services/level/level-info';
+import { ChatHelpModalComponent } from 'src/app/chat/chat-help/chat-help-modal.component';
 
 @Component({
     selector: 'prt-user-info-panel',
@@ -50,12 +51,12 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
     openProfile() {
         if (this.partner) {
-            const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop : 'static', keyboard : false });
+            const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
             modalRef.componentInstance.message = 'User settings cannot be editted while chatting.';
             return;
         }
 
-        const modalRef = this.modal.open(UserProfileModalComponent, { centered: true, backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
+        const modalRef = this.modal.open(UserProfileModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         modalRef.componentInstance.user = this.user;
 
         modalRef.result.then(() => {
@@ -65,9 +66,13 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     }
 
     openFriends() {
-        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false });
+        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
 
         modalRef.componentInstance.message = "Coming soon...";
+    }
+
+    openHelp() {
+        this.modal.open(ChatHelpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
     getUser() {
@@ -78,7 +83,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
             this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
             this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
             this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
-            
+
             this.loadingRequest = null;
         });
     }

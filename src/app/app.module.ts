@@ -27,6 +27,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { MessageDisplayModalComponent } from './shared/message-display/message-display-modal.component';
 import { UserInfoPanelComponent } from './chat/user-info-panel/user-info-panel.component';
 import { ChangeAvatarModalComponent } from './chat/change-avatar/change-avatar-modal.component';
+import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ChangeAvatarModalComponent } from './chat/change-avatar/change-avatar-m
     PrivacyPolicyModalComponent,
     ChangeLogComponent,
     UserInfoPanelComponent,
-    ChangeAvatarModalComponent
+    ChangeAvatarModalComponent,
+    ChatHelpModalComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { ChangeAvatarModalComponent } from './chat/change-avatar/change-avatar-m
     MessageDisplayModalComponent,
     TermsModalComponent,
     PrivacyPolicyModalComponent,
-    ChangeAvatarModalComponent
+    ChangeAvatarModalComponent,
+    ChatHelpModalComponent
 ]
 })
 export class AppModule { }
