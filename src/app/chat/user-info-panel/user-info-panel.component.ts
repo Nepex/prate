@@ -11,6 +11,7 @@ import { MessageDisplayModalComponent } from '../../shared/message-display/messa
 import { LevelService } from 'src/app/services/level/level.service';
 import { LevelInfo } from 'src/app/services/level/level-info';
 import { ChatHelpModalComponent } from 'src/app/chat/chat-help/chat-help-modal.component';
+import { BugReportModalComponent } from '../bug-report/bug-report-modal.component';
 
 @Component({
     selector: 'prt-user-info-panel',
@@ -73,6 +74,10 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
 
     openHelp() {
         this.modal.open(ChatHelpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+    }
+
+    openBugReport () {
+        this.modal.open(BugReportModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
     getUser() {

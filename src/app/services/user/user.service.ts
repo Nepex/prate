@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { User } from './user';
+import { BugReport } from './bug-report';
 
 
 @Injectable()
@@ -75,6 +76,24 @@ export class UserService {
         };
 
         const req = this.http.put<User>(url, body, {
+            headers: headers
+        }).pipe(map(res => res));
+
+        return req;
+    }
+
+    sendBugReport(report): Observable<BugReport> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `${this.sessionService.getToken()}`);
+
+        const url = `${this.apiUrl}/bugreport/`;
+
+        const body = {
+            message: report
+        };
+
+        const req = this.http.post<BugReport>(url, body, {
             headers: headers
         }).pipe(map(res => res));
 

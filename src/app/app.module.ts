@@ -28,6 +28,7 @@ import { MessageDisplayModalComponent } from './shared/message-display/message-d
 import { UserInfoPanelComponent } from './chat/user-info-panel/user-info-panel.component';
 import { ChangeAvatarModalComponent } from './chat/change-avatar/change-avatar-modal.component';
 import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.component';
+import { BugReportModalComponent } from './chat/bug-report/bug-report-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.compone
     ChangeLogComponent,
     UserInfoPanelComponent,
     ChangeAvatarModalComponent,
-    ChatHelpModalComponent
+    ChatHelpModalComponent,
+    BugReportModalComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.compone
     TermsModalComponent,
     PrivacyPolicyModalComponent,
     ChangeAvatarModalComponent,
-    ChatHelpModalComponent
+    ChatHelpModalComponent,
+    BugReportModalComponent
 ]
 })
 export class AppModule { }

@@ -1,0 +1,34 @@
+<form (ngSubmit)="sendReport()" [formGroup]="bugReportForm" novalidate>
+    <div class="modal-header no-pad-margin">
+        <div class="container bug-report-header">
+            <div class="row">
+                <div class="col-12 my-auto text-center">
+                    Report a Bug
+                </div>
+            </div>
+        </div>
+        <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+    </div>
+    <div class="container modal-body">
+        <div class="row no-pad-margin">
+            
+            <div class="col-12 message-col">
+                <div style="margin-bottom: 10px;" *ngIf="messages">
+                    <prt-alert-messages [messages]="messages"></prt-alert-messages>
+                </div>
+                <div class="input-group">
+                    <textarea rows="40" cols="50" class="form-control text-input text-area" formControlName="message"
+                        placeholder="Tell us the issue (200 Char Limit)"> </textarea>
+                </div>
+
+                <div class="char-left-msg">{{ messageLeftLength }} <span *ngIf="messageLeftLength > 0">characters
+                        left</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer text-center no-pad-margin">
+        <div class="form-group text-center" style="margin-bottom: 20px;">
+            <input type="submit" value="SEND" class="btn submit-btn cursor-pointer" [disabled]="disableForm" />
+        </div>
+    </div>
+</form>
