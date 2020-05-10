@@ -66,7 +66,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     statusMessage: string;
     expMessage: string;
     rankUpMessage: string;
-    showEmoji: boolean = false;
+    showEmojis: boolean = false;
     isWindowFocused: boolean;
 
     // https://www.iconfinder.com/iconsets/emoticons-50
