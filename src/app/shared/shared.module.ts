@@ -9,6 +9,7 @@ import { OffClickDirective } from './off-click-directive/off-click.directive';
 import { MessageDisplayModalComponent } from './message-display/message-display-modal.component';
 import { InterestFormatPipe } from './interest-format-pipe/interest-format.pipe';
 import { ServicesModule } from '../services/services.module';
+import { SafeHtmlPipe } from './safe-html-pipe/safe-html.pipe';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { ServicesModule } from '../services/services.module';
         OffClickDirective,
         MessageDisplayModalComponent,
         FooterComponent,
-        InterestFormatPipe
+        InterestFormatPipe,
+        SafeHtmlPipe
     ],
     imports: [
         CommonModule,
@@ -32,7 +34,8 @@ import { ServicesModule } from '../services/services.module';
         OffClickDirective,
         MessageDisplayModalComponent,
         FooterComponent,
-        InterestFormatPipe
+        InterestFormatPipe,
+        SafeHtmlPipe
     ],
     providers: [],
 })

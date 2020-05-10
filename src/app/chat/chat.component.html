@@ -39,7 +39,8 @@
                 {{ this.leaveMessage }}
             </div>
 
-            <div style="font-size: 12px;" [ngStyle]="{'padding-top': rankUpMessage ? '12px' : '35px'}" [innerHTML]="expMessage"></div>
+            <div style="font-size: 12px;" [ngStyle]="{'padding-top': rankUpMessage ? '12px' : '35px'}"
+                [innerHTML]="expMessage"></div>
             <div style="font-size: 12px; padding-top: 10px;" [innerHTML]="rankUpMessage" *ngIf="rankUpMessage"></div>
         </div>
 
@@ -120,6 +121,10 @@
                 <span *ngIf="partner">{{ partner.name }} is typing...</span>
             </div>
 
+            <div class="return-to-bottom" [hidden]="autoScroll">
+                <i class="fas fa-chevron-down cursor-pointer" (click)="returnToBottom()"></i>
+            </div>
+
             <div class="user-warning-msg" [hidden]="!statusMessage">
                 {{ statusMessage }}
             </div>
@@ -127,7 +132,20 @@
             <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate autocomplete="off">
                 <div class="align-bottom">
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
-                        formControlName="message" (keypress)="listenForUserTyping()">
+                        formControlName="message" (keypress)="listenForUserTyping()" #messageInput>
+
+                    <div class="emoji-btn-container cursor-pointer" (click)="showEmojis = !showEmojis" (offClick)="showEmojis ? showEmojis = !showEmojis : showEmojis"><img
+                            src="../../assets/images/emoji-send.png" class="emoji-btn">
+
+                        <div class="emoji-container" *ngIf="showEmojis">
+                            <div class="row text-center no-pad-margin">
+                                <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
+                                    <img src="../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
+                                        ngbTooltip="{{e.code}}" placement="top" container="body" (click)="insertEmoji(e.code)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
                             src="../../assets/images/prt-send.png"></div>
                 </div>

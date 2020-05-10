@@ -332,10 +332,10 @@
     font-size: 11px;
     color: #111111;
     position: absolute;
-    top: 13px;
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
+    transform: translate(-50%, -100%);
+    -ms-transform: translate(-50%, -100%);
 }
 
 .progress-container:hover .exp-text-container {

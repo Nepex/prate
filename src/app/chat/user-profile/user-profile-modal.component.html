@@ -263,7 +263,7 @@
                                             'color': profileForm.value.font_color }">
 
                             <div class="float-left" *ngIf="profileForm.value.show_avatars">
-                                <img [src]="'../../../assets/images/avatars/' + user.avatar" class="user-icon">
+                                <img [src]="'../../../assets/images/avatars/' + user.avatar" class="user-icon" style="top: 0px;">
                             </div>
                             <div [ngStyle]="{'margin-left': profileForm.value.show_avatars ? '65px' : '0px' }">
                                 <div class="float-left message-user">{{ profileForm.value.name }}</div>

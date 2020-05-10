@@ -29,6 +29,7 @@ import { UserInfoPanelComponent } from './chat/user-info-panel/user-info-panel.c
 import { ChangeAvatarModalComponent } from './chat/change-avatar/change-avatar-modal.component';
 import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.component';
 import { BugReportModalComponent } from './chat/bug-report/bug-report-modal.component';
+import { OffClickDirective } from './shared/off-click-directive/off-click.directive';
 
 @NgModule({
   declarations: [

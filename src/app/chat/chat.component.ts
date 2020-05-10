@@ -1,6 +1,6 @@
 import { ChatMessage } from './../services/chat/chat-message';
 import { UserService } from './../services/user/user.service';
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { User } from '../services/user/user';
 import { ChatService } from '../services/chat/chat.service';
@@ -11,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IsTyping } from '../services/chat/is-typing';
 import { LevelService } from '../services/level/level.service';
 import { Router } from '@angular/router';
-import { LevelInfo } from '../services/level/level-info';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'prt-chat',
@@ -19,6 +19,23 @@ import { LevelInfo } from '../services/level/level-info';
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
+    @ViewChild('messageInput')
+    messageInput: any;
+
+    // notifications
+    @HostListener('window:focus', ['$event'])
+    onFocus(event: FocusEvent): void {
+        this.titleService.setTitle('Prate');
+        this.isWindowFocused = true;
+
+    }
+
+    @HostListener('window:blur', ['$event'])
+    onBlur(event: FocusEvent): void {
+        this.isWindowFocused = false;
+    }
+
+
     user: User;
     partner: User = null;
     chatMessages: ChatMessage[] = [];
@@ -49,12 +66,47 @@ export class ChatComponent implements OnInit, OnDestroy {
     statusMessage: string;
     expMessage: string;
     rankUpMessage: string;
+    showEmoji: boolean = false;
+    isWindowFocused: boolean;
+
+    // https://www.iconfinder.com/iconsets/emoticons-50
+    emojis = [
+        { code: ':smile:', img: 'smile.png' },
+        { code: ':smile-eyesclosed:', img: 'smile-eyesclosed.png' },
+        { code: ':smile-open:', img: 'smile-open.png' },
+        { code: ':smile-tongue:', img: 'smile-tongue.png' },
+        { code: ':cool:', img: 'cool.png' },
+        { code: ':laugh:', img: 'laugh.png' },
+        { code: ':laugh-crying:', img: 'laugh-crying.png' },
+        { code: ':crying-happy:', img: 'crying-happy.png' },
+
+        { code: ':frown:', img: 'frown.png' },
+        { code: ':frown-angry:', img: 'frown-angry.png' },
+        { code: ':frown-exhausted:', img: 'frown-exhausted.png' },
+        { code: ':frown-sad:', img: 'frown-sad.png' },
+        { code: ':crying-sad:', img: 'crying-sad.png' },
+
+        { code: ':confused:', img: 'confused.png' },
+        { code: ':uncertain:', img: 'uncertain.png' },
+        { code: ':unamused:', img: 'unamused.png' },
+        { code: ':thinking:', img: 'thinking.png' },
+        { code: ':cringe:', img: 'cringe.png' },
+        { code: ':dead:', img: 'dead.png' },
+        { code: ':thumbsup:', img: 'thumbsup.png' },
+        { code: ':thumbsdown:', img: 'thumbsdown.png' },
+        { code: ':facepalm:', img: 'facepalm.png' },
+
+        { code: ':angry:', img: 'angry.png' },
+        // { code: ':angry-fuming:', img: 'angry-fuming.png'},
+
+        { code: ':poop:', img: 'poop.png' },
+    ]
 
     messageForm: FormGroup = new FormGroup({
         message: new FormControl('', [Validators.maxLength(500), Validators.minLength(1), Validators.required]),
     });
 
-    constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService, private router: Router) { }
+    constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService, private router: Router, private titleService: Title) { }
 
     /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
@@ -174,13 +226,23 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** Listens for messages sucessfully sent by user */
     messageSent(msgObj: ChatMessage): void {
         msgObj.message = this.linkify(msgObj.message);
+        msgObj.message = this.emojify(msgObj.message);
 
         this.chatMessages.push(msgObj);
     }
 
     /** Listens for messages received from partner */
     messageReceived(msgObj: ChatMessage): void {
+        if (!this.isWindowFocused) {
+            this.titleService.setTitle('New Message!');
+            let audio = new Audio();
+            audio.src = "../../assets/sounds/notif.mp3";
+            audio.load();
+            audio.play();
+        }
+
         msgObj.message = this.linkify(msgObj.message);
+        msgObj.message = this.emojify(msgObj.message);
 
         this.chatMessages.push(msgObj);
     }
@@ -272,7 +334,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.expMessage = this.expMessage + ' - Level up!';
 
             if (this.levelService.checkIfRankUp(this.user.experience + this.chatTimer, this.user.levelInfo)) {
-                this.rankUpMessage = '<img src="../../assets/images/badges/' + levelUpInfo.badge + '" height="20" width="20"> <br />Ranked up to ' + levelUpInfo.rank + '!'
+                this.rankUpMessage = '<img src="../../assets/images/badges/' + levelUpInfo.badge + '" height="20" width="20" style="position: relative; top: -2px;"> <br />Ranked up to ' + levelUpInfo.rank + '!'
             }
         }
 
@@ -284,7 +346,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.user.experience = this.user.experience + this.chatTimer;
 
         this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
-        
+
         this.chatTimer = 0;
         this.inactivityTimer = 0;
     }
@@ -320,11 +382,42 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    /** Auto scrolls to bottom */
+    returnToBottom() {
+        let element = document.getElementById('chatMessages');
+
+        element.scrollTop = element.scrollHeight;
+    }
+
     /** Checks message for links then turns them into HREFs */
     linkify(plainTextMessage) {
         let urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         return plainTextMessage.replace(urlRegex, url => {
             return '<a href="' + url + '" target="_blank">' + url + '</a>';
         });
+    }
+
+    /** Checks if emojis are present in message and converts them */
+    emojify(plainTextMessage) {
+        let newMessage = plainTextMessage;
+
+        for (let i = 0; i < this.emojis.length; i++) {
+            let emojiString = this.emojis[i].code;
+            let emojiRegex = new RegExp(emojiString, 'g');
+
+            newMessage = newMessage.replace(emojiRegex, '<img src="../../assets/images/emojis/' + this.emojis[i].img + '" height="18" width="18" />');
+        }
+
+        return newMessage;
+    }
+
+    /** Add emoji to message */
+    insertEmoji(code) {
+        console.log(code);
+        let message = this.messageForm.value.message;
+        if (!message) { message = ''; }
+
+        this.messageForm.value.message = this.messageForm.controls.message.setValue(message + code);
+        this.messageInput.nativeElement.focus();
     }
 }
