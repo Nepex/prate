@@ -13,6 +13,14 @@ export class ChangeLogComponent implements OnInit {
     ngOnInit(): void {
         this.updates = [
             {
+                title: 'v0.0.10-alpha',
+                date: 'May 9, 2020',
+                items: [
+                    'Help section added',
+                    'Bug Report added'
+                ]
+            },
+            {
                 title: 'v0.0.9-alpha',
                 date: 'May 7, 2020',
                 items: [
