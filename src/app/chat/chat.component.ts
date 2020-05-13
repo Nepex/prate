@@ -12,6 +12,8 @@ import { IsTyping } from '../services/chat/is-typing';
 import { LevelService } from '../services/level/level.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { OuterAppInviteModalComponent } from './invite-modals/outer-app-invite/outer-app-invite-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'prt-chat',
@@ -35,7 +37,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.isWindowFocused = false;
     }
 
-
     user: User;
     partner: User = null;
     chatMessages: ChatMessage[] = [];
@@ -44,6 +45,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     partnerFoundSub: Subscription;
     messageReceivedSub: Subscription;
     messageSentSub: Subscription;
+
+    outerAppInviteReceivedSub: Subscription;
+    outerAppInviteSentSub: Subscription;
+    outerAppInviteAcceptedSub: Subscription;
+    outerAppInviteCanceledSub: Subscription;
+
+    closedYtVideoSub: Subscription;
+    toggledYtPlaySub: Subscription;
+
     userDoneTypingSub: Subscription;
     isPartnerTypingSub: Subscription;
     partnerDisconnectSub: Subscription;
@@ -66,7 +76,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     statusMessage: string;
     expMessage: string;
     rankUpMessage: string;
-    showEmojis: boolean = false;
+    hideEmojis: boolean = true;
+    hideYtControls: boolean = true;
+    inviteLink: string;
+    outerAppInviteModal: any;
+
+    // yt video
+    ytUrl: string;
+    ytPlayState: boolean = true;
+
     isWindowFocused: boolean;
 
     // https://www.iconfinder.com/iconsets/emoticons-50
@@ -106,10 +124,16 @@ export class ChatComponent implements OnInit, OnDestroy {
         message: new FormControl('', [Validators.maxLength(500), Validators.minLength(1), Validators.required]),
     });
 
-    constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService, private router: Router, private titleService: Title) { }
+    constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService, private router: Router, private titleService: Title,
+        private modal: NgbModal) {
+    }
 
     /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.body.appendChild(tag);
+
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -121,6 +145,15 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
             this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
+
+            this.outerAppInviteSentSub = this.chatService.outerAppInviteSent.subscribe(msgObj => this.outerAppInviteSent(msgObj));
+            this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
+            this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
+            this.outerAppInviteCanceledSub = this.chatService.outerAppInviteCanceled.subscribe(msgObj => this.outerAppInviteCanceled(msgObj));
+
+            this.toggledYtPlaySub = this.chatService.toggledYtPlay.subscribe(msgObj => this.toggleYtPlay(msgObj));
+            this.closedYtVideoSub = this.chatService.closedYtVideo.subscribe(msgObj => this.closeYtVideo(msgObj));
+
             this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
             this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
             this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
@@ -133,6 +166,14 @@ export class ChatComponent implements OnInit, OnDestroy {
                 } else {
                     this.disconnect();
                 }
+
+                return null;
+            };
+
+            // maybe a fix for mobile sleep issues?
+            window.ononline = () => {
+                this.chatService.connect();
+                return null;
             };
 
             this.loadingRequest = null;
@@ -144,6 +185,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.partnerFoundSub.unsubscribe();
         this.messageSentSub.unsubscribe();
         this.messageReceivedSub.unsubscribe();
+
+        this.outerAppInviteSentSub.unsubscribe();
+        this.outerAppInviteReceivedSub.unsubscribe();
+        this.outerAppInviteAcceptedSub.unsubscribe();
+        this.outerAppInviteCanceledSub.unsubscribe();
+
         this.userDoneTypingSub.unsubscribe();
         this.isPartnerTypingSub.unsubscribe();
         this.partnerDisconnectSub.unsubscribe();
@@ -153,7 +200,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Commences matching, looks for available partners */
     searchForMatch(): void {
-        // make sure user settings are updated
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -413,11 +459,89 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Add emoji to message */
     insertEmoji(code) {
-        console.log(code);
         let message = this.messageForm.value.message;
         if (!message) { message = ''; }
 
         this.messageForm.value.message = this.messageForm.controls.message.setValue(message + code);
         this.messageInput.nativeElement.focus();
+    }
+
+    // Invite Logic
+    sendOuterAppInvite(app) {
+        if (!this.partner) {
+            return;
+        }
+
+        if (this.inviteLink.length > 2000 || !this.inviteLink) {
+            this.inviteLink = null;
+            return;
+        }
+
+        // validate link here
+
+        this.chatService.sendOuterAppInvite(this.partner, this.user, app, this.inviteLink);
+        this.inactivityTimer = 0;
+        this.statusMessage = null;
+        if (app === 'yt') { this.hideYtControls = true; }
+    }
+
+    outerAppInviteSent(invInfo) {
+        this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        this.outerAppInviteModal.componentInstance.user = invInfo.sender;
+        this.outerAppInviteModal.componentInstance.type = 'sent';
+        this.outerAppInviteModal.componentInstance.outerAppType = invInfo.outerAppType;
+
+        this.outerAppInviteModal.result.then(res => {
+            if (res === 'cancel') {
+                this.chatService.outerAppInviteCancel(this.partner, this.user, invInfo.app);
+            }
+        });
+    }
+
+    outerAppInviteReceived(invInfo) {
+        this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        this.outerAppInviteModal.componentInstance.user = invInfo.sender;
+        this.outerAppInviteModal.componentInstance.type = 'received';
+        this.outerAppInviteModal.componentInstance.outerAppType = invInfo.outerAppType;
+
+        this.outerAppInviteModal.result.then(res => {
+            if (res === 'accept') {
+                this.outerAppInviteAccepted(invInfo);
+                this.chatService.outerAppInviteAccept(this.partner, this.user, invInfo.outerAppType);
+            } else if (res === 'cancel') {
+                this.chatService.outerAppInviteCancel(this.partner, this.user, invInfo.outerAppType);
+            }
+        });
+    }
+
+    outerAppInviteAccepted(invInfo) {
+        if (this.outerAppInviteModal) {
+            this.outerAppInviteModal.close();
+        }
+        // prepare app
+        // yt
+        if (invInfo.outerAppType === 'yt') {
+            this.ytUrl = invInfo.outerAppLink ? invInfo.outerAppLink : this.inviteLink;
+        }
+    }
+
+    outerAppInviteCanceled(invInfo) {
+        this.outerAppInviteModal.close();
+    }
+
+    toggleYtPlay(senderInfo) {
+        this.ytPlayState = !this.ytPlayState;
+        if (!senderInfo) {
+            this.chatService.toggleYtPlay(this.partner, this.user);
+        }
+    }
+
+    closeYtVideo(senderInfo) {
+        this.ytUrl = null;
+        this.inviteLink = null;
+        this.hideYtControls = true;
+        if (!senderInfo) {
+            this.chatService.closeYtVideo(this.partner, this.user);
+        }
     }
 }

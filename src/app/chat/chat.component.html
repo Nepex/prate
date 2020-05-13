@@ -80,6 +80,8 @@
     </div>
 
     <div class="row chat-area">
+        <prt-youtube-player [height]="100" [width]="100" [playState]="ytPlayState" [videoUrl]="ytUrl">
+        </prt-youtube-player>
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
@@ -129,25 +131,64 @@
                 {{ statusMessage }}
             </div>
 
-            <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" novalidate autocomplete="off">
+            <div class="yt-play-controls" *ngIf="ytUrl">
+                <div class="col-12">
+                    <i class="fas cursor-pointer"
+                        [ngClass]="{'fa-play': !ytPlayState, 'fa-pause': ytPlayState}"
+                        ngbTooltip="Toggle Play/Pause" placement="top" container="body"
+                        style="position: relative; top: 1px; left: 6px;"
+                        (click)="toggleYtPlay(null)"></i>
+                    &nbsp;
+                    <i class="fas fas fa-times cursor-pointer" ngbTooltip="Close Video" placement="top"
+                        container="body" style="position: relative; top: 1px; left: 6px;"
+                        (click)="closeYtVideo(null)"></i>
+                </div>
+            </div>
+
+            <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" (keydown.enter)="sendMessage()" novalidate
+                autocomplete="off">
                 <div class="align-bottom">
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
                         formControlName="message" (keypress)="listenForUserTyping()" #messageInput>
 
-                    <div class="emoji-btn-container cursor-pointer" (click)="showEmojis = !showEmojis" (offClick)="showEmojis ? showEmojis = !showEmojis : showEmojis"><img
-                            src="../../assets/images/emoji-send.png" class="emoji-btn">
-
-                        <div class="emoji-container" *ngIf="showEmojis">
+                    <div class="yt-ctrl-btn-container cursor-pointer"
+                        (offClick)="!hideYtControls ? hideYtControls = !hideYtControls : hideYtControls"><img
+                            src="../../assets/images/yt-send.png" class="yt-ctrl-btn" title="YouTube Controls"
+                            (click)="hideYtControls = !hideYtControls" *ngIf="!ytUrl">
+                        <div class="yt-ctrl-container" [hidden]="hideYtControls">
                             <div class="row text-center no-pad-margin">
-                                <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
-                                    <img src="../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
-                                        ngbTooltip="{{e.code}}" placement="top" container="body" (click)="insertEmoji(e.code)" />
+                                <div class="col-9 no-pad-margin">
+                                    <input type="text" class="yt-send-input" ngbTooltip="Paste YouTube Link"
+                                        placement="top" container="body" [(ngModel)]="inviteLink"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <div class="col-3"><i class="fas fa-paper-plane cursor-pointer" ngbTooltip="Send Invite"
+                                        placement="top" container="body"
+                                        style="position: relative; top: 1px; left: 6px;"
+                                        (click)="sendOuterAppInvite('yt')"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="emoji-btn-container cursor-pointer"
+                        (offClick)="!hideEmojis ? hideEmojis = !hideEmojis : hideEmojis"><img
+                            src="../../assets/images/emoji-send.png" class="emoji-btn" title="Emojis"
+                            (click)="hideEmojis = !hideEmojis">
+
+                        <div class="emoji-container" [hidden]="hideEmojis">
+                            <div class="row text-center no-pad-margin">
+                                <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
+                                    <img src="../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
+                                        ngbTooltip="{{e.code}}" placement="top" container="body"
+                                        (click)="insertEmoji(e.code)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
-                            src="../../assets/images/prt-send.png"></div>
+                            src="../../assets/images/prt-send.png" title="Send Message"></div>
                 </div>
             </form>
         </div>

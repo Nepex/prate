@@ -99,10 +99,53 @@
     width: 25px;
 }
 
-.emoji-code-text {
-    font-weight: 600;
-    padding-bottom: 5px;
+.yt-ctrl-btn {
+    width: 27px;
+    height: 20px;
 }
+
+.yt-ctrl-btn-container {
+    position: absolute;
+    right: 105px;
+    top: 18px;
+    z-index: 900;
+}
+
+.yt-ctrl-container {
+    position: absolute;
+    bottom: 25px;
+    right: 13px;
+    cursor: default;
+    background: #efefef;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+    line-height: 1.3;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.yt-play-controls {
+    font-size: 18px;
+    position: absolute;
+    z-index: 900;
+    left: 25px;
+    bottom: 60px;
+    color: #ffffff;
+}
+
+.yt-send-input {
+    padding-right: 35px;
+}
+
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 
 .chat-area {
     /* background-image: url("../../assets/images/prt-background.png"); */

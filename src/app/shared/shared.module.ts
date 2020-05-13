@@ -10,6 +10,8 @@ import { MessageDisplayModalComponent } from './message-display/message-display-
 import { InterestFormatPipe } from './interest-format-pipe/interest-format.pipe';
 import { ServicesModule } from '../services/services.module';
 import { SafeHtmlPipe } from './safe-html-pipe/safe-html.pipe';
+import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
+import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { SafeHtmlPipe } from './safe-html-pipe/safe-html.pipe';
         MessageDisplayModalComponent,
         FooterComponent,
         InterestFormatPipe,
-        SafeHtmlPipe
+        SafeHtmlPipe,
+        SafeUrlPipe,
+        YoutubePlayerComponent
     ],
     imports: [
         CommonModule,
@@ -35,7 +39,9 @@ import { SafeHtmlPipe } from './safe-html-pipe/safe-html.pipe';
         MessageDisplayModalComponent,
         FooterComponent,
         InterestFormatPipe,
-        SafeHtmlPipe
+        SafeHtmlPipe,
+        SafeUrlPipe,
+        YoutubePlayerComponent
     ],
     providers: [],
 })

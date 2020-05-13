@@ -13,6 +13,15 @@ export class ChatService implements OnDestroy {
     @Output() public partner = new EventEmitter();
     @Output() public messageReceived = new EventEmitter();
     @Output() public messageSent = new EventEmitter();
+
+    @Output() public outerAppInviteReceived = new EventEmitter();
+    @Output() public outerAppInviteSent = new EventEmitter();
+    @Output() public outerAppInviteAccepted = new EventEmitter();
+    @Output() public outerAppInviteCanceled = new EventEmitter();
+
+    @Output() public closedYtVideo = new EventEmitter();
+    @Output() public toggledYtPlay = new EventEmitter();
+
     @Output() public isPartnerTyping = new EventEmitter();
     @Output() public partnerDisconnected = new EventEmitter();
     @Output() public userDisconnected = new EventEmitter();
@@ -22,19 +31,11 @@ export class ChatService implements OnDestroy {
 
     private matchFindRefreshInterval: number;
 
-    constructor(private sessionService: SessionService) {}
+    constructor(private sessionService: SessionService) { }
 
     /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
     intiateMatching(user: User): void {
-        this.socket = io(environment.apiServer, {
-            path: environment.socketIoServer
-        });
-
-        // this.socket = io('https://prate.club', {
-        //     path: '/api/socket.io'
-        // });
-
-        // this.socket = io.connect(environment.apiBaseUrl);
+        this.connect();
 
         this.socket.on('matchError', err => {
             this.matchingError.emit(err);
@@ -68,8 +69,16 @@ export class ChatService implements OnDestroy {
                 this.partner.emit(partner);
 
                 this.listenForMessageRecevied();
+
                 this.listenForPartnerIsTyping();
                 this.listenForPartnerDisconnect();
+
+                this.listenForOuterAppInvite();
+                this.listenForOuterAppInviteAccept();
+                this.listenForOuterAppInviteCancel();
+
+                this.listenForToggleYtPlay();
+                this.listenForCloseYtVideo();
             }
         });
     }
@@ -113,6 +122,121 @@ export class ChatService implements OnDestroy {
         });
     }
 
+    /** Emits app invite sent to socket */
+    sendOuterAppInvite(partner: User, user: User, outerAppType: string, outerAppLink: string): void {
+        const msgObj: ChatMessage = {
+            sender: user.name,
+            receiver: partner.clientId,
+            outerAppType: outerAppType,
+            outerAppLink: outerAppLink,
+            datetime: moment().format('hh:mm a'),
+            type: 'sent'
+        };
+
+        this.socket.emit('outer-app-invite-send', msgObj);
+        this.outerAppInviteSent.emit(msgObj);
+    }
+
+    /** Listens for app invite received from socket */
+    listenForOuterAppInvite(): void {
+        this.socket.on('outer-app-invite-received', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.outerAppInviteReceived.emit(msgObj);
+        });
+    }
+
+    /** Emits app invite accepted to socket */
+    outerAppInviteAccept(partner: User, user: User, outerAppType: string): void {
+        const msgObj: ChatMessage = {
+            sender: user.name,
+            receiver: partner.clientId,
+            outerAppType: outerAppType,
+            datetime: moment().format('hh:mm a'),
+            type: 'sent'
+        };
+
+        this.socket.emit('outer-app-invite-accept', msgObj);
+    }
+
+    /** Listens for app invite accepted from socket */
+    listenForOuterAppInviteAccept(): void {
+        this.socket.on('outer-app-invite-accept', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.outerAppInviteAccepted.emit(msgObj);
+        });
+    }
+
+    /** Emits app invite canceled to socket */
+    outerAppInviteCancel(partner: User, user: User, outerAppType: string): void {
+        const msgObj: ChatMessage = {
+            sender: user.name,
+            receiver: partner.clientId,
+            outerAppType: outerAppType,
+            datetime: moment().format('hh:mm a'),
+            type: 'sent'
+        };
+
+        this.socket.emit('outer-app-invite-cancel', msgObj);
+    }
+
+    /** Listens for app invite canceled from socket */
+    listenForOuterAppInviteCancel(): void {
+        this.socket.on('outer-app-invite-cancel', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.outerAppInviteCanceled.emit(msgObj);
+        });
+    }
+
+    /** Emits to play/pause YT video to socket */
+    toggleYtPlay(partner: User, user: User): void {
+        const msgObj: ChatMessage = {
+            sender: user.name,
+            receiver: partner.clientId,
+            datetime: moment().format('hh:mm a'),
+            type: 'sent'
+        };
+
+        this.socket.emit('toggle-yt-play', msgObj);
+    }
+
+    /** Listens for play/pause YT video from socket */
+    listenForToggleYtPlay(): void {
+        this.socket.on('toggle-yt-play', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.toggledYtPlay.emit(msgObj);
+        });
+    }
+
+    /** Emits to close YT video to socket */
+    closeYtVideo(partner: User, user: User): void {
+        const msgObj: ChatMessage = {
+            sender: user.name,
+            receiver: partner.clientId,
+            datetime: moment().format('hh:mm a'),
+            type: 'sent'
+        };
+
+        this.socket.emit('close-yt-video', msgObj);
+    }
+
+    /** Listens for close YT video from socket */
+    listenForCloseYtVideo(): void {
+        this.socket.on('close-yt-video', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.closedYtVideo.emit(msgObj);
+        });
+    }
+
     /** Emits to socket that user is currently typing */
     userIsTyping(isTyping: boolean, partner: User): void {
         const typingObj = {
@@ -128,6 +252,15 @@ export class ChatService implements OnDestroy {
         this.socket.on('user-typed', typingObj => {
             this.isPartnerTyping.emit(typingObj);
         });
+    }
+
+    /** Connect to socket */
+    connect() {
+        this.socket = io(environment.apiServer, {
+            path: environment.socketIoServer
+        });
+
+        // this.socket = io.connect(environment.apiServer + '/' + environment.socketIoServer);
     }
 
     /** Emits to socket when user is disconnected from chat */

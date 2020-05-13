@@ -1,0 +1,27 @@
+<div class="modal-header no-pad-margin">
+    <div class="container invite-header">
+        <div class="row">
+            <div class="col-12 my-auto text-center">
+                <span *ngIf="type === 'sent'">Invite Sent</span>
+                <span *ngIf="type === 'received'">Invite Received</span>
+            </div>
+        </div>
+    </div>
+    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+</div>
+<div class="container modal-body">
+    <div class="row no-pad-margin">
+        <div class="col-12 message-col">
+            <span *ngIf="type === 'received' && outerAppType === 'yt'">{{ user }} has invited you to watch a YouTube video.</span>
+            <span *ngIf="type === 'sent' && outerAppType === 'yt'">Waiting for answer...</span>
+        </div>
+    </div>
+</div>
+<div class="modal-footer text-center no-pad-margin">
+    <div class="form-group text-center" style="margin-bottom: 20px;">
+        <button class="btn submit-btn cursor-pointer" *ngIf="type === 'sent'" (click)="passBack('cancel')">Cancel</button>
+
+        <button class="btn submit-btn cursor-pointer" *ngIf="type === 'received'" (click)="passBack('accept')">Accept</button> &nbsp;
+        <button class="btn submit-btn cursor-pointer" *ngIf="type === 'received'" (click)="passBack('cancel')">Decline</button>
+    </div>
+</div>

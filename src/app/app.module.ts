@@ -30,6 +30,7 @@ import { ChangeAvatarModalComponent } from './chat/change-avatar/change-avatar-m
 import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.component';
 import { BugReportModalComponent } from './chat/bug-report/bug-report-modal.component';
 import { OffClickDirective } from './shared/off-click-directive/off-click.directive';
+import { OuterAppInviteModalComponent } from './chat/invite-modals/outer-app-invite/outer-app-invite-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { OffClickDirective } from './shared/off-click-directive/off-click.direct
     UserInfoPanelComponent,
     ChangeAvatarModalComponent,
     ChatHelpModalComponent,
-    BugReportModalComponent
+    BugReportModalComponent,
+    OuterAppInviteModalComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ import { OffClickDirective } from './shared/off-click-directive/off-click.direct
     PrivacyPolicyModalComponent,
     ChangeAvatarModalComponent,
     ChatHelpModalComponent,
-    BugReportModalComponent
+    BugReportModalComponent,
+    OuterAppInviteModalComponent
 ]
 })
 export class AppModule { }
