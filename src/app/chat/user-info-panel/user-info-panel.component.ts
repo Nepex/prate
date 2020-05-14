@@ -58,7 +58,6 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         }
 
         const modalRef = this.modal.open(UserProfileModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        modalRef.componentInstance.user = this.user;
 
         modalRef.result.then(() => {
         }, () => {

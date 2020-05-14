@@ -347,6 +347,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.leaveMessage = 'You left the chat';
         this.chatMessages = [];
         this.partner = null;
+        this.inviteLink = null;
+        this.ytUrl = null;
 
         this.chatFinishedOverlay = true;
         this.stopTimerAndGiveExp();
@@ -361,6 +363,8 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.leaveMessage = 'has left the chat';
             this.chatMessages = [];
             this.partner = null;
+            this.inviteLink = null;
+            this.ytUrl = null;
 
             this.matchedWithOverlay = false;
             this.chatFinishedOverlay = true;
@@ -463,6 +467,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (!message) { message = ''; }
 
         this.messageForm.value.message = this.messageForm.controls.message.setValue(message + code);
+        this.hideEmojis = true;
         this.messageInput.nativeElement.focus();
     }
 
@@ -472,12 +477,19 @@ export class ChatComponent implements OnInit, OnDestroy {
             return;
         }
 
-        if (this.inviteLink.length > 2000 || !this.inviteLink) {
+        if (this.inviteLink.length > 1000 || !this.inviteLink) {
             this.inviteLink = null;
             return;
         }
 
-        // validate link here
+        if (app === 'yt') {
+            const ytRegEx = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
+
+            if (!ytRegEx.test(this.inviteLink)) {
+                this.inviteLink = 'Invalid link'
+                return;
+            }
+        }
 
         this.chatService.sendOuterAppInvite(this.partner, this.user, app, this.inviteLink);
         this.inactivityTimer = 0;

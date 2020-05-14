@@ -69,6 +69,21 @@
     height: 55px;
     width: 60px;
     border-radius: 50%;
+    opacity: .6;
+    transition: .25s;
+}
+
+.avatar-image:hover {
+    opacity: 1;
+    transition: .25s;
+    -webkit-box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.active-avatar {
+    opacity: 1;
+    -webkit-box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 ::ng-deep>>>.modal-content {

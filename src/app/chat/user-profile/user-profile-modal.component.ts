@@ -1,15 +1,13 @@
 import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
 import { User } from '../../services/user/user';
-import { MessageDisplayModalComponent } from '../../shared/message-display/message-display-modal.component';
 import { LevelService } from '../../services/level/level.service';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
 import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
-import { LevelInfo } from 'src/app/services/level/level-info';
 
 @Component({
     selector: 'prt-user-profile-modal',
@@ -17,7 +15,7 @@ import { LevelInfo } from 'src/app/services/level/level-info';
     styleUrls: ['./user-profile-modal.component.css']
 })
 export class UserProfileModalComponent implements OnInit {
-    @Input() user: User;
+    user: User;
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
     showPasswordFields: boolean = false;
@@ -43,6 +41,25 @@ export class UserProfileModalComponent implements OnInit {
         private levelService: LevelService) { }
 
     ngOnInit(): void {
+        this.getUser();
+    }
+
+    getUser() {
+        this.loadingRequest = this.userService.getUser();
+
+        this.loadingRequest.subscribe(res => {
+            this.user = res;
+            this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
+            this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
+            this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
+
+            this.initFormValues();
+
+            this.loadingRequest = null;
+        });
+    }
+
+    initFormValues() {
         this.profileForm.controls.name.setValue(this.user.name);
         this.profileForm.controls.font_face.setValue(this.user.font_face);
         this.profileForm.controls.font_color.setValue('#' + this.user.font_color);
@@ -124,8 +141,14 @@ export class UserProfileModalComponent implements OnInit {
 
     openEditAvatar() {
         this.activeModal.close();
-        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false });
+        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 
         modalRef.componentInstance.user = this.user;
+        modalRef.componentInstance.userSettingsRef = this;
+
+        modalRef.result.then(() => {
+        }, () => {
+            this.modal.open(UserProfileModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+        });
     }
 }

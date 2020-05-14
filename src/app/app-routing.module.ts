@@ -9,6 +9,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { DevelopersComponent } from './resources/developers/developers.component';
 import { SummaryComponent } from './resources/summary/summary.component';
 import { PageNotFoundComponent } from './resources/errors/page-not-found.component.ts/page-not-found.component';
+import { AttributionsComponent } from './resources/attributions/attributions.component';
 
 export const routes: Routes = [
   // public
@@ -17,7 +18,7 @@ export const routes: Routes = [
   { path: 'download', component: DownloadComponent },
   { path: 'summary', component: SummaryComponent },
   { path: 'changelog', component: ChangeLogComponent },
-
+  { path: 'attributions', component: AttributionsComponent },
 
   // private
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },

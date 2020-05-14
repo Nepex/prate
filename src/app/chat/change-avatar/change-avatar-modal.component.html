@@ -1,39 +1,36 @@
-<form (ngSubmit)="applyChanges()" [formGroup]="avatarForm" novalidate>
-
-    <div class="modal-header no-pad-margin">
-        <div class="container avatar-header">
-            <div class="row">
-                <div class="col-12 my-auto text-center">
-                    Change Avatar
-                </div>
-            </div>
-        </div>
-
-        <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
-    </div>
-
-    <div class="container modal-body">
+<div class="modal-header no-pad-margin">
+    <div class="container avatar-header">
         <div class="row">
-            <div class="col-12 text-center">
-                <prt-alert-messages [messages]="messages"></prt-alert-messages>
-
-                <div class="row">
-                    <div class="col-6 text-center">
-                        <img src="../../../assets/images/avatars/default.png" class="avatar-image"> <br />
-                        <input type="radio" name="avatar" value="default.png" formControlName="avatar" />
-                    </div>
-                    <div class="col-6 text-center">
-                        <img src="../../../assets/images/avatars/female.png" class="avatar-image"> <br />
-                        <input type="radio" name="avatar" value="female.png" formControlName="avatar" />
-                    </div>
-                </div>
+            <div class="col-12 my-auto text-center">
+                Change Avatar
             </div>
         </div>
     </div>
 
-    <div class="modal-footer text-center no-pad-margin">
-        <div class="form-group text-center">
-            <input type="submit" value="APPLY" class="btn submit-btn cursor-pointer" />
+    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+</div>
+
+<div class="container modal-body">
+    <div class="row">
+        <div class="col-12 text-center">
+            <div style="padding-bottom: 20px;" *ngIf="messages && messages.length > 0">
+                <prt-alert-messages [messages]="messages"></prt-alert-messages>
+            </div>
+
+            <div class="row">
+                <div class="col-3 text-center position-relative" *ngFor="let a of avatars"
+                    style="padding-bottom: 15px;">
+                    <img src="../../../assets/images/avatars/{{a.name}}" class="avatar-image cursor-pointer"
+                        (click)="selectAvatar(a.name)" [ngClass]="{'active-avatar' : selectedAvatar === a.name}">
+                    <br />
+                </div>
+            </div>
         </div>
     </div>
-</form>
+</div>
+
+<div class="modal-footer text-center no-pad-margin">
+    <div class="form-group text-center">
+        <button class="btn submit-btn cursor-pointer" type="button" (click)="applyChanges()">OKAY</button>
+    </div>
+</div>

@@ -31,6 +31,7 @@ import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.compone
 import { BugReportModalComponent } from './chat/bug-report/bug-report-modal.component';
 import { OffClickDirective } from './shared/off-click-directive/off-click.directive';
 import { OuterAppInviteModalComponent } from './chat/invite-modals/outer-app-invite/outer-app-invite-modal.component';
+import { AttributionsComponent } from './resources/attributions/attributions.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { OuterAppInviteModalComponent } from './chat/invite-modals/outer-app-inv
     DevelopersComponent,
     DownloadComponent,
     SummaryComponent,
+    AttributionsComponent,
     PageNotFoundComponent,
     TermsModalComponent,
     PrivacyPolicyModalComponent,

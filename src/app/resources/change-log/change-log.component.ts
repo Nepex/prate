@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-change-log',
+    selector: 'prt-change-log',
     templateUrl: './change-log.component.html',
     styleUrls: ['./change-log.component.css']
 })

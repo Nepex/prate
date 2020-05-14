@@ -6,11 +6,12 @@ import { AlertMessages } from './../shared/alert-messages/alert-messages.compone
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { User } from '../services/user/user';
-import { Router } from '@angular/router';
 import { LoginModalComponent } from '../login/login-modal.component';
 import { SubmittableFormGroup } from '../shared/submittable-form-group/submittable-form-group';
+import { Credentials } from '../services/session/credentials';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'prt-sign-up-modal',
@@ -29,13 +30,14 @@ export class SignUpModalComponent implements OnInit {
         passwordConfirm: new FormControl('', [Validators.required])
     });
 
-    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
+    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal, private sessionService: SessionService,
+        private router: Router) { }
 
     ngOnInit(): void { }
 
-    openLogin() {
-        this.modal.open(LoginModalComponent, { centered: true, backdrop : 'static', keyboard : false });
-    }
+    // openLogin() {
+    //     this.modal.open(LoginModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+    // }
 
     createUser() {
         this.messages = [];
@@ -68,10 +70,7 @@ export class SignUpModalComponent implements OnInit {
             this.messages.push({ message: 'Account created! Redirecting...', type: 'success' });
             this.signUpForm.reset();
 
-            setTimeout(() => {
-                this.activeModal.close();
-                this.openLogin();
-            }, 500);
+            this.logUserIn(body);
         }, err => {
             this.loadingRequest = null;
             this.signUpForm['submitted'] = false;
@@ -82,16 +81,42 @@ export class SignUpModalComponent implements OnInit {
         });
     }
 
+    logUserIn(body) {
+        if (this.loadingRequest) {
+            return;
+        }
+
+        delete body.name;
+
+        this.loadingRequest = this.sessionService.login(body);
+
+        this.loadingRequest.subscribe(res => {
+            this.loadingRequest = null;
+            this.signUpForm['submitted'] = false;
+
+            setTimeout(() => {
+                this.activeModal.close();
+                this.router.navigateByUrl('/chat');
+            }, 500);
+        }, err => {
+            this.loadingRequest = null;
+            this.signUpForm['submitted'] = false;
+            err.error.forEach(error => {
+                this.messages.push({ message: error, type: 'error' });
+            });
+        });
+    }
+
     openTerms() {
         this.activeModal.close();
-        this.modal.open(TermsModalComponent, { centered: true, backdrop : 'static', keyboard : false });
+        this.modal.open(TermsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 
         return false;
     }
 
     openPrivacyPolicy() {
         this.activeModal.close();
-        this.modal.open(PrivacyPolicyModalComponent, { centered: true, backdrop : 'static', keyboard : false });
+        this.modal.open(PrivacyPolicyModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 
         return false;
     }

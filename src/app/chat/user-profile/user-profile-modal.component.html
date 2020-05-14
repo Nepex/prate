@@ -1,4 +1,4 @@
-<form (ngSubmit)="applyChanges()" [formGroup]="profileForm" novalidate>
+<form (ngSubmit)="applyChanges()" [formGroup]="profileForm" novalidate *ngIf="user">
 
     <div class="modal-header no-pad-margin">
         <div class="container user-header" *ngIf="user">
