@@ -7,13 +7,13 @@
             </div>
         </div>
     </div>
-    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <div class="container modal-body">
     <div class="row no-pad-margin">
         <div class="col-12 message-col">
-            <span *ngIf="type === 'received' && outerAppType === 'yt'">{{ user }} has invited you to watch a YouTube video.</span>
-            <span *ngIf="type === 'sent' && outerAppType === 'yt'">Waiting for answer...</span>
+            <span *ngIf="type === 'received' && outerApp === 'yt'">{{ user }} has invited you to watch a YouTube video titled: <strong><span *ngIf="ytVideoTitle">{{ ytVideoTitle }}</span></strong>
+            </span>
+            <span *ngIf="type === 'sent' && outerApp === 'yt'">Waiting for answer...</span>
         </div>
     </div>
 </div>

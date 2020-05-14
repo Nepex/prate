@@ -5,7 +5,7 @@ import { Injectable, EventEmitter, Output, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import * as io from 'socket.io-client';
 import { SessionService } from '../session/session.service';
-import { LevelInfo } from '../level/level-info';
+import { OuterAppInfo } from './outer-app-info';
 
 @Injectable()
 export class ChatService implements OnDestroy {
@@ -19,8 +19,7 @@ export class ChatService implements OnDestroy {
     @Output() public outerAppInviteAccepted = new EventEmitter();
     @Output() public outerAppInviteCanceled = new EventEmitter();
 
-    @Output() public closedYtVideo = new EventEmitter();
-    @Output() public toggledYtPlay = new EventEmitter();
+    @Output() public toggledOuterAppFunction = new EventEmitter();
 
     @Output() public isPartnerTyping = new EventEmitter();
     @Output() public partnerDisconnected = new EventEmitter();
@@ -77,8 +76,7 @@ export class ChatService implements OnDestroy {
                 this.listenForOuterAppInviteAccept();
                 this.listenForOuterAppInviteCancel();
 
-                this.listenForToggleYtPlay();
-                this.listenForCloseYtVideo();
+                this.listenForToggleOuterAppFunction();
             }
         });
     }
@@ -123,13 +121,12 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits app invite sent to socket */
-    sendOuterAppInvite(partner: User, user: User, outerAppType: string, outerAppLink: string): void {
-        const msgObj: ChatMessage = {
+    sendOuterAppInvite(partner: User, user: User, outerApp: string, outerAppLink: string): void {
+        const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
-            outerAppType: outerAppType,
+            outerApp: outerApp,
             outerAppLink: outerAppLink,
-            datetime: moment().format('hh:mm a'),
             type: 'sent'
         };
 
@@ -148,12 +145,11 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits app invite accepted to socket */
-    outerAppInviteAccept(partner: User, user: User, outerAppType: string): void {
-        const msgObj: ChatMessage = {
+    outerAppInviteAccept(partner: User, user: User, outerApp: string): void {
+        const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
-            outerAppType: outerAppType,
-            datetime: moment().format('hh:mm a'),
+            outerApp: outerApp,
             type: 'sent'
         };
 
@@ -171,12 +167,11 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits app invite canceled to socket */
-    outerAppInviteCancel(partner: User, user: User, outerAppType: string): void {
-        const msgObj: ChatMessage = {
+    outerAppInviteCancel(partner: User, user: User, outerApp: string): void {
+        const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
-            outerAppType: outerAppType,
-            datetime: moment().format('hh:mm a'),
+            outerApp: outerApp,
             type: 'sent'
         };
 
@@ -193,47 +188,25 @@ export class ChatService implements OnDestroy {
         });
     }
 
-    /** Emits to play/pause YT video to socket */
-    toggleYtPlay(partner: User, user: User): void {
-        const msgObj: ChatMessage = {
+    /** Emits app functions to socket */
+    toggleOuterAppFunction(partner: User, user: User, outerApp: string, activity: string): void {
+        const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
-            datetime: moment().format('hh:mm a'),
-            type: 'sent'
+            type: 'sent',
+            outerApp: outerApp,
+            activity: activity
         };
 
-        this.socket.emit('toggle-yt-play', msgObj);
+        this.socket.emit('toggle-outer-app-function', msgObj);
     }
 
-    /** Listens for play/pause YT video from socket */
-    listenForToggleYtPlay(): void {
-        this.socket.on('toggle-yt-play', msgObj => {
-            msgObj.datetime = moment().format('hh:mm a');
+    /** Listens for app function changes from socket */
+    listenForToggleOuterAppFunction(): void {
+        this.socket.on('toggle-outer-app-function', msgObj => {
             msgObj.type = 'received';
 
-            this.toggledYtPlay.emit(msgObj);
-        });
-    }
-
-    /** Emits to close YT video to socket */
-    closeYtVideo(partner: User, user: User): void {
-        const msgObj: ChatMessage = {
-            sender: user.name,
-            receiver: partner.clientId,
-            datetime: moment().format('hh:mm a'),
-            type: 'sent'
-        };
-
-        this.socket.emit('close-yt-video', msgObj);
-    }
-
-    /** Listens for close YT video from socket */
-    listenForCloseYtVideo(): void {
-        this.socket.on('close-yt-video', msgObj => {
-            msgObj.datetime = moment().format('hh:mm a');
-            msgObj.type = 'received';
-
-            this.closedYtVideo.emit(msgObj);
+            this.toggledOuterAppFunction.emit(msgObj);
         });
     }
 

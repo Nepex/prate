@@ -51,8 +51,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     outerAppInviteAcceptedSub: Subscription;
     outerAppInviteCanceledSub: Subscription;
 
-    closedYtVideoSub: Subscription;
-    toggledYtPlaySub: Subscription;
+    toggledOuterAppFunctionSub: Subscription;
 
     userDoneTypingSub: Subscription;
     isPartnerTypingSub: Subscription;
@@ -77,13 +76,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     expMessage: string;
     rankUpMessage: string;
     hideEmojis: boolean = true;
-    hideYtControls: boolean = true;
+    hideYtInvControls: boolean = true;
     inviteLink: string;
     outerAppInviteModal: any;
 
     // yt video
     ytUrl: string;
     ytPlayState: boolean = true;
+    ytMuteState: boolean = false;
 
     isWindowFocused: boolean;
 
@@ -151,8 +151,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
             this.outerAppInviteCanceledSub = this.chatService.outerAppInviteCanceled.subscribe(msgObj => this.outerAppInviteCanceled(msgObj));
 
-            this.toggledYtPlaySub = this.chatService.toggledYtPlay.subscribe(msgObj => this.toggleYtPlay(msgObj));
-            this.closedYtVideoSub = this.chatService.closedYtVideo.subscribe(msgObj => this.closeYtVideo(msgObj));
+            this.toggledOuterAppFunctionSub = this.chatService.toggledOuterAppFunction.subscribe(msgObj => this.outerAppFunctionToggledByPartner(msgObj));
 
             this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
             this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
@@ -190,6 +189,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.outerAppInviteReceivedSub.unsubscribe();
         this.outerAppInviteAcceptedSub.unsubscribe();
         this.outerAppInviteCanceledSub.unsubscribe();
+
+        this.toggledOuterAppFunctionSub.unsubscribe();
 
         this.userDoneTypingSub.unsubscribe();
         this.isPartnerTypingSub.unsubscribe();
@@ -494,14 +495,14 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.chatService.sendOuterAppInvite(this.partner, this.user, app, this.inviteLink);
         this.inactivityTimer = 0;
         this.statusMessage = null;
-        if (app === 'yt') { this.hideYtControls = true; }
+        if (app === 'yt') { this.hideYtInvControls = true; }
     }
 
     outerAppInviteSent(invInfo) {
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'sent';
-        this.outerAppInviteModal.componentInstance.outerAppType = invInfo.outerAppType;
+        this.outerAppInviteModal.componentInstance.outerApp = invInfo.outerApp;
 
         this.outerAppInviteModal.result.then(res => {
             if (res === 'cancel') {
@@ -514,14 +515,15 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'received';
-        this.outerAppInviteModal.componentInstance.outerAppType = invInfo.outerAppType;
+        this.outerAppInviteModal.componentInstance.outerApp = invInfo.outerApp;
+        this.outerAppInviteModal.componentInstance.url = invInfo.outerAppLink;
 
         this.outerAppInviteModal.result.then(res => {
             if (res === 'accept') {
                 this.outerAppInviteAccepted(invInfo);
-                this.chatService.outerAppInviteAccept(this.partner, this.user, invInfo.outerAppType);
+                this.chatService.outerAppInviteAccept(this.partner, this.user, invInfo.outerApp);
             } else if (res === 'cancel') {
-                this.chatService.outerAppInviteCancel(this.partner, this.user, invInfo.outerAppType);
+                this.chatService.outerAppInviteCancel(this.partner, this.user, invInfo.outerApp);
             }
         });
     }
@@ -532,7 +534,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
         // prepare app
         // yt
-        if (invInfo.outerAppType === 'yt') {
+        if (invInfo.outerApp === 'yt') {
             this.ytUrl = invInfo.outerAppLink ? invInfo.outerAppLink : this.inviteLink;
         }
     }
@@ -541,19 +543,41 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.outerAppInviteModal.close();
     }
 
-    toggleYtPlay(senderInfo) {
-        this.ytPlayState = !this.ytPlayState;
-        if (!senderInfo) {
-            this.chatService.toggleYtPlay(this.partner, this.user);
+    toggleOuterAppFunction(outerApp, activity) {
+        if (outerApp === 'yt') {
+            if (activity === 'playpause') {
+                this.ytPlayState = !this.ytPlayState;
+            }
+            else if (activity === 'muteunmute') {
+                this.ytMuteState = !this.ytMuteState;
+            }
+            else if (activity === 'close') {
+                this.ytUrl = null;
+                this.inviteLink = null;
+                this.ytPlayState = true;
+                this.ytMuteState = false;
+                this.hideYtInvControls = true;
+            }
         }
+
+        this.chatService.toggleOuterAppFunction(this.partner, this.user, outerApp, activity);
     }
 
-    closeYtVideo(senderInfo) {
-        this.ytUrl = null;
-        this.inviteLink = null;
-        this.hideYtControls = true;
-        if (!senderInfo) {
-            this.chatService.closeYtVideo(this.partner, this.user);
+    outerAppFunctionToggledByPartner(receivedInfo) {
+        if (receivedInfo.outerApp === 'yt') {
+            if (receivedInfo.activity === 'playpause') {
+                this.ytPlayState = !this.ytPlayState;
+            }
+            else if (receivedInfo.activity === 'muteunmute') {
+                this.ytMuteState = !this.ytMuteState;
+            }
+            else if (receivedInfo.activity === 'close') {
+                this.ytUrl = null;
+                this.inviteLink = null;
+                this.ytPlayState = true;
+                this.ytMuteState = false;
+                this.hideYtInvControls = true;
+            }
         }
     }
 }

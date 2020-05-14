@@ -32,6 +32,7 @@ import { BugReportModalComponent } from './chat/bug-report/bug-report-modal.comp
 import { OffClickDirective } from './shared/off-click-directive/off-click.directive';
 import { OuterAppInviteModalComponent } from './chat/invite-modals/outer-app-invite/outer-app-invite-modal.component';
 import { AttributionsComponent } from './resources/attributions/attributions.component';
+import { ServicesExternalModule } from './services-external/services-external.module';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { AttributionsComponent } from './resources/attributions/attributions.com
     FormsModule,
     ReactiveFormsModule,
     ServicesModule,
+    ServicesExternalModule,
     MomentModule,
     AngularResizedEventModule,
     BrowserAnimationsModule,

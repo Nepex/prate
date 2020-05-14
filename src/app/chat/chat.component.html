@@ -80,7 +80,8 @@
     </div>
 
     <div class="row chat-area">
-        <prt-youtube-player [height]="100" [width]="100" [playState]="ytPlayState" [videoUrl]="ytUrl">
+        <prt-youtube-player [height]="100" [width]="100" [playState]="ytPlayState" [muteState]="ytMuteState"
+            [videoUrl]="ytUrl">
         </prt-youtube-player>
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
@@ -119,7 +120,7 @@
                 </div>
             </div>
 
-            <div class="user-is-typing" [hidden]="!partnerIsTyping">
+            <div class="user-is-typing" [hidden]="!partnerIsTyping" [ngStyle]="{'color': ytUrl ? '#000000' : '#666666'}">
                 <span *ngIf="partner">{{ partner.name }} is typing...</span>
             </div>
 
@@ -133,15 +134,17 @@
 
             <div class="yt-play-controls" *ngIf="ytUrl">
                 <div class="col-12">
-                    <i class="fas cursor-pointer"
-                        [ngClass]="{'fa-play': !ytPlayState, 'fa-pause': ytPlayState}"
+                    <i class="fas cursor-pointer" [ngClass]="{'fa-play': !ytPlayState, 'fa-pause': ytPlayState}"
                         ngbTooltip="Toggle Play/Pause" placement="top" container="body"
-                        style="position: relative; top: 1px; left: 6px;"
-                        (click)="toggleYtPlay(null)"></i>
+                        style="position: relative; top: 1px; left: 6px;" (click)="toggleOuterAppFunction('yt', 'playpause')"></i>
                     &nbsp;
-                    <i class="fas fas fa-times cursor-pointer" ngbTooltip="Close Video" placement="top"
-                        container="body" style="position: relative; top: 1px; left: 6px;"
-                        (click)="closeYtVideo(null)"></i>
+                    <i class="fas cursor-pointer" [ngClass]="{'fa-volume-up': !ytMuteState, 'fa-volume-mute': ytMuteState}"
+                        ngbTooltip="Toggle Mute/UnMute" placement="top" container="body"
+                        style="position: relative; top: 1px; left: 6px;" (click)="toggleOuterAppFunction('yt', 'muteunmute')"></i>
+                    &nbsp;
+                    <i class="fas fas fa-times cursor-pointer" ngbTooltip="Close Video" placement="top" container="body"
+                        style="position: relative; top: 1px; left: 6px;"
+                        (click)="toggleOuterAppFunction('yt', 'close')"></i>
                 </div>
             </div>
 
@@ -152,10 +155,10 @@
                         formControlName="message" (keypress)="listenForUserTyping()" #messageInput>
 
                     <div class="yt-ctrl-btn-container cursor-pointer"
-                        (offClick)="!hideYtControls ? hideYtControls = !hideYtControls : hideYtControls"><img
-                            src="../../assets/images/yt-send.png" class="yt-ctrl-btn" title="YouTube Controls"
-                            (click)="hideYtControls = !hideYtControls" *ngIf="!ytUrl">
-                        <div class="yt-ctrl-container" [hidden]="hideYtControls">
+                        (offClick)="!hideYtInvControls ? hideYtInvControls = !hideYtInvControls : hideYtInvControls">
+                        <img src="../../assets/images/yt-send.png" class="yt-ctrl-btn" title="YouTube Controls"
+                            (click)="hideYtInvControls = !hideYtInvControls" *ngIf="!ytUrl">
+                        <div class="yt-ctrl-container" [hidden]="hideYtInvControls">
                             <div class="row text-center no-pad-margin">
                                 <div class="col-9 no-pad-margin">
                                     <input type="text" class="yt-send-input" ngbTooltip="Paste YouTube Link"

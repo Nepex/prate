@@ -8,12 +8,14 @@ import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core
 export class YoutubePlayerComponent implements OnInit, OnChanges {
     @Input() videoUrl: string;
     @Input() playState: boolean;
+    @Input() muteState: boolean;
     @Input() height: string;
     @Input() width: string;
 
     public YT: any;
     videoPlayer: any;
     videoId: any;
+    hidePlayer: boolean = true;
 
     constructor() { }
 
@@ -40,15 +42,22 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: { [property: string]: SimpleChange }) {
         if (changes.videoUrl && !changes.videoUrl.firstChange) {
-            if (!this.videoUrl) {
-                this.videoUrl = null;
-                this.videoId = null;
-            } else {
-                this.videoUrl = changes.videoUrl.currentValue;
+            this.videoUrl = changes.videoUrl.currentValue;
 
+            if (!this.videoUrl) {
+                this.videoId = null;
+                this.hidePlayer = true;
+            }  else {
                 var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
                 var match = this.videoUrl.match(regExp);
                 this.videoId = (match && match[1].length == 11) ? match[1] : false;
+    
+                // timeout to maybe skip the 'error' message in hidden youtube player
+                if (this.videoId) {
+                    setTimeout(() => {
+                        this.hidePlayer = false;
+                    }, 500);
+                }
             }
         }
 
@@ -61,10 +70,19 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
                 this.pauseVideo();
             }
         }
+
+        if (changes.muteState && !changes.muteState.firstChange) {
+            this.muteState = changes.muteState.currentValue;
+
+            if (this.muteState) {
+                this.muteVideo();
+            } else {
+                this.unmuteVideo();
+            }
+        }
     }
 
     onPlayerReady(event) {
-        console.log('successfully bound player');
         this.videoPlayer.playVideo();
         this.videoPlayer.unMute();
     }
@@ -75,6 +93,14 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
 
     pauseVideo() {
         this.videoPlayer.pauseVideo();
+    }
+
+    muteVideo() {
+        this.videoPlayer.mute();
+    }
+
+    unmuteVideo() {
+        this.videoPlayer.unMute();
     }
 
     onPlayerStateChange(event) {
