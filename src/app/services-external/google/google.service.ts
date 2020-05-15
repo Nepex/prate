@@ -12,6 +12,7 @@ export class GoogleService {
     constructor(handler: HttpBackend) {
         this.http = new HttpClient(handler);
     }
+
     getYtVideoInfo(videoId: string): Observable<any> {
         const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${this.googleApiKey}`;
 

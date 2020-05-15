@@ -13,6 +13,8 @@ import { BugReport } from './bug-report';
 @Injectable()
 export class UserService {
     @Output() public avatarChanged = new EventEmitter();
+    @Output() public userSettingsChanged = new EventEmitter();
+
     private apiUrl = `${environment.apiBaseUrl}/users`;
 
     constructor(private http: HttpClient, private sessionService: SessionService) {

@@ -42,6 +42,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     chatMessages: ChatMessage[] = [];
 
     loadingRequest: Observable<User>;
+    userSettingsChangedSub: Subscription;
     partnerFoundSub: Subscription;
     messageReceivedSub: Subscription;
     messageSentSub: Subscription;
@@ -142,6 +143,8 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
 
             // set listeners
+            this.userSettingsChangedSub = this.userService.userSettingsChanged.subscribe(res => this.getUser());
+
             this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
             this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
@@ -181,6 +184,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Unsubscribe from subscriptions on page destroy */
     ngOnDestroy(): void {
+        this.userSettingsChangedSub.unsubscribe();
         this.partnerFoundSub.unsubscribe();
         this.messageSentSub.unsubscribe();
         this.messageReceivedSub.unsubscribe();
@@ -197,6 +201,16 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.partnerDisconnectSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
+    }
+
+    /** Any time settings need to be refreshed */
+    getUser() {
+        this.loadingRequest = this.userService.getUser();
+
+        this.loadingRequest.subscribe(res => { 
+            this.loadingRequest = null;
+            this.user = res; 
+        });
     }
 
     /** Commences matching, looks for available partners */
@@ -282,10 +296,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     messageReceived(msgObj: ChatMessage): void {
         if (!this.isWindowFocused) {
             this.titleService.setTitle('New Message!');
-            let audio = new Audio();
-            audio.src = "../../assets/sounds/notif.mp3";
-            audio.load();
-            audio.play();
+
+            if (this.user.sounds) {
+                let audio = new Audio();
+                audio.src = "../../assets/sounds/notif.mp3";
+                audio.load();
+                audio.play();
+            }
         }
 
         msgObj.message = this.linkify(msgObj.message);

@@ -13,6 +13,9 @@ export class User {
     avatar?: string;
     show_avatars?: boolean;
     bubble_layout?: string;
+    color_theme?: string;
+    enforce_interests?: boolean;
+    sounds?: boolean;
     webSocketAuth?: string;
     token?: string;
     experience?: number;

@@ -49,6 +49,7 @@ export class ChatService implements OnDestroy {
             bubble_color: user.bubble_color,
             avatar: user.avatar,
             experience: user.experience,
+            enforce_interests: user.enforce_interests,
             webSocketAuth: '3346841372',
             token: this.sessionService.getToken(),
             levelInfo: user.levelInfo

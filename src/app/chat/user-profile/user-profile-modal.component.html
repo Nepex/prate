@@ -141,6 +141,60 @@
                             </span>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
+                            Theme
+                        </div>
+                        <div class="col-5 text-left">
+                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
+                                formControlName="color_theme" style="padding-top: 5px;">
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="'light'"> Light
+                                </label>
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="'dark'"> Dark
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-left">
+                    <h5 class="form-header">Misc</h5>
+                </div>
+                <div class="form-group position-relative">
+                    <div class="row">
+                        <div class="col-5 layout-options-container text-left">
+                            Enforce Interests
+                        </div>
+                        <div class="col-5 text-left">
+                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
+                                formControlName="enforce_interests">
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="true"> Yes
+                                </label>
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="false"> No
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
+                            Sounds
+                        </div>
+                        <div class="col-5 text-left">
+                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
+                                formControlName="sounds" style="padding-top: 5px;">
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="true"> On
+                                </label>
+                                <label ngbButtonLabel class="selection-btn">
+                                    <input ngbButton type="radio" [value]="false"> Off
+                                </label>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="text-left">

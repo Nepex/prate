@@ -83,8 +83,7 @@ export class ChangeAvatarModalComponent implements OnInit {
 
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
-            this.messages.push({ message: 'Avatar updated', type: 'success' });
-            this.user.avatar = this.selectedAvatar;
+            this.activeModal.dismiss();
             this.userService.avatarChanged.emit();
         }, err => {
             this.loadingRequest = null;

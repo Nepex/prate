@@ -13,6 +13,15 @@ export class ChangeLogComponent implements OnInit {
     ngOnInit(): void {
         this.updates = [
             {
+                title: 'v0.0.13-alpha',
+                date: 'May 15, 2020',
+                items: [
+                    'Sound toggle option',
+                    'Dark theme option',
+                    'Enforce interests option'
+                ]
+            },
+            {
                 title: 'v0.0.12-alpha',
                 date: 'May 14, 2020',
                 items: [

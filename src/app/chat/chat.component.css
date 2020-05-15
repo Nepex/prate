@@ -1,3 +1,14 @@
+.dark-theme {
+    background-color: #111111;
+    background-image: url("../../assets/images/prt-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index:  0;
+}
+
 .menu-logo {
     height: 60px;
     width: 75px;
@@ -222,8 +233,11 @@
     z-index: 900;
     left: 30px;
     bottom: 60px;
+}
 
+.yt-typing {
     text-shadow: 0 0 10px #ffffff, 0 0 10px #ffffff;
+    color: #000000;
 }
 
 .return-to-bottom {

@@ -33,6 +33,9 @@ export class UserProfileModalComponent implements OnInit {
         interests: new FormControl('', []),
         show_avatars: new FormControl('', [Validators.required]),
         bubble_layout: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        color_theme: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        enforce_interests: new FormControl('', [Validators.required]),
+        sounds: new FormControl('', [Validators.required]),
         oldPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)]),
         newPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)])
     });
@@ -66,6 +69,9 @@ export class UserProfileModalComponent implements OnInit {
         this.profileForm.controls.bubble_color.setValue('#' + this.user.bubble_color);
         this.profileForm.controls.show_avatars.setValue(this.user.show_avatars);
         this.profileForm.controls.bubble_layout.setValue(this.user.bubble_layout);
+        this.profileForm.controls.color_theme.setValue(this.user.color_theme);
+        this.profileForm.controls.enforce_interests.setValue(this.user.enforce_interests);
+        this.profileForm.controls.sounds.setValue(this.user.sounds);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
 
@@ -106,7 +112,10 @@ export class UserProfileModalComponent implements OnInit {
             interests: this.profileForm.value.interests ? this.profileForm.value.interests : [],
             experience: this.user.experience,
             show_avatars: this.profileForm.value.show_avatars,
-            bubble_layout: this.profileForm.value.bubble_layout
+            bubble_layout: this.profileForm.value.bubble_layout,
+            color_theme: this.profileForm.value.color_theme,
+            enforce_interests: this.profileForm.value.enforce_interests,
+            sounds: this.profileForm.value.sounds
         };
 
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {
@@ -120,6 +129,7 @@ export class UserProfileModalComponent implements OnInit {
             this.loadingRequest = null;
             this.profileForm['submitted'] = false;
             this.messages.push({ message: 'Settings saved', type: 'success' });
+            this.userService.userSettingsChanged.emit();
         }, err => {
             this.loadingRequest = null;
             this.profileForm['submitted'] = false;
