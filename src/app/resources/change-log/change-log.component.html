@@ -17,7 +17,8 @@
                     <div class="row">
 
                         <table class="table table-striped table-borderless">
-                            <tbody *ngFor="let u of updates">
+                            <tbody
+                                *ngFor="let u of updates | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
                                 <tr>
                                     <td>
                                         <span class="float-left update-title">
@@ -39,7 +40,9 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        <ngb-pagination [collectionSize]="updates.length" [(page)]="page" [pageSize]="pageSize"
+                            [maxSize]="10">
+                        </ngb-pagination>
                     </div>
 
                 </div>

@@ -45,7 +45,7 @@ export class UserService {
     /** Awards exp */
     awardExp(userInfo, secsSpentChatting) {
         const user = Object.assign({}, userInfo);
-        
+
         user.experience = user.experience + secsSpentChatting;
 
         delete user.email;
@@ -116,13 +116,16 @@ export class UserService {
         return req;
     }
 
-    // getById(id: number): Observable<User> {
-    //     const url = `${this.apiUrl}/${id}`;
+    getById(id: string): Observable<User> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', `${this.sessionService.getToken()}`);
+        const url = `${this.apiUrl}/${id}`;
 
-    //     const req = this.http.get<User>(url);
+        const req = this.http.get<User>(url, { headers: headers });
 
-    //     return req;
-    // }
+        return req;
+    }
 
     // update(user: User): Observable<User> {
     //     const url = `${this.apiUrl}/${user.id}`;

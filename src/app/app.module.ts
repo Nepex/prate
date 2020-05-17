@@ -33,6 +33,8 @@ import { OffClickDirective } from './shared/off-click-directive/off-click.direct
 import { OuterAppInviteModalComponent } from './chat/invite-modals/outer-app-invite/outer-app-invite-modal.component';
 import { AttributionsComponent } from './resources/attributions/attributions.component';
 import { ServicesExternalModule } from './services-external/services-external.module';
+import { TagInputModule } from 'ngx-chips';
+import { ViewUserProfileModalComponent } from './chat/view-user-profile/view-user-profile-modal.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { ServicesExternalModule } from './services-external/services-external.mo
     ChangeAvatarModalComponent,
     ChatHelpModalComponent,
     BugReportModalComponent,
-    OuterAppInviteModalComponent
+    OuterAppInviteModalComponent,
+    ViewUserProfileModalComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { ServicesExternalModule } from './services-external/services-external.mo
     MomentModule,
     AngularResizedEventModule,
     BrowserAnimationsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    TagInputModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
@@ -82,7 +86,8 @@ import { ServicesExternalModule } from './services-external/services-external.mo
     ChangeAvatarModalComponent,
     ChatHelpModalComponent,
     BugReportModalComponent,
-    OuterAppInviteModalComponent
-]
+    OuterAppInviteModalComponent,
+    ViewUserProfileModalComponent
+  ]
 })
 export class AppModule { }

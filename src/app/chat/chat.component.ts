@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { OuterAppInviteModalComponent } from './invite-modals/outer-app-invite/outer-app-invite-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewUserProfileModalComponent } from './view-user-profile/view-user-profile-modal.component';
 
 @Component({
     selector: 'prt-chat',
@@ -72,6 +73,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     inactivityTimer: number = 0;
     chatTimer: number = 0;
 
+    hideBubbles: boolean = false;
     leaveMessage: string;
     statusMessage: string;
     expMessage: string;
@@ -207,9 +209,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     getUser() {
         this.loadingRequest = this.userService.getUser();
 
-        this.loadingRequest.subscribe(res => { 
+        this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
-            this.user = res; 
+            this.user = res;
         });
     }
 
@@ -231,6 +233,17 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Sets partner object after a match is sucessfully made */
     setPartner(partner: User): void {
+        if (!this.isWindowFocused) {
+            this.titleService.setTitle('Match found!');
+
+            if (this.user.sounds) {
+                let audio = new Audio();
+                audio.src = "../../assets/sounds/match-found.mp3";
+                audio.load();
+                audio.play();
+            }
+        }
+
         this.matching = false;
         this.partner = partner;
         this.matchFoundAnimation = true;
@@ -305,6 +318,15 @@ export class ChatComponent implements OnInit, OnDestroy {
             }
         }
 
+        if (this.isWindowFocused && this.hideBubbles) {
+            if (this.user.sounds) {
+                let audio = new Audio();
+                audio.src = "../../assets/sounds/notif.mp3";
+                audio.load();
+                audio.play();
+            }
+        }
+
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
 
@@ -367,6 +389,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.partner = null;
         this.inviteLink = null;
         this.ytUrl = null;
+        this.hideBubbles = false;
 
         this.chatFinishedOverlay = true;
         this.stopTimerAndGiveExp();
@@ -375,6 +398,17 @@ export class ChatComponent implements OnInit, OnDestroy {
     /** If partner is disconnected, unmatch user */
     partnerDisconnect(isDisconnected: boolean): void {
         if (isDisconnected) {
+            if (!this.isWindowFocused) {
+                this.titleService.setTitle('Match left!');
+    
+                if (this.user.sounds) {
+                    let audio = new Audio();
+                    audio.src = "../../assets/sounds/match-left.mp3";
+                    audio.load();
+                    audio.play();
+                }
+            }
+
             this.chatService.killSocketConnection();
             this.partnerIsTyping = false;
             this.partnerLeftName = this.partner.name;
@@ -383,6 +417,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.partner = null;
             this.inviteLink = null;
             this.ytUrl = null;
+            this.hideBubbles = false;
 
             this.matchedWithOverlay = false;
             this.chatFinishedOverlay = true;
@@ -428,6 +463,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Go home when logo is clicked
     goToHome() {
         this.router.navigateByUrl('/');
+    }
+
+    // Opens chatting users' profile
+    openViewUserProfile(msgType, userId, partnerId) {
+        let id;
+
+        id = msgType === 'sent' ? userId : partnerId;
+
+        const modalRef = this.modal.open(ViewUserProfileModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.userId = id;
     }
 
     /** If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling. */
@@ -574,6 +619,7 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.ytPlayState = true;
                 this.ytMuteState = false;
                 this.hideYtInvControls = true;
+                this.hideBubbles = false;
             }
         }
 
@@ -594,6 +640,7 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.ytPlayState = true;
                 this.ytMuteState = false;
                 this.hideYtInvControls = true;
+                this.hideBubbles = false;
             }
         }
     }

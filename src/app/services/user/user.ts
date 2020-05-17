@@ -20,4 +20,5 @@ export class User {
     token?: string;
     experience?: number;
     levelInfo?: LevelInfo;
+    bio?: string;
 }

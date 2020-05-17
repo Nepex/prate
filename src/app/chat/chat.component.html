@@ -86,7 +86,7 @@
         </prt-youtube-player>
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
-                <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
+                <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()" [hidden]="hideBubbles">
                     <div class="position-relative"
                         [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
                         <div [ngClass]="{ 'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating', 
@@ -95,13 +95,13 @@
                             <div class="float-left" *ngIf="user.show_avatars">
                                 <div class="position-relative">
                                     <img [src]="m.type === 'sent' ? '../../../assets/images/avatars/' + user.avatar : '../../../assets/images/avatars/' + partner.avatar"
-                                        class="user-icon">
+                                        class="user-icon cursor-pointer" (click)="openViewUserProfile(m.type, user.id, partner.id)">
                                     <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
-                                        class="user-badge">
+                                        class="user-badge cursor-pointer" (click)="openViewUserProfile(m.type, user.id, partner.id)">
                                 </div>
                             </div>
                             <div [ngStyle]="{'margin-left': user.show_avatars ? '65px' : '0px' }">
-                                <div class="float-left message-user">{{ m.sender }}</div>
+                                <div class="float-left message-user"><span class="cursor-pointer" (click)="openViewUserProfile(m.type, user.id, partner.id)">{{ m.sender }}</span></div>
 
                                 <br />
                                 <span [innerHTML]="m.message"
@@ -140,8 +140,12 @@
                         style="position: relative; top: 1px; left: 6px;" (click)="toggleOuterAppFunction('yt', 'playpause')"></i>
                     &nbsp;
                     <i class="fas cursor-pointer" [ngClass]="{'fa-volume-up': !ytMuteState, 'fa-volume-mute': ytMuteState}"
-                        ngbTooltip="Toggle Mute/UnMute" placement="top" container="body"
+                        ngbTooltip="Toggle Mute/Un-Mute" placement="top" container="body"
                         style="position: relative; top: 1px; left: 6px;" (click)="toggleOuterAppFunction('yt', 'muteunmute')"></i>
+                    &nbsp;
+                    <i class="fas cursor-pointer" [ngClass]="{'fa-comment': !hideBubbles, 'fa-comment-slash': hideBubbles}"
+                        ngbTooltip="Hide/Show Bubbles" placement="top" container="body"
+                        style="position: relative; top: 1px; left: 6px;" (click)="hideBubbles = !hideBubbles"></i>
                     &nbsp;
                     <i class="fas fas fa-times cursor-pointer" ngbTooltip="Close Video" placement="top" container="body"
                         style="position: relative; top: 1px; left: 6px;"

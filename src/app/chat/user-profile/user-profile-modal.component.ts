@@ -8,21 +8,51 @@ import { User } from '../../services/user/user';
 import { LevelService } from '../../services/level/level.service';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
 import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
     selector: 'prt-user-profile-modal',
     templateUrl: './user-profile-modal.component.html',
-    styleUrls: ['./user-profile-modal.component.css']
+    styleUrls: ['./user-profile-modal.component.css'],
+    animations: [
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({ height: '0%', opacity: '0' }),
+                animate('300ms ease-in', style({ height: '20%', opacity: '1.0'}))
+            ]),
+            transition(':leave', [
+                animate('300ms ease-in', style({ height: '0%', opacity: '0'  }))
+            ])
+        ])
+    ]
 })
 export class UserProfileModalComponent implements OnInit {
     user: User;
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
-    showPasswordFields: boolean = false;
-    showBubblePreview: boolean = false;
+    customInterests: string[] = [];
+    customInterestsValidators = [this.customInterestMaxLength];
+    customInterestsErrors = { 'customInterestMaxLength': 'Too many characters' };
+
+    showChangePassword: boolean = false;
+    showMiscOpts: boolean = false;
+    showBio: boolean = false;
+    showInterests: boolean = false;
+
+    bioLeftLength: any;
 
     expCurValue: number;
     expMaxValue: number;
+
+    private customInterestMaxLength(control: FormControl) {
+        if (control.value.length > 20) {
+            return {
+                'customInterestMaxLength': true
+            };
+        }
+
+        return null;
+    }
 
     userRegex = /^[a-zA-Z0-9]*$/;
     profileForm: SubmittableFormGroup = new SubmittableFormGroup({
@@ -36,6 +66,7 @@ export class UserProfileModalComponent implements OnInit {
         color_theme: new FormControl('', [Validators.required, Validators.maxLength(20)]),
         enforce_interests: new FormControl('', [Validators.required]),
         sounds: new FormControl('', [Validators.required]),
+        bio: new FormControl('', [Validators.maxLength(200)]),
         oldPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)]),
         newPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)])
     });
@@ -45,6 +76,20 @@ export class UserProfileModalComponent implements OnInit {
 
     ngOnInit(): void {
         this.getUser();
+
+        this.profileForm.controls['bio'].valueChanges.subscribe((v) => {
+            if (!v) {
+                this.bioLeftLength = null;
+
+                return;
+            }
+
+            this.bioLeftLength = 200 - v.length;
+
+            if (this.bioLeftLength < 0) {
+                this.bioLeftLength = 'Limit exceeded';
+            }
+        });
     }
 
     getUser() {
@@ -63,6 +108,7 @@ export class UserProfileModalComponent implements OnInit {
     }
 
     initFormValues() {
+        this.pushCustomInterestsToInput();
         this.profileForm.controls.name.setValue(this.user.name);
         this.profileForm.controls.font_face.setValue(this.user.font_face);
         this.profileForm.controls.font_color.setValue('#' + this.user.font_color);
@@ -72,6 +118,7 @@ export class UserProfileModalComponent implements OnInit {
         this.profileForm.controls.color_theme.setValue(this.user.color_theme);
         this.profileForm.controls.enforce_interests.setValue(this.user.enforce_interests);
         this.profileForm.controls.sounds.setValue(this.user.sounds);
+        this.profileForm.controls.bio.setValue(this.user.bio);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
 
@@ -103,6 +150,8 @@ export class UserProfileModalComponent implements OnInit {
             return;
         }
 
+        this.pushCustomInterestsToForm();
+
         const body: any = {
             id: this.user.id,
             name: this.profileForm.value.name,
@@ -115,7 +164,8 @@ export class UserProfileModalComponent implements OnInit {
             bubble_layout: this.profileForm.value.bubble_layout,
             color_theme: this.profileForm.value.color_theme,
             enforce_interests: this.profileForm.value.enforce_interests,
-            sounds: this.profileForm.value.sounds
+            sounds: this.profileForm.value.sounds,
+            bio: this.profileForm.value.bio,
         };
 
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {
@@ -146,6 +196,31 @@ export class UserProfileModalComponent implements OnInit {
             this.profileForm.value.interests.splice(idx, 1);
         } else {
             this.profileForm.value.interests.push(val);
+        }
+    }
+
+    pushCustomInterestsToForm() {
+        for (let i = 0; i < this.customInterests.length; i++) {
+            if (this.customInterests[i] !== 'movies/tv' && this.customInterests[i] !== 'music' && this.customInterests[i] !== 'gaming' && this.customInterests[i] !== 'books'
+                && this.customInterests[i] !== 'education' && this.customInterests[i] !== 'sports' && this.customInterests[i] !== 'life' && this.customInterests[i] !== 'dating' &&
+                this.profileForm.value.interests.indexOf(this.customInterests[i]) === -1) {
+                this.profileForm.value.interests.push(this.customInterests[i].toLowerCase());
+            }
+        }
+    }
+
+    pushCustomInterestsToInput() {
+        for (let i = 0; i < this.user.interests.length; i++) {
+            if (this.user.interests[i] !== 'movies/tv' && this.user.interests[i] !== 'music' && this.user.interests[i] !== 'gaming' && this.user.interests[i] !== 'books'
+                && this.user.interests[i] !== 'education' && this.user.interests[i] !== 'sports' && this.user.interests[i] !== 'life' && this.user.interests[i] !== 'dating') {
+                this.customInterests.push(this.user.interests[i]);
+            }
+        }
+    }
+
+    onCustomInterestRemoved(e) {
+        if (this.profileForm.value.interests.indexOf(e) > -1) {
+            this.profileForm.value.interests.splice(this.profileForm.value.interests.indexOf(e), 1);
         }
     }
 

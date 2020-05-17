@@ -1,0 +1,44 @@
+<div class="modal-header no-pad-margin" *ngIf="user">
+    <div class="container view-user-header">
+        <div class="row">
+            <div class="col-12 my-auto text-center user-icon-container">
+                <div class="user-icon-content">
+                    <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon">
+
+                    <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="no-pad-margin" style="padding-top: 5px;">
+                    <span class="username no-pad-margin">{{ user.name }}</span>
+                </div>
+                <div class="no-pad-margin">
+                    <span class="user-level no-pad-margin">{{ user.levelInfo.rank }} - Level
+                        {{ user.levelInfo.level }}</span>
+                </div>
+
+                <div class="no-pad-margin">
+                    <span class="user-time-spent no-pad-margin">Chat time:
+                        {{ (user.experience / 60 / 60).toFixed(0) }} hours</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+</div>
+
+<div class="container modal-body no-pad-margin" *ngIf="user">
+    <div class="row no-pad-margin">
+        <div class="col-12 user-bio">
+            <span *ngIf="!user.bio">This user has not set up their bio.</span>
+            <span *ngIf="user.bio">{{user.bio}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer text-center no-pad-margin">
+    <br />
+</div>

@@ -108,6 +108,11 @@
     margin-left: 3px;
 }
 
+.custom-interests-container {
+    padding-left: 45px;
+    padding-right: 55px;
+}
+
 ::ng-deep>>>.modal-content {
     border: 0;
     border-radius: 35px;
@@ -118,18 +123,44 @@
     padding: 0!important;
 }
 
-/* Preview Bubble */
-.show-preview-link {
-    padding-left: 37px;
-    color: #007bff;
-    cursor: pointer;
+::ng-deep>>>.ng2-tag-input__text-input {
+    background-color: rgb(249, 253, 255);
 }
 
-.show-preview-link:hover {
-    padding-left: 37px;
-    color: #007bff;
+.text-area {
+    resize: none;
+    height: 200px;
+    font-weight: 500;
+    padding-top: 12px;
+}
+
+.message-col {
+    margin-top: 10px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.char-left-msg {
+    text-align: right;
+    font-size: 13px;
+    padding-right: 27px;
+    padding-top: 5px;
+}
+
+hr {
+    width: 106%;
+    position: relative;
+    left: -14px;
+}
+
+/* Preview Bubble */
+
+.show-preview-link {
+    padding-left: 52px;
+    color: #666666;
     cursor: pointer;
-    text-decoration: underline;
+    font-weight: 600;
+    font-size: 12px;
 }
 
 .preview-bubble-container {
@@ -168,7 +199,6 @@
     min-width: 100px;
     display: inline-block;
     padding: 15px;
-
     max-width: 90%;
     overflow-wrap: break-word;
 }
@@ -185,7 +215,6 @@
     display: inline-block;
     padding: 15px;
     text-align: left;
-
     max-width: 90%;
     overflow-wrap: break-word;
 }
@@ -273,7 +302,7 @@
     position: absolute;
     top: 2px;
     left: -3px;
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, .5);
 }
 
 .user-edit-icon {
@@ -319,7 +348,12 @@
 .user-level {
     color: #ffffff;
     font-size: 11px;
-    padding-bottom: 3px;
+    /* font-weight: 600; */
+}
+
+.user-time-spent {
+    color: #ffffff;
+    font-size: 11px;
 }
 
 .progress-container {

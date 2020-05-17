@@ -7,18 +7,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangeLogComponent implements OnInit {
     updates;
+    page: number = 1;
+    pageSize: number = 10;
 
     constructor() { }
 
     ngOnInit(): void {
         this.updates = [
             {
+                title: 'v0.0.14-alpha',
+                date: 'May 17, 2020',
+                items: [
+                    'Toggle chat bubbles while sharing youtube videos',
+                    'Custom interests',
+                    'Custom bio and match profile view',
+                    'Match leave and found notifications',
+                    'Misc styling and bug fixes'
+                ]
+            },
+            {
                 title: 'v0.0.13-alpha',
                 date: 'May 15, 2020',
                 items: [
                     'Sound toggle option',
                     'Dark theme option',
-                    'Enforce interests option'
+                    'Enforce interests option',
+                    'Avatar overhaul'
                 ]
             },
             {
