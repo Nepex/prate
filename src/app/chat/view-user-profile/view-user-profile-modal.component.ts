@@ -18,14 +18,11 @@ export class ViewUserProfileModalComponent implements OnInit {
     constructor(private userService: UserService, public activeModal: NgbActiveModal, private levelService: LevelService) {}
 
     ngOnInit() {
-        console.log(this.userId);
         this.loadingRequest = this.userService.getById(this.userId);
 
         this.loadingRequest.subscribe(res => {
             this.user = res;
             this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
-
-            console.log(res);
         });
     }
 }

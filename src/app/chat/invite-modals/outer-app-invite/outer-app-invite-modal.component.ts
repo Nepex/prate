@@ -26,7 +26,6 @@ export class OuterAppInviteModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.outerApp, this.url)
         if (this.outerApp === 'yt' && this.url) {
             this.getVideoInfo();
         }
