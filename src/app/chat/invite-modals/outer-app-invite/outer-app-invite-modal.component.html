@@ -19,9 +19,9 @@
 </div>
 <div class="modal-footer text-center no-pad-margin">
     <div class="form-group text-center" style="margin-bottom: 20px;">
-        <button class="btn submit-btn cursor-pointer" *ngIf="type === 'sent'" (click)="passBack('cancel')">Cancel</button>
+        <button class="btn submit-btn cursor-pointer" [hidden]="type === 'received'" (click)="passBack('cancel')" id="cancelBtn" #cancelBtn>Cancel</button>
 
-        <button class="btn submit-btn cursor-pointer" *ngIf="type === 'received'" (click)="passBack('accept')">Accept</button> &nbsp;
-        <button class="btn submit-btn cursor-pointer" *ngIf="type === 'received'" (click)="passBack('cancel')">Decline</button>
+        <button class="btn submit-btn cursor-pointer" [hidden]="type === 'sent'" (click)="passBack('accept')">Accept</button> &nbsp;
+        <button class="btn submit-btn cursor-pointer" [hidden]="type === 'sent'" (click)="passBack('cancel')">Decline</button>
     </div>
 </div>

@@ -39,7 +39,7 @@ export class UserProfileModalComponent implements OnInit {
     showBio: boolean = false;
     showInterests: boolean = false;
 
-    bioLeftLength: any;
+    bioLeftLength: any = 200;
 
     expCurValue: number;
     expMaxValue: number;
@@ -79,7 +79,7 @@ export class UserProfileModalComponent implements OnInit {
 
         this.profileForm.controls['bio'].valueChanges.subscribe((v) => {
             if (!v) {
-                this.bioLeftLength = null;
+                this.bioLeftLength = 200;
 
                 return;
             }

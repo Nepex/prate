@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, HostListener, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/services/user/user';
 import { Observable } from 'rxjs';
@@ -17,15 +17,33 @@ export class OuterAppInviteModalComponent implements OnInit {
     @Input() User: User;
     @Input() url: string;
 
+    @HostListener('document:keydown', ['$event'])
+    onKeyDown(evt: KeyboardEvent) {
+        if (
+            evt.keyCode === 8 || evt.which === 8 ||
+            evt.keyCode === 32 || evt.which === 32 ||
+            evt.keyCode === 13 || evt.which === 13
+        ) {
+            evt.preventDefault();
+            return false;
+        }
+    }
+
 
     loadingRequest: Observable<any>;
     ytVideoTitle: string;
 
     constructor(public activeModal: NgbActiveModal, private googleService: GoogleService) {
-        
+
     }
 
     ngOnInit() {
+        document.querySelectorAll("button").forEach( function(item) {
+            item.addEventListener('focus', function() {
+                this.blur();
+            })
+        })
+
         if (this.outerApp === 'yt' && this.url) {
             this.getVideoInfo();
         }

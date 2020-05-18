@@ -133,10 +133,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        document.body.appendChild(tag);
-
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -161,7 +157,11 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
             this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
             this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
-            this.listenForUserDoneTyping();
+
+            // timeout because of dark styling needing a user obj present (see html)
+            setTimeout(() => {
+                this.listenForUserDoneTyping();
+            }, 500);
 
             // if page is refreshed or browser is closed, disconnect the user
             window.onbeforeunload = () => {
@@ -171,12 +171,6 @@ export class ChatComponent implements OnInit, OnDestroy {
                     this.disconnect();
                 }
 
-                return null;
-            };
-
-            // maybe a fix for mobile sleep issues?
-            window.ononline = () => {
-                this.chatService.connect();
                 return null;
             };
 
@@ -190,14 +184,11 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.partnerFoundSub.unsubscribe();
         this.messageSentSub.unsubscribe();
         this.messageReceivedSub.unsubscribe();
-
         this.outerAppInviteSentSub.unsubscribe();
         this.outerAppInviteReceivedSub.unsubscribe();
         this.outerAppInviteAcceptedSub.unsubscribe();
         this.outerAppInviteCanceledSub.unsubscribe();
-
         this.toggledOuterAppFunctionSub.unsubscribe();
-
         this.userDoneTypingSub.unsubscribe();
         this.isPartnerTypingSub.unsubscribe();
         this.partnerDisconnectSub.unsubscribe();
@@ -400,7 +391,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (isDisconnected) {
             if (!this.isWindowFocused) {
                 this.titleService.setTitle('Match left!');
-    
+
                 if (this.user.sounds) {
                     let audio = new Audio();
                     audio.src = "../../assets/sounds/match-left.mp3";
@@ -463,6 +454,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Go home when logo is clicked
     goToHome() {
         this.router.navigateByUrl('/');
+    }
+
+    // toggle chat bubbles
+    toggleBubbles() {
+        this.hideBubbles = !this.hideBubbles;
+
+        if (!this.hideBubbles) {
+            this.returnToBottom();
+        }
     }
 
     // Opens chatting users' profile
