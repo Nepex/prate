@@ -84,6 +84,8 @@
         <prt-youtube-player [height]="100" [width]="100" [playState]="ytPlayState" [muteState]="ytMuteState"
             [videoUrl]="ytUrl">
         </prt-youtube-player>
+        <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
+            (canceled)="closeGame($event)" (inviteSent)="sendGameInvite($event)" (gameClosed)="gameSessionClosed($event)"></prt-game-container>
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
@@ -172,12 +174,42 @@
                 autocomplete="off">
                 <div class="align-bottom">
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
-                        formControlName="message" (keypress)="listenForUserTyping()" #messageInput 
-                        [ngStyle]="{'background-color': user.color_theme === 'dark' ? '#111111' : 'rgb(228, 230, 228)', 'color': user.color_theme === 'dark' ? '#eeeeee' : '#000000'}" *ngIf="user">
+                        formControlName="message" (keypress)="listenForUserTyping()" #messageInput
+                        [ngStyle]="{'background-color': user.color_theme === 'dark' ? '#111111' : 'rgb(228, 230, 228)', 'color': user.color_theme === 'dark' ? '#eeeeee' : '#000000'}"
+                        *ngIf="user">
+
+
+                    <div class="game-btn-container cursor-pointer"
+                        (offClick)="!hideGames ? hideGames = !hideGames : hideGames"><img
+                            src="../../assets/images/game-send.png" class="game-btn" title="Games"
+                            (click)="hideGames = !hideGames" *ngIf="user"
+                            [ngStyle]="{'filter': user.color_theme === 'dark' ? 'brightness(110%)' : 'brightness(100%)'}">
+
+                        <div *ngIf="user" class="game-container" [hidden]="hideGames"
+                            [ngStyle]="{'background-color': user.color_theme === 'dark' ? '#111111' : '#efefef', 'color': user.color_theme === 'dark' ? '#efefef' : '#666666'}">
+                            <div class="row text-center no-pad-margin">
+                                <div class="col-4 no-pad-margin game-icon-container">
+                                    <i class="fas fa-paint-brush cursor-pointer" ngbTooltip="Drawing | gartic.io"
+                                        placement="top" container="body" (click)="prepareGameInvite('gartic')"></i>
+                                </div>
+
+                                <div class="col-4 no-pad-margin game-icon-container">
+                                    <i class="fas fa-chess-pawn cursor-pointer" ngbTooltip="Chess | chess.org"
+                                        placement="top" container="body" (click)="prepareGameInvite('chess')"></i>
+                                </div>
+
+                                <div class="col-4 no-pad-margin game-icon-container">
+                                    <i class="fab fa-slack-hash cursor-pointer"
+                                        ngbTooltip="TicTacToe | ultimate-t3.herokuapp.com" placement="top"
+                                        container="body" (click)="prepareGameInvite('tictactoe')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="yt-ctrl-btn-container cursor-pointer"
                         (offClick)="!hideYtInvControls ? hideYtInvControls = !hideYtInvControls : hideYtInvControls">
-                        <img src="../../assets/images/yt-send.png" class="yt-ctrl-btn" title="YouTube Controls"
+                        <img src="../../assets/images/yt-send.png" class="yt-ctrl-btn" title="YouTube Share"
                             (click)="hideYtInvControls = !hideYtInvControls" *ngIf="!ytUrl && user"
                             [ngStyle]="{'filter': user.color_theme === 'dark' ? 'brightness(110%)' : 'brightness(100%)'}">
                         <div class="yt-ctrl-container" [hidden]="hideYtInvControls">
@@ -202,7 +234,8 @@
                             (click)="hideEmojis = !hideEmojis" *ngIf="user"
                             [ngStyle]="{'filter': user.color_theme === 'dark' ? 'brightness(110%)' : 'brightness(100%)'}">
 
-                        <div *ngIf="user" class="emoji-container" [hidden]="hideEmojis" [ngStyle]="{'background': user.color_theme === 'dark' ? '#111111' : '#efefef'}">
+                        <div *ngIf="user" class="emoji-container" [hidden]="hideEmojis"
+                            [ngStyle]="{'background': user.color_theme === 'dark' ? '#111111' : '#efefef'}">
                             <div class="row text-center no-pad-margin">
                                 <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
                                     <img src="../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"

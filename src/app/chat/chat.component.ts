@@ -88,6 +88,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     ytPlayState: boolean = true;
     ytMuteState: boolean = false;
 
+    // game
+    gameUrl: string;
+    gameType: string;
+    gameAccepted: boolean = false;
+
+    hideGames: boolean = true;
+
     isWindowFocused: boolean;
 
     // https://www.iconfinder.com/iconsets/emoticons-50
@@ -381,6 +388,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.inviteLink = null;
         this.ytUrl = null;
         this.hideBubbles = false;
+        this.closeGame();
 
         this.chatFinishedOverlay = true;
         this.stopTimerAndGiveExp();
@@ -409,6 +417,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.inviteLink = null;
             this.ytUrl = null;
             this.hideBubbles = false;
+            this.closeGame();
 
             this.matchedWithOverlay = false;
             this.chatFinishedOverlay = true;
@@ -534,6 +543,39 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.messageInput.nativeElement.focus();
     }
 
+    // Games
+    prepareGameInvite(game) {
+        if (!this.partner) {
+            return;
+        }
+
+        if (game === 'gartic') {
+            this.gameUrl = 'https://www.gartic.io';
+            this.gameType = 'gartic';
+        } else if (game === 'chess') {
+            this.gameUrl = 'https://www.chess.org'
+            this.gameType = 'chess';
+        } else if (game === 'tictactoe') {
+            this.gameUrl = 'https://ultimate-t3.herokuapp.com';
+            this.gameType = 'tictactoe';
+        }
+    }
+
+    closeGame() {
+        this.gameUrl = null;
+        this.gameType = null;
+        this.gameAccepted = false;
+    }
+
+    sendGameInvite(gameInfo) {
+        this.inviteLink = gameInfo.url;
+        this.sendOuterAppInvite(gameInfo.gameType);
+    }
+
+    gameSessionClosed() {
+        this.toggleOuterAppFunction(this.gameType, 'close');
+    }
+
     // Invite Logic
     sendOuterAppInvite(app) {
         if (!this.partner) {
@@ -599,10 +641,30 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (invInfo.outerApp === 'yt') {
             this.ytUrl = invInfo.outerAppLink ? invInfo.outerAppLink : this.inviteLink;
         }
+
+        // games
+        if (invInfo.outerApp === 'gartic' || invInfo.outerApp === 'chess' || invInfo.outerApp === 'tictactoe') {
+            if (invInfo.outerAppLink) {
+                this.gameUrl = invInfo.outerAppLink;
+            }
+
+            if (invInfo.outerApp === 'gartic') {
+                this.gameType = 'gartic';
+            }
+            if (invInfo.outerApp === 'chess') {
+                this.gameType = 'chess';
+            }
+            if (invInfo.outerApp === 'tictactoe') {
+                this.gameType = 'tictactoe';
+            }
+
+            this.gameAccepted = true;
+        }
     }
 
     outerAppInviteCanceled(invInfo) {
         this.outerAppInviteModal.close();
+        this.closeGame();
     }
 
     toggleOuterAppFunction(outerApp, activity) {
@@ -620,6 +682,12 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.ytMuteState = false;
                 this.hideYtInvControls = true;
                 this.hideBubbles = false;
+            }
+        }
+
+        if (outerApp === 'gartic' || outerApp === 'chess' || outerApp === 'tictactoe') {
+            if (activity === 'close') {
+                this.closeGame();
             }
         }
 
@@ -641,6 +709,12 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.ytMuteState = false;
                 this.hideYtInvControls = true;
                 this.hideBubbles = false;
+            }
+        }
+
+        if (receivedInfo.outerApp === 'gartic' || receivedInfo.outerApp === 'chess' || receivedInfo.outerApp === 'tictactoe') {
+            if (receivedInfo.activity === 'close') {
+                this.closeGame();
             }
         }
     }

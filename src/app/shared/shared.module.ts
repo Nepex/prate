@@ -12,6 +12,8 @@ import { ServicesModule } from '../services/services.module';
 import { SafeHtmlPipe } from './safe-html-pipe/safe-html.pipe';
 import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
 import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
+import { GameContainerComponent } from './game-container/game-container.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -24,12 +26,14 @@ import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
         InterestFormatPipe,
         SafeHtmlPipe,
         SafeUrlPipe,
-        YoutubePlayerComponent
+        YoutubePlayerComponent,
+        GameContainerComponent
     ],
     imports: [
         CommonModule,
         NgbModule,
-        ServicesModule
+        ServicesModule,
+        FormsModule
     ],
     exports: [
         HeaderComponent,
@@ -41,7 +45,8 @@ import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
         InterestFormatPipe,
         SafeHtmlPipe,
         SafeUrlPipe,
-        YoutubePlayerComponent
+        YoutubePlayerComponent,
+        GameContainerComponent
     ],
     providers: [],
 })
