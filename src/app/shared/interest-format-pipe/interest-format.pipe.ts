@@ -6,6 +6,10 @@ import { Injectable, Pipe, PipeTransform } from '@angular/core';
 @Injectable()
 export class InterestFormatPipe implements PipeTransform {
     transform(item: string): string {
+        if (!item) {
+            return 'No common interests';
+        }
+
         return item.charAt(0).toUpperCase() + item.slice(1);
     }
 }

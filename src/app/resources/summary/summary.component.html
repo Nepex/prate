@@ -2,12 +2,13 @@
 
     <prt-header [selectedTab]="'SUMMARY'"></prt-header>
 
-    <div class="row no-pad-margin text-center">
+    <div class="row no-pad-margin text-center" style="padding-bottom: 40px;">
         <div class="col-12">
 
+            <!-- Why Prate? -->
             <div class="row">
                 <div class="col-lg-4 offset-lg-4 col-sm-12">
-                    <img class="img-fluid page-heading" src="../../assets/images/prt-icon.png"/>
+                    <img class="img-fluid page-heading" src="../../assets/images/prt-icon.png" />
                 </div>
             </div>
 
@@ -29,51 +30,84 @@
                 </div>
             </div>
 
-            <div class="row block-container" style="margin-top: 20px;">
-                <div class="col-lg-6 col-sm-12 offset-lg-3">
-                    <i class="fas fa-user-check summary-icon"></i>
-                    <div class="sub-heading">Matching</div>
+            <!-- Matching -->
+            <div class="row block-container">
+                <div class="col-lg-3 col-sm-8 offset-lg-3 offset-sm-2 text-left">
+                    <div class="sub-heading">Interest Based Matching</div>
+                    <hr />
                     <div class="statement mx-auto">
-                        <div class="summary-message">Users will be matched with somone
-                            they can relate to or you can just match randomly to chat with anyone! Not liking your
+                        <div class="summary-message">Users will be matched with someone
+                            they can relate to, or you can just match randomly to chat with anyone! Not liking your
                             match? You can leave your chat any time
                             and match with a another user. Our services allow for easy, seamless chatting across
-                            multiple platforms. Prate doesn't discriminate!
+                            multiple platforms. <br /> <br /> Prate doesn't discriminate!
                         </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-8 offset-sm-2 offset-lg-0">
+                    <div class="img-container">
+                        <img src="../../../assets/images/whyprate-matched.jpg" class="img-fluid img-present"
+                            (mouseenter)="fadeMatchIcon = true" (mouseleave)="fadeMatchIcon = false">
+                        <i class="fas fa-user-check summary-icon"
+                            [ngClass]="{'fade-out-icon' : fadeMatchIcon === true}"></i>
                     </div>
                 </div>
             </div>
 
+            <!-- Customization -->
             <div class="row block-container">
-                <div class="col-lg-6 col-sm-12 offset-lg-3">
-                    <i class="fas fa-edit summary-icon"></i>
+                <div class="col-lg-3 offset-lg-3 d-none d-lg-block">
+                    <div class="img-container">
+                        <img src="../../../assets/images/why-prate-customization.jpg" class="img-fluid img-present"
+                            (mouseenter)="fadeCustomIcon = true" (mouseleave)="fadeCustomIcon = false">
+                        <i class="fas fa-edit summary-icon" [ngClass]="{'fade-out-icon' : fadeCustomIcon === true}"></i>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-8 offset-sm-2 text-left offset-lg-0">
                     <div class="sub-heading">Customization</div>
+                    <hr />
                     <div class="statement mx-auto">
                         <div class="summary-message">Customize several aspects of your chatting experience. Change
-                            your text color, bubble color, and font face easily with our user settings management.
-                            We even allow users to sport their own custom picture that they can show off to their
-                            friends and matches. It's easy to be an individual on Prate and separate yourself from the
+                            your display name, avatar, text color, bubble color, and font face easily with our user settings management. 
+                            We even allow custom chat layout options. It's easy to be an individual on Prate and separate yourself from the
                             rest.
                         </div>
                     </div>
                 </div>
+
+                <div class="col-sm-8 offset-sm-2 d-xs-block d-sm-block d-sm-block d-lg-none d-xl-none">
+                    <img src="../../../assets/images/why-prate-customization.jpg" class="img-fluid img-present"
+                        (mouseenter)="fadeCustomIcon = true" (mouseleave)="fadeCustomIcon = false">
+                    <i class="fas fa-edit summary-icon" [ngClass]="{'fade-out-icon' : fadeCustomIcon === true}"></i>
+                </div>
             </div>
 
-            <div class="row final-block-container">
-                <div class="col-lg-6 col-sm-12 offset-lg-3">
-                    <i class="fas fa-chart-line summary-icon"></i>
+            <!-- Progression -->
+            <div class="row block-container">
+                <div class="col-lg-3 col-sm-8 offset-lg-3 offset-sm-2 text-left offset-lg-0">
                     <div class="sub-heading">Progression</div>
+                    <hr />
                     <div class="statement mx-auto">
-                        <div class="summary-message">
-                            Using Prate's leveling progression system, you can easily rank up and earn rewards to show
+                        <div class="summary-message">Using Prate's leveling progression system, you can easily rank up
+                            and earn rewards to show
                             off to your matches. Your chatting experience is reflected to other users so they know you
                             know what you're
                             doing. All of your chatting experience means something, and your time is never wasted.
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <div class="col-lg-3 col-sm-8 offset-sm-2 offset-lg-0">
+                    <div class="img-container">
+                        <img src="../../../assets/images/whyprate-progression.jpg" class="img-fluid img-present"
+                            (mouseenter)="fadeProgIcon = true" (mouseleave)="fadeProgIcon = false">
+                        <i class="fas fa-chart-line summary-icon"
+                            [ngClass]="{'fade-out-icon' : fadeProgIcon === true}"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

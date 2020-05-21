@@ -31,6 +31,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     userDisconnectSub: Subscription;
     partnerDisconnectSub: Subscription;
     avatarChangedSub: Subscription;
+    settingsChangedSub: Subscription;
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService,
         private chatService: ChatService, private levelService: LevelService) { }
@@ -40,7 +41,8 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
         this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());
         this.userDisconnectSub = this.chatService.userDisconnected.subscribe(() => this.updateExpAndClearPartner());
-        this.avatarChangedSub = this.userService.avatarChanged.subscribe(() => this.getUser());
+        this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => { this.user.avatar = avatar; });
+        this.settingsChangedSub = this.userService.userSettingsChanged.subscribe(user => this.user.name = user.name);
     }
 
     ngOnDestroy() {
@@ -48,6 +50,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.partnerDisconnectSub.unsubscribe();
         this.userDisconnectSub.unsubscribe();
         this.avatarChangedSub.unsubscribe();
+        this.settingsChangedSub.unsubscribe();
     }
 
     openProfile() {
@@ -57,12 +60,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const modalRef = this.modal.open(UserProfileModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-
-        modalRef.result.then(() => {
-        }, () => {
-            this.getUser();
-        });
+        this.modal.open(UserProfileModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
     openFriends() {

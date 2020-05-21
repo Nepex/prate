@@ -13,7 +13,7 @@ export class DownloadComponent implements OnInit {
     ngOnInit() {}
 
     openComingSoon() {
-        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false });
+        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
 
         modalRef.componentInstance.message = "Coming soon...";
     }

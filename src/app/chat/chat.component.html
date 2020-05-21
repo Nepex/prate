@@ -182,7 +182,7 @@
                     <div class="game-btn-container cursor-pointer"
                         (offClick)="!hideGames ? hideGames = !hideGames : hideGames"><img
                             src="../../assets/images/game-send.png" class="game-btn" title="Games"
-                            (click)="hideGames = !hideGames" *ngIf="user"
+                            (click)="hideGames = !hideGames" *ngIf="user && !ytUrl"
                             [ngStyle]="{'filter': user.color_theme === 'dark' ? 'brightness(110%)' : 'brightness(100%)'}">
 
                         <div *ngIf="user" class="game-container" [hidden]="hideGames"

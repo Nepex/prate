@@ -179,7 +179,7 @@ export class UserProfileModalComponent implements OnInit {
             this.loadingRequest = null;
             this.profileForm['submitted'] = false;
             this.messages.push({ message: 'Settings saved', type: 'success' });
-            this.userService.userSettingsChanged.emit();
+            this.userService.userSettingsChanged.emit(body);
         }, err => {
             this.loadingRequest = null;
             this.profileForm['submitted'] = false;

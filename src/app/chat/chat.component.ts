@@ -274,6 +274,12 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             // disconnect user after 10 minutes of inactivity
             if (this.inactivityTimer >= 600) {
+
+                // terrible fix for inactivity during game - remove once everything's worked out
+                if (this.gameAccepted) {
+                    return;
+                }
+
                 this.disconnect();
                 return;
             }
@@ -470,7 +476,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.hideBubbles = !this.hideBubbles;
 
         if (!this.hideBubbles) {
-            this.returnToBottom();
+            setTimeout(() => {
+                this.returnToBottom();
+            }, 200);
         }
     }
 
@@ -565,6 +573,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.gameUrl = null;
         this.gameType = null;
         this.gameAccepted = false;
+        this.inviteLink = null;
     }
 
     sendGameInvite(gameInfo) {

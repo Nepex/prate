@@ -33,8 +33,8 @@
 <div class="container modal-body no-pad-margin" *ngIf="user">
     <div class="row no-pad-margin">
         <div class="col-12 user-bio">
-            <span *ngIf="!user.bio || user.bio.length === 0">This user has not set up their bio.</span>
-            <span *ngIf="user.bio || user.bio.length > 0">{{user.bio}}</span>
+            <span *ngIf="!user.bio">This user has not set up their bio.</span>
+            <span *ngIf="user.bio">{{user.bio}}</span>
         </div>
     </div>
 </div>

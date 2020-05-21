@@ -62,7 +62,7 @@
 
 .hidden-container {
     position: absolute;
-    top: -1000px;
+    top: -2000px;
     opacity: 0;
 }
 
