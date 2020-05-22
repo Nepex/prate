@@ -1,9 +1,12 @@
+// Angular
 import { Injectable } from '@angular/core';
+
+// App
 import { LevelInfo } from './level-info';
 
 @Injectable()
 export class LevelService {
-    levelInfo: LevelInfo[] = [
+    public levelInfo: LevelInfo[] = [
         { level: 1, experienceNeeded: 0, rank: 'Pebble', badge: 'pebble.png', rankUp: false },
         { level: 2, experienceNeeded: 300, rank: 'Pebble', badge: 'pebble.png', rankUp: false }, // 5 min - 5 min increment onward
         { level: 3, experienceNeeded: 600, rank: 'Pebble', badge: 'pebble.png', rankUp: false }, // 10 min
@@ -126,7 +129,7 @@ export class LevelService {
 
     constructor() { }
 
-    getLevelInfo(experience) {
+    public getLevelInfo(experience: number): LevelInfo {
         for (let i = 0; i < this.levelInfo.length; i++) {
             if (experience < this.levelInfo[i + 1].experienceNeeded) {
                 const levelInfo = Object.assign({}, this.levelInfo[i]); // copy or else it will modify the original array
@@ -137,7 +140,7 @@ export class LevelService {
         }
     }
 
-    checkIfLevelUp(newExpValue, userLevelInfo) {
+    public checkIfLevelUp(newExpValue: number, userLevelInfo: LevelInfo): any {
         for (let i = 0; i < this.levelInfo.length; i++) {
             // future case: make sure array doesn't break
             if (i + 1 > this.levelInfo.length || i + 2 > this.levelInfo.length) {
@@ -156,7 +159,7 @@ export class LevelService {
         }
     }
 
-    checkIfRankUp(newExpValue, userLevelInfo) {
+    public checkIfRankUp(newExpValue: number, userLevelInfo: LevelInfo): any {
         let isRankUp: boolean = false;
 
         for (let i = userLevelInfo.level - 1; i < this.levelInfo.length; i++) {
@@ -179,20 +182,7 @@ export class LevelService {
         }
     }
 
-    getMaxExpBarValue(userLevelInfo) {
-        for (let i = 0; i < this.levelInfo.length; i++) {
-            if (userLevelInfo.level === 1) {
-                return userLevelInfo.experienceNeeded;
-            }
-
-            if (userLevelInfo.level === this.levelInfo[i].level) {
-                let value = userLevelInfo.experienceNeeded - this.levelInfo[i].experienceNeeded;
-                return value;
-            }
-        }
-    }
-
-    getCurExpBarValue(userLevelInfo, curExp) {
+    public getCurExpBarValue(userLevelInfo: LevelInfo, curExp: number): number {
         for (let i = 0; i < this.levelInfo.length; i++) {
             if (userLevelInfo.level === 1) {
                 return curExp;
@@ -201,6 +191,19 @@ export class LevelService {
             if (userLevelInfo.level === this.levelInfo[i].level) {
                 let value = curExp - this.levelInfo[i].experienceNeeded;
 
+                return value;
+            }
+        }
+    }
+
+    public getMaxExpBarValue(userLevelInfo: LevelInfo): number {
+        for (let i = 0; i < this.levelInfo.length; i++) {
+            if (userLevelInfo.level === 1) {
+                return userLevelInfo.experienceNeeded;
+            }
+
+            if (userLevelInfo.level === this.levelInfo[i].level) {
+                let value = userLevelInfo.experienceNeeded - this.levelInfo[i].experienceNeeded;
                 return value;
             }
         }

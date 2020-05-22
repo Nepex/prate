@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { AlertMessages } from 'src/app/shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user/user.service';
-import { BugReport } from 'src/app/services/user/bug-report';
+import { BugReport } from 'src/app/services/generic/bug-report';
 
 @Component({
     selector: 'prt-bug-report-modal',

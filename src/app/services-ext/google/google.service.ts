@@ -1,13 +1,13 @@
+// Angular
 import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class GoogleService {
-    googleApiKey: string = 'AIzaSyCcHzGUWPieUbZ7IZHhmBpcQ22mkeuEmuU';
-
     private http: HttpClient;
+    googleApiKey: string = 'AIzaSyCcHzGUWPieUbZ7IZHhmBpcQ22mkeuEmuU';
 
     constructor(handler: HttpBackend) {
         this.http = new HttpClient(handler);

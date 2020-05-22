@@ -1,15 +1,19 @@
-import { ChatMessage } from './chat-message';
-import { User } from './../user/user';
-import { environment } from './../../../environments/environment';
+// Angular
 import { Injectable, EventEmitter, Output, OnDestroy } from '@angular/core';
+
+// NPM
 import * as moment from 'moment';
 import * as io from 'socket.io-client';
-import { SessionService } from '../session/session.service';
+
+// App
+import { ChatMessage } from './chat-message';
+import { environment } from './../../../environments/environment';
 import { OuterAppInfo } from './outer-app-info';
+import { SessionService } from '../session/session.service';
+import { User } from './../user/user';
 
 @Injectable()
 export class ChatService implements OnDestroy {
-    public socket: io.Socket;
     @Output() public partner = new EventEmitter();
     @Output() public messageReceived = new EventEmitter();
     @Output() public messageSent = new EventEmitter();
@@ -26,14 +30,15 @@ export class ChatService implements OnDestroy {
     @Output() public userDisconnected = new EventEmitter();
     @Output() public matchingError = new EventEmitter();
 
-    user: User;
+    public socket: io.Socket;
 
+    private user: User;
     private matchFindRefreshInterval: number;
 
     constructor(private sessionService: SessionService) { }
 
     /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
-    intiateMatching(user: User): void {
+    public intiateMatching(user: User): void {
         this.connect();
 
         this.socket.on('matchError', err => {
@@ -83,22 +88,22 @@ export class ChatService implements OnDestroy {
     }
 
     /** Stop match timer on destroy */
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         clearTimeout(this.matchFindRefreshInterval);
     }
 
     /** Emits to socket that user is looking for a match */
-    lookForMatch(): void {
+    private lookForMatch(): void {
         this.socket.emit('searchForMatch', this.user);
     }
 
     /** Emits to socket to stop looking for a match, clears partner if a match has already been made */
-    cancelMatching() {
+    public cancelMatching(): void {
         this.socket.emit('cancelMatching');
     }
 
     /** Emits message sent to socket */
-    sendMessage(partner: User, user: User, message: string): void {
+    public sendMessage(partner: User, user: User, message: string): void {
         const msgObj: ChatMessage = {
             sender: user.name,
             receiver: partner.clientId,
@@ -112,7 +117,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Listens for message received from socket */
-    listenForMessageRecevied(): void {
+    private listenForMessageRecevied(): void {
         this.socket.on('message-received', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
             msgObj.type = 'received';
@@ -122,7 +127,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits app invite sent to socket */
-    sendOuterAppInvite(partner: User, user: User, outerApp: string, outerAppLink: string): void {
+    public sendOuterAppInvite(partner: User, user: User, outerApp: string, outerAppLink: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
@@ -136,7 +141,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Listens for app invite received from socket */
-    listenForOuterAppInvite(): void {
+    private listenForOuterAppInvite(): void {
         this.socket.on('outer-app-invite-received', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
             msgObj.type = 'received';
@@ -146,7 +151,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits app invite accepted to socket */
-    outerAppInviteAccept(partner: User, user: User, outerApp: string): void {
+    public outerAppInviteAccept(partner: User, user: User, outerApp: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
@@ -158,7 +163,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Listens for app invite accepted from socket */
-    listenForOuterAppInviteAccept(): void {
+    private listenForOuterAppInviteAccept(): void {
         this.socket.on('outer-app-invite-accept', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
             msgObj.type = 'received';
@@ -168,7 +173,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits app invite canceled to socket */
-    outerAppInviteCancel(partner: User, user: User, outerApp: string): void {
+    public outerAppInviteCancel(partner: User, user: User, outerApp: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
@@ -180,7 +185,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Listens for app invite canceled from socket */
-    listenForOuterAppInviteCancel(): void {
+    private listenForOuterAppInviteCancel(): void {
         this.socket.on('outer-app-invite-cancel', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
             msgObj.type = 'received';
@@ -190,7 +195,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits app functions to socket */
-    toggleOuterAppFunction(partner: User, user: User, outerApp: string, activity: string): void {
+    public toggleOuterAppFunction(partner: User, user: User, outerApp: string, activity: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
             receiver: partner.clientId,
@@ -203,7 +208,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Listens for app function changes from socket */
-    listenForToggleOuterAppFunction(): void {
+    private listenForToggleOuterAppFunction(): void {
         this.socket.on('toggle-outer-app-function', msgObj => {
             msgObj.type = 'received';
 
@@ -212,7 +217,7 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits to socket that user is currently typing */
-    userIsTyping(isTyping: boolean, partner: User): void {
+    public userIsTyping(isTyping: boolean, partner: User): void {
         const typingObj = {
             isTyping: isTyping,
             receiver: partner.clientId
@@ -222,14 +227,14 @@ export class ChatService implements OnDestroy {
     }
 
     /** Listens for if partner is typing */
-    listenForPartnerIsTyping(): void {
+    private listenForPartnerIsTyping(): void {
         this.socket.on('user-typed', typingObj => {
             this.isPartnerTyping.emit(typingObj);
         });
     }
 
     /** Connect to socket */
-    connect() {
+    private connect(): void {
         this.socket = io(environment.apiServer, {
             path: environment.socketIoServer
         });
@@ -238,20 +243,20 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits to socket when user is disconnected from chat */
-    disconnect(partner: User): void {
+    public disconnect(partner: User): void {
         this.socket.emit('disconnected', { receiver: partner.clientId });
         this.userDisconnected.emit(true);
     }
 
     /** Listens for if partner disconnects */
-    listenForPartnerDisconnect(): void {
+    private listenForPartnerDisconnect(): void {
         this.socket.on('partnerDisconnected', data => {
             this.partnerDisconnected.emit(true);
         });
     }
 
     /** Disconnects a user from socket */
-    killSocketConnection() {
+    public killSocketConnection(): void {
         this.socket.emit('killSocketConnection', null);
     }
 }

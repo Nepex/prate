@@ -59,7 +59,7 @@ export class ChangeAvatarModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.selectedAvatar = this.user.avatar;
     }
 

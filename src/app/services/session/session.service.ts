@@ -1,17 +1,19 @@
+// Angular
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { LocalStorageService } from 'ngx-webstorage';
-import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
+// NPM
+import { LocalStorageService } from 'ngx-webstorage';
+
+// App
 import { Credentials } from './credentials';
 import { environment } from '../../../environments/environment';
 import { Session } from './session';
 
 @Injectable()
 export class SessionService {
-
     public static STORAGE_KEYS = { TOKEN: 'token' };
     public onLogin: EventEmitter<void> = new EventEmitter<void>();
     public onLogout: EventEmitter<void> = new EventEmitter<void>();
@@ -24,7 +26,7 @@ export class SessionService {
         this.loadStoredSession();
     }
 
-    loadStoredSession() {
+    private loadStoredSession(): void {
         const existingToken = this.localStorageService.retrieve(SessionService.STORAGE_KEYS.TOKEN);
 
         if (existingToken) {
@@ -36,21 +38,21 @@ export class SessionService {
         }
     }
 
-    getToken() {
+    public getToken(): string|null {
         return this.currentSession ? this.currentSession.token : null;
     }
 
-    isAuthenticated() {
+    public isAuthenticated(): boolean {
         return this.currentSession && this.currentSession.token ? true : false;
     }
 
-    logout() {
+    public logout(): void {
         this.currentSession = null;
         this.localStorageService.clear(SessionService.STORAGE_KEYS.TOKEN);
         this.onLogout.emit();
     }
 
-    login(credentials: Credentials): Observable<Session> {
+    public login(credentials: Credentials): Observable<Session> {
         if (this.currentSession) {
             throw new Error('already logged in');
         }

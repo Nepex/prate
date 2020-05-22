@@ -30,7 +30,8 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
             this.YT = window['YT'];
             this.videoPlayer = new window['YT'].Player('player', {
                 events: {
-                    'onReady': this.onPlayerReady.bind(this)
+                    'onReady': this.onPlayerReady.bind(this),
+                    'onStateChange': this.onPlayerStateChange.bind(this)
                 }
             })
         };
@@ -41,13 +42,15 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
             this.videoUrl = changes.videoUrl.currentValue;
 
             if (!this.videoUrl) {
+                // if no video URL is passed, clear out playing video and hide player
                 this.videoId = null;
                 this.hidePlayer = true;
-            }  else {
+            } else {
+                // if a video URL is passed, get ID from it and unhide player
                 const regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
                 const match = this.videoUrl.match(regExp);
                 this.videoId = (match && match[1].length == 11) ? match[1] : false;
-    
+
                 // timeout to skip the 'error' message in hidden youtube player
                 if (this.videoId) {
                     setTimeout(() => {
@@ -78,9 +81,21 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
         }
     }
 
-    onPlayerReady(e) {
+    onPlayerReady(event) {
         this.videoPlayer.playVideo();
         this.videoPlayer.unMute();
+    }
+
+    onPlayerStateChange(event) {
+        switch (event.data) {
+            case window['YT'].PlayerState.PLAYING:
+                break;
+            case window['YT'].PlayerState.PAUSED:
+                break;
+            case window['YT'].PlayerState.ENDED:
+                this.videoUrl = null;
+                break;
+        };
     }
 
     playVideo() {
