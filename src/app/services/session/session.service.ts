@@ -46,12 +46,6 @@ export class SessionService {
         return this.currentSession && this.currentSession.token ? true : false;
     }
 
-    public logout(): void {
-        this.currentSession = null;
-        this.localStorageService.clear(SessionService.STORAGE_KEYS.TOKEN);
-        this.onLogout.emit();
-    }
-
     public login(credentials: Credentials): Observable<Session> {
         if (this.currentSession) {
             throw new Error('already logged in');
@@ -71,5 +65,11 @@ export class SessionService {
             }));
 
         return req;
+    }
+
+    public logout(): void {
+        this.currentSession = null;
+        this.localStorageService.clear(SessionService.STORAGE_KEYS.TOKEN);
+        this.onLogout.emit();
     }
 }

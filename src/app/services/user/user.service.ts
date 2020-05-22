@@ -9,7 +9,6 @@ import { BugReport } from '../generic/bug-report';
 import { environment } from '../../../environments/environment';
 import { User } from './user';
 
-
 @Injectable()
 export class UserService {
     @Output() public avatarChanged = new EventEmitter();
@@ -17,7 +16,23 @@ export class UserService {
 
     private apiUrl = `${environment.apiBaseUrl}/users`;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
+
+    public getUser(): Observable<User> {
+        const url = `${this.apiUrl}/me`;
+
+        const req = this.http.get<User>(url).pipe(map(res => res));
+
+        return req;
+    }
+
+    public getById(id: string): Observable<User> {
+        const url = `${this.apiUrl}/${id}`;
+
+        const req = this.http.get<User>(url);
+
+        return req;
+    }
 
     public create(user: User): Observable<User> {
         const url = `${this.apiUrl}`;
@@ -27,10 +42,22 @@ export class UserService {
         return req;
     }
 
-    public updateUser(user): Observable<User> {
+    public updateUser(user: User): Observable<User> {
         const url = `${this.apiUrl}/${user.id}`;
 
         const req = this.http.put<User>(url, user).pipe(map(res => res));
+
+        return req;
+    }
+
+    public updateUserAvatar(user: User): Observable<User> {
+        const url = `${this.apiUrl}/avatar/${user.id}`;
+
+        const body = {
+            avatar: user.avatar
+        };
+
+        const req = this.http.put<User>(url, body).pipe(map(res => res));
 
         return req;
     }
@@ -51,18 +78,6 @@ export class UserService {
         return req;
     }
 
-    public updateUserAvatar(user: User): Observable<User> {
-        const url = `${this.apiUrl}/avatar/${user.id}`;
-
-        const body = {
-            avatar: user.avatar
-        };
-
-        const req = this.http.put<User>(url, body).pipe(map(res => res));
-
-        return req;
-    }
-
     public sendBugReport(report: BugReport): Observable<BugReport> {
         const url = `${this.apiUrl}/bugreport/`;
 
@@ -74,21 +89,4 @@ export class UserService {
 
         return req;
     }
-
-    public getUser(): Observable<User> {
-        const url = `${this.apiUrl}/me`;
-
-        const req = this.http.get<User>(url).pipe(map(res => res));
-
-        return req;
-    }
-
-    public getById(id: string): Observable<User> {
-        const url = `${this.apiUrl}/${id}`;
-
-        const req = this.http.get<User>(url);
-
-        return req;
-    }
 }
-
