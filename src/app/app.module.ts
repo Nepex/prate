@@ -4,7 +4,6 @@ import { PageNotFoundComponent } from './pages/errors/page-not-found.component.t
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DownloadComponent } from './pages/download/download.component';
 import { DevelopersComponent } from './pages/developers/developers.component';
-import { UserProfileModalComponent } from './chat/profile/user-profile/user-profile-modal.component';
 import { AuthGuard } from './auth-guard.service';
 import { ServicesModule } from './services/services.module';
 import { ChatComponent } from './chat/chat.component';
@@ -25,16 +24,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChangeLogComponent } from './pages/change-log/change-log.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MessageDisplayModalComponent } from './shared/message-display/message-display-modal.component';
-import { UserInfoPanelComponent } from './chat/user-info-panel/user-info-panel.component';
-import { ChangeAvatarModalComponent } from './chat/profile/change-avatar/change-avatar-modal.component';
-import { ChatHelpModalComponent } from './chat/chat-help/chat-help-modal.component';
-import { BugReportModalComponent } from './chat/bug-report/bug-report-modal.component';
+import { UserInfoPanelComponent } from './chat/components/profile/user-info-panel/user-info-panel.component';
+import { ChangeAvatarModalComponent } from './chat/components/profile/change-avatar/change-avatar-modal.component';
+import { ChatHelpModalComponent } from './chat/components/chat-help/chat-help-modal.component';
+import { BugReportModalComponent } from './chat/components/bug-report/bug-report-modal.component';
 import { OffClickDirective } from './shared/off-click-directive/off-click.directive';
-import { OuterAppInviteModalComponent } from './chat/invite-modals/outer-app-invite/outer-app-invite-modal.component';
+import { OuterAppInviteModalComponent } from './chat/components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { AttributionsComponent } from './pages/attributions/attributions.component';
 import { ServicesExternalModule } from './services-ext/services-external.module';
 import { TagInputModule } from 'ngx-chips';
-import { ViewUserProfileModalComponent } from './chat/profile/view-user-profile/view-user-profile-modal.component';
+import { ViewUserProfileModalComponent } from './chat/components/profile/view-user-profile/view-user-profile-modal.component';
+import { UserSettingsModalComponent } from './chat/components/profile/user-settings/user-settings-modal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,7 @@ import { ViewUserProfileModalComponent } from './chat/profile/view-user-profile/
     ChatComponent,
     LoginModalComponent,
     SignUpModalComponent,
-    UserProfileModalComponent,
+    UserSettingsModalComponent,
     DevelopersComponent,
     DownloadComponent,
     SummaryComponent,
@@ -79,7 +79,7 @@ import { ViewUserProfileModalComponent } from './chat/profile/view-user-profile/
   entryComponents: [
     LoginModalComponent,
     SignUpModalComponent,
-    UserProfileModalComponent,
+    UserSettingsModalComponent,
     MessageDisplayModalComponent,
     TermsModalComponent,
     PrivacyPolicyModalComponent,

@@ -12,9 +12,9 @@ import { IsTyping } from '../services/chat/is-typing';
 import { LevelService } from '../services/level/level.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { OuterAppInviteModalComponent } from './invite-modals/outer-app-invite/outer-app-invite-modal.component';
+import { OuterAppInviteModalComponent } from './components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ViewUserProfileModalComponent } from './profile/view-user-profile/view-user-profile-modal.component';
+import { ViewUserProfileModalComponent } from './components/profile/view-user-profile/view-user-profile-modal.component';
 
 @Component({
     selector: 'prt-chat',
