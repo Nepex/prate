@@ -1,20 +1,20 @@
-import { ChatMessage } from './../services/chat/chat-message';
-import { UserService } from './../services/user/user.service';
+import { ChatMessage } from '../../services/chat/chat-message';
+import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
 import { Observable, Subscription, fromEvent } from 'rxjs';
-import { User } from '../services/user/user';
-import { ChatService } from '../services/chat/chat.service';
+import { User } from '../../services/user/user';
+import { ChatService } from '../../services/chat/chat.service';
 
 
 import { map, debounceTime, throttleTime } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IsTyping } from '../services/chat/is-typing';
-import { LevelService } from '../services/level/level.service';
+import { IsTyping } from '../../services/chat/is-typing';
+import { LevelService } from '../../services/level/level.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { OuterAppInviteModalComponent } from './components/invites/outer-app-invite/outer-app-invite-modal.component';
+import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ViewUserProfileModalComponent } from './components/profile/view-user-profile/view-user-profile-modal.component';
+import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
 
 @Component({
     selector: 'prt-chat',

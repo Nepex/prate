@@ -1,7 +1,7 @@
 import { ChangeLogComponent } from './pages/change-log/change-log.component';
 import { DownloadComponent } from './pages/download/download.component';
 import { AuthGuard } from './auth-guard.service';
-import { ChatComponent } from './chat/chat.component';
+import { ChatComponent } from './chat/chat/chat.component';
 import { Routes, RouterModule } from '@angular/router';
 
 import { NgModule } from '@angular/core';

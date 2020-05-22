@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'prt-chat-help-modal',
-    templateUrl: './chat-help-modal.component.html',
-    styleUrls: ['./chat-help-modal.component.css']
+    selector: 'prt-help-modal',
+    templateUrl: './help-modal.component.html',
+    styleUrls: ['./help-modal.component.css']
 })
-export class ChatHelpModalComponent {
+export class HelpModalComponent {
     selectedTab: string = 'basics';
 
     ranks: any = [

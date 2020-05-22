@@ -32,7 +32,6 @@ import { FormsModule } from '@angular/forms';
     imports: [
         CommonModule,
         NgbModule,
-        ServicesModule,
         FormsModule
     ],
     exports: [

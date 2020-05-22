@@ -9,9 +9,9 @@ import { ChatService } from 'src/app/services/chat/chat.service';
 import { MessageDisplayModalComponent } from '../../../../shared/message-display/message-display-modal.component';
 import { LevelService } from 'src/app/services/level/level.service';
 import { LevelInfo } from 'src/app/services/level/level-info';
-import { ChatHelpModalComponent } from 'src/app/chat/components/chat-help/chat-help-modal.component';
 import { BugReportModalComponent } from '../../bug-report/bug-report-modal.component';
 import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
+import { HelpModalComponent } from '../../help/help-modal.component';
 
 @Component({
     selector: 'prt-user-info-panel',
@@ -70,7 +70,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     }
 
     openHelp() {
-        this.modal.open(ChatHelpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        this.modal.open(HelpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
     openBugReport () {
