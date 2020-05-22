@@ -23,13 +23,14 @@
     padding-right: 40px;
 }
 
-.text-box {
-    height: 300px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 2%;
+::ng-deep>>>.modal-content {
+    border: 0;
+    border-radius: 35px;
+}
+
+::ng-deep>>>.modal {
+    text-align: center;
+    padding: 0!important;
 }
 
 .close-btn {
@@ -49,19 +50,11 @@
     width: 50%;
 }
 
-a:hover {
-    color: #dddddd;
-    transition: .5s;
-    text-decoration: none;
+.text-box {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 2%;
 }
-
-::ng-deep>>>.modal-content {
-    border: 0;
-    border-radius: 35px;
-}
-
-::ng-deep>>>.modal {
-    text-align: center;
-    padding: 0!important;
-}
-

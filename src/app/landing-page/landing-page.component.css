@@ -16,20 +16,7 @@
     border-radius: 20px;
 }
 
-.badges {
-    height: 35px;
-    width: 120px;
-}
-
-.mobile-badges {
-    margin-top: 20px;
-}
-
 @media (min-width: 344px) {
-    .mobile-badges {
-        display: none;
-    }
-
     .content-container {
         padding-bottom: 0px;
         padding-top: 20px;
@@ -37,10 +24,6 @@
 }
 
 @media (min-width: 992px) {
-    .mobile-badges {
-        display: block;
-    }
-
     .content-container {
         padding-bottom: 120px;
         padding-top: 140px;

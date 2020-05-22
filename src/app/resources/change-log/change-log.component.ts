@@ -1,4 +1,8 @@
+// NPM
 import { Component, OnInit } from '@angular/core';
+
+// App
+import { Update } from 'src/app/services/generic/update';
 
 @Component({
     selector: 'prt-change-log',
@@ -6,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./change-log.component.css']
 })
 export class ChangeLogComponent implements OnInit {
-    updates;
+    updates: Update[];
+
+    // Pagination
     page: number = 1;
     pageSize: number = 10;
 
