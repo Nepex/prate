@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TermsModalComponent } from '../../resources/terms/terms-modal.component';
-import { PrivacyPolicyModalComponent } from '../../resources/privacy-policy/privacy-policy-modal.component';
+import { TermsModalComponent } from '../../pages/terms/terms-modal.component';
+import { PrivacyPolicyModalComponent } from '../../pages/privacy-policy/privacy-policy-modal.component';
 
 @Component({
     selector: 'prt-footer',

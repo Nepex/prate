@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { SessionService } from '../services/session/session.service';
-import { SignUpModalComponent } from './../sign-up/sign-up-modal.component';
+import { SessionService } from '../../services/session/session.service';
+import { SignUpModalComponent } from '../sign-up/sign-up-modal.component';
 
 @Component({
     selector: 'prt-landing-page',

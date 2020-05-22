@@ -1,12 +1,12 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Credentials } from './../services/session/credentials';
+import { Credentials } from './../../services/session/credentials';
 import { Component, OnInit } from '@angular/core';
-import { AlertMessages } from '../shared/alert-messages/alert-messages.component';
+import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SessionService } from '../services/session/session.service';
+import { SessionService } from '../../services/session/session.service';
 import { Router } from '@angular/router';
-import { SubmittableFormGroup } from '../shared/submittable-form-group/submittable-form-group';
+import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
 
 @Component({
     selector: 'prt-login-modal',

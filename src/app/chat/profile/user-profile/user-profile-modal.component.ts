@@ -1,11 +1,11 @@
-import { UserService } from '../../services/user/user.service';
+import { UserService } from '../../../services/user/user.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
+import { AlertMessages } from '../../../shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
-import { User } from '../../services/user/user';
-import { LevelService } from '../../services/level/level.service';
+import { User } from '../../../services/user/user';
+import { LevelService } from '../../../services/level/level.service';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
 import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
 import { trigger, transition, style, animate } from '@angular/animations';

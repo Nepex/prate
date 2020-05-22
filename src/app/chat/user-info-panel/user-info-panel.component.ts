@@ -2,7 +2,7 @@ import { UserService } from '../../services/user/user.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SessionService } from 'src/app/services/session/session.service';
 import { Router } from '@angular/router';
-import { UserProfileModalComponent } from 'src/app/chat/user-profile/user-profile-modal.component';
+import { UserProfileModalComponent } from 'src/app/chat/profile/user-profile/user-profile-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/services/user/user';

@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { OuterAppInviteModalComponent } from './invite-modals/outer-app-invite/outer-app-invite-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ViewUserProfileModalComponent } from './view-user-profile/view-user-profile-modal.component';
+import { ViewUserProfileModalComponent } from './profile/view-user-profile/view-user-profile-modal.component';
 
 @Component({
     selector: 'prt-chat',

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { SessionService } from './../../services/session/session.service';
-import { LoginModalComponent } from './../../login/login-modal.component';
+import { LoginModalComponent } from './../../pages/login/login-modal.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/services/user/user';

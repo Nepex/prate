@@ -1,15 +1,15 @@
+import { PrivacyPolicyModalComponent } from '../privacy-policy/privacy-policy-modal.component';
+import { TermsModalComponent } from 'src/app/pages/terms/terms-modal.component';
+import { SessionService } from '../../services/session/session.service';
+import { UserService } from '../../services/user/user.service';
+import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
+import { User } from '../../services/user/user';
+import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
 import { Router } from '@angular/router';
-import { AlertMessages } from '../shared/alert-messages/alert-messages.component';
-import { SubmittableFormGroup } from '../shared/submittable-form-group/submittable-form-group';
-import { UserService } from '../services/user/user.service';
-import { SessionService } from '../services/session/session.service';
-import { User } from '../services/user/user';
-import { TermsModalComponent } from '../pages/terms/terms-modal.component';
-import { PrivacyPolicyModalComponent } from '../pages/privacy-policy/privacy-policy-modal.component';
 
 @Component({
     selector: 'prt-sign-up-modal',
