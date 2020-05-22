@@ -32,7 +32,7 @@ import { BugReportModalComponent } from './chat/bug-report/bug-report-modal.comp
 import { OffClickDirective } from './shared/off-click-directive/off-click.directive';
 import { OuterAppInviteModalComponent } from './chat/invite-modals/outer-app-invite/outer-app-invite-modal.component';
 import { AttributionsComponent } from './pages/attributions/attributions.component';
-import { ServicesExternalModule } from './services-external/services-external.module';
+import { ServicesExternalModule } from './services-ext/services-external.module';
 import { TagInputModule } from 'ngx-chips';
 import { ViewUserProfileModalComponent } from './chat/profile/view-user-profile/view-user-profile-modal.component';
 

@@ -4,7 +4,7 @@ import { User } from 'src/app/services/user/user';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { GoogleService } from 'src/app/services-external/google/google.service';
+import { GoogleService } from 'src/app/services-ext/google/google.service';
 
 @Component({
     selector: 'prt-outer-app-invite-modal',
