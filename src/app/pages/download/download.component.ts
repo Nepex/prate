@@ -15,7 +15,7 @@ import { MessageDisplayModalComponent } from 'src/app/shared/message-display/mes
 export class DownloadComponent {
     constructor(private modal: NgbModal) { }
 
-    openComingSoonModal() {
+    openComingSoonModal(): void {
         const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
 
         modalRef.componentInstance.message = "Coming soon...";

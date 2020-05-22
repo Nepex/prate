@@ -1,14 +1,19 @@
-import { UserService } from '../../../../services/user/user.service';
-import { Component, OnInit, Input } from '@angular/core';
+// Angular
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertMessages } from '../../../../shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
-import { User } from '../../../../services/user/user';
-import { LevelService } from '../../../../services/level/level.service';
-import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
-import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
 import { trigger, transition, style, animate } from '@angular/animations';
+
+// NPM
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
+import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
+import { LevelService } from '../../../../services/level/level.service';
+import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
+import { User } from '../../../../services/user/user';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
     selector: 'prt-user-settings-modal',
@@ -28,18 +33,18 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class UserSettingsModalComponent implements OnInit {
     user: User;
-    messages: AlertMessages[];
+    messages: AlertMessage[];
     loadingRequest: Observable<any>;
     customInterests: string[] = [];
-    customInterestsValidators = [this.customInterestMaxLength];
-    customInterestsErrors = { 'customInterestMaxLength': 'Too many characters' };
+    customInterestsValidators: any = [this.customInterestMaxLength];
+    customInterestsErrors: any = { 'customInterestMaxLength': 'Too many characters' };
 
     showChangePassword: boolean = false;
     showMiscOpts: boolean = false;
     showBio: boolean = false;
     showInterests: boolean = false;
 
-    bioLeftLength: any = 200;
+    bioLeftLength: string|number = 200;
 
     expCurValue: number;
     expMaxValue: number;
@@ -74,7 +79,7 @@ export class UserSettingsModalComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal,
         private levelService: LevelService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.getUser();
 
         this.profileForm.controls['bio'].valueChanges.subscribe((v) => {
@@ -92,7 +97,7 @@ export class UserSettingsModalComponent implements OnInit {
         });
     }
 
-    getUser() {
+    getUser(): void {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -107,7 +112,7 @@ export class UserSettingsModalComponent implements OnInit {
         });
     }
 
-    initFormValues() {
+    initFormValues(): void {
         this.pushCustomInterestsToInput();
         this.profileForm.controls.name.setValue(this.user.name);
         this.profileForm.controls.font_face.setValue(this.user.font_face);
@@ -126,7 +131,7 @@ export class UserSettingsModalComponent implements OnInit {
         this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
     }
 
-    applyChanges() {
+    applyChanges(): void {
         this.messages = [];
         this.profileForm['submitted'] = true;
 
@@ -180,6 +185,7 @@ export class UserSettingsModalComponent implements OnInit {
             this.profileForm['submitted'] = false;
             this.messages.push({ message: 'Settings saved', type: 'success' });
             this.userService.userSettingsChanged.emit(body);
+            this.user.name = body.name;
         }, err => {
             this.loadingRequest = null;
             this.profileForm['submitted'] = false;
@@ -189,7 +195,7 @@ export class UserSettingsModalComponent implements OnInit {
         });
     };
 
-    toggleInterest(val) {
+    toggleInterest(val: string): void {
         const idx = this.profileForm.value.interests.indexOf(val);
 
         if (idx > -1) {
@@ -199,7 +205,7 @@ export class UserSettingsModalComponent implements OnInit {
         }
     }
 
-    pushCustomInterestsToForm() {
+    pushCustomInterestsToForm(): void {
         for (let i = 0; i < this.customInterests.length; i++) {
             if (this.customInterests[i] !== 'movies/tv' && this.customInterests[i] !== 'music' && this.customInterests[i] !== 'gaming' && this.customInterests[i] !== 'books'
                 && this.customInterests[i] !== 'education' && this.customInterests[i] !== 'sports' && this.customInterests[i] !== 'life' && this.customInterests[i] !== 'dating' &&
@@ -209,7 +215,7 @@ export class UserSettingsModalComponent implements OnInit {
         }
     }
 
-    pushCustomInterestsToInput() {
+    pushCustomInterestsToInput(): void {
         for (let i = 0; i < this.user.interests.length; i++) {
             if (this.user.interests[i] !== 'movies/tv' && this.user.interests[i] !== 'music' && this.user.interests[i] !== 'gaming' && this.user.interests[i] !== 'books'
                 && this.user.interests[i] !== 'education' && this.user.interests[i] !== 'sports' && this.user.interests[i] !== 'life' && this.user.interests[i] !== 'dating') {
@@ -218,13 +224,13 @@ export class UserSettingsModalComponent implements OnInit {
         }
     }
 
-    onCustomInterestRemoved(e) {
+    onCustomInterestRemoved(e): void {
         if (this.profileForm.value.interests.indexOf(e) > -1) {
             this.profileForm.value.interests.splice(this.profileForm.value.interests.indexOf(e), 1);
         }
     }
 
-    openEditAvatar() {
+    openEditAvatar(): void {
         this.activeModal.close();
         const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 

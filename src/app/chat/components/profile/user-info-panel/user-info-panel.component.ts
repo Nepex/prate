@@ -1,17 +1,21 @@
-import { UserService } from '../../../../services/user/user.service';
+// Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SessionService } from 'src/app/services/session/session.service';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'src/app/services/user/user';
-import { ChatService } from 'src/app/services/chat/chat.service';
-import { MessageDisplayModalComponent } from '../../../../shared/message-display/message-display-modal.component';
-import { LevelService } from 'src/app/services/level/level.service';
-import { LevelInfo } from 'src/app/services/level/level-info';
+import { Router } from '@angular/router';
+
+// NPM
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
 import { BugReportModalComponent } from '../../bug-report/bug-report-modal.component';
-import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
+import { ChatService } from 'src/app/services/chat/chat.service';
 import { HelpModalComponent } from '../../help/help-modal.component';
+import { LevelService } from 'src/app/services/level/level.service';
+import { MessageDisplayModalComponent } from '../../../../shared/message-display/message-display-modal.component';
+import { SessionService } from 'src/app/services/session/session.service';
+import { User } from 'src/app/services/user/user';
+import { UserService } from '../../../../services/user/user.service';
+import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
 
 @Component({
     selector: 'prt-user-info-panel',
@@ -36,7 +40,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService,
         private chatService: ChatService, private levelService: LevelService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.getUser();
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
         this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());
@@ -45,7 +49,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.settingsChangedSub = this.userService.userSettingsChanged.subscribe(user => this.user.name = user.name);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.partnerFoundSub.unsubscribe();
         this.partnerDisconnectSub.unsubscribe();
         this.userDisconnectSub.unsubscribe();
@@ -53,7 +57,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.settingsChangedSub.unsubscribe();
     }
 
-    openProfile() {
+    openProfile(): void {
         if (this.partner) {
             const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
             modalRef.componentInstance.message = 'User settings cannot be editted while chatting.';
@@ -63,21 +67,21 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
-    openFriends() {
+    openFriends(): void {
         const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
 
         modalRef.componentInstance.message = "Coming soon...";
     }
 
-    openHelp() {
+    openHelp(): void {
         this.modal.open(HelpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
-    openBugReport () {
+    openBugReport(): void {
         this.modal.open(BugReportModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
-    getUser() {
+    getUser(): void {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -90,7 +94,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         });
     }
 
-    updateExpAndClearPartner() {
+    updateExpAndClearPartner(): void {
         this.partner = null;
 
         // find a better way to wait for exp reward
@@ -99,7 +103,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         }, 1000);
     }
 
-    logout() {
+    logout(): void {
         if (this.partner) {
             this.chatService.disconnect(this.partner);
         }

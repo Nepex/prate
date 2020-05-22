@@ -19,17 +19,17 @@ export class LandingPageComponent implements OnInit {
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.sessionService.isAuthenticated()) {
             this.userAuthed = true;
         }
     }
 
-    goToChat() {
+    goToChat(): void {
         this.router.navigateByUrl('/chat');
     }
 
-    openSignUpModal() {
+    openSignUpModal(): void {
         this.modal.open(SignUpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 }

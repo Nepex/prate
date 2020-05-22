@@ -1,19 +1,22 @@
-import { ChatMessage } from '../../services/chat/chat-message';
-import { UserService } from '../../services/user/user.service';
-import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
-import { User } from '../../services/user/user';
-import { ChatService } from '../../services/chat/chat.service';
-
-
-import { map, debounceTime, throttleTime } from 'rxjs/operators';
+// Angular
+import { Component, OnInit, OnDestroy, ViewChild, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IsTyping } from '../../services/chat/is-typing';
-import { LevelService } from '../../services/level/level.service';
+import { map, debounceTime } from 'rxjs/operators';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
+
+// NPM
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { ChatMessage } from '../../services/chat/chat-message';
+import { ChatService } from '../../services/chat/chat.service';
+import { IsTyping } from '../../services/chat/is-typing';
+import { LevelService } from '../../services/level/level.service';
+import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
+import { User } from '../../services/user/user';
+import { UserService } from '../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
 
 @Component({
@@ -98,7 +101,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     isWindowFocused: boolean;
 
     // https://www.iconfinder.com/iconsets/emoticons-50
-    emojis = [
+    emojis: any = [
         { code: ':smile:', img: 'smile.png' },
         { code: ':smile-eyesclosed:', img: 'smile-eyesclosed.png' },
         { code: ':smile-open:', img: 'smile-open.png' },
@@ -204,7 +207,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** Any time settings need to be refreshed */
-    getUser() {
+    getUser(): void {
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -254,11 +257,11 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.accumulateTime();
     }
 
-    approveMatch() {
+    approveMatch(): void {
         this.matchedWithOverlay = false;
     }
 
-    approveChatFinished() {
+    approveChatFinished(): void {
         this.chatFinishedOverlay = false;
     }
 
@@ -432,7 +435,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** Resets timers and awards exp */
-    stopTimerAndGiveExp() {
+    stopTimerAndGiveExp(): void {
         clearTimeout(this.chatTimerInterval);
         this.rankUpMessage = null;
         let levelUpInfo = this.levelService.checkIfLevelUp(this.user.experience + this.chatTimer, this.user.levelInfo);
@@ -461,18 +464,18 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** If user is already matched/matching or auth failure */
-    matchError(err) {
+    matchError(err: string): void {
         this.matching = false;
         this.statusMessage = err;
     }
 
     // Go home when logo is clicked
-    goToHome() {
+    goToHome(): void {
         this.router.navigateByUrl('/');
     }
 
     // toggle chat bubbles
-    toggleBubbles() {
+    toggleBubbles(): void {
         this.hideBubbles = !this.hideBubbles;
 
         if (!this.hideBubbles) {
@@ -483,7 +486,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     // Opens chatting users' profile
-    openViewUserProfile(msgType, userId, partnerId) {
+    openViewUserProfile(msgType: string, userId: string, partnerId: string): void {
         let id;
 
         id = msgType === 'sent' ? userId : partnerId;
@@ -493,7 +496,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling. */
-    chatScrolled() {
+    chatScrolled(): void {
         let element = document.getElementById('chatMessages');
         let atBottom = (element.scrollTop + element.offsetHeight + 100) >= element.scrollHeight;
         if (atBottom) {
@@ -504,7 +507,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** If user is at the bottom, auto scroll chat with messages sent/received */
-    checkForAutoScroll() {
+    checkForAutoScroll(): void {
         let element = document.getElementById('chatMessages');
 
         if (this.autoScroll) {
@@ -513,14 +516,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** Auto scrolls to bottom */
-    returnToBottom() {
+    returnToBottom(): void {
         let element = document.getElementById('chatMessages');
 
         element.scrollTop = element.scrollHeight;
     }
 
     /** Checks message for links then turns them into HREFs */
-    linkify(plainTextMessage) {
+    linkify(plainTextMessage: string): string {
         let urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         return plainTextMessage.replace(urlRegex, url => {
             return '<a href="' + url + '" target="_blank">' + url + '</a>';
@@ -528,7 +531,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** Checks if emojis are present in message and converts them */
-    emojify(plainTextMessage) {
+    emojify(plainTextMessage:string): string {
         let newMessage = plainTextMessage;
 
         for (let i = 0; i < this.emojis.length; i++) {
@@ -542,7 +545,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** Add emoji to message */
-    insertEmoji(code) {
+    insertEmoji(code: string): void {
         let message = this.messageForm.value.message;
         if (!message) { message = ''; }
 
@@ -552,7 +555,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     // Games
-    prepareGameInvite(game) {
+    prepareGameInvite(game: string): void {
         if (!this.partner) {
             return;
         }
@@ -569,24 +572,24 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
-    closeGame() {
+    closeGame(): void {
         this.gameUrl = null;
         this.gameType = null;
         this.gameAccepted = false;
         this.inviteLink = null;
     }
 
-    sendGameInvite(gameInfo) {
+    sendGameInvite(gameInfo: any): void {
         this.inviteLink = gameInfo.url;
         this.sendOuterAppInvite(gameInfo.gameType);
     }
 
-    gameSessionClosed() {
+    gameSessionClosed(): void {
         this.toggleOuterAppFunction(this.gameType, 'close');
     }
 
     // Invite Logic
-    sendOuterAppInvite(app) {
+    sendOuterAppInvite(app: string): void {
         if (!this.partner) {
             return;
         }
@@ -611,7 +614,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (app === 'yt') { this.hideYtInvControls = true; }
     }
 
-    outerAppInviteSent(invInfo) {
+    outerAppInviteSent(invInfo: any): void {
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'sent';
@@ -624,7 +627,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
-    outerAppInviteReceived(invInfo) {
+    outerAppInviteReceived(invInfo: any): void {
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'received';
@@ -641,7 +644,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
-    outerAppInviteAccepted(invInfo) {
+    outerAppInviteAccepted(invInfo: any): void {
         if (this.outerAppInviteModal) {
             this.outerAppInviteModal.close();
         }
@@ -671,12 +674,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
-    outerAppInviteCanceled(invInfo) {
+    outerAppInviteCanceled(invInfo: any): void {
         this.outerAppInviteModal.close();
         this.closeGame();
     }
 
-    toggleOuterAppFunction(outerApp, activity) {
+    toggleOuterAppFunction(outerApp: string, activity: string): void {
         if (outerApp === 'yt') {
             if (activity === 'playpause') {
                 this.ytPlayState = !this.ytPlayState;
@@ -703,7 +706,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.chatService.toggleOuterAppFunction(this.partner, this.user, outerApp, activity);
     }
 
-    outerAppFunctionToggledByPartner(receivedInfo) {
+    outerAppFunctionToggledByPartner(receivedInfo: any): void {
         if (receivedInfo.outerApp === 'yt') {
             if (receivedInfo.activity === 'playpause') {
                 this.ytPlayState = !this.ytPlayState;

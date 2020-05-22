@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class GoogleService {
     private http: HttpClient;
-    googleApiKey: string = 'AIzaSyCcHzGUWPieUbZ7IZHhmBpcQ22mkeuEmuU';
+    private googleApiKey: string = 'AIzaSyCcHzGUWPieUbZ7IZHhmBpcQ22mkeuEmuU';
 
     constructor(handler: HttpBackend) {
         this.http = new HttpClient(handler);
     }
 
-    getYtVideoInfo(videoId: string): Observable<any> {
+    public getYtVideoInfo(videoId: string): Observable<any> {
         const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${this.googleApiKey}`;
 
         const req = this.http.get<any>(url).pipe(map(res => res));

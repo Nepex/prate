@@ -16,13 +16,13 @@ import { TermsModalComponent } from '../../pages/terms/terms-modal.component';
 export class FooterComponent {
     constructor(private modal: NgbModal) { }
 
-    openTermsModal() {
+    openTermsModal(): boolean {
         this.modal.open(TermsModalComponent, { centered: true, backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
 
         return false;
     }
 
-    openPrivacyPolicyModal() {
+    openPrivacyPolicyModal(): boolean {
         this.modal.open(PrivacyPolicyModalComponent, { centered: true, backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
 
         return false;

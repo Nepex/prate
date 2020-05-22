@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
+import { AlertMessage } from '../../shared/alert-messages/alert-messages.component';
+import { Credentials } from '../../services/session/credentials';
 import { PrivacyPolicyModalComponent } from '../privacy-policy/privacy-policy-modal.component';
 import { SessionService } from '../../services/session/session.service';
 import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
@@ -22,7 +23,7 @@ import { User } from '../../services/user/user';
     styleUrls: ['./sign-up-modal.component.css']
 })
 export class SignUpModalComponent {
-    messages: AlertMessages[];
+    messages: AlertMessage[];
     loadingRequest: Observable<any>;
 
     userRegex: RegExp = /^[a-zA-Z0-9]*$/;
@@ -37,7 +38,7 @@ export class SignUpModalComponent {
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal, private sessionService: SessionService,
         private router: Router) { }
 
-    createUser() {
+    createUser(): void {
         this.messages = [];
         this.signUpForm['submitted'] = true;
 
@@ -75,14 +76,17 @@ export class SignUpModalComponent {
         });
     }
 
-    logUserIn(body) {
+    logUserIn(body: User): void {
         if (this.loadingRequest) {
             return;
         }
 
-        delete body.name;
+        const credentials: Credentials = {
+            email: body.email,
+            password: body.password
+        };
 
-        this.loadingRequest = this.sessionService.login(body);
+        this.loadingRequest = this.sessionService.login(credentials);
 
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
@@ -99,14 +103,14 @@ export class SignUpModalComponent {
         });
     }
 
-    openTermsModal() {
+    openTermsModal(): boolean {
         this.activeModal.close();
         this.modal.open(TermsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 
         return false;
     }
 
-    openPrivacyPolicyModal() {
+    openPrivacyPolicyModal(): boolean {
         this.activeModal.close();
         this.modal.open(PrivacyPolicyModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
+import { AlertMessage } from '../../shared/alert-messages/alert-messages.component';
 import { Credentials } from './../../services/session/credentials';
 import { SessionService } from '../../services/session/session.service';
 import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
@@ -19,7 +19,7 @@ import { SubmittableFormGroup } from '../../shared/submittable-form-group/submit
     styleUrls: ['./login-modal.component.css']
 })
 export class LoginModalComponent {
-    messages: AlertMessages[];
+    messages: AlertMessage[];
     loadingRequest: Observable<any>;
 
     emailRegex: RegExp = /^[^@]+@[^@]+\.[^@]+$/;
@@ -30,7 +30,7 @@ export class LoginModalComponent {
 
     constructor(public activeModal: NgbActiveModal, private sessionService: SessionService, private router: Router) { }
 
-    attemptLogin() {
+    attemptLogin(): void {
         this.messages = [];
         this.loginForm['submitted'] = true;
 

@@ -18,9 +18,9 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./alert-messages.component.css']
 })
 export class AlertMessagesComponent {
-    @Input() messages;
+    @Input() messages: AlertMessage[];
 
-    close(m) {
+    close(m: AlertMessage): void {
         for (let i = 0; i < this.messages.length; i++) {
             if (m.message === this.messages[i].message) {
                 this.messages.splice(i, 1);
@@ -29,7 +29,7 @@ export class AlertMessagesComponent {
     }
 }
 
-export class AlertMessages {
+export class AlertMessage {
     message: string;
     type: string;
 }

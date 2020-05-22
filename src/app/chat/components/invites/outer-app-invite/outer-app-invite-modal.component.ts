@@ -1,10 +1,13 @@
-import { Component, Input, OnInit, HostListener, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from 'src/app/services/user/user';
+// Angular
+import { Component, Input, OnInit, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { GoogleService } from 'src/app/services-ext/google/google.service';
+
+// NPM
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { GoogleService } from '../../../../services-ext/google/google.service';
+import { User } from '../../../../services/user/user';
 
 @Component({
     selector: 'prt-outer-app-invite-modal',
@@ -18,7 +21,7 @@ export class OuterAppInviteModalComponent implements OnInit {
     @Input() url: string;
 
     @HostListener('document:keydown', ['$event'])
-    onKeyDown(evt: KeyboardEvent) {
+    onKeyDown(evt: KeyboardEvent): boolean {
         if (
             evt.keyCode === 8 || evt.which === 8 ||
             evt.keyCode === 32 || evt.which === 32 ||
@@ -37,7 +40,7 @@ export class OuterAppInviteModalComponent implements OnInit {
 
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         document.querySelectorAll("button").forEach( function(item) {
             item.addEventListener('focus', function() {
                 this.blur();
@@ -49,11 +52,11 @@ export class OuterAppInviteModalComponent implements OnInit {
         }
     }
 
-    passBack(answer) {
+    passBack(answer: string): void {
         this.activeModal.close(answer);
     }
 
-    getVideoInfo() {
+    getVideoInfo(): void {
         if (this.loadingRequest) {
             return;
         }

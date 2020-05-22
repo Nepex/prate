@@ -1,8 +1,8 @@
+// Angular
 import { Component, OnDestroy } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd, NavigationCancel } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router, NavigationEnd, NavigationCancel } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SessionService } from './services/session/session.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'prt-root',
@@ -24,7 +24,7 @@ import { SessionService } from './services/session/session.service';
   ],
 })
 export class AppComponent implements OnDestroy {
-  isLoadingRoute;
+  isLoadingRoute: boolean;
   routerSub: Subscription;
 
   constructor(private router: Router) {
@@ -34,7 +34,7 @@ export class AppComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.routerSub.unsubscribe();
   }
 

@@ -18,7 +18,7 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
 
     constructor() { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         document.body.appendChild(tag);
@@ -37,7 +37,7 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
         };
     }
 
-    ngOnChanges(changes: { [property: string]: SimpleChange }) {
+    ngOnChanges(changes: { [property: string]: SimpleChange }): void {
         if (changes.videoUrl && !changes.videoUrl.firstChange) {
             this.videoUrl = changes.videoUrl.currentValue;
 
@@ -81,12 +81,12 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
         }
     }
 
-    onPlayerReady(event) {
+    onPlayerReady(event): void {
         this.videoPlayer.playVideo();
         this.videoPlayer.unMute();
     }
 
-    onPlayerStateChange(event) {
+    onPlayerStateChange(event): void {
         switch (event.data) {
             case window['YT'].PlayerState.PLAYING:
                 break;
@@ -98,19 +98,19 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
         };
     }
 
-    playVideo() {
+    playVideo(): void {
         this.videoPlayer.playVideo();
     }
 
-    pauseVideo() {
+    pauseVideo(): void {
         this.videoPlayer.pauseVideo();
     }
 
-    muteVideo() {
+    muteVideo(): void {
         this.videoPlayer.mute();
     }
 
-    unmuteVideo() {
+    unmuteVideo(): void {
         this.videoPlayer.unMute();
     }
 }

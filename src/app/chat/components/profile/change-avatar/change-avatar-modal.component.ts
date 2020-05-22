@@ -1,9 +1,14 @@
+// Angular
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+
+// NPM
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.component';
 import { User } from 'src/app/services/user/user';
 import { UserService } from 'src/app/services/user/user.service';
-import { AlertMessages } from 'src/app/shared/alert-messages/alert-messages.component';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'prt-change-avatar-modal',
@@ -13,11 +18,11 @@ import { Observable } from 'rxjs';
 export class ChangeAvatarModalComponent implements OnInit {
     @Input() user: User;
 
-    messages: AlertMessages[];
+    messages: AlertMessage[];
     loadingRequest: Observable<any>;
 
-    selectedAvatar;
-    avatars = [
+    selectedAvatar: string;
+    avatars: any = [
         { name: 'default.png' },
         { name: 'male1.png' },
         { name: 'male2.png' },
@@ -59,15 +64,15 @@ export class ChangeAvatarModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.selectedAvatar = this.user.avatar;
     }
 
-    selectAvatar(avatar) {
+    selectAvatar(avatar): void {
         this.selectedAvatar = avatar;
     }
 
-    applyChanges() {
+    applyChanges(): void {
         this.messages = [];
 
         if (this.loadingRequest) {

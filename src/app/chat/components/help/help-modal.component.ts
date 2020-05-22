@@ -1,4 +1,7 @@
+// Angular
 import { Component } from '@angular/core';
+
+// NPM
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

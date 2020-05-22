@@ -22,7 +22,7 @@ export class GameContainerComponent {
         this.canceled.emit(true);
     }
 
-    sendInvite(url): void {
+    sendInvite(url: string): void {
         let urlRegex;
         
         if (this.gameType === 'gartic') {
@@ -46,7 +46,7 @@ export class GameContainerComponent {
         this.inviteSent.emit(gameInfo);
     }
 
-    closeGame() {
+    closeGame(): void {
         this.gameClosed.emit(true);
     }
 }

@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private userService: UserService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.sessionService.isAuthenticated()) {
             this.userAuthed = true;
 
@@ -39,13 +39,13 @@ export class HeaderComponent implements OnInit {
         }
     }
 
-    openLoginModal() {
-        this.modal.open(LoginModalComponent, { centered: true, backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
+    openLoginModal(): boolean {
+        this.modal.open(LoginModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
 
         return false;
     }
 
-    logout() {
+    logout(): void {
         this.sessionService.logout();
         window.location.reload();
     }

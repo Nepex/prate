@@ -1,11 +1,16 @@
+// Angular
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
 import { FormControl, Validators } from '@angular/forms';
-import { AlertMessages } from 'src/app/shared/alert-messages/alert-messages.component';
 import { Observable } from 'rxjs';
-import { UserService } from 'src/app/services/user/user.service';
-import { BugReport } from 'src/app/services/generic/bug-report';
+
+// NPM
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { AlertMessage } from '../../../shared/alert-messages/alert-messages.component';
+import { BugReport } from '../../../services/generic/bug-report';
+import { SubmittableFormGroup } from '../../../shared/submittable-form-group/submittable-form-group';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
     selector: 'prt-bug-report-modal',
@@ -13,8 +18,8 @@ import { BugReport } from 'src/app/services/generic/bug-report';
     styleUrls: ['./bug-report-modal.component.css']
 })
 export class BugReportModalComponent {
-    messages: AlertMessages[];
-    messageLeftLength;
+    messages: AlertMessage[];
+    messageLeftLength: string | number;
     loadingRequest: Observable<BugReport>;
     disableForm: boolean = false;
 
@@ -39,16 +44,12 @@ export class BugReportModalComponent {
         });
     }
 
-    sendReport() {
+    sendReport(): void {
         this.messages = [];
         this.bugReportForm['submitted'] = true;
         this.disableForm = true;
 
-        if (!this.bugReportForm.valid) {
-            return;
-        }
-
-        if (this.loadingRequest) {
+        if (!this.bugReportForm.valid || this.loadingRequest) {
             return;
         }
 

@@ -12,12 +12,10 @@ export class OffClickDirective {
     @Output('offClick')
     offClicked = new EventEmitter();
 
-    constructor(
-        private elementRef: ElementRef) {
-
+    constructor(private elementRef: ElementRef) {
     }
 
-    onClick($event) {
+    onClick($event): void {
         $event.stopPropagation();
 
         if (!this.elementRef.nativeElement.contains($event.target))
