@@ -1,15 +1,20 @@
-import { PrivacyPolicyModalComponent } from '../privacy-policy/privacy-policy-modal.component';
-import { TermsModalComponent } from 'src/app/pages/terms/terms-modal.component';
-import { SessionService } from '../../services/session/session.service';
-import { UserService } from '../../services/user/user.service';
-import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
+// Angular
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
-import { User } from '../../services/user/user';
-import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+
+// NPM
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
+import { PrivacyPolicyModalComponent } from '../privacy-policy/privacy-policy-modal.component';
+import { SessionService } from '../../services/session/session.service';
+import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
+import { TermsModalComponent } from 'src/app/pages/terms/terms-modal.component';
+import { UserService } from '../../services/user/user.service';
+import { User } from '../../services/user/user';
 
 @Component({
     selector: 'prt-sign-up-modal',
@@ -19,8 +24,9 @@ import { Router } from '@angular/router';
 export class SignUpModalComponent implements OnInit {
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
-    userRegex = /^[a-zA-Z0-9]*$/;
-    emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
+
+    userRegex: RegExp = /^[a-zA-Z0-9]*$/;
+    emailRegex: RegExp = /^[^@]+@[^@]+\.[^@]+$/;
     signUpForm: SubmittableFormGroup = new SubmittableFormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
@@ -33,24 +39,16 @@ export class SignUpModalComponent implements OnInit {
 
     ngOnInit(): void { }
 
-    // openLogin() {
-    //     this.modal.open(LoginModalComponent, { centered: true, backdrop: 'static', keyboard: false });
-    // }
-
     createUser() {
         this.messages = [];
         this.signUpForm['submitted'] = true;
 
-        if (!this.signUpForm.valid) {
+        if (!this.signUpForm.valid || this.loadingRequest) {
             return;
         }
 
         if (this.signUpForm.value.password !== this.signUpForm.value.passwordConfirm) {
             this.messages.push({ message: 'Passwords do not match', type: 'error' });
-            return;
-        }
-
-        if (this.loadingRequest) {
             return;
         }
 
@@ -90,8 +88,6 @@ export class SignUpModalComponent implements OnInit {
 
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
-            this.signUpForm['submitted'] = false;
-
             setTimeout(() => {
                 this.activeModal.close();
                 this.router.navigateByUrl('/chat');
@@ -105,14 +101,14 @@ export class SignUpModalComponent implements OnInit {
         });
     }
 
-    openTerms() {
+    openTermsModal() {
         this.activeModal.close();
         this.modal.open(TermsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 
         return false;
     }
 
-    openPrivacyPolicy() {
+    openPrivacyPolicyModal() {
         this.activeModal.close();
         this.modal.open(PrivacyPolicyModalComponent, { centered: true, backdrop: 'static', keyboard: false });
 

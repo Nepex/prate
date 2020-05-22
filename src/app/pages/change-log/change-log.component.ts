@@ -1,4 +1,4 @@
-// NPM
+// Angular
 import { Component, OnInit } from '@angular/core';
 
 // App

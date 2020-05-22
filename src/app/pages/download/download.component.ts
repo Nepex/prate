@@ -1,5 +1,7 @@
-// NPM
+// Angular
 import { Component, OnInit } from '@angular/core';
+
+// NPM
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App

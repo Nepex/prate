@@ -1,11 +1,16 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Credentials } from './../../services/session/credentials';
+// Angular
 import { Component, OnInit } from '@angular/core';
-import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SessionService } from '../../services/session/session.service';
 import { Router } from '@angular/router';
+
+// NPM
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { AlertMessages } from '../../shared/alert-messages/alert-messages.component';
+import { Credentials } from './../../services/session/credentials';
+import { SessionService } from '../../services/session/session.service';
 import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
 
 @Component({
@@ -16,7 +21,8 @@ import { SubmittableFormGroup } from '../../shared/submittable-form-group/submit
 export class LoginModalComponent implements OnInit {
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
-    emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
+
+    emailRegex: RegExp = /^[^@]+@[^@]+\.[^@]+$/;
     loginForm: SubmittableFormGroup = new SubmittableFormGroup({
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
         password: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -24,17 +30,13 @@ export class LoginModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private sessionService: SessionService, private router: Router) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     attemptLogin() {
         this.messages = [];
         this.loginForm['submitted'] = true;
 
-        if (!this.loginForm.valid) {
-            return;
-        }
-
-        if (this.loadingRequest) {
+        if (!this.loginForm.valid || this.loadingRequest) {
             return;
         }
 
@@ -45,16 +47,11 @@ export class LoginModalComponent implements OnInit {
 
         this.loadingRequest = this.sessionService.login(body);
 
-        this.loadingRequest.subscribe(res => {
+        this.loadingRequest.subscribe(() => {
             this.loadingRequest = null;
             this.loginForm['submitted'] = false;
-            this.messages.push({ message: 'Success! Redirecting...', type: 'success' });
-            this.loginForm.reset();
-
-            setTimeout(() => {
-                this.activeModal.close();
-                this.router.navigateByUrl('/chat');
-            }, 500);
+            this.activeModal.close();
+            this.router.navigateByUrl('/chat');
         }, err => {
             this.loadingRequest = null;
             this.loginForm['submitted'] = false;
