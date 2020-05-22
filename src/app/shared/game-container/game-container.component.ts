@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector: 'prt-game-container',
     templateUrl: './game-container.component.html',
     styleUrls: ['./game-container.component.css']
 })
-export class GameContainerComponent implements OnInit, OnChanges {
+export class GameContainerComponent {
     @Input() gameType: string;
     @Input() gameUrl: string;
     @Input() gameAccepted: boolean;
-
 
     @Output() canceled = new EventEmitter();
     @Output() inviteSent = new EventEmitter();
@@ -19,17 +18,11 @@ export class GameContainerComponent implements OnInit, OnChanges {
 
     constructor() { }
 
-    ngOnInit(): void {
-    }
-
-    ngOnChanges(changes: { [property: string]: SimpleChange }) {
-    }
-
-    cancel() {
+    cancel(): void {
         this.canceled.emit(true);
     }
 
-    sendInvite(url) {
+    sendInvite(url): void {
         let urlRegex;
         
         if (this.gameType === 'gartic') {

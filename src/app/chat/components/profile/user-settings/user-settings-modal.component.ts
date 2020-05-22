@@ -74,7 +74,7 @@ export class UserSettingsModalComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal,
         private levelService: LevelService) { }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.getUser();
 
         this.profileForm.controls['bio'].valueChanges.subscribe((v) => {

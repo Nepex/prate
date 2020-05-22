@@ -1,3 +1,4 @@
+// Angular
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
 
 @Component({
@@ -9,8 +10,6 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
     @Input() videoUrl: string;
     @Input() playState: boolean;
     @Input() muteState: boolean;
-    @Input() height: string;
-    @Input() width: string;
 
     public YT: any;
     videoPlayer: any;
@@ -19,21 +18,18 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
 
     constructor() { }
 
-    ngOnInit(): void {
+    ngOnInit() {
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         document.body.appendChild(tag);
 
-        var firstScriptTag = document.getElementsByTagName('script')[0];
+        const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        window['onYouTubeIframeAPIReady'] = (e) => {
+        window['onYouTubeIframeAPIReady'] = () => {
             this.YT = window['YT'];
             this.videoPlayer = new window['YT'].Player('player', {
-                // videoId: this.videoId,
                 events: {
-                    'onStateChange': this.onPlayerStateChange.bind(this),
-                    'onError': this.onPlayerError.bind(this),
                     'onReady': this.onPlayerReady.bind(this)
                 }
             })
@@ -48,11 +44,11 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
                 this.videoId = null;
                 this.hidePlayer = true;
             }  else {
-                var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
-                var match = this.videoUrl.match(regExp);
+                const regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
+                const match = this.videoUrl.match(regExp);
                 this.videoId = (match && match[1].length == 11) ? match[1] : false;
     
-                // timeout to maybe skip the 'error' message in hidden youtube player
+                // timeout to skip the 'error' message in hidden youtube player
                 if (this.videoId) {
                     setTimeout(() => {
                         this.hidePlayer = false;
@@ -82,7 +78,7 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
         }
     }
 
-    onPlayerReady(event) {
+    onPlayerReady(e) {
         this.videoPlayer.playVideo();
         this.videoPlayer.unMute();
     }
@@ -102,29 +98,4 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
     unmuteVideo() {
         this.videoPlayer.unMute();
     }
-
-    onPlayerStateChange(event) {
-        switch (event.data) {
-            case window['YT'].PlayerState.PLAYING:
-                break;
-            case window['YT'].PlayerState.PAUSED:
-                break;
-            case window['YT'].PlayerState.ENDED:
-                break;
-        };
-    };
-    //utility
-    cleanTime() {
-        return Math.round(this.videoPlayer.getCurrentTime())
-    };
-    onPlayerError(event) {
-        switch (event.data) {
-            case 2:
-                break;
-            case 100:
-                break;
-            case 101 || 150:
-                break;
-        };
-    };
 }

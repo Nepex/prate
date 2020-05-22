@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 // NPM
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,10 +12,8 @@ import { MessageDisplayModalComponent } from 'src/app/shared/message-display/mes
     templateUrl: './download.component.html',
     styleUrls: ['./download.component.css']
 })
-export class DownloadComponent implements OnInit {
+export class DownloadComponent {
     constructor(private modal: NgbModal) { }
-
-    ngOnInit(): void {}
 
     openComingSoonModal() {
         const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });

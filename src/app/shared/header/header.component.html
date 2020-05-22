@@ -1,4 +1,4 @@
-<div class="row no-pad-margin" style="position: relative;">
+<div class="row no-pad-margin position-relative">
     <div class="col-12 header-container">
         <a href="/"><img class="d-none d-lg-inline d-xl-inline" src="../../assets/images/prt-logo.png" /></a>
         <a href="/"><img class="d-lg-none d-xl-none menu-logo-sm" src="../../assets/images/prt-icon.png" /></a>
@@ -23,14 +23,14 @@
                     <li class="header-link" [ngClass]="{ 'active': selectedTab === 'DEVELOPERS'}"><a
                             href="/developers">Developers</a></li>
                     <li class="header-link d-block d-lg-none" *ngIf="!userAuthed"><a href="#"
-                            (click)="openLogin();">Login</a></li>
+                            (click)="openLoginModal();">Login</a></li>
                     <li class="header-link d-block d-lg-none cursor-pointer" *ngIf="userAuthed"><a
                             (click)="logout();">Logout</a></li>
                 </ul>
             </div>
         </nav>
 
-        <div class="log-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="openLogin()"
+        <div class="log-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="openLoginModal()"
             *ngIf="!userAuthed">
             Login
         </div>

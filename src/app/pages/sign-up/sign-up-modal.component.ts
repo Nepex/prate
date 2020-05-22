@@ -21,7 +21,7 @@ import { User } from '../../services/user/user';
     templateUrl: './sign-up-modal.component.html',
     styleUrls: ['./sign-up-modal.component.css']
 })
-export class SignUpModalComponent implements OnInit {
+export class SignUpModalComponent {
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
 
@@ -36,8 +36,6 @@ export class SignUpModalComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal, private sessionService: SessionService,
         private router: Router) { }
-
-    ngOnInit(): void { }
 
     createUser() {
         this.messages = [];

@@ -1,10 +1,14 @@
-import { Router } from '@angular/router';
-import { SessionService } from './../../services/session/session.service';
-import { LoginModalComponent } from './../../pages/login/login-modal.component';
+// Angular
 import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from 'src/app/services/user/user';
 import { Observable } from 'rxjs';
+
+// NPM
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// App
+import { LoginModalComponent } from './../../pages/login/login-modal.component';
+import { SessionService } from './../../services/session/session.service';
+import { User } from 'src/app/services/user/user';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -14,14 +18,15 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class HeaderComponent implements OnInit {
     @Input() selectedTab: string;
+
     isCollapsed: boolean = true;
-    userAuthed: boolean = false;
-    user: User;
     loadingRequest: Observable<User>;
+    user: User;
+    userAuthed: boolean = false;
 
-    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService) { }
+    constructor(private modal: NgbModal, private sessionService: SessionService, private userService: UserService) { }
 
-    ngOnInit(): void {
+    ngOnInit() {
         if (this.sessionService.isAuthenticated()) {
             this.userAuthed = true;
 
@@ -34,14 +39,10 @@ export class HeaderComponent implements OnInit {
         }
     }
 
-    openLogin() {
+    openLoginModal() {
         this.modal.open(LoginModalComponent, { centered: true, backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
 
         return false;
-    }
-
-    goToChat() {
-        this.router.navigateByUrl('/chat');
     }
 
     logout() {

@@ -36,7 +36,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService,
         private chatService: ChatService, private levelService: LevelService) { }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.getUser();
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
         this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());

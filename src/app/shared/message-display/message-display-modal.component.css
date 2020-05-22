@@ -43,12 +43,6 @@
     width: 50%;
 }
 
-a:hover {
-    color: #dddddd;
-    transition: .5s;
-    text-decoration: none;
-}
-
 ::ng-deep>>>.modal-content {
     border: 0;
     border-radius: 35px;

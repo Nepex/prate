@@ -19,7 +19,7 @@ export class LandingPageComponent implements OnInit {
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         if (this.sessionService.isAuthenticated()) {
             this.userAuthed = true;
         }

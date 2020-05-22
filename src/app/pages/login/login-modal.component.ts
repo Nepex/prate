@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ import { SubmittableFormGroup } from '../../shared/submittable-form-group/submit
     templateUrl: './login-modal.component.html',
     styleUrls: ['./login-modal.component.css']
 })
-export class LoginModalComponent implements OnInit {
+export class LoginModalComponent {
     messages: AlertMessages[];
     loadingRequest: Observable<any>;
 
@@ -29,8 +29,6 @@ export class LoginModalComponent implements OnInit {
     });
 
     constructor(public activeModal: NgbActiveModal, private sessionService: SessionService, private router: Router) { }
-
-    ngOnInit(): void { }
 
     attemptLogin() {
         this.messages = [];

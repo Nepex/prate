@@ -18,7 +18,7 @@ export class ChangeLogComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.updates = [
             {
                 title: 'v0.0.16-alpha',

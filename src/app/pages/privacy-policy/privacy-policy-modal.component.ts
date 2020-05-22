@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 // NPM
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,8 +9,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './privacy-policy-modal.component.html',
     styleUrls: ['./privacy-policy-modal.component.css']
 })
-export class PrivacyPolicyModalComponent implements OnInit {
+export class PrivacyPolicyModalComponent {
     constructor(public activeModal: NgbActiveModal) { }
-
-    ngOnInit(): void { }
 }

@@ -81,11 +81,11 @@
     </div>
 
     <div class="row chat-area">
-        <prt-youtube-player [height]="100" [width]="100" [playState]="ytPlayState" [muteState]="ytMuteState"
-            [videoUrl]="ytUrl">
+        <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
         </prt-youtube-player>
         <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
-            (canceled)="closeGame($event)" (inviteSent)="sendGameInvite($event)" (gameClosed)="gameSessionClosed($event)"></prt-game-container>
+            (canceled)="closeGame($event)" (inviteSent)="sendGameInvite($event)"
+            (gameClosed)="gameSessionClosed($event)"></prt-game-container>
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">

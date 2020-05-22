@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 // NPM
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,8 +9,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './terms-modal.component.html',
     styleUrls: ['./terms-modal.component.css']
 })
-export class TermsModalComponent implements OnInit {
+export class TermsModalComponent {
     constructor(public activeModal: NgbActiveModal) { }
-
-    ngOnInit(): void { }
 }
