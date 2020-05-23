@@ -23,32 +23,45 @@ import { UserService } from '../../../../services/user/user.service';
         trigger('slideInOut', [
             transition(':enter', [
                 style({ height: '0%', opacity: '0' }),
-                animate('300ms ease-in', style({ height: '20%', opacity: '1.0'}))
+                animate('300ms ease-in', style({ height: '20%', opacity: '1.0' }))
             ]),
             transition(':leave', [
-                animate('300ms ease-in', style({ height: '0%', opacity: '0'  }))
+                animate('300ms ease-in', style({ height: '0%', opacity: '0' }))
             ])
         ])
     ]
 })
 export class UserSettingsModalComponent implements OnInit {
-    user: User;
-    messages: AlertMessage[];
+    // Subs
     loadingRequest: Observable<User>;
-    customInterests: string[] = [];
-    customInterestsValidators: any = [this.customInterestMaxLength];
-    customInterestsErrors: ChipsValidators = { 'customInterestMaxLength': 'Too many characters' };
 
+    // Data Stores
+    user: User;
+
+    // UI
+    messages: AlertMessage[];
+    customInterests: string[] = [];
+    showInterests: boolean = false;
+    showBio: boolean = false;
+    bioLeftLength: string | number = 200;
     showChangePassword: boolean = false;
     showMiscOpts: boolean = false;
-    showBio: boolean = false;
-    showInterests: boolean = false;
-
-    bioLeftLength: string|number = 200;
-
     expCurValue: number;
     expMaxValue: number;
+    interests: { name: string; title: string; }[] = [
+        { name: 'movies/tv', title: 'Movies/TV' },
+        { name: 'music', title: 'Music' },
+        { name: 'gaming', title: 'Gaming' },
+        { name: 'books', title: 'Books' },
+        { name: 'education', title: 'Education' },
+        { name: 'sports', title: 'Sports' },
+        { name: 'life', title: 'Life' },
+        { name: 'dating', title: 'Dating' },
+    ];
 
+    // NGX Chips
+    customInterestsValidators: any = [this.customInterestMaxLength];
+    customInterestsErrors: ChipsValidators = { 'customInterestMaxLength': 'Too many characters' };
     private customInterestMaxLength(control: FormControl): ChipsValidators {
         if (control.value.length > 20) {
             return {
@@ -59,6 +72,7 @@ export class UserSettingsModalComponent implements OnInit {
         return null;
     }
 
+    // Forms
     userRegex: RegExp = /^[a-zA-Z0-9]*$/;
     profileForm: SubmittableFormGroup = new SubmittableFormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
@@ -82,6 +96,7 @@ export class UserSettingsModalComponent implements OnInit {
     ngOnInit(): void {
         this.getUser();
 
+        // Track amount of characters in bio message
         this.profileForm.controls['bio'].valueChanges.subscribe((v) => {
             if (!v) {
                 this.bioLeftLength = 200;
@@ -113,7 +128,6 @@ export class UserSettingsModalComponent implements OnInit {
     }
 
     initFormValues(): void {
-        this.pushCustomInterestsToInput();
         this.profileForm.controls.name.setValue(this.user.name);
         this.profileForm.controls.font_face.setValue(this.user.font_face);
         this.profileForm.controls.font_color.setValue('#' + this.user.font_color);
@@ -126,9 +140,71 @@ export class UserSettingsModalComponent implements OnInit {
         this.profileForm.controls.bio.setValue(this.user.bio);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
+        this.pushCustomInterestsToInput();
 
         this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
         this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
+    }
+
+    openEditAvatar(): void {
+        this.activeModal.close();
+        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+
+        modalRef.componentInstance.user = this.user;
+
+        modalRef.result.then(() => {
+        }, () => {
+            this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+        });
+    }
+
+    toggleInterest(val: string): void {
+        const idx = this.profileForm.value.interests.indexOf(val);
+
+        if (idx > -1) {
+            this.profileForm.value.interests.splice(idx, 1);
+        } else {
+            this.profileForm.value.interests.push(val);
+        }
+    }
+
+    pushCustomInterestsToForm(): void {
+        for (let i = 0; i < this.customInterests.length; i++) {
+            let isCustomInterest = true;
+
+            for (let j = 0; j < this.interests.length; j++) {
+                if (this.customInterests[i] === this.interests[j].name) {
+                    isCustomInterest = false;
+                    break;
+                }
+            }
+
+            if (isCustomInterest && this.profileForm.value.interests.indexOf(this.customInterests[i]) === -1) {
+                this.profileForm.value.interests.push(this.customInterests[i].toLowerCase());
+            }
+        }
+    }
+
+    pushCustomInterestsToInput(): void {
+        for (let i = 0; i < this.user.interests.length; i++) {
+            let isCustomInterest = true;
+
+            for (let j = 0; j < this.interests.length; j++) {
+                if (this.user.interests[i] === this.interests[j].name) {
+                    isCustomInterest = false;
+                }
+            }
+
+            if (isCustomInterest) {
+                this.customInterests.push(this.user.interests[i]);
+            }
+        }
+    }
+
+    onCustomInterestRemoved(e): void {
+        if (this.profileForm.value.interests.indexOf(e) > -1) {
+            this.profileForm.value.interests.splice(this.profileForm.value.interests.indexOf(e), 1);
+        }
     }
 
     applyChanges(): void {
@@ -147,11 +223,7 @@ export class UserSettingsModalComponent implements OnInit {
             this.profileForm.controls.newPassword.updateValueAndValidity();
         }
 
-        if (!this.profileForm.valid) {
-            return;
-        }
-
-        if (this.loadingRequest) {
+        if (!this.profileForm.valid || this.loadingRequest) {
             return;
         }
 
@@ -194,56 +266,8 @@ export class UserSettingsModalComponent implements OnInit {
             });
         });
     };
-
-    toggleInterest(val: string): void {
-        const idx = this.profileForm.value.interests.indexOf(val);
-
-        if (idx > -1) {
-            this.profileForm.value.interests.splice(idx, 1);
-        } else {
-            this.profileForm.value.interests.push(val);
-        }
-    }
-
-    pushCustomInterestsToForm(): void {
-        for (let i = 0; i < this.customInterests.length; i++) {
-            if (this.customInterests[i] !== 'movies/tv' && this.customInterests[i] !== 'music' && this.customInterests[i] !== 'gaming' && this.customInterests[i] !== 'books'
-                && this.customInterests[i] !== 'education' && this.customInterests[i] !== 'sports' && this.customInterests[i] !== 'life' && this.customInterests[i] !== 'dating' &&
-                this.profileForm.value.interests.indexOf(this.customInterests[i]) === -1) {
-                this.profileForm.value.interests.push(this.customInterests[i].toLowerCase());
-            }
-        }
-    }
-
-    pushCustomInterestsToInput(): void {
-        for (let i = 0; i < this.user.interests.length; i++) {
-            if (this.user.interests[i] !== 'movies/tv' && this.user.interests[i] !== 'music' && this.user.interests[i] !== 'gaming' && this.user.interests[i] !== 'books'
-                && this.user.interests[i] !== 'education' && this.user.interests[i] !== 'sports' && this.user.interests[i] !== 'life' && this.user.interests[i] !== 'dating') {
-                this.customInterests.push(this.user.interests[i]);
-            }
-        }
-    }
-
-    onCustomInterestRemoved(e): void {
-        if (this.profileForm.value.interests.indexOf(e) > -1) {
-            this.profileForm.value.interests.splice(this.profileForm.value.interests.indexOf(e), 1);
-        }
-    }
-
-    openEditAvatar(): void {
-        this.activeModal.close();
-        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
-
-        modalRef.componentInstance.user = this.user;
-        modalRef.componentInstance.userSettingsRef = this;
-
-        modalRef.result.then(() => {
-        }, () => {
-            this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
-        });
-    }
 }
 
 export class ChipsValidators {
-    customInterestMaxLength?: boolean|null|string;
+    customInterestMaxLength?: boolean | null | string;
 }

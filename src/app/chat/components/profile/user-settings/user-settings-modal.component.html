@@ -1,7 +1,8 @@
 <form (ngSubmit)="applyChanges()" [formGroup]="profileForm" novalidate *ngIf="user">
-
+    <!-- Modal Header -->
     <div class="modal-header no-pad-margin">
         <div class="container user-header" *ngIf="user">
+            <!-- User Profile -->
             <div class="row">
                 <div class="col-12 my-auto text-center user-icon-container">
                     <div class="user-icon-content" (click)="openEditAvatar()">
@@ -16,7 +17,7 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <div class="no-pad-margin" style="padding-top: 5px;">
+                    <div class="no-pad-margin username-container">
                         <span class="username no-pad-margin">{{ user.name }}</span>
                     </div>
                     <div class="no-pad-margin">
@@ -43,11 +44,13 @@
 
         <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
     </div>
+    <!-- Modal Body -->
     <div class="container modal-body">
         <div class="row">
             <div class="col-12 text-center">
                 <prt-alert-messages [messages]="messages"></prt-alert-messages>
 
+                <!-- Main Settings -->
                 <div class="text-left">
                     <h5 class="form-header">Name</h5>
                 </div>
@@ -91,7 +94,7 @@
                                 (colorPickerChange)="profileForm.controls['font_color'].setValue($event);"
                                 [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
                                 [style.background]="profileForm.controls['font_color'].value" [cpOKButtonClass]="'btn'"
-                                [cpDisableInput]="true" style="border: 1px solid #eee"> </div>
+                                [cpDisableInput]="true"> </div>
                         </div>
                     </div>
                 </div>
@@ -99,30 +102,27 @@
                 <div class="text-left">
                     <h5 class="form-header">Bubble Color</h5>
                 </div>
-                <div class="form-group position-relative" style="padding-bottom: 10px;">
+                <div class="form-group position-relative">
                     <div class="col-12">
                         <div class="input-group">
                             <div class="color-input" [colorPicker]="profileForm.controls['bubble_color'].value"
                                 (colorPickerChange)="profileForm.controls['bubble_color'].setValue($event);"
                                 [cpAlphaChannel]="'disabled'" [cpOKButton]="true" [cpPosition]="'bottom'"
                                 [style.background]="profileForm.controls['bubble_color'].value"
-                                [cpOKButtonClass]="'btn'" [cpDisableInput]="true" style="border: 1px solid #eee"> </div>
+                                [cpOKButtonClass]="'btn'" [cpDisableInput]="true"> </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- <div class="text-left" style="padding-top: 10px;">
-                    <h6 class="show-preview-link">Preview - You and your matches will see this!</h6>
-                </div> -->
+                <!-- Preview Bubble -->
                 <div class="position-relative preview-bubble-container" [ngClass]="{ 'text-right': profileForm.value.bubble_layout === 'alternating', 
-                    'text-left': profileForm.value.bubble_layout === 'all_left' }" style="padding-top: 5px;">
+                    'text-left': profileForm.value.bubble_layout === 'all_left' }">
                     <div [ngClass]="{ 'right-bubble': profileForm.value.bubble_layout === 'alternating', 'left-bubble': profileForm.value.bubble_layout === 'all_left'}"
                         [ngStyle]="{'background-color': profileForm.value.bubble_color,
                                             'color': profileForm.value.font_color }">
 
                         <div class="float-left" *ngIf="profileForm.value.show_avatars">
-                            <img [src]="'../../../assets/images/avatars/' + user.avatar" class="user-icon"
-                                style="top: 0px;">
+                            <img [src]="'../../../assets/images/avatars/' + user.avatar" class="user-icon">
                         </div>
                         <div [ngStyle]="{'margin-left': profileForm.value.show_avatars ? '65px' : '0px' }">
                             <div class="float-left message-user">{{ profileForm.value.name }}</div>
@@ -135,13 +135,12 @@
 
                             <div class="float-right message-time">
                                 Sent 5:02 pm</div>
-
                         </div>
                     </div>
                 </div>
-                <!-- <hr> -->
 
-                <div class="text-left" style="padding-top: 10px;">
+                <!-- Interests  -->
+                <div class="text-left">
                     <h5 class="form-header">
                         <span class="cursor-pointer" (click)="showInterests = !showInterests">
                             Interests <i class="fas"
@@ -151,100 +150,15 @@
                 </div>
                 <div class="form-group position-relative" [@slideInOut] *ngIf="showInterests">
                     <div class="col-12">
-
                         <div class="row text-left interest-container">
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-lg-4 col-sm-6" *ngFor="let i of interests">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="checkbox" value="movies/tv"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('movies/tv') > -1"
-                                            (change)="toggleInterest('movies/tv')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Movies/TV</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" value="music"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('music') > -1"
-                                            (change)="toggleInterest('music')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Music</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" value="gaming"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('gaming') > -1"
-                                            (change)="toggleInterest('gaming')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Gaming</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" value="books"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('books') > -1"
-                                            (change)="toggleInterest('books')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Books</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" value="education"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('education') > -1"
-                                            (change)="toggleInterest('education')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Education</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" value="sports"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('sports') > -1"
-                                            (change)="toggleInterest('sports')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Sports</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" value="life"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('life') > -1"
-                                            (change)="toggleInterest('life')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Life</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" value="dating"
-                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf('dating') > -1"
-                                            (change)="toggleInterest('dating')" class="form-check-input"
-                                            style="position: relative; top: 1.5px;" />
-                                        <span class="interest-title">Dating</span>
+                                        <input type="checkbox" value="{{i.name}}"
+                                            [checked]="profileForm.value.interests && profileForm.value.interests.indexOf(i.name) > -1"
+                                            (change)="toggleInterest(i.name)"
+                                            class="form-check-input interest-checkbox" />
+                                        <span class="interest-title">{{ i.title }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -263,6 +177,7 @@
                     </div>
                 </div>
 
+                <!-- Bio -->
                 <div class="text-left">
                     <h5 class="form-header">
                         <span class="cursor-pointer" (click)="showBio = !showBio">
@@ -271,9 +186,9 @@
                         </span>
                     </h5>
                 </div>
-                <div class="form-group position-relative" [@slideInOut] *ngIf="showBio" style="margin-bottom: 0px;">
+                <div class="form-group position-relative bio-container" [@slideInOut] *ngIf="showBio">
                     <div class="row">
-                        <div class="col-12 text-center message-col">
+                        <div class="col-12 text-center bio-col">
                             <div class="input-group">
                                 <textarea rows="40" cols="50" class="form-control text-input text-area"
                                     formControlName="bio"
@@ -286,6 +201,7 @@
                     </div>
                 </div>
 
+                <!-- Options -->
                 <div class="text-left">
                     <h5 class="form-header">
                         <span class="cursor-pointer" (click)="showMiscOpts = !showMiscOpts">
@@ -294,82 +210,82 @@
                         </span>
                     </h5>
                 </div>
-                <div class="form-group position-relative" [@slideInOut] *ngIf="showMiscOpts" style="margin-top: 15px;">
+                <div class="form-group position-relative options-container" [@slideInOut] *ngIf="showMiscOpts">
                     <div class="row">
-                        <div class="col-5 layout-options-container text-left">
+                        <div class="col-5 option-text text-left">
                             Show Avatars
                         </div>
                         <div class="col-5 text-left">
                             <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
                                 formControlName="show_avatars">
-                                <label ngbButtonLabel class="selection-btn">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="true"> Yes
                                 </label>
-                                <label ngbButtonLabel class="selection-btn">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="false"> No
                                 </label>
                             </span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
+                        <div class="col-5 option-text option-text-padding text-left">
                             Bubbles
                         </div>
                         <div class="col-5 text-left">
-                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
-                                formControlName="bubble_layout" style="padding-top: 5px;">
-                                <label ngbButtonLabel class="selection-btn">
+                            <span class="btn-group btn-group-toggle opt-toggle-grp-pad" ngbRadioGroup name="radioBasic"
+                                formControlName="bubble_layout">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="'alternating'"> Alternate
                                 </label>
-                                <label ngbButtonLabel class="selection-btn">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="'all_left'"> Left
                                 </label>
                             </span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
+                        <div class="col-5 option-text option-text-padding text-left">
                             Theme
                         </div>
                         <div class="col-5 text-left">
-                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
-                                formControlName="color_theme" style="padding-top: 5px;">
-                                <label ngbButtonLabel class="selection-btn">
+                            <span class="btn-group btn-group-toggle opt-toggle-grp-pad" ngbRadioGroup name="radioBasic"
+                                formControlName="color_theme">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="'light'"> Light
                                 </label>
-                                <label ngbButtonLabel class="selection-btn">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="'dark'"> Dark
                                 </label>
                             </span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
+                        <div class="col-5 option-text option-text-padding text-left">
                             Enforce Interests
                         </div>
                         <div class="col-5 text-left">
-                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
-                                formControlName="enforce_interests" style="padding-top: 5px;">
-                                <label ngbButtonLabel class="selection-btn">
+                            <span class="btn-group btn-group-toggle opt-toggle-grp-pad" ngbRadioGroup name="radioBasic"
+                                formControlName="enforce_interests">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="true"> Yes
                                 </label>
-                                <label ngbButtonLabel class="selection-btn">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="false"> No
                                 </label>
                             </span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5 layout-options-container text-left" style="padding-top: 10px;">
+                        <div class="col-5 option-text option-text-padding text-left">
                             Sounds
                         </div>
                         <div class="col-5 text-left">
-                            <span class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"
-                                formControlName="sounds" style="padding-top: 5px;">
-                                <label ngbButtonLabel class="selection-btn">
+                            <span class="btn-group btn-group-toggle opt-toggle-grp-pad" ngbRadioGroup name="radioBasic"
+                                formControlName="sounds">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="true"> On
                                 </label>
-                                <label ngbButtonLabel class="selection-btn">
+                                <label ngbButtonLabel class="opt-toggle-btn">
                                     <input ngbButton type="radio" [value]="false"> Off
                                 </label>
                             </span>
@@ -377,6 +293,7 @@
                     </div>
                 </div>
 
+                <!-- Change Password -->
                 <div class="text-left">
                     <div class="text-left">
                         <h5 class="form-header">
@@ -387,8 +304,7 @@
                         </h5>
                     </div>
                 </div>
-                <div class="form-group position-relative" [@slideInOut] *ngIf="showChangePassword"
-                    style="padding-top: 10px;">
+                <div class="form-group position-relative" [@slideInOut] *ngIf="showChangePassword">
                     <prt-form-validation-msgs [control]="profileForm.controls.oldPassword"
                         [submitted]="profileForm.submitted">
                     </prt-form-validation-msgs>
@@ -399,7 +315,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group position-relative" style="padding-top: 3px;">
+                    <div class="form-group position-relative cpw-input-container">
                         <prt-form-validation-msgs [control]="profileForm.controls.newPassword"
                             [submitted]="profileForm.submitted">
                         </prt-form-validation-msgs>
@@ -414,6 +330,7 @@
             </div>
         </div>
     </div>
+    <!-- Modal Footer -->
     <div class="modal-footer text-center no-pad-margin">
         <div class="form-group text-center">
             <input type="submit" value="APPLY" class="btn submit-btn cursor-pointer" />

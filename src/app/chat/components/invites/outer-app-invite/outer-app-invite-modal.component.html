@@ -1,3 +1,4 @@
+<!-- Modal Header -->
 <div class="modal-header no-pad-margin">
     <div class="container invite-header">
         <div class="row">
@@ -8,6 +9,7 @@
         </div>
     </div>
 </div>
+<!-- Modal Body -->
 <div class="container modal-body">
     <div class="row no-pad-margin">
         <div class="col-12 message-col">
@@ -15,18 +17,15 @@
                 titled: <strong><span *ngIf="ytVideoTitle">{{ ytVideoTitle }}</span></strong>
             </span>
 
-            <span *ngIf="type === 'received' && outerApp === 'gartic'">{{ user }} has invited you to play Gartic!</span>
-
-            <span *ngIf="type === 'received' && outerApp === 'chess'">{{ user }} has invited you to play Chess!</span>
-
-            <span *ngIf="type === 'received' && outerApp === 'tictactoe'">{{ user }} has invited you to play TicTacToe!</span>
+            <span *ngIf="type === 'received' && outerApp !== 'yt'">{{ user }} has invited you to: {{ outerApp.charAt(0).toUpperCase() + outerApp.slice(1) }}!</span>
 
             <span *ngIf="type === 'sent'">Waiting for answer...</span>
         </div>
     </div>
 </div>
+<!-- Modal Footer -->
 <div class="modal-footer text-center no-pad-margin">
-    <div class="form-group text-center" style="margin-bottom: 20px;">
+    <div class="form-group text-center btn-container">
         <button class="btn submit-btn cursor-pointer" [hidden]="type === 'received'" (click)="passBack('cancel')"
             id="cancelBtn" #cancelBtn>Cancel</button>
 

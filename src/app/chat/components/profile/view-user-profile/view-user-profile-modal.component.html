@@ -1,3 +1,4 @@
+<!-- Modal Header -->
 <div class="modal-header no-pad-margin" *ngIf="user">
     <div class="container view-user-header">
         <div class="row">
@@ -11,16 +12,16 @@
         </div>
         <div class="row">
             <div class="col-12 text-center">
-                <div class="no-pad-margin" style="padding-top: 5px;">
-                    <span class="username no-pad-margin">{{ user.name }}</span>
+                <div class="username-container">
+                    <span class="username">{{ user.name }}</span>
                 </div>
-                <div class="no-pad-margin">
-                    <span class="user-level no-pad-margin">{{ user.levelInfo.rank }} - Level
+                <div>
+                    <span class="user-level">{{ user.levelInfo.rank }} - Level
                         {{ user.levelInfo.level }}</span>
                 </div>
 
-                <div class="no-pad-margin">
-                    <span class="user-time-spent no-pad-margin">Chat time:
+                <div>
+                    <span class="user-time-spent">Chat time:
                         {{ (user.experience / 60 / 60).toFixed(0) }} hours</span>
                 </div>
             </div>
@@ -29,7 +30,7 @@
 
     <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
 </div>
-
+<!-- Modal Body -->
 <div class="container modal-body no-pad-margin" *ngIf="user">
     <div class="row no-pad-margin">
         <div class="col-12 user-bio">
@@ -38,7 +39,7 @@
         </div>
     </div>
 </div>
-
+<!-- Modal Footer-->
 <div class="modal-footer text-center no-pad-margin">
     <br />
 </div>

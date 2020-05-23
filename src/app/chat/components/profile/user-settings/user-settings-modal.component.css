@@ -5,23 +5,6 @@
     border-top-right-radius: 15px;
 }
 
-.user-header {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.close-btn {
-    color: #00AFF0;
-    position: absolute;
-    right: 13px;
-    top: 10px;
-    font-size: 20px;
-}
-
-.close-btn:hover {
-    color: #ffffff;
-}
-
 .modal-body {
     background-color: rgb(249, 253, 255);
     padding-top: 20px;
@@ -37,6 +20,161 @@
     padding-bottom: 0;
     justify-content: center;
 }
+
+::ng-deep>>>.modal-content {
+    border: 0;
+    border-radius: 35px;
+}
+
+::ng-deep>>>.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.close-btn {
+    color: #00AFF0;
+    position: absolute;
+    right: 13px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+/* Header */
+
+.user-header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.user-icon {
+    height: 55px;
+    width: 60px;
+    border-radius: 50%;
+    position: relative;
+    top: 2px;
+    left: -3px;
+}
+
+.user-icon-container {
+    padding-right: 10px;
+    position: relative;
+    height: 55px;
+}
+
+.user-icon-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    width: 60px;
+    height: 55px;
+}
+
+.user-icon-edit-btn {
+    transition: .5s ease;
+    opacity: 0;
+    text-align: center;
+    color: #dddddd;
+    font-size: 16px;
+    height: 55px;
+    width: 60px;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: -3px;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.user-edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-55%, -50%);
+    -ms-transform: translate(-55%, -50%);
+}
+
+.user-badge {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 4px;
+    bottom: -2px;
+}
+
+.user-icon-content .user-badge {
+    transition: .5s ease;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.user-icon-content:hover .user-badge {
+    transition: .5s ease;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.user-icon-content:hover .user-icon-edit-btn {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.username-container {
+    padding-top: 5px;
+}
+
+.username {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.user-status {
+    color: green;
+    font-weight: 100;
+    font-size: 9px;
+    padding-left: 5px;
+    position: relative;
+    top: -1px;
+}
+
+.user-level {
+    color: #ffffff;
+    font-size: 11px;
+}
+
+.user-time-spent {
+    color: #ffffff;
+    font-size: 11px;
+}
+
+.progress-container {
+    margin: 0;
+    padding: 15px 18px 0px 18px;
+}
+
+.progress-container:hover .exp-text-container {
+    transition: .5s ease;
+    opacity: 1;
+}
+
+.exp-text-container {
+    opacity: 0;
+    font-size: 11px;
+    color: #111111;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    -ms-transform: translate(-50%, -100%);
+}
+
+/* Body */
 
 .form-header {
     padding-left: 37px;
@@ -59,44 +197,11 @@
     width: 100%;
     margin-left: 20px;
     margin-right: 20px;
+    border: 1px solid #eee;
 }
 
-.submit-btn {
-    border-radius: 20px;
-    margin: 10px 0 10px 0;
-    padding: 10px 50px 10px 50px;
-    font-weight: 600;
-    font-size: 18px;
-    border: 0;
-}
-
-.layout-options-container {
-    padding-left: 55px;
-    padding-top: 5px;
-}
-
-.layout-radio-btn {
-    position: relative;
-    top: 1px;
-}
-
-.selection-btn {
-    background-color: #e6e6e6;
-    color: #444444;
-    outline: none;
-    border: 1px solid #7e7e7e;
-}
-
-.selection-btn:active {
-    animation-name: none !important;
-}
-
-.active, .focus {
-    background-color: #00AFF0;
-    color: #ffffff;
-    outline: none !important;
-    box-shadow: none !important;
-    transition: .5s;
+::ng-deep>>>.color-picker .arrow.arrow-bottom {
+    display: none !important;
 }
 
 .interest-container {
@@ -108,23 +213,22 @@
     margin-left: 3px;
 }
 
+.interest-checkbox {
+    position: relative;
+    top: 1.5px;
+}
+
 .custom-interests-container {
     padding-left: 45px;
     padding-right: 55px;
 }
 
-::ng-deep>>>.modal-content {
-    border: 0;
-    border-radius: 35px;
-}
-
-::ng-deep>>>.modal {
-    text-align: center;
-    padding: 0!important;
-}
-
 ::ng-deep>>>.ng2-tag-input__text-input {
     background-color: rgb(249, 253, 255);
+}
+
+.bio-container {
+    margin-bottom: 0px;
 }
 
 .text-area {
@@ -134,8 +238,7 @@
     padding-top: 12px;
 }
 
-.message-col {
-    margin-top: 10px;
+.bio-col {
     padding-left: 35px;
     padding-right: 35px;
 }
@@ -147,45 +250,63 @@
     padding-top: 5px;
 }
 
-hr {
-    width: 106%;
-    position: relative;
-    left: -14px;
+.options-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.option-text {
+    padding-left: 55px;
+    padding-top: 5px;
+}
+
+.option-text-padding {
+    padding-top: 10px;
+}
+
+.opt-toggle-btn {
+    background-color: #e6e6e6;
+    color: #444444;
+    outline: none;
+    border: 1px solid #7e7e7e;
+}
+
+.opt-toggle-btn:active {
+    animation-name: none !important;
+}
+
+.opt-toggle-grp-pad {
+    padding-top: 5px;
+}
+
+.active, .focus {
+    background-color: #00AFF0;
+    color: #ffffff;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: .5s;
+}
+
+.cpw-input-container {
+    padding-top: 3px;
+}
+
+.submit-btn {
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+    padding: 10px 50px 10px 50px;
+    font-weight: 600;
+    font-size: 18px;
+    border: 0;
 }
 
 /* Preview Bubble */
 
-.show-preview-link {
-    padding-left: 52px;
-    color: #666666;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 12px;
-}
-
 .preview-bubble-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-left: 15px;
     margin-right: 25px;
-}
-
-.user-icon {
-    height: 55px;
-    width: 60px;
-    border-radius: 50%;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}
-
-.user-badge {
-    height: 20px;
-    width: 20px;
-    /* margin-right: 3px;
-    position: relative;
-    top: 1px; */
-    position: absolute;
-    right: 4px;
-    bottom: -2px;
 }
 
 .left-bubble {
@@ -263,120 +384,4 @@ hr {
     filter: brightness(125%);
     font-size: 11px;
     font-weight: 700;
-}
-
-/* header */
-
-.user-icon {
-    height: 55px;
-    width: 60px;
-    border-radius: 50%;
-}
-
-.user-icon-container {
-    padding-right: 10px;
-    position: relative;
-    height: 55px;
-}
-
-.user-icon-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-    width: 60px;
-    height: 55px;
-}
-
-.user-icon-edit-btn {
-    transition: .5s ease;
-    opacity: 0;
-    text-align: center;
-    color: #dddddd;
-    font-size: 16px;
-    height: 55px;
-    width: 60px;
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: -3px;
-    background-color: rgba(0, 0, 0, .5);
-}
-
-.user-edit-icon {
-    position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-55%, -50%);
-    -ms-transform: translate(-55%, -50%);
-}
-
-.user-icon-content .user-badge {
-    transition: .5s ease;
-    opacity: 1;
-    cursor: pointer;
-}
-
-.user-icon-content:hover .user-badge {
-    transition: .5s ease;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.user-icon-content:hover .user-icon-edit-btn {
-    opacity: 1;
-    cursor: pointer;
-}
-
-.username {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-.user-status {
-    color: green;
-    font-weight: 100;
-    font-size: 9px;
-    padding-left: 5px;
-    position: relative;
-    top: -1px;
-}
-
-.user-level {
-    color: #ffffff;
-    font-size: 11px;
-    /* font-weight: 600; */
-}
-
-.user-time-spent {
-    color: #ffffff;
-    font-size: 11px;
-}
-
-.progress-container {
-    margin: 0;
-    padding: 15px 18px 0px 18px;
-}
-
-.exp-text-container {
-    opacity: 0;
-    font-size: 11px;
-    color: #111111;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -100%);
-    -ms-transform: translate(-50%, -100%);
-}
-
-.progress-container:hover .exp-text-container {
-    transition: .5s ease;
-    opacity: 1;
-}
-
-::ng-deep>>>.color-picker .arrow.arrow-bottom {
-    display: none !important;
 }

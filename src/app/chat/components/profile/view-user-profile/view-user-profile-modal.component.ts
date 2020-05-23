@@ -16,10 +16,14 @@ import { UserService } from 'src/app/services/user/user.service';
     styleUrls: ['./view-user-profile-modal.component.css']
 })
 export class ViewUserProfileModalComponent implements OnInit {
+    // Component Inputs
     @Input() userId: string;
-    user: User;
 
+    // Subs
     loadingRequest: Observable<User>;
+
+    // Data Store
+    user: User;
 
     constructor(private userService: UserService, public activeModal: NgbActiveModal, private levelService: LevelService) {}
 

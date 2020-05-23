@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { ChatModule } from './chat/chat.module';
-import { ServicesExternalModule } from './services-ext/services-external.module';
+import { ServicesExternalModule } from './services/services-ext/services-external.module';
 import { ServicesModule } from './services/services.module';
 
 @NgModule({

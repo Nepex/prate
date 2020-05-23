@@ -18,17 +18,21 @@ import { UserService } from '../../../services/user/user.service';
     styleUrls: ['./bug-report-modal.component.css']
 })
 export class BugReportModalComponent {
+    // Subs
+    loadingRequest: Observable<BugReport>;
+
+    // UI
     messages: AlertMessage[];
     messageLeftLength: string | number;
-    loadingRequest: Observable<BugReport>;
     disableForm: boolean = false;
 
+    // Forms
     bugReportForm: SubmittableFormGroup = new SubmittableFormGroup({
         message: new FormControl('', [Validators.required, Validators.maxLength(200)])
     });
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService) {
-        // Track characters on message
+        // Track amount of characters on message
         this.bugReportForm.controls['message'].valueChanges.subscribe((v) => {
             if (!v) {
                 this.messageLeftLength = null;

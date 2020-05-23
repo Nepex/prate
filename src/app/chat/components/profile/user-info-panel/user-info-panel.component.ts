@@ -17,25 +17,30 @@ import { User } from 'src/app/services/user/user';
 import { UserService } from '../../../../services/user/user.service';
 import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
 
+// This component is placed on the Chat (top-right) to display user information and navigation
 @Component({
     selector: 'prt-user-info-panel',
     templateUrl: './user-info-panel.component.html',
     styleUrls: ['./user-info-panel.component.css']
 })
 export class UserInfoPanelComponent implements OnInit, OnDestroy {
-    isCollapsed = true;
+    // Subs
     loadingRequest: Observable<User>;
-    user: User;
-    partner: User;
-
-    expMaxValue: number;
-    expCurValue: number;
 
     partnerFoundSub: Subscription;
     userDisconnectSub: Subscription;
     partnerDisconnectSub: Subscription;
     avatarChangedSub: Subscription;
     settingsChangedSub: Subscription;
+
+    // Data Store
+    user: User;
+    partner: User;
+
+    // UI
+    navIsCollapsed: boolean = true;
+    expCurValue: number;
+    expMaxValue: number;
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService,
         private chatService: ChatService, private levelService: LevelService) { }
@@ -45,7 +50,7 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
         this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());
         this.userDisconnectSub = this.chatService.userDisconnected.subscribe(() => this.updateExpAndClearPartner());
-        this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => { this.user.avatar = avatar; });
+        this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
         this.settingsChangedSub = this.userService.userSettingsChanged.subscribe(user => this.user.name = user.name);
     }
 
@@ -55,30 +60,6 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         this.userDisconnectSub.unsubscribe();
         this.avatarChangedSub.unsubscribe();
         this.settingsChangedSub.unsubscribe();
-    }
-
-    openProfile(): void {
-        if (this.partner) {
-            const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-            modalRef.componentInstance.message = 'User settings cannot be editted while chatting.';
-            return;
-        }
-
-        this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-    }
-
-    openFriends(): void {
-        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-
-        modalRef.componentInstance.message = "Coming soon...";
-    }
-
-    openHelp(): void {
-        this.modal.open(HelpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-    }
-
-    openBugReport(): void {
-        this.modal.open(BugReportModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
     getUser(): void {
@@ -101,6 +82,30 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.getUser();
         }, 1000);
+    }
+
+    openSettingsModal(): void {
+        if (this.partner) {
+            const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+            modalRef.componentInstance.message = 'User settings cannot be editted while chatting.';
+            return;
+        }
+
+        this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+    }
+
+    openFriendsModal(): void {
+        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+
+        modalRef.componentInstance.message = "Coming soon...";
+    }
+
+    openHelpModal(): void {
+        this.modal.open(HelpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+    }
+
+    openBugReportModal(): void {
+        this.modal.open(BugReportModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
 
     logout(): void {

@@ -81,8 +81,8 @@
     </div>
 
     <div class="row chat-area">
-        <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
-        </prt-youtube-player>
+        <!-- <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
+        </prt-youtube-player> -->
         <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
             (canceled)="closeGame($event)" (inviteSent)="sendGameInvite($event)"
             (gameClosed)="gameSessionClosed($event)"></prt-game-container>

@@ -16,11 +16,14 @@ import { UserService } from 'src/app/services/user/user.service';
     styleUrls: ['./change-avatar-modal.component.css']
 })
 export class ChangeAvatarModalComponent implements OnInit {
+    // Component Inputs
     @Input() user: User;
 
-    messages: AlertMessage[];
+    // Subs
     loadingRequest: Observable<User>;
 
+    // UI
+    messages: AlertMessage[];
     selectedAvatar: string;
     avatars: { name: string }[] = [
         { name: 'default.png' },
@@ -68,7 +71,7 @@ export class ChangeAvatarModalComponent implements OnInit {
         this.selectedAvatar = this.user.avatar;
     }
 
-    selectAvatar(avatar): void {
+    selectAvatar(avatar: string): void {
         this.selectedAvatar = avatar;
     }
 

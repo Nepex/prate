@@ -10,8 +10,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./help-modal.component.css']
 })
 export class HelpModalComponent {
+    // UI
     selectedTab: string = 'basics';
-
     ranks: Rank[] = [
         { rank: 'Pebble', img: '../../../assets/images/badges/pebble.png', level: '1', rewards: 'N/A' },
         { rank: 'Coal', img: '../../../assets/images/badges/coal.png', level: '5', rewards: 'N/A' },

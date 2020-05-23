@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { GoogleService } from '../../../../services-ext/google/google.service';
+import { GoogleService } from 'src/app/services/services-ext/google/google.service';
 import { User } from '../../../../services/user/user';
 
 @Component({
@@ -15,11 +15,19 @@ import { User } from '../../../../services/user/user';
     styleUrls: ['./outer-app-invite-modal.component.css']
 })
 export class OuterAppInviteModalComponent implements OnInit {
-    @Input() type: string; // sent or received
-    @Input() outerApp: string;
+    // Component Inputs
     @Input() User: User;
+    @Input() type: string; // 'sent' or 'received'
+    @Input() outerApp: string; // 'yt', 'gartic', etc
     @Input() url: string;
 
+    // Subs
+    loadingRequest: Observable<any>;
+
+    // UI
+    ytVideoTitle: string;
+
+    // So keys don't trigger modal/browser activities (enter, spacebar, backspace)...
     @HostListener('document:keydown', ['$event'])
     onKeyDown(evt: KeyboardEvent): boolean {
         if (
@@ -32,17 +40,13 @@ export class OuterAppInviteModalComponent implements OnInit {
         }
     }
 
-
-    loadingRequest: Observable<any>;
-    ytVideoTitle: string;
-
-    constructor(public activeModal: NgbActiveModal, private googleService: GoogleService) {
-
-    }
+    constructor(public activeModal: NgbActiveModal, private googleService: GoogleService) { }
 
     ngOnInit(): void {
-        document.querySelectorAll("button").forEach( function(item) {
-            item.addEventListener('focus', function() {
+        // Incase they receive the invite while typing, unfocus all elements so spacebar doesn't trigger anything
+        // Only using this because stopping spacebar propagation doesn't seem to work in all browsers
+        document.querySelectorAll("button").forEach(function (item) {
+            item.addEventListener('focus', function () {
                 this.blur();
             })
         })
@@ -61,8 +65,8 @@ export class OuterAppInviteModalComponent implements OnInit {
             return;
         }
 
-        var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
-        var match = this.url.match(regExp);
+        const regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
+        const match = this.url.match(regExp);
         const videoId = (match && match[1].length == 11) ? match[1] : '';
 
         this.loadingRequest = this.googleService.getYtVideoInfo(videoId);

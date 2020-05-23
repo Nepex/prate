@@ -1,34 +1,39 @@
+<!-- Desktop View -->
 <div class="row browser-container">
     <div class="col-3 my-auto user-icon-container" *ngIf="user">
-        <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right"
-            style="padding-bottom: 3px;">
+        <!-- User Avatar/Badge -->
+        <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right">
 
         <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge-desktop">
     </div>
     <div class="col-9" *ngIf="user">
         <div class="row">
             <div class="col-12 no-pad-margin">
+                <!-- User Name/Rank/Level -->
                 <div class="float-left">
                     <div class="no-pad-margin">
                         <span class="username no-pad-margin">{{ user.name }}</span>
                         <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
                     </div>
-                    <div class="no-pad-margin" style="line-height: 15px;">
-                        <span class="user-level no-pad-margin">{{ user.levelInfo.rank}} - Level {{ user.levelInfo.level }}</span>
+                    <div class="no-pad-margin user-level-container">
+                        <span class="user-level no-pad-margin">{{ user.levelInfo.rank}} - Level
+                            {{ user.levelInfo.level }}</span>
                     </div>
                 </div>
 
+                <!-- Navigation Icons -->
                 <div class="lg-nav-icon-container">
-                    <i class="fas fa-cog lg-nav-icon" (click)="openProfile()" title="User Profile"></i>
-                    <i class="fas fa-user-friends lg-nav-icon" (click)="openFriends()" title="Show Friends"></i>
-                    <i class="fas fa-question-circle lg-nav-icon" (click)="openHelp()" title="Help"></i>
-                    <i class="fas fas fa-bug lg-nav-icon" (click)="openBugReport()" title="Bug Report"></i>
+                    <i class="fas fa-cog lg-nav-icon" (click)="openSettingsModal()" title="User Settings"></i>
+                    <i class="fas fa-user-friends lg-nav-icon" (click)="openFriendsModal()" title="Show Friends"></i>
+                    <i class="fas fa-question-circle lg-nav-icon" (click)="openHelpModal()" title="Help"></i>
+                    <i class="fas fas fa-bug lg-nav-icon" (click)="openBugReportModal()" title="Bug Report"></i>
                     <i class="fas fa-times lg-nav-icon" (click)="logout()" title="Logout"></i>
                 </div>
             </div>
         </div>
 
         <div class="row">
+            <!-- User Exp Bar -->
             <div class="col-12 progress-container">
                 <ngb-progressbar type="success" [value]="expCurValue" [max]="expMaxValue">
                 </ngb-progressbar>
@@ -37,45 +42,48 @@
         </div>
     </div>
 </div>
+
+<!-- Mobile View -->
 <div class="row mobile-container">
     <div class="col-12 my-auto user-icon-container" *ngIf="user">
         <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right cursor-pointer"
-            style="margin-right: 5px;" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed"
-            (offClick)="isCollapsed ? isCollapsed : isCollapsed = !isCollapsed" />
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="navIsCollapsed = !navIsCollapsed" (offClick)="navIsCollapsed ? navIsCollapsed : navIsCollapsed = !navIsCollapsed" />
 
+        <!-- User Avatar/Badge -->
         <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge-mobile">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
+        <!-- Navigation Dropdown -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="navIsCollapsed">
             <ul class="navbar-nav mr-auto nav-items">
                 <ul class="navbar-nav mr-auto">
-                    <li class="sm-nav-link cursor-pointer" (click)="openProfile()">
+                    <li class="sm-nav-link cursor-pointer" (click)="openSettingsModal()">
                         <span>
                             <i class="fas fa-cog sm-nav-icon"></i>
-                            User Profile
+                            Settings
                         </span>
                     </li>
-                    <li class="sm-nav-link cursor-pointer" (click)="openFriends()">
+                    <li class="sm-nav-link cursor-pointer" (click)="openFriendsModal()">
                         <span>
-                            <i class="fas fa-user sm-nav-icon" style="padding-right: 1px;"></i>
-                            Show Friends
+                            <i class="fas fa-user sm-nav-icon friends-mobile-icon-pad"></i>
+                            Friends
                         </span>
                     </li>
-                    <li class="sm-nav-link cursor-pointer" (click)="openHelp()">
+                    <li class="sm-nav-link cursor-pointer" (click)="openHelpModal()">
                         <span>
-                            <i class="fas fa-question-circle sm-nav-icon" style="padding-right: 0px;"></i>
+                            <i class="fas fa-question-circle sm-nav-icon"></i>
                             Help
                         </span>
                     </li>
-                    <li class="sm-nav-link cursor-pointer" (click)="openBugReport()">
+                    <li class="sm-nav-link cursor-pointer" (click)="openBugReportModal()">
                         <span>
-                            <i class="fas fa-bug sm-nav-icon" style="padding-right: 0px;"></i>
+                            <i class="fas fa-bug sm-nav-icon"></i>
                             Bug Report
                         </span>
                     </li>
                     <li class="sm-nav-link cursor-pointer" (click)="logout()">
                         <span>
-                            <i class="fas fa-times sm-nav-icon" style="padding-left: 1px; padding-right: 3px;"></i>
+                            <i class="fas fa-times sm-nav-icon logout-mobile-icon-pad"></i>
                             Logout
                         </span>
                     </li>

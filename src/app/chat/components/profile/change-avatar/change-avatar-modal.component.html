@@ -1,3 +1,4 @@
+<!-- Modal Header -->
 <div class="modal-header no-pad-margin">
     <div class="container avatar-header">
         <div class="row">
@@ -9,17 +10,16 @@
 
     <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
 </div>
-
+<!-- Modal Body -->
 <div class="container modal-body">
     <div class="row">
         <div class="col-12 text-center">
-            <div style="padding-bottom: 20px;" *ngIf="messages && messages.length > 0">
+            <div class="alert-messages" *ngIf="messages && messages.length > 0">
                 <prt-alert-messages [messages]="messages"></prt-alert-messages>
             </div>
 
             <div class="row">
-                <div class="col-3 text-center position-relative" *ngFor="let a of avatars"
-                    style="padding-bottom: 15px;">
+                <div class="col-3 text-center position-relative avatars-container" *ngFor="let a of avatars">
                     <img src="../../../assets/images/avatars/{{a.name}}" class="avatar-image cursor-pointer"
                         (click)="selectAvatar(a.name)" [ngClass]="{'active-avatar' : selectedAvatar === a.name}">
                     <br />
@@ -28,7 +28,7 @@
         </div>
     </div>
 </div>
-
+<!-- Modal Footer -->
 <div class="modal-footer text-center no-pad-margin">
     <div class="form-group text-center">
         <button class="btn submit-btn cursor-pointer" type="button" (click)="applyChanges()">APPLY</button>

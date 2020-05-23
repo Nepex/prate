@@ -5,6 +5,12 @@
     border-top-right-radius: 35px;
 }
 
+.modal-body {
+    background-color: #00AFF0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .modal-footer {
     background-color: #00AFF0;
     border-top: 0;
@@ -12,12 +18,6 @@
     border-bottom-right-radius: 35px;
     padding-top: 0;
     justify-content: center;
-}
-
-.modal-body {
-    background-color: #00AFF0;
-    padding-top: 0;
-    padding-bottom: 0;
 }
 
 ::ng-deep>>>.modal-content {

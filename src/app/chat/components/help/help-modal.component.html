@@ -1,3 +1,4 @@
+<!-- Modal Header -->
 <div class="modal-header no-pad-margin">
     <div class="container help-header">
         <div class="row">
@@ -8,8 +9,10 @@
     </div>
     <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
 </div>
+<!-- Modal Body -->
 <div class="container modal-body">
     <div class="row no-pad-margin">
+        <!-- Tab navigation -->
         <div class="col-3 text-center help-tab cursor-pointer" (click)="selectedTab = 'basics'"
             [ngClass]="{'selected-tab': selectedTab === 'basics'}">
             Basics
@@ -30,86 +33,108 @@
 
     <div class="row no-pad-margin help-info-container text-left">
         <div class="col-12">
+            <!-- Basics Section -->
             <div
                 [ngClass]="{'shown-container': selectedTab === 'basics', 'hidden-container': selectedTab !== 'basics'}">
 
                 <h6 class="help-title-text"><strong>How to Use Prate</strong></h6>
 
                 <div class="inner-help-text">
-                    To begin searching for a match, simply click 'FIND A MATCH'. Prate will open a matching dialog and begin looking for your match. The matching works by looking 
-                    through your selected interests and finding other users with the same interests. If no other users have been found matching your interests, then you will be matched
+                    To begin searching for a match, simply click 'FIND A MATCH'. Prate will open a matching dialog and
+                    begin looking for your match. The matching works by looking
+                    through your selected interests and finding other users with the same interests. If no other users
+                    have been found matching your interests, then you will be matched
                     with the first available person.
                 </div>
 
                 <h6 class="help-title-text"><strong>Basic Navigation</strong></h6>
 
                 <div class="inner-help-text">
-                    To open up options and information dialogs, click the icons on your user information panel. The cog icon will open your user settings, the group icon will open your friends list, 
-                    the question mark icon will open help, the bug icon will open a popup to send a bug report, and the X icon will log you out and return you to the home page. Clicking the Prate icon 
-                    at any time will also return you to the home page without logging you out. On mobile these will just be named links inside a dropdown after tapping your user avatar.
+                    To open up options and information dialogs, click the icons on your user information panel. The cog
+                    icon will open your user settings, the group icon will open your friends list,
+                    the question mark icon will open help, the bug icon will open a popup to send a bug report, and the
+                    X icon will log you out and return you to the home page. Clicking the Prate icon
+                    at any time will also return you to the home page without logging you out. On mobile these will just
+                    be named links inside a dropdown after tapping your user avatar.
                 </div>
-                
+
                 <div class="inner-help-text">
-                    Once matched with a user, you can simply begin chatting with him or her by entering text in the bottom textbox and hitting enter. You may leave your match at any time 
+                    Once matched with a user, you can simply begin chatting with him or her by entering text in the
+                    bottom textbox and hitting enter. You may leave your match at any time
                     by clicking the 'LEAVE CHAT' button.
                 </div>
 
                 <h6 class="help-title-text"><strong>Gaining Experience</strong></h6>
 
                 <div class="inner-help-text">
-                    Prate awards experience points based on every 10 seconds spent matched. Experience points are awarded after either user disconnects. Users who are inactive for 10 minutes 
-                    or longer will be automatically disconnected. Once your experience bar is filled, you will be rewarded and increase in level (see <span class="fake-link" (click)="selectedTab = 'badges'">Badges</span>).
+                    Prate awards experience points based on every 10 seconds spent matched. Experience points are
+                    awarded after either user disconnects. Users who are inactive for 10 minutes
+                    or longer will be automatically disconnected. Once your experience bar is filled, you will be
+                    rewarded and increase in level (see <span class="link-to-tab"
+                        (click)="selectedTab = 'badges'">Badges</span>).
                 </div>
 
                 <h6 class="help-title-text"><strong>Customization</strong></h6>
 
                 <div class="inner-help-text">
-                    Prate reflects most of your settings to your matches so you can be unique while chatting. Please see <span class="fake-link" (click)="selectedTab = 'customize'">Customize</span> for more details.
+                    Prate reflects most of your settings to your matches so you can be unique while chatting. Please see
+                    <span class="link-to-tab" (click)="selectedTab = 'customize'">Customize</span> for more details.
                 </div>
 
             </div>
 
+            <!-- Advanced Section -->
             <div
                 [ngClass]="{'shown-container': selectedTab === 'advanced', 'hidden-container': selectedTab !== 'advanced'}">
                 <h6 class="help-title-text"><strong>HTML Injection</strong></h6>
 
                 <div class="inner-help-text">
-                    Prate currently allows basic HTML injection to further style messages. Simply wrap your text in &lt;&gt;&lt;/&gt; to apply a style. Example: 
-                    &lt;h1&gt;This will be large text&lt;/h1&gt;. Currently supported tags include: H1-6, I, B, U, and Strong. Any malicious code or fake links will 
+                    Prate currently allows basic HTML injection to further style messages. Simply wrap your text in
+                    &lt;&gt;&lt;/&gt; to apply a style. Example:
+                    &lt;h1&gt;This will be large text&lt;/h1&gt;. Currently supported tags include: H1-6, I, B, U, and
+                    Strong. Any malicious code or fake links will
                     be striped from your message.
                 </div>
 
                 <h6 class="help-title-text"><strong>Hyperlinks</strong></h6>
 
                 <div class="inner-help-text">
-                    To create a link within your message just begin your link with http:// or https:// followed by the link and Prate will automatically create a
+                    To create a link within your message just begin your link with http:// or https:// followed by the
+                    link and Prate will automatically create a
                     link to the URL for you.
                 </div>
 
                 <h6 class="help-title-text"><strong>Emojis</strong></h6>
 
                 <div class="inner-help-text">
-                    To insert an emoji, click the emoji button and select your emoji. It will automatically be applied to your message. You can also look at the emoji code 
+                    To insert an emoji, click the emoji button and select your emoji. It will automatically be applied
+                    to your message. You can also look at the emoji code
                     and type it into messages to automatically insert the emoji.
                 </div>
 
                 <h6 class="help-title-text"><strong>YouTube Sharing</strong></h6>
 
                 <div class="inner-help-text">
-                    You can watch YouTube with your match by clicking on the YouTube icon and pasting in the link to the video then clicking the send invite button. An invite will be sent out to 
-                    your match which they will have to accept, afterwhich the video will play inside the chat area. Video controls will appear at the bottom of the screen. Any video control will 
-                    also be reflected to your partner so you may stay synced up. Clicking the 'X' will close the video for you and your partner.
+                    You can watch YouTube with your match by clicking on the YouTube icon and pasting in the link to the
+                    video then clicking the send invite button. An invite will be sent out to
+                    your match which they will have to accept, afterwhich the video will play inside the chat area.
+                    Video controls will appear at the bottom of the screen. Any video control will
+                    also be reflected to your partner so you may stay synced up. Clicking the 'X' will close the video
+                    for you and your partner.
                 </div>
 
                 <h6 class="help-title-text"><strong>Playing Games Together</strong></h6>
 
                 <div class="inner-help-text">
-                    You can play games with your match by clicking the game controller icon and selecting a game, afterwhich you will be prompted with instructions on getting an invite code. Paste 
-                    the invite code into the textbox and click 'Send Invite' to invite your match to play a game with you. You can exit out of the game at any point by clicking the X at the top 
+                    You can play games with your match by clicking the game controller icon and selecting a game,
+                    afterwhich you will be prompted with instructions on getting an invite code. Paste
+                    the invite code into the textbox and click 'Send Invite' to invite your match to play a game with
+                    you. You can exit out of the game at any point by clicking the X at the top
                     right, this will also close the game for your match.
                 </div>
             </div>
 
+            <!-- Badges Section -->
             <div
                 [ngClass]="{'shown-container': selectedTab === 'badges', 'hidden-container': selectedTab !== 'badges'}">
                 <table class="table table-striped table-borderless">
@@ -133,52 +158,67 @@
 
             </div>
 
+            <!-- Customize Section -->
             <div
                 [ngClass]="{'shown-container': selectedTab === 'customize', 'hidden-container': selectedTab !== 'customize'}">
                 <h6 class="help-title-text"><strong>Opening User Settings</strong></h6>
 
                 <div class="inner-help-text">
-                    To open your user settings, click on the cog icon inside your user information panel at the top right (or 'User Settings' after tapping your avatar on mobile). This will display 
-                    all edittable settings. Settings include name, avatar, font customization, layout, interests, and password.
+                    To open your user settings, click on the cog icon inside your user information panel at the top
+                    right (or 'User Settings' after tapping your avatar on mobile). This will display
+                    all edittable settings. Settings include name, avatar, font customization, layout, interests, and
+                    password.
                 </div>
 
                 <h6 class="help-title-text"><strong>Changing your Avatar</strong></h6>
 
                 <div class="inner-help-text">
-                    Changing your avatar is easily achieved by clicking your avatar image at the top of the settings popup. This will open a new popup where you can select your new avatar 
+                    Changing your avatar is easily achieved by clicking your avatar image at the top of the settings
+                    popup. This will open a new popup where you can select your new avatar
                     then set it by clicking 'Apply'.
                 </div>
 
                 <h6 class="help-title-text"><strong>Customizing your Font</strong></h6>
 
                 <div class="inner-help-text">
-                    All settings applied to your font will be seen by both your and your matches. To change your font style, click the dropdown under 'Font' and choose one from the selection. 
-                    To change your font color, click the color bar under 'Font Color' and drag around the color spectrum until you are happy with your selected color then click 'Ok'. The same setting 
-                    can be applied to your bubble color (text background) by clicking the color bar under 'Bubble Color'. For a live preview of changes, click 'Show Preview' above the 'Apply' button.
+                    All settings applied to your font will be seen by both your and your matches. To change your font
+                    style, click the dropdown under 'Font' and choose one from the selection.
+                    To change your font color, click the color bar under 'Font Color' and drag around the color spectrum
+                    until you are happy with your selected color then click 'Ok'. The same setting
+                    can be applied to your bubble color (text background) by clicking the color bar under 'Bubble
+                    Color'. For a live preview of changes, click 'Show Preview' above the 'Apply' button.
                 </div>
 
-                
+
 
                 <h6 class="help-title-text"><strong>Selecting Interests</strong></h6>
 
                 <div class="inner-help-text">
-                    To change your interests, select which topics you are interested in chatting about by clicking the checkboxes beside that topic. You may also add custom interests by entering topics into the textbox and hitting Enter after each topic. 
+                    To change your interests, select which topics you are interested in chatting about by clicking the
+                    checkboxes beside that topic. You may also add custom interests by entering topics into the textbox
+                    and hitting Enter after each topic.
                     Prate will try to match you with people of similar interests.
                 </div>
 
                 <h6 class="help-title-text"><strong>Setting Up your Bio</strong></h6>
 
                 <div class="inner-help-text">
-                    You can write a short description about yourself under the 'Bio' category. This will be displayed on your profile for your matches to see.
+                    You can write a short description about yourself under the 'Bio' category. This will be displayed on
+                    your profile for your matches to see.
                 </div>
 
 
                 <h6 class="help-title-text"><strong>Custom Options</strong></h6>
 
                 <div class="inner-help-text">
-                    By default, avatars are shown inside bubbles during chatting. To turn this off click 'No' beside 'Show Avatars'. To customizing bubble positions there are two options: 'Alternate', 
-                    which places your sent messages on the right side and your match's messages on the left side (more mobile focused), and 'Left', which places all messages on the left (more desktop focused). You may also 
-                    turn your notification sounds off by toggling the 'Sound' option. The 'Enforce Interest' option will force matching to search until someone with one of your interests is found. The 'Theme' option allows you 
+                    By default, avatars are shown inside bubbles during chatting. To turn this off click 'No' beside
+                    'Show Avatars'. To customizing bubble positions there are two options: 'Alternate',
+                    which places your sent messages on the right side and your match's messages on the left side (more
+                    mobile focused), and 'Left', which places all messages on the left (more desktop focused). You may
+                    also
+                    turn your notification sounds off by toggling the 'Sound' option. The 'Enforce Interest' option will
+                    force matching to search until someone with one of your interests is found. The 'Theme' option
+                    allows you
                     to toggle between a light or dark website color theme.
                 </div>
 
@@ -190,7 +230,8 @@
                 <h6 class="help-title-text"><strong>Changing your Password</strong></h6>
 
                 <div class="inner-help-text">
-                    To change your password, click 'Change Password' located towards the bottom of the settings popup. Two textboxes will appear where you may enter your new password and 
+                    To change your password, click 'Change Password' located towards the bottom of the settings popup.
+                    Two textboxes will appear where you may enter your new password and
                     old password for confirmation.
                 </div>
 
@@ -204,6 +245,7 @@
         </div>
     </div>
 </div>
+<!-- Modal Footer -->
 <div class="modal-footer text-center no-pad-margin">
     <br />
 </div>
