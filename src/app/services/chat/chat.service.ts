@@ -14,21 +14,21 @@ import { User } from './../user/user';
 
 @Injectable()
 export class ChatService implements OnDestroy {
-    @Output() public partner = new EventEmitter();
-    @Output() public messageReceived = new EventEmitter();
-    @Output() public messageSent = new EventEmitter();
+    @Output() public partner: EventEmitter<any> = new EventEmitter();
+    @Output() public messageReceived: EventEmitter<any> = new EventEmitter();
+    @Output() public messageSent: EventEmitter<any> = new EventEmitter();
 
-    @Output() public outerAppInviteReceived = new EventEmitter();
-    @Output() public outerAppInviteSent = new EventEmitter();
-    @Output() public outerAppInviteAccepted = new EventEmitter();
-    @Output() public outerAppInviteCanceled = new EventEmitter();
+    @Output() public outerAppInviteReceived: EventEmitter<any> = new EventEmitter();
+    @Output() public outerAppInviteSent: EventEmitter<any> = new EventEmitter();
+    @Output() public outerAppInviteAccepted: EventEmitter<any> = new EventEmitter();
+    @Output() public outerAppInviteCanceled: EventEmitter<any> = new EventEmitter();
 
-    @Output() public toggledOuterAppFunction = new EventEmitter();
+    @Output() public toggledOuterAppFunction: EventEmitter<any> = new EventEmitter();
 
-    @Output() public isPartnerTyping = new EventEmitter();
-    @Output() public partnerDisconnected = new EventEmitter();
-    @Output() public userDisconnected = new EventEmitter();
-    @Output() public matchingError = new EventEmitter();
+    @Output() public isPartnerTyping: EventEmitter<any> = new EventEmitter();
+    @Output() public partnerDisconnected: EventEmitter<any> = new EventEmitter();
+    @Output() public userDisconnected: EventEmitter<any> = new EventEmitter();
+    @Output() public matchingError: EventEmitter<any> = new EventEmitter();
 
     public socket: io.Socket;
 

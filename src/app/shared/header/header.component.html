@@ -1,8 +1,10 @@
 <div class="row no-pad-margin position-relative">
     <div class="col-12 header-container">
+        <!-- Mobile/Desktop Logo -->
         <a href="/"><img class="d-none d-lg-inline d-xl-inline" src="../../assets/images/prt-logo.png" /></a>
         <a href="/"><img class="d-lg-none d-xl-none menu-logo-sm" src="../../assets/images/prt-icon.png" /></a>
 
+        <!-- Mobile/Desktop Menu -->
         <nav class="navbar-expand-lg">
             <a class="navbar-brand d-block d-lg-none"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -30,6 +32,7 @@
             </div>
         </nav>
 
+        <!-- Desktop Login/Logout -->
         <div class="log-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="openLoginModal()"
             *ngIf="!userAuthed">
             Login
@@ -39,6 +42,5 @@
             *ngIf="userAuthed">
             Logout
         </div>
-
     </div>
 </div>

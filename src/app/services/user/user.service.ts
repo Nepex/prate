@@ -11,8 +11,8 @@ import { User } from './user';
 
 @Injectable()
 export class UserService {
-    @Output() public avatarChanged = new EventEmitter();
-    @Output() public userSettingsChanged = new EventEmitter();
+    @Output() public avatarChanged: EventEmitter<any> = new EventEmitter();
+    @Output() public userSettingsChanged: EventEmitter<any> = new EventEmitter();
 
     private apiUrl = `${environment.apiBaseUrl}/users`;
 

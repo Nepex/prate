@@ -10,7 +10,7 @@ import { Directive, Output, EventEmitter, ElementRef } from '@angular/core';
 
 export class OffClickDirective {
     @Output('offClick')
-    offClicked = new EventEmitter();
+    offClicked: EventEmitter<any> = new EventEmitter();
 
     constructor(private elementRef: ElementRef) {
     }

@@ -39,10 +39,6 @@ export class AppComponent implements OnDestroy {
   }
 
   private _navigationInterceptor(event: Event): void {
-    // if (event instanceof NavigationStart) {
-    //   this.isLoadingRoute = true;
-    // } else 
-
     if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
       setTimeout(() => {
         this.isLoadingRoute = false;

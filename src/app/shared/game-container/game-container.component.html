@@ -1,4 +1,5 @@
 <div class="game" *ngIf="gameUrl">
+    <!-- Invite code instructions -->
     <div class="instructions" *ngIf="!gameAccepted">
         Instructions: <br />
         <span *ngIf="gameType === 'gartic'">
@@ -16,14 +17,16 @@
             1.) Under 'Online Game' click 'Start'
         </span>
         <br />
-        <input type="text" class="form-control" placeholder="Paste invite code here" style="margin-bottom: 10px; margin-top: 10px;" [(ngModel)]="inviteLink" />
+        <input type="text" class="form-control invite-link-input" placeholder="Paste invite code here" [(ngModel)]="inviteLink" />
         <button class="btn" (click)="sendInvite(inviteLink)">Send Invite</button> &nbsp;
         <button class="btn" (click)="cancel()">Cancel</button>
     </div>
 
+    <!-- Close game -->
     <div class="close-game text-center cursor-pointer" *ngIf="gameAccepted" (click)="closeGame()">
         <i class="fas fa-times close-btn"></i> <br /> End Game
     </div>
 
+    <!-- Game container -->
     <iframe [src]="gameUrl | safeURL" frameborder="0"></iframe>
 </div>

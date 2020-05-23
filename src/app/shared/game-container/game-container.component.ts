@@ -10,9 +10,9 @@ export class GameContainerComponent {
     @Input() gameUrl: string;
     @Input() gameAccepted: boolean;
 
-    @Output() canceled = new EventEmitter();
-    @Output() inviteSent = new EventEmitter();
-    @Output() gameClosed = new EventEmitter();
+    @Output() canceled: EventEmitter<boolean> = new EventEmitter();
+    @Output() inviteSent: EventEmitter<any> = new EventEmitter();
+    @Output() gameClosed: EventEmitter<boolean> = new EventEmitter();
 
     inviteLink: string;
 
