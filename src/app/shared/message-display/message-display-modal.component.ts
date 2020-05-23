@@ -10,6 +10,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./message-display-modal.component.css']
 })
 export class MessageDisplayModalComponent {
+    // UI
     @Input() message: string;
 
     constructor(public activeModal: NgbActiveModal) { }

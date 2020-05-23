@@ -16,6 +16,7 @@ import { FormControl } from '@angular/forms';
     styleUrls: ['./form-validation-msgs.component.css']
 })
 export class FormValidationMsgsComponent {
+    // UI
     @Input() submitted: boolean;
     @Input() control: FormControl;
     @Input() example: string;

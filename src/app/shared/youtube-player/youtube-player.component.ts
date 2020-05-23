@@ -7,11 +7,15 @@ import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core
     styleUrls: ['./youtube-player.component.css']
 })
 export class YoutubePlayerComponent implements OnInit, OnChanges {
+    // Component Inputs
     @Input() videoUrl: string;
     @Input() playState: boolean;
     @Input() muteState: boolean;
 
+    // Data Stores
     public YT: Window;
+
+    // UI
     videoPlayer: any;
     videoId: string;
     hidePlayer: boolean = true;

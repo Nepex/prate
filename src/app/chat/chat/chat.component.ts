@@ -26,10 +26,12 @@ import { ViewUserProfileModalComponent } from '../components/profile/view-user-p
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
+    // HTML Element Refs
     @ViewChild('messageInput')
     messageInput: ElementRef;
 
-    // notifications
+    // Window Listensers (for notifications)
+    isWindowFocused: boolean;
     @HostListener('window:focus', ['$event'])
     onFocus(event: FocusEvent): void {
         this.titleService.setTitle('Prate');
@@ -42,10 +44,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.isWindowFocused = false;
     }
 
-    user: User;
-    partner: User = null;
-    chatMessages: ChatMessage[] = [];
-
+    // Subs
     loadingRequest: Observable<User>;
     userSettingsChangedSub: Subscription;
     partnerFoundSub: Subscription;
@@ -64,44 +63,52 @@ export class ChatComponent implements OnInit, OnDestroy {
     partnerDisconnectSub: Subscription;
     matchingErrorSub: Subscription;
 
+    // Data Stores
     matching: boolean = false;
-    autoScroll: boolean = true;
-    userIsTyping: boolean = false;
-    partnerIsTyping: boolean = false;
+    user: User;
+    partner: User = null;
+    chatMessages: ChatMessage[] = [];
+
+    // UI
+    // Overlay show/hide
     matchFoundAnimation: boolean = false;
     matchedWithOverlay: boolean = false;
     chatFinishedOverlay: boolean = false;
-    partnerLeftName: string;
 
+    // Chat UI
+    autoScroll: boolean = true;
+    userIsTyping: boolean = false;
+    partnerIsTyping: boolean = false;
+    hideBubbles: boolean = false;
+
+    // Chat timers
     chatTimerInterval: number;
     inactivityTimer: number = 0;
     chatTimer: number = 0;
 
-    hideBubbles: boolean = false;
+    // Post-chat messages
+    partnerLeftName: string;
     leaveMessage: string;
     statusMessage: string;
     expMessage: string;
     rankUpMessage: string;
-    hideEmojis: boolean = true;
-    hideYtInvControls: boolean = true;
+
+    // App Invite
     inviteLink: string;
     outerAppInviteModal: NgbModalRef;
-
-    // yt video
+    // YouTube
     ytUrl: string;
     ytPlayState: boolean = true;
     ytMuteState: boolean = false;
-
-    // game
+    hideYtInvControls: boolean = true;
+    // Games
     gameUrl: string;
     gameType: string;
     gameAccepted: boolean = false;
-
     hideGames: boolean = true;
 
-    isWindowFocused: boolean;
-
-    // https://www.iconfinder.com/iconsets/emoticons-50
+    // Emojis
+    hideEmojis: boolean = true;
     emojis: { code: string; img: string; }[] = [
         { code: ':smile:', img: 'smile.png' },
         { code: ':smile-eyesclosed:', img: 'smile-eyesclosed.png' },
@@ -134,6 +141,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         { code: ':poop:', img: 'poop.png' },
     ]
 
+    // Forms
     messageForm: FormGroup = new FormGroup({
         message: new FormControl('', [Validators.maxLength(500), Validators.minLength(1), Validators.required]),
     });

@@ -18,6 +18,7 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./alert-messages.component.css']
 })
 export class AlertMessagesComponent {
+    // UI
     @Input() messages: AlertMessage[];
 
     close(m: AlertMessage): void {

@@ -6,14 +6,17 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
     styleUrls: ['./game-container.component.css']
 })
 export class GameContainerComponent {
+    // Component Inputs
     @Input() gameType: string;
     @Input() gameUrl: string;
     @Input() gameAccepted: boolean;
 
+    // Component Outputs
     @Output() canceled: EventEmitter<boolean> = new EventEmitter();
     @Output() inviteSent: EventEmitter<{ url: string; gameType: string; }> = new EventEmitter();
     @Output() gameClosed: EventEmitter<boolean> = new EventEmitter();
 
+    // UI
     inviteLink: string;
 
     constructor() { }

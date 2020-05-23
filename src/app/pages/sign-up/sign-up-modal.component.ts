@@ -23,9 +23,13 @@ import { User } from '../../services/user/user';
     styleUrls: ['./sign-up-modal.component.css']
 })
 export class SignUpModalComponent {
-    messages: AlertMessage[];
+    // Subs
     loadingRequest: Observable<User>;
 
+    // UI
+    messages: AlertMessage[];
+
+    // Forms
     userRegex: RegExp = /^[a-zA-Z0-9]*$/;
     emailRegex: RegExp = /^[^@]+@[^@]+\.[^@]+$/;
     signUpForm: SubmittableFormGroup = new SubmittableFormGroup({

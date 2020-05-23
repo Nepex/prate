@@ -10,9 +10,8 @@ import { Update } from 'src/app/services/generic/update';
     styleUrls: ['./change-log.component.css']
 })
 export class ChangeLogComponent implements OnInit {
+    // UI
     updates: Update[];
-
-    // Pagination
     page: number = 1;
     pageSize: number = 10;
 

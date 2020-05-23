@@ -20,9 +20,13 @@ import { User } from '../../services/user/user';
     styleUrls: ['./login-modal.component.css']
 })
 export class LoginModalComponent {
-    messages: AlertMessage[];
+    // Subs
     loadingRequest: Observable<User>;
 
+    // UI
+    messages: AlertMessage[];
+
+    // Forms
     emailRegex: RegExp = /^[^@]+@[^@]+\.[^@]+$/;
     loginForm: SubmittableFormGroup = new SubmittableFormGroup({
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),

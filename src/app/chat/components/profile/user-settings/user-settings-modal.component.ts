@@ -56,7 +56,7 @@ export class UserSettingsModalComponent implements OnInit {
         { name: 'education', title: 'Education' },
         { name: 'sports', title: 'Sports' },
         { name: 'life', title: 'Life' },
-        { name: 'dating', title: 'Dating' },
+        { name: 'dating', title: 'Dating' }
     ];
 
     // NGX Chips

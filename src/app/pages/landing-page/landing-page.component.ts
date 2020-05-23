@@ -15,6 +15,7 @@ import { SignUpModalComponent } from '../sign-up/sign-up-modal.component';
     styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
+    // UI
     userAuthed: boolean = false;
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router) {}

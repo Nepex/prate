@@ -17,11 +17,17 @@ import { UserService } from 'src/app/services/user/user.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+    // Component Inputs
     @Input() selectedTab: string;
 
-    isCollapsed: boolean = true;
+    // Subs
     loadingRequest: Observable<User>;
+    
+    // Data Stores
     user: User;
+
+    // UI
+    isCollapsed: boolean = true;
     userAuthed: boolean = false;
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private userService: UserService) { }
