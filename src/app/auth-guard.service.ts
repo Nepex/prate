@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 // App
 import { SessionService } from './services/session/session.service';
 
+// Service for redirecting away from URLs if user is not authenticated
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(private router: Router, private sessionService: SessionService) { }

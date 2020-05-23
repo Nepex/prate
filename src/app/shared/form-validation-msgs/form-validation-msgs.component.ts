@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+// X and checkmarks for invalid/valid inputs
 @Component({
     selector: 'prt-form-validation-msgs',
     template:

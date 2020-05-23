@@ -1,5 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 
+// Component for the chat page, Displays game pages
 @Component({
     selector: 'prt-game-container',
     templateUrl: './game-container.component.html',

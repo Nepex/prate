@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SessionService } from '../../services/session/session.service';
 import { SignUpModalComponent } from '../sign-up/sign-up-modal.component';
 
+// Home page, first page loaded
 @Component({
     selector: 'prt-landing-page',
     templateUrl: './landing-page.component.html',

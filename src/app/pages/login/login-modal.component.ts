@@ -14,6 +14,7 @@ import { SessionService } from '../../services/session/session.service';
 import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
 import { User } from '../../services/user/user';
 
+// Modal for logging users in
 @Component({
     selector: 'prt-login-modal',
     templateUrl: './login-modal.component.html',

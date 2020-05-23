@@ -9,6 +9,7 @@ import { BugReport } from '../generic/bug-report';
 import { environment } from '../../../environments/environment';
 import { User } from './user';
 
+// Service for creating, searching, and updating users
 @Injectable()
 export class UserService {
     @Output() public avatarChanged: EventEmitter<string> = new EventEmitter();

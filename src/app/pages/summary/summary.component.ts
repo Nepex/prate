@@ -1,6 +1,7 @@
 // Angular
 import { Component } from '@angular/core';
 
+// Why Prate? page, shows basic app info
 @Component({
     selector: 'prt-summary',
     templateUrl: './summary.component.html',

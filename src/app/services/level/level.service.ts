@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 // App
 import { LevelInfo } from './level-info';
 
+// Service for level mapping and experience handling
 @Injectable()
 export class LevelService {
     public levelInfo: LevelInfo[] = [

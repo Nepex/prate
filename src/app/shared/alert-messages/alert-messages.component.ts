@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+// Error and success message display component
 @Component({
     selector: 'prt-alert-messages',
     template:
@@ -32,5 +33,5 @@ export class AlertMessagesComponent {
 
 export class AlertMessage {
     message: string;
-    type: string;
+    type: string; // accepts 'success' and 'error'
 }

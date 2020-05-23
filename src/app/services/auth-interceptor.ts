@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 // App
 import { SessionService } from './session/session.service';
 
+// Intercepts HTTP requests and adds required headers (for all calls from services.module)
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 

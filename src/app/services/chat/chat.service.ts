@@ -12,6 +12,7 @@ import { OuterAppInfo } from './outer-app-info';
 import { SessionService } from '../session/session.service';
 import { User } from './../user/user';
 
+// Service for managing chat connections
 @Injectable()
 export class ChatService implements OnDestroy {
     @Output() public partner: EventEmitter<User> = new EventEmitter();

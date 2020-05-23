@@ -11,6 +11,7 @@ import { SessionService } from './../../services/session/session.service';
 import { User } from 'src/app/services/user/user';
 import { UserService } from 'src/app/services/user/user.service';
 
+// Header component for base website
 @Component({
     selector: 'prt-header',
     templateUrl: './header.component.html',

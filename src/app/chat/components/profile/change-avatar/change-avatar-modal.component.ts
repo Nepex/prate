@@ -10,6 +10,7 @@ import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.compo
 import { User } from 'src/app/services/user/user';
 import { UserService } from 'src/app/services/user/user.service';
 
+// Modal for changing the user's profile avatar picture
 @Component({
     selector: 'prt-change-avatar-modal',
     templateUrl: './change-avatar-modal.component.html',

@@ -10,6 +10,7 @@ import { LevelService } from 'src/app/services/level/level.service';
 import { User } from 'src/app/services/user/user';
 import { UserService } from 'src/app/services/user/user.service';
 
+// Modal for viewing a user's profile
 @Component({
     selector: 'prt-view-user-profile-modal',
     templateUrl: './view-user-profile-modal.component.html',

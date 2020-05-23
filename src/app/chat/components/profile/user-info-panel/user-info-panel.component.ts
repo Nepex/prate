@@ -17,7 +17,7 @@ import { User } from 'src/app/services/user/user';
 import { UserService } from '../../../../services/user/user.service';
 import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
 
-// This component is placed on the Chat (top-right) to display user information and navigation
+// Component that's placed on the Chat page (top-right) to display user information and navigation
 @Component({
     selector: 'prt-user-info-panel',
     templateUrl: './user-info-panel.component.html',

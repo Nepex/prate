@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyPolicyModalComponent } from '../../pages/privacy-policy/privacy-policy-modal.component';
 import { TermsModalComponent } from '../../pages/terms/terms-modal.component';
 
+// Footer component for base website
 @Component({
     selector: 'prt-footer',
     templateUrl: './footer.component.html',

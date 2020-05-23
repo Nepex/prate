@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 // NPM
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+// Help modal that displays chat help and information
 @Component({
     selector: 'prt-help-modal',
     templateUrl: './help-modal.component.html',

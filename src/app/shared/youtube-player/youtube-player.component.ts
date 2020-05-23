@@ -1,6 +1,7 @@
 // Angular
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
 
+// Component for the chat page, displays youtube videos behind chat
 @Component({
     selector: 'prt-youtube-player',
     templateUrl: './youtube-player.component.html',

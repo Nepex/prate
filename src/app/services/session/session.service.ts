@@ -12,6 +12,7 @@ import { Credentials } from './credentials';
 import { environment } from '../../../environments/environment';
 import { Session } from './session';
 
+// Service for logging in/out and storing tokens
 @Injectable()
 export class SessionService {
     public static STORAGE_KEYS = { TOKEN: 'token' };

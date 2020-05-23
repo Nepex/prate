@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+// Service for handling google api calls
 @Injectable()
 export class GoogleService {
     private http: HttpClient;

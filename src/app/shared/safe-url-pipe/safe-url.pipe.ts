@@ -2,6 +2,7 @@
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { Pipe, PipeTransform } from '@angular/core';
 
+// Pipe for safely injecting in URLs
 @Pipe({
     name: 'safeURL',
 })

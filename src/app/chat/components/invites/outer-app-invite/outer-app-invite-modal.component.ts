@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleService } from 'src/app/services/services-ext/google/google.service';
 import { User } from '../../../../services/user/user';
 
+// Modal for accepting/canceling outside application invites
 @Component({
     selector: 'prt-outer-app-invite-modal',
     templateUrl: './outer-app-invite-modal.component.html',

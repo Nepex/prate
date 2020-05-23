@@ -17,6 +17,7 @@ import { TermsModalComponent } from 'src/app/pages/terms/terms-modal.component';
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../services/user/user';
 
+// Modal for creating new users
 @Component({
     selector: 'prt-sign-up-modal',
     templateUrl: './sign-up-modal.component.html',

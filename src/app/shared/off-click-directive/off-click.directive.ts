@@ -1,6 +1,7 @@
 // Angular
 import { Directive, Output, EventEmitter, ElementRef } from '@angular/core';
 
+// Directive that emits when an element is clicked off of
 @Directive({
     selector: '[offClick]',
     host: {

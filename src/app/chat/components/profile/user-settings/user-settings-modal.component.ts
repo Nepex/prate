@@ -15,6 +15,7 @@ import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/subm
 import { User } from '../../../../services/user/user';
 import { UserService } from '../../../../services/user/user.service';
 
+// Modal for managing user settings
 @Component({
     selector: 'prt-user-settings-modal',
     templateUrl: './user-settings-modal.component.html',

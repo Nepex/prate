@@ -12,6 +12,7 @@ import { BugReport } from '../../../services/generic/bug-report';
 import { SubmittableFormGroup } from '../../../shared/submittable-form-group/submittable-form-group';
 import { UserService } from '../../../services/user/user.service';
 
+// Modal for client to send bug reports
 @Component({
     selector: 'prt-bug-report-modal',
     templateUrl: './bug-report-modal.component.html',

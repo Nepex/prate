@@ -20,6 +20,7 @@ import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
 
+// Central chat component
 @Component({
     selector: 'prt-chat',
     templateUrl: './chat.component.html',
@@ -139,7 +140,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         // { code: ':angry-fuming:', img: 'angry-fuming.png'},
 
         { code: ':poop:', img: 'poop.png' },
-    ]
+    ];
 
     // Forms
     messageForm: FormGroup = new FormGroup({

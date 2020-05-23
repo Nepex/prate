@@ -1,6 +1,7 @@
 // Angular
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 
+// Pipe for chat matches, formats Based On: 'interest'
 @Pipe({
     name: 'interestFormat'
 })
