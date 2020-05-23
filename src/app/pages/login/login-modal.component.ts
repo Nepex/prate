@@ -12,6 +12,7 @@ import { AlertMessage } from '../../shared/alert-messages/alert-messages.compone
 import { Credentials } from './../../services/session/credentials';
 import { SessionService } from '../../services/session/session.service';
 import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
+import { User } from '../../services/user/user';
 
 @Component({
     selector: 'prt-login-modal',
@@ -20,7 +21,7 @@ import { SubmittableFormGroup } from '../../shared/submittable-form-group/submit
 })
 export class LoginModalComponent {
     messages: AlertMessage[];
-    loadingRequest: Observable<any>;
+    loadingRequest: Observable<User>;
 
     emailRegex: RegExp = /^[^@]+@[^@]+\.[^@]+$/;
     loginForm: SubmittableFormGroup = new SubmittableFormGroup({

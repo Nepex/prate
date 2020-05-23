@@ -34,7 +34,7 @@ import { UserService } from '../../../../services/user/user.service';
 export class UserSettingsModalComponent implements OnInit {
     user: User;
     messages: AlertMessage[];
-    loadingRequest: Observable<any>;
+    loadingRequest: Observable<User>;
     customInterests: string[] = [];
     customInterestsValidators: any = [this.customInterestMaxLength];
     customInterestsErrors: any = { 'customInterestMaxLength': 'Too many characters' };
@@ -157,7 +157,7 @@ export class UserSettingsModalComponent implements OnInit {
 
         this.pushCustomInterestsToForm();
 
-        const body: any = {
+        const body: User = {
             id: this.user.id,
             name: this.profileForm.value.name,
             font_face: this.profileForm.value.font_face,

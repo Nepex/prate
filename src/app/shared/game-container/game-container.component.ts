@@ -11,7 +11,7 @@ export class GameContainerComponent {
     @Input() gameAccepted: boolean;
 
     @Output() canceled: EventEmitter<boolean> = new EventEmitter();
-    @Output() inviteSent: EventEmitter<any> = new EventEmitter();
+    @Output() inviteSent: EventEmitter<{ url: string; gameType: string; }> = new EventEmitter();
     @Output() gameClosed: EventEmitter<boolean> = new EventEmitter();
 
     inviteLink: string;
@@ -24,7 +24,7 @@ export class GameContainerComponent {
 
     sendInvite(url: string): void {
         let urlRegex;
-        
+
         if (this.gameType === 'gartic') {
             urlRegex = /(^https?:\/\/gartic.io\/?.*)/i;
         } else if (this.gameType === 'chess') {

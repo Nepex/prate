@@ -12,7 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class HelpModalComponent {
     selectedTab: string = 'basics';
 
-    ranks: any = [
+    ranks: Rank[] = [
         { rank: 'Pebble', img: '../../../assets/images/badges/pebble.png', level: '1', rewards: 'N/A' },
         { rank: 'Coal', img: '../../../assets/images/badges/coal.png', level: '5', rewards: 'N/A' },
         { rank: 'Bronze', img: '../../../assets/images/badges/bronze.png', level: '10', rewards: 'N/A' },
@@ -28,4 +28,11 @@ export class HelpModalComponent {
     ];
 
     constructor(public activeModal: NgbActiveModal) { }
+}
+
+export class Rank {
+    rank: string;
+    img: string;
+    level: string;
+    rewards: string;
 }

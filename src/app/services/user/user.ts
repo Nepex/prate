@@ -2,7 +2,7 @@ import { LevelInfo } from '../level/level-info';
 
 export class User {
     id?: string;
-    name: string;
+    name?: string;
     email?: string;
     password?: string;
     interests?: string[];
@@ -21,4 +21,7 @@ export class User {
     experience?: number;
     levelInfo?: LevelInfo;
     bio?: string;
+
+    newPassword?: string;
+    oldPassword?: string;
 }

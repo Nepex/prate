@@ -101,7 +101,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     isWindowFocused: boolean;
 
     // https://www.iconfinder.com/iconsets/emoticons-50
-    emojis: any = [
+    emojis: { code: string; img: string; }[] = [
         { code: ':smile:', img: 'smile.png' },
         { code: ':smile-eyesclosed:', img: 'smile-eyesclosed.png' },
         { code: ':smile-open:', img: 'smile-open.png' },

@@ -13,7 +13,7 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
 
     public YT: any;
     videoPlayer: any;
-    videoId: any;
+    videoId: string;
     hidePlayer: boolean = true;
 
     constructor() { }
@@ -49,7 +49,7 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
                 // if a video URL is passed, get ID from it and unhide player
                 const regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
                 const match = this.videoUrl.match(regExp);
-                this.videoId = (match && match[1].length == 11) ? match[1] : false;
+                this.videoId = (match && match[1].length == 11) ? match[1] : null;
 
                 // timeout to skip the 'error' message in hidden youtube player
                 if (this.videoId) {

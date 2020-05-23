@@ -14,21 +14,21 @@ import { User } from './../user/user';
 
 @Injectable()
 export class ChatService implements OnDestroy {
-    @Output() public partner: EventEmitter<any> = new EventEmitter();
-    @Output() public messageReceived: EventEmitter<any> = new EventEmitter();
-    @Output() public messageSent: EventEmitter<any> = new EventEmitter();
+    @Output() public partner: EventEmitter<User> = new EventEmitter();
+    @Output() public messageReceived: EventEmitter<ChatMessage> = new EventEmitter();
+    @Output() public messageSent: EventEmitter<ChatMessage> = new EventEmitter();
 
-    @Output() public outerAppInviteReceived: EventEmitter<any> = new EventEmitter();
-    @Output() public outerAppInviteSent: EventEmitter<any> = new EventEmitter();
-    @Output() public outerAppInviteAccepted: EventEmitter<any> = new EventEmitter();
-    @Output() public outerAppInviteCanceled: EventEmitter<any> = new EventEmitter();
+    @Output() public outerAppInviteReceived: EventEmitter<OuterAppInfo> = new EventEmitter();
+    @Output() public outerAppInviteSent: EventEmitter<OuterAppInfo> = new EventEmitter();
+    @Output() public outerAppInviteAccepted: EventEmitter<void> = new EventEmitter();
+    @Output() public outerAppInviteCanceled: EventEmitter<void> = new EventEmitter();
 
-    @Output() public toggledOuterAppFunction: EventEmitter<any> = new EventEmitter();
+    @Output() public toggledOuterAppFunction: EventEmitter<void> = new EventEmitter();
 
-    @Output() public isPartnerTyping: EventEmitter<any> = new EventEmitter();
-    @Output() public partnerDisconnected: EventEmitter<any> = new EventEmitter();
-    @Output() public userDisconnected: EventEmitter<any> = new EventEmitter();
-    @Output() public matchingError: EventEmitter<any> = new EventEmitter();
+    @Output() public isPartnerTyping: EventEmitter<void> = new EventEmitter();
+    @Output() public partnerDisconnected: EventEmitter<boolean> = new EventEmitter();
+    @Output() public userDisconnected: EventEmitter<boolean> = new EventEmitter();
+    @Output() public matchingError: EventEmitter<void> = new EventEmitter();
 
     public socket: io.Socket;
 

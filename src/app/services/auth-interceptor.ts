@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
             if (event instanceof HttpResponse) {
                 // do stuff with response if you want
             }
-        }, (err: any) => {
+        }, err => {
             if (err instanceof HttpErrorResponse) {
                 if (err.status === 401 && this.sessionService.isAuthenticated()) {
                     this.sessionService.logout();

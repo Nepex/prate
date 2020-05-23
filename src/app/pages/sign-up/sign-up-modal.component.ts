@@ -24,7 +24,7 @@ import { User } from '../../services/user/user';
 })
 export class SignUpModalComponent {
     messages: AlertMessage[];
-    loadingRequest: Observable<any>;
+    loadingRequest: Observable<User>;
 
     userRegex: RegExp = /^[a-zA-Z0-9]*$/;
     emailRegex: RegExp = /^[^@]+@[^@]+\.[^@]+$/;

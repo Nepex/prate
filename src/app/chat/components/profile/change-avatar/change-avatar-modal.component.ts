@@ -19,10 +19,10 @@ export class ChangeAvatarModalComponent implements OnInit {
     @Input() user: User;
 
     messages: AlertMessage[];
-    loadingRequest: Observable<any>;
+    loadingRequest: Observable<User>;
 
     selectedAvatar: string;
-    avatars: any = [
+    avatars: { name: string }[] = [
         { name: 'default.png' },
         { name: 'male1.png' },
         { name: 'male2.png' },
@@ -79,7 +79,7 @@ export class ChangeAvatarModalComponent implements OnInit {
             return;
         }
 
-        const body: any = {
+        const body: User = {
             id: this.user.id,
             avatar: this.selectedAvatar,
         };

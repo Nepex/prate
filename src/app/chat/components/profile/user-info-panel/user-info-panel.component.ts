@@ -24,7 +24,7 @@ import { UserSettingsModalComponent } from '../user-settings/user-settings-modal
 })
 export class UserInfoPanelComponent implements OnInit, OnDestroy {
     isCollapsed = true;
-    loadingRequest: Observable<any>;
+    loadingRequest: Observable<User>;
     user: User;
     partner: User;
 
