@@ -11,7 +11,7 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
     @Input() playState: boolean;
     @Input() muteState: boolean;
 
-    public YT: any;
+    public YT: Window;
     videoPlayer: any;
     videoId: string;
     hidePlayer: boolean = true;

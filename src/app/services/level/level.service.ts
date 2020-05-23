@@ -140,16 +140,16 @@ export class LevelService {
         }
     }
 
-    public checkIfLevelUp(newExpValue: number, userLevelInfo: LevelInfo): any {
+    public checkIfLevelUp(newExpValue: number, userLevelInfo: LevelInfo): LevelInfo {
         for (let i = 0; i < this.levelInfo.length; i++) {
             // future case: make sure array doesn't break
             if (i + 1 > this.levelInfo.length || i + 2 > this.levelInfo.length) {
-                return false;
+                return null;
             }
 
             // no level up
             if (newExpValue < userLevelInfo.experienceNeeded) {
-                return false;
+                return null;
             }
 
             // level up detected
@@ -159,7 +159,7 @@ export class LevelService {
         }
     }
 
-    public checkIfRankUp(newExpValue: number, userLevelInfo: LevelInfo): any {
+    public checkIfRankUp(newExpValue: number, userLevelInfo: LevelInfo): boolean {
         let isRankUp: boolean = false;
 
         for (let i = userLevelInfo.level - 1; i < this.levelInfo.length; i++) {

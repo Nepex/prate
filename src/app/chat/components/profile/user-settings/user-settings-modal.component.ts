@@ -37,7 +37,7 @@ export class UserSettingsModalComponent implements OnInit {
     loadingRequest: Observable<User>;
     customInterests: string[] = [];
     customInterestsValidators: any = [this.customInterestMaxLength];
-    customInterestsErrors: any = { 'customInterestMaxLength': 'Too many characters' };
+    customInterestsErrors: ChipsValidators = { 'customInterestMaxLength': 'Too many characters' };
 
     showChangePassword: boolean = false;
     showMiscOpts: boolean = false;
@@ -49,7 +49,7 @@ export class UserSettingsModalComponent implements OnInit {
     expCurValue: number;
     expMaxValue: number;
 
-    private customInterestMaxLength(control: FormControl) {
+    private customInterestMaxLength(control: FormControl): ChipsValidators {
         if (control.value.length > 20) {
             return {
                 'customInterestMaxLength': true
@@ -59,7 +59,7 @@ export class UserSettingsModalComponent implements OnInit {
         return null;
     }
 
-    userRegex = /^[a-zA-Z0-9]*$/;
+    userRegex: RegExp = /^[a-zA-Z0-9]*$/;
     profileForm: SubmittableFormGroup = new SubmittableFormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)]),
         font_face: new FormControl('', [Validators.required, Validators.maxLength(25)]),
@@ -242,4 +242,8 @@ export class UserSettingsModalComponent implements OnInit {
             this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
         });
     }
+}
+
+export class ChipsValidators {
+    customInterestMaxLength?: boolean|null|string;
 }

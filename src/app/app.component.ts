@@ -1,6 +1,6 @@
 // Angular
 import { Component, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd, NavigationCancel } from '@angular/router';
+import { Router, NavigationEnd, NavigationCancel, Event } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -28,7 +28,7 @@ export class AppComponent implements OnDestroy {
   routerSub: Subscription;
 
   constructor(private router: Router) {
-    this.routerSub = this.router.events.subscribe((event: any) => {
+    this.routerSub = this.router.events.subscribe((event: Event) => {
       this.isLoadingRoute = true;
       this._navigationInterceptor(event);
     });

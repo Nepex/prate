@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit, OnDestroy, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { map, debounceTime } from 'rxjs/operators';
 import { Observable, Subscription, fromEvent } from 'rxjs';
@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 // NPM
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { ChatMessage } from '../../services/chat/chat-message';
 import { ChatService } from '../../services/chat/chat.service';
 import { IsTyping } from '../../services/chat/is-typing';
 import { LevelService } from '../../services/level/level.service';
+import { OuterAppInfo } from 'src/app/services/chat/outer-app-info';
 import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
@@ -26,7 +27,7 @@ import { ViewUserProfileModalComponent } from '../components/profile/view-user-p
 })
 export class ChatComponent implements OnInit, OnDestroy {
     @ViewChild('messageInput')
-    messageInput: any;
+    messageInput: ElementRef;
 
     // notifications
     @HostListener('window:focus', ['$event'])
@@ -84,7 +85,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     hideEmojis: boolean = true;
     hideYtInvControls: boolean = true;
     inviteLink: string;
-    outerAppInviteModal: any;
+    outerAppInviteModal: NgbModalRef;
 
     // yt video
     ytUrl: string;
@@ -531,7 +532,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     /** Checks if emojis are present in message and converts them */
-    emojify(plainTextMessage:string): string {
+    emojify(plainTextMessage: string): string {
         let newMessage = plainTextMessage;
 
         for (let i = 0; i < this.emojis.length; i++) {
@@ -579,7 +580,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.inviteLink = null;
     }
 
-    sendGameInvite(gameInfo: any): void {
+    sendGameInvite(gameInfo: { url: string; gameType: string; }): void {
         this.inviteLink = gameInfo.url;
         this.sendOuterAppInvite(gameInfo.gameType);
     }
@@ -614,7 +615,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (app === 'yt') { this.hideYtInvControls = true; }
     }
 
-    outerAppInviteSent(invInfo: any): void {
+    outerAppInviteSent(invInfo: OuterAppInfo): void {
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'sent';
@@ -622,12 +623,12 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.outerAppInviteModal.result.then(res => {
             if (res === 'cancel') {
-                this.chatService.outerAppInviteCancel(this.partner, this.user, invInfo.app);
+                this.chatService.outerAppInviteCancel(this.partner, this.user, invInfo.outerApp);
             }
         });
     }
 
-    outerAppInviteReceived(invInfo: any): void {
+    outerAppInviteReceived(invInfo: OuterAppInfo): void {
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'received';
@@ -644,7 +645,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
-    outerAppInviteAccepted(invInfo: any): void {
+    outerAppInviteAccepted(invInfo: OuterAppInfo): void {
         if (this.outerAppInviteModal) {
             this.outerAppInviteModal.close();
         }
@@ -674,7 +675,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
-    outerAppInviteCanceled(invInfo: any): void {
+    outerAppInviteCanceled(invInfo: OuterAppInfo): void {
         this.outerAppInviteModal.close();
         this.closeGame();
     }
@@ -706,7 +707,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.chatService.toggleOuterAppFunction(this.partner, this.user, outerApp, activity);
     }
 
-    outerAppFunctionToggledByPartner(receivedInfo: any): void {
+    outerAppFunctionToggledByPartner(receivedInfo: OuterAppInfo): void {
         if (receivedInfo.outerApp === 'yt') {
             if (receivedInfo.activity === 'playpause') {
                 this.ytPlayState = !this.ytPlayState;
