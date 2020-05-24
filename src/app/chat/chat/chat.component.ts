@@ -210,11 +210,16 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // -- General Purpose Functions --
     getUser(): void {
+        if (this.loadingRequest) {
+            return
+        }
+
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
             this.user = res;
+            this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
         });
     }
 
@@ -274,6 +279,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // -- Matching --
     searchForMatch(): void {
+        if (this.loadingRequest) {
+            return
+        }
+
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {

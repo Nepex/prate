@@ -59,6 +59,19 @@ input:focus {
     font-size: 17px;
 }
 
+.partner-left-name {
+    color: #00AFF0;
+}
+
+.exp-overlay-msg {
+    font-size: 12px;
+}
+
+.rank-up-overlay-msg {
+    font-size: 12px;
+    padding-top: 10px;
+}
+
 /* Header */
 
 .header {
@@ -229,6 +242,12 @@ input:focus {
     color: #000000;
 }
 
+.yt-send-inv-icon {
+    position: relative;
+    top: 0.5px;
+    left: 6px;
+}
+
 .user-warning-msg {
     position: absolute;
     z-index: 900;
@@ -243,6 +262,14 @@ input:focus {
     bottom: 60px;
     font-size: 18px;
     transition: .5s;
+}
+
+.light-theme-status-msg {
+    color: #666666;
+}
+
+.dark-theme-status-msg {
+    color: #eeeeee;
 }
 
 /* Footer */
@@ -266,6 +293,34 @@ input:focus {
     padding-left: 10px;
     padding-right: 155px;
     box-shadow: inset 0px 2px 7px 0px rgba(0, 0, 0, .5);
+}
+
+.light-icon-img {
+    filter: brightness(100%);
+}
+
+.dark-icon-img {
+    filter: brightness(110%);
+}
+
+.light-pop-container {
+    background-color: #efefef !important;
+    color: #666666 !important;
+}
+
+.dark-pop-container {
+    background-color: #111111 !important;
+    color: #efefef !important;
+}
+
+.light-message-input {
+    background-color: rgb(228, 230, 228) !important;
+    color: #000000 !important;
+}
+
+.dark-message-input {
+    background-color: #111111 !important;
+    color: #eeeeee !important;
 }
 
 .send-btn-container {

@@ -12,8 +12,8 @@ import { User } from './user';
 // Service for creating, searching, and updating users
 @Injectable()
 export class UserService {
-    @Output() public avatarChanged: EventEmitter<string> = new EventEmitter();
-    @Output() public userSettingsChanged: EventEmitter<User> = new EventEmitter();
+    public avatarChanged: EventEmitter<string> = new EventEmitter();
+    public userSettingsChanged: EventEmitter<User> = new EventEmitter();
 
     private apiUrl = `${environment.apiBaseUrl}/users`;
 

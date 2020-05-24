@@ -15,20 +15,19 @@ import { User } from './../user/user';
 // Service for managing chat connections
 @Injectable()
 export class ChatService implements OnDestroy {
-    @Output() public partner: EventEmitter<User> = new EventEmitter();
-    @Output() public messageReceived: EventEmitter<ChatMessage> = new EventEmitter();
+    public partner: EventEmitter<User> = new EventEmitter();
+    public messageReceived: EventEmitter<ChatMessage> = new EventEmitter();
+    public isPartnerTyping: EventEmitter<void> = new EventEmitter();
 
-    @Output() public outerAppInviteReceived: EventEmitter<OuterAppInfo> = new EventEmitter();
-    @Output() public outerAppInviteSent: EventEmitter<OuterAppInfo> = new EventEmitter();
-    @Output() public outerAppInviteAccepted: EventEmitter<void> = new EventEmitter();
-    @Output() public outerAppInviteCanceled: EventEmitter<void> = new EventEmitter();
-
-    @Output() public toggledOuterAppFunction: EventEmitter<void> = new EventEmitter();
-
-    @Output() public isPartnerTyping: EventEmitter<void> = new EventEmitter();
-    @Output() public partnerDisconnected: EventEmitter<boolean> = new EventEmitter();
-    @Output() public userDisconnected: EventEmitter<boolean> = new EventEmitter();
-    @Output() public matchingError: EventEmitter<void> = new EventEmitter();
+    public outerAppInviteReceived: EventEmitter<OuterAppInfo> = new EventEmitter();
+    public outerAppInviteSent: EventEmitter<OuterAppInfo> = new EventEmitter();
+    public outerAppInviteAccepted: EventEmitter<void> = new EventEmitter();
+    public outerAppInviteCanceled: EventEmitter<void> = new EventEmitter();
+    public toggledOuterAppFunction: EventEmitter<void> = new EventEmitter();
+    
+    public partnerDisconnected: EventEmitter<boolean> = new EventEmitter();
+    public userDisconnected: EventEmitter<boolean> = new EventEmitter();
+    public matchingError: EventEmitter<void> = new EventEmitter();
 
     public socket: io.Socket;
 
@@ -250,4 +249,3 @@ export class ChatService implements OnDestroy {
         this.socket.emit('killSocketConnection', null);
     }
 }
-

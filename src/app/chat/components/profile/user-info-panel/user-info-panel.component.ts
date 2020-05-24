@@ -63,6 +63,10 @@ export class UserInfoPanelComponent implements OnInit, OnDestroy {
     }
 
     getUser(): void {
+        if (this.loadingRequest) {
+            return;
+        }
+        
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
