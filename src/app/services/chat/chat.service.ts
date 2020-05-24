@@ -17,7 +17,6 @@ import { User } from './../user/user';
 export class ChatService implements OnDestroy {
     @Output() public partner: EventEmitter<User> = new EventEmitter();
     @Output() public messageReceived: EventEmitter<ChatMessage> = new EventEmitter();
-    @Output() public messageSent: EventEmitter<ChatMessage> = new EventEmitter();
 
     @Output() public outerAppInviteReceived: EventEmitter<OuterAppInfo> = new EventEmitter();
     @Output() public outerAppInviteSent: EventEmitter<OuterAppInfo> = new EventEmitter();
@@ -104,17 +103,8 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits message sent to socket */
-    public sendMessage(partner: User, user: User, message: string): void {
-        const msgObj: ChatMessage = {
-            sender: user.name,
-            receiver: partner.clientId,
-            message: message,
-            datetime: moment().format('hh:mm a'),
-            type: 'sent'
-        };
-
+    public sendMessage(msgObj: ChatMessage): void {
         this.socket.emit('message-send', msgObj);
-        this.messageSent.emit(msgObj);
     }
 
     /** Listens for message received from socket */
@@ -188,10 +178,9 @@ export class ChatService implements OnDestroy {
     /** Listens for app invite canceled from socket */
     private listenForOuterAppInviteCancel(): void {
         this.socket.on('outer-app-invite-cancel', msgObj => {
-            msgObj.datetime = moment().format('hh:mm a');
             msgObj.type = 'received';
 
-            this.outerAppInviteCanceled.emit(msgObj);
+            this.outerAppInviteCanceled.emit();
         });
     }
 
@@ -246,13 +235,13 @@ export class ChatService implements OnDestroy {
     /** Emits to socket when user is disconnected from chat */
     public disconnect(partner: User): void {
         this.socket.emit('disconnected', { receiver: partner.clientId });
-        this.userDisconnected.emit(true);
+        this.userDisconnected.emit();
     }
 
     /** Listens for if partner disconnects */
     private listenForPartnerDisconnect(): void {
         this.socket.on('partnerDisconnected', data => {
-            this.partnerDisconnected.emit(true);
+            this.partnerDisconnected.emit();
         });
     }
 

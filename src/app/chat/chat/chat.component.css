@@ -249,7 +249,7 @@ input:focus {
 
 /* Input/Misc */
 
-.align-bottom {
+.message-input-container {
     position: absolute;
     bottom: 0;
     width: 100%;

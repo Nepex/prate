@@ -23,7 +23,7 @@
             Based on:<br /> {{ partner.matchedBasedOn | interestFormat }}
         </div>
 
-        <button class="btn matching-btn" for="matching-button" (click)="approveMatch()">SAY HI!</button>
+        <button class="btn matching-btn" for="matching-button" (click)="matchedWithOverlay = false">SAY HI!</button>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
             <div style="font-size: 12px; padding-top: 10px;" [innerHTML]="rankUpMessage" *ngIf="rankUpMessage"></div>
         </div>
 
-        <button class="btn matching-btn" for="matching-button" (click)="approveChatFinished()">OK</button>
+        <button class="btn matching-btn" for="matching-button" (click)="chatFinishedOverlay = false">OK</button>
     </div>
 </div>
 
@@ -55,7 +55,7 @@
     <div class="row header">
         <div class="col-lg-8 col-2 my-auto">
             <div class="float-left text-center">
-                <img class="menu-logo cursor-pointer" (click)="goToHome();" src="../../assets/images/prt-icon.png" />
+                <a href="/"><img class="menu-logo cursor-pointer" src="../../assets/images/prt-icon.png" /></a>
             </div>
             <!-- Desktop buttons -->
             <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()"
@@ -82,7 +82,7 @@
         </prt-youtube-player> -->
         <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
             (canceled)="closeGame($event)" (inviteSent)="sendGameInvite($event)"
-            (gameClosed)="gameSessionClosed($event)"></prt-game-container>
+            (gameClosed)="gameSessionClose($event)"></prt-game-container>
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
@@ -95,15 +95,15 @@
                                 <div class="position-relative">
                                     <img [src]="m.type === 'sent' ? '../../../assets/images/avatars/' + user.avatar : '../../../assets/images/avatars/' + partner.avatar"
                                         class="user-icon cursor-pointer"
-                                        (click)="openViewUserProfile(m.type, user.id, partner.id)">
+                                        (click)="openViewUserProfileModal(m.type, user.id, partner.id)">
                                     <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
                                         class="user-badge cursor-pointer"
-                                        (click)="openViewUserProfile(m.type, user.id, partner.id)">
+                                        (click)="openViewUserProfileModal(m.type, user.id, partner.id)">
                                 </div>
                             </div>
                             <div [ngStyle]="{'margin-left': user.show_avatars ? '65px' : '0px' }">
                                 <div class="float-left message-user"><span class="cursor-pointer"
-                                        (click)="openViewUserProfile(m.type, user.id, partner.id)">{{ m.sender }}</span>
+                                        (click)="openViewUserProfileModal(m.type, user.id, partner.id)">{{ m.sender }}</span>
                                 </div>
 
                                 <br />
@@ -135,7 +135,7 @@
 
             <div class="return-to-bottom-icon" [hidden]="autoScroll" *ngIf="user"
                 [ngStyle]="{'color': user.color_theme === 'dark' ? '#eeeeee' : '#666666'}">
-                <i class="fas fa-chevron-down cursor-pointer" (click)="returnToBottom()"></i>
+                <i class="fas fa-chevron-down cursor-pointer" (click)="scrollToChatBottom()"></i>
             </div>
 
             <div class="user-warning-msg" [hidden]="!statusMessage" *ngIf="user"
@@ -148,13 +148,13 @@
                     <i class="fas cursor-pointer" [ngClass]="{'fa-play': !ytPlayState, 'fa-pause': ytPlayState}"
                         ngbTooltip="Toggle Play/Pause" placement="top" container="body"
                         style="position: relative; top: 1px; left: 6px;"
-                        (click)="toggleOuterAppFunction('yt', 'playpause')"></i>
+                        (click)="toggledOuterAppFunction('yt', 'playpause', true)"></i>
                     &nbsp;
                     <i class="fas cursor-pointer"
                         [ngClass]="{'fa-volume-up': !ytMuteState, 'fa-volume-mute': ytMuteState}"
                         ngbTooltip="Toggle Mute/Un-Mute" placement="top" container="body"
                         style="position: relative; top: 1px; left: 6px;"
-                        (click)="toggleOuterAppFunction('yt', 'muteunmute')"></i>
+                        (click)="toggledOuterAppFunction('yt', 'muteunmute', true)"></i>
                     &nbsp;
                     <i class="fas cursor-pointer"
                         [ngClass]="{'fa-comment': !hideBubbles, 'fa-comment-slash': hideBubbles}"
@@ -163,15 +163,15 @@
                     &nbsp;
                     <i class="fas fas fa-times cursor-pointer" ngbTooltip="Close Video" placement="top" container="body"
                         style="position: relative; top: 1px; left: 6px;"
-                        (click)="toggleOuterAppFunction('yt', 'close')"></i>
+                        (click)="toggledOuterAppFunction('yt', 'close', true)"></i>
                 </div>
             </div>
 
             <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" (keydown.enter)="sendMessage()" novalidate
                 autocomplete="off">
-                <div class="align-bottom">
+                <div class="message-input-container">
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
-                        formControlName="message" (keypress)="listenForUserTyping()" #messageInput
+                        formControlName="message" (keypress)="emitIsTyping()" #messageInput
                         [ngStyle]="{'background-color': user.color_theme === 'dark' ? '#111111' : 'rgb(228, 230, 228)', 'color': user.color_theme === 'dark' ? '#eeeeee' : '#000000'}"
                         *ngIf="user">
 
@@ -237,7 +237,7 @@
                                 <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
                                     <img src="../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
                                         ngbTooltip="{{e.code}}" placement="top" container="body"
-                                        (click)="insertEmoji(e.code)" />
+                                        (click)="insertEmojiCodeInMsg(e.code)" />
                                 </div>
                             </div>
                         </div>

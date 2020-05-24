@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 // NPM
+import * as moment from 'moment';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // App
@@ -50,13 +51,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     userSettingsChangedSub: Subscription;
     partnerFoundSub: Subscription;
     messageReceivedSub: Subscription;
-    messageSentSub: Subscription;
 
     outerAppInviteReceivedSub: Subscription;
-    outerAppInviteSentSub: Subscription;
     outerAppInviteAcceptedSub: Subscription;
     outerAppInviteCanceledSub: Subscription;
-
     toggledOuterAppFunctionSub: Subscription;
 
     userDoneTypingSub: Subscription;
@@ -102,6 +100,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     ytPlayState: boolean = true;
     ytMuteState: boolean = false;
     hideYtInvControls: boolean = true;
+    ytUrlRegex: RegExp = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
     // Games
     gameUrl: string;
     gameType: string;
@@ -151,7 +150,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         private modal: NgbModal) {
     }
 
-    /** Populates user data, sets up listeners from chat service and component */
     ngOnInit(): void {
         this.loadingRequest = this.userService.getUser();
 
@@ -163,24 +161,21 @@ export class ChatComponent implements OnInit, OnDestroy {
             // set listeners
             this.userSettingsChangedSub = this.userService.userSettingsChanged.subscribe(res => this.getUser());
 
-            this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.setPartner(partner));
-            this.messageSentSub = this.chatService.messageSent.subscribe(msgObj => this.messageSent(msgObj));
+            this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.matchFound(partner));
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
 
-            this.outerAppInviteSentSub = this.chatService.outerAppInviteSent.subscribe(msgObj => this.outerAppInviteSent(msgObj));
             this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
             this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
-            this.outerAppInviteCanceledSub = this.chatService.outerAppInviteCanceled.subscribe(msgObj => this.outerAppInviteCanceled(msgObj));
-
-            this.toggledOuterAppFunctionSub = this.chatService.toggledOuterAppFunction.subscribe(msgObj => this.outerAppFunctionToggledByPartner(msgObj));
+            this.outerAppInviteCanceledSub = this.chatService.outerAppInviteCanceled.subscribe(() => this.outerAppInviteCanceled());
+            this.toggledOuterAppFunctionSub = this.chatService.toggledOuterAppFunction.subscribe(msgObj => this.toggledOuterAppFunction(msgObj.outerApp, msgObj.activity, false));
 
             this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
-            this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(isDisconnected => this.partnerDisconnect(isDisconnected));
+            this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.partnerDisconnected());
             this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
 
             // timeout because of dark styling needing a user obj present (see html)
             setTimeout(() => {
-                this.listenForUserDoneTyping();
+                this.listenAndEmitDoneTyping();
             }, 500);
 
             // if page is refreshed or browser is closed, disconnect the user
@@ -198,13 +193,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
-    /** Unsubscribe from subscriptions on page destroy */
     ngOnDestroy(): void {
         this.userSettingsChangedSub.unsubscribe();
         this.partnerFoundSub.unsubscribe();
-        this.messageSentSub.unsubscribe();
         this.messageReceivedSub.unsubscribe();
-        this.outerAppInviteSentSub.unsubscribe();
         this.outerAppInviteReceivedSub.unsubscribe();
         this.outerAppInviteAcceptedSub.unsubscribe();
         this.outerAppInviteCanceledSub.unsubscribe();
@@ -216,7 +208,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         clearTimeout(this.chatTimerInterval);
     }
 
-    /** Any time settings need to be refreshed */
+    // -- General Purpose Functions --
     getUser(): void {
         this.loadingRequest = this.userService.getUser();
 
@@ -226,7 +218,61 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
-    /** Commences matching, looks for available partners */
+    openViewUserProfileModal(msgType: string, userId: string, partnerId: string): void {
+        let id = msgType === 'sent' ? userId : partnerId;
+
+        const modalRef = this.modal.open(ViewUserProfileModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.userId = id;
+    }
+
+    sendNotification(windowTitle: string, soundFile: string) {
+        this.titleService.setTitle(windowTitle);
+
+        if (this.user.sounds) {
+            let audio = new Audio();
+            audio.src = "../../assets/sounds/" + soundFile;
+            audio.load();
+            audio.play();
+        }
+    }
+
+    toggleBubbles(): void {
+        this.hideBubbles = !this.hideBubbles;
+
+        // wait for html to render and return to bottom if bubbles shown
+        if (!this.hideBubbles) {
+            setTimeout(() => {
+                this.scrollToChatBottom();
+            }, 200);
+        }
+    }
+
+    clearInactivity() {
+        this.inactivityTimer = 0;
+        this.statusMessage = null;
+    }
+
+    clearPartnerAndEndChat() {
+        this.partner = null;
+        this.chatMessages = [];
+        this.matchedWithOverlay = false;
+        this.chatFinishedOverlay = true;
+        this.closeApps();
+    }
+
+    closeApps() {
+        this.gameUrl = null;
+        this.ytUrl = null;
+        this.inviteLink = null;
+        this.ytPlayState = true;
+        this.ytMuteState = false;
+        this.hideYtInvControls = true;
+        this.hideBubbles = false;
+        this.gameAccepted = false;
+        this.gameType = null;
+    }
+
+    // -- Matching --
     searchForMatch(): void {
         this.loadingRequest = this.userService.getUser();
 
@@ -242,17 +288,25 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
-    /** Sets partner object after a match is sucessfully made */
-    setPartner(partner: User): void {
-        if (!this.isWindowFocused) {
-            this.titleService.setTitle('Match found!');
+    cancelMatching(): void {
+        // if a partner has been found, make sure to emit disconnection
+        if (this.partner) {
+            this.disconnect();
+            return;
+        }
+        this.chatService.cancelMatching();
+        this.matching = false;
+    }
 
-            if (this.user.sounds) {
-                let audio = new Audio();
-                audio.src = "../../assets/sounds/match-found.mp3";
-                audio.load();
-                audio.play();
-            }
+    // if user is already matched/matching or auth failure
+    matchError(err: string): void {
+        this.matching = false;
+        this.statusMessage = err;
+    }
+
+    matchFound(partner: User): void {
+        if (!this.isWindowFocused) {
+            this.sendNotification('Match found!', 'match-found.mp3');
         }
 
         this.matching = false;
@@ -267,15 +321,97 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.accumulateTime();
     }
 
-    approveMatch(): void {
-        this.matchedWithOverlay = false;
+    disconnect(): void {
+        this.chatService.disconnect(this.partner);
+        this.leaveMessage = 'You left the chat';
+        this.clearPartnerAndEndChat();
+        this.stopTimerAndGiveExp();
+
     }
 
-    approveChatFinished(): void {
-        this.chatFinishedOverlay = false;
+    partnerDisconnected(): void {
+        if (!this.isWindowFocused) {
+            this.sendNotification('Match left!', 'match-left.mp3')
+        }
+
+        this.chatService.killSocketConnection();
+        this.partnerIsTyping = false;
+        this.partnerLeftName = this.partner.name;
+        this.leaveMessage = 'has left the chat';
+        this.clearPartnerAndEndChat();
+        this.stopTimerAndGiveExp();
     }
 
-    /** Accumulates chat time and kicks user if inactive for 10 minutes */
+    // --- Chatting ---
+    sendMessage(): void {
+        if (!this.messageForm.valid || !this.partner) {
+            return;
+        }
+
+        const msgObj: ChatMessage = {
+            sender: this.user.name,
+            receiver: this.partner.clientId,
+            message: this.messageForm.value.message,
+            datetime: moment().format('hh:mm a'),
+            type: 'sent'
+        };
+
+        this.chatService.sendMessage(msgObj);
+
+        msgObj.message = this.linkify(msgObj.message);
+        msgObj.message = this.emojify(msgObj.message);
+        this.chatMessages.push(msgObj);
+
+        this.clearInactivity();
+        this.messageForm.reset();
+    }
+
+    messageReceived(msgObj: ChatMessage): void {
+        if (!this.isWindowFocused || (this.isWindowFocused && this.hideBubbles)) {
+            this.sendNotification('New Message', 'notif.mp3');
+        }
+
+        msgObj.message = this.linkify(msgObj.message);
+        msgObj.message = this.emojify(msgObj.message);
+
+        this.chatMessages.push(msgObj);
+    }
+
+    emitIsTyping(): void {
+        if (!this.partner || this.userIsTyping) {
+            return;
+        }
+
+        this.userIsTyping = true;
+        this.chatService.userIsTyping(true, this.partner);
+    }
+
+    listenAndEmitDoneTyping(): void {
+        const input = document.getElementById('messageInput');
+        const event = fromEvent(input, 'keyup').pipe(map(i => i.currentTarget['value']));
+        const debouncedInput = event.pipe(debounceTime(500));
+
+        this.userDoneTypingSub = debouncedInput.subscribe(val => {
+            if (this.partner) {
+                this.userIsTyping = false;
+                this.chatService.userIsTyping(false, this.partner);
+            }
+        });
+    }
+
+    isPartnerTyping(typingObj: IsTyping): void {
+        if (!this.partner) {
+            return;
+        }
+
+        if (typingObj.isTyping) {
+            this.partnerIsTyping = true;
+        } else {
+            this.partnerIsTyping = false;
+        }
+    }
+
+    // --- Time and Exp ---
     accumulateTime(): void {
         this.chatTimerInterval = window.setTimeout(() => {
             this.chatTimer = this.chatTimer + 10;
@@ -301,150 +437,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         }, 10000);
     }
 
-    /** Attempt to send a message */
-    sendMessage(): void {
-        if (!this.messageForm.valid || !this.partner) {
-            return;
-        }
-
-        const message = this.messageForm.value.message;
-        this.chatService.sendMessage(this.partner, this.user, message);
-        this.inactivityTimer = 0;
-        this.statusMessage = null;
-        this.messageForm.reset();
-    }
-
-    /** Listens for messages sucessfully sent by user */
-    messageSent(msgObj: ChatMessage): void {
-        msgObj.message = this.linkify(msgObj.message);
-        msgObj.message = this.emojify(msgObj.message);
-
-        this.chatMessages.push(msgObj);
-    }
-
-    /** Listens for messages received from partner */
-    messageReceived(msgObj: ChatMessage): void {
-        if (!this.isWindowFocused) {
-            this.titleService.setTitle('New Message!');
-
-            if (this.user.sounds) {
-                let audio = new Audio();
-                audio.src = "../../assets/sounds/notif.mp3";
-                audio.load();
-                audio.play();
-            }
-        }
-
-        if (this.isWindowFocused && this.hideBubbles) {
-            if (this.user.sounds) {
-                let audio = new Audio();
-                audio.src = "../../assets/sounds/notif.mp3";
-                audio.load();
-                audio.play();
-            }
-        }
-
-        msgObj.message = this.linkify(msgObj.message);
-        msgObj.message = this.emojify(msgObj.message);
-
-        this.chatMessages.push(msgObj);
-    }
-
-    /** If host starts typing */
-    listenForUserTyping(): void {
-        if (!this.partner || this.userIsTyping) {
-            return;
-        }
-
-        this.userIsTyping = true;
-        this.chatService.userIsTyping(true, this.partner);
-    }
-
-    /** Listens for last key up event, sets user as done typing after .5 seconds */
-    listenForUserDoneTyping(): void {
-        const input = document.getElementById('messageInput');
-        const event = fromEvent(input, 'keyup').pipe(map(i => i.currentTarget['value']));
-        const debouncedInput = event.pipe(debounceTime(500));
-
-        this.userDoneTypingSub = debouncedInput.subscribe(val => {
-            if (this.partner) {
-                this.userIsTyping = false;
-                this.chatService.userIsTyping(false, this.partner);
-            }
-        });
-    }
-
-    /** If partner is typing, display a message */
-    isPartnerTyping(typingObj: IsTyping): void {
-        if (!this.partner) {
-            return;
-        }
-
-        if (typingObj.isTyping) {
-            this.partnerIsTyping = true;
-        } else {
-            this.partnerIsTyping = false;
-        }
-    }
-
-    /** On cancel button clicked, halt matching */
-    cancelMatching(): void {
-        // if a partner has been found, make sure to emit disconnection
-        if (this.partner) {
-            this.disconnect();
-            return;
-        }
-        this.chatService.cancelMatching();
-        this.matching = false;
-    }
-
-    /** If user leaves the chat or is disconnected - unmatch both user and partner */
-    disconnect(): void {
-        this.chatService.disconnect(this.partner);
-        this.leaveMessage = 'You left the chat';
-        this.chatMessages = [];
-        this.partner = null;
-        this.inviteLink = null;
-        this.ytUrl = null;
-        this.hideBubbles = false;
-        this.closeGame();
-
-        this.chatFinishedOverlay = true;
-        this.stopTimerAndGiveExp();
-    }
-
-    /** If partner is disconnected, unmatch user */
-    partnerDisconnect(isDisconnected: boolean): void {
-        if (isDisconnected) {
-            if (!this.isWindowFocused) {
-                this.titleService.setTitle('Match left!');
-
-                if (this.user.sounds) {
-                    let audio = new Audio();
-                    audio.src = "../../assets/sounds/match-left.mp3";
-                    audio.load();
-                    audio.play();
-                }
-            }
-
-            this.chatService.killSocketConnection();
-            this.partnerIsTyping = false;
-            this.partnerLeftName = this.partner.name;
-            this.leaveMessage = 'has left the chat';
-            this.chatMessages = [];
-            this.partner = null;
-            this.inviteLink = null;
-            this.ytUrl = null;
-            this.hideBubbles = false;
-            this.closeGame();
-
-            this.matchedWithOverlay = false;
-            this.chatFinishedOverlay = true;
-            this.stopTimerAndGiveExp();
-        }
-    }
-
-    /** Resets timers and awards exp */
     stopTimerAndGiveExp(): void {
         clearTimeout(this.chatTimerInterval);
         this.rankUpMessage = null;
@@ -473,74 +465,16 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.inactivityTimer = 0;
     }
 
-    /** If user is already matched/matching or auth failure */
-    matchError(err: string): void {
-        this.matching = false;
-        this.statusMessage = err;
+    // -- Message Formatting --
+    insertEmojiCodeInMsg(code: string): void {
+        let message = this.messageForm.value.message;
+        if (!message) { message = ''; }
+
+        this.messageForm.value.message = this.messageForm.controls.message.setValue(message + code);
+        this.hideEmojis = true;
+        this.messageInput.nativeElement.focus();
     }
 
-    // Go home when logo is clicked
-    goToHome(): void {
-        this.router.navigateByUrl('/');
-    }
-
-    // toggle chat bubbles
-    toggleBubbles(): void {
-        this.hideBubbles = !this.hideBubbles;
-
-        if (!this.hideBubbles) {
-            setTimeout(() => {
-                this.returnToBottom();
-            }, 200);
-        }
-    }
-
-    // Opens chatting users' profile
-    openViewUserProfile(msgType: string, userId: string, partnerId: string): void {
-        let id;
-
-        id = msgType === 'sent' ? userId : partnerId;
-
-        const modalRef = this.modal.open(ViewUserProfileModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        modalRef.componentInstance.userId = id;
-    }
-
-    /** If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling. */
-    chatScrolled(): void {
-        let element = document.getElementById('chatMessages');
-        let atBottom = (element.scrollTop + element.offsetHeight + 100) >= element.scrollHeight;
-        if (atBottom) {
-            this.autoScroll = true;
-        } else {
-            this.autoScroll = false;
-        }
-    }
-
-    /** If user is at the bottom, auto scroll chat with messages sent/received */
-    checkForAutoScroll(): void {
-        let element = document.getElementById('chatMessages');
-
-        if (this.autoScroll) {
-            element.scrollTop = element.scrollHeight;
-        }
-    }
-
-    /** Auto scrolls to bottom */
-    returnToBottom(): void {
-        let element = document.getElementById('chatMessages');
-
-        element.scrollTop = element.scrollHeight;
-    }
-
-    /** Checks message for links then turns them into HREFs */
-    linkify(plainTextMessage: string): string {
-        let urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        return plainTextMessage.replace(urlRegex, url => {
-            return '<a href="' + url + '" target="_blank">' + url + '</a>';
-        });
-    }
-
-    /** Checks if emojis are present in message and converts them */
     emojify(plainTextMessage: string): string {
         let newMessage = plainTextMessage;
 
@@ -554,85 +488,64 @@ export class ChatComponent implements OnInit, OnDestroy {
         return newMessage;
     }
 
-    /** Add emoji to message */
-    insertEmoji(code: string): void {
-        let message = this.messageForm.value.message;
-        if (!message) { message = ''; }
-
-        this.messageForm.value.message = this.messageForm.controls.message.setValue(message + code);
-        this.hideEmojis = true;
-        this.messageInput.nativeElement.focus();
+    linkify(plainTextMessage: string): string {
+        let urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        return plainTextMessage.replace(urlRegex, url => {
+            return '<a href="' + url + '" target="_blank">' + url + '</a>';
+        });
     }
 
-    // Games
-    prepareGameInvite(game: string): void {
-        if (!this.partner) {
-            return;
-        }
+    // --- Chat Scroll Functionality ---
+    scrollToChatBottom(): void {
+        let element = document.getElementById('chatMessages');
 
-        if (game === 'gartic') {
-            this.gameUrl = 'https://www.gartic.io';
-            this.gameType = 'gartic';
-        } else if (game === 'chess') {
-            this.gameUrl = 'https://www.chess.org'
-            this.gameType = 'chess';
-        } else if (game === 'tictactoe') {
-            this.gameUrl = 'https://ultimate-t3.herokuapp.com';
-            this.gameType = 'tictactoe';
+        element.scrollTop = element.scrollHeight;
+    }
+
+    // if chat is scrolled, check if user is at the bottom, if not, allow for free scrolling
+    chatScrolled(): void {
+        let element = document.getElementById('chatMessages');
+        let atBottom = (element.scrollTop + element.offsetHeight + 100) >= element.scrollHeight;
+        if (atBottom) {
+            this.autoScroll = true;
+        } else {
+            this.autoScroll = false;
         }
     }
 
-    closeGame(): void {
-        this.gameUrl = null;
-        this.gameType = null;
-        this.gameAccepted = false;
-        this.inviteLink = null;
+    // If user is at the bottom, auto scroll chat with messages sent/received
+    checkForAutoScroll(): void {
+        let element = document.getElementById('chatMessages');
+
+        if (this.autoScroll) {
+            element.scrollTop = element.scrollHeight;
+        }
     }
 
-    sendGameInvite(gameInfo: { url: string; gameType: string; }): void {
-        this.inviteLink = gameInfo.url;
-        this.sendOuterAppInvite(gameInfo.gameType);
-    }
-
-    gameSessionClosed(): void {
-        this.toggleOuterAppFunction(this.gameType, 'close');
-    }
-
-    // Invite Logic
+    // -- App Invites --
     sendOuterAppInvite(app: string): void {
-        if (!this.partner) {
-            return;
-        }
-
-        if (this.inviteLink.length > 1000 || !this.inviteLink) {
-            this.inviteLink = null;
+        if (this.inviteLink.length > 1000 || !this.inviteLink || !this.partner) {
             return;
         }
 
         if (app === 'yt') {
-            const ytRegEx = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
-
-            if (!ytRegEx.test(this.inviteLink)) {
-                this.inviteLink = 'Invalid link'
+            if (!this.ytUrlRegex.test(this.inviteLink)) {
+                this.inviteLink = 'Invalid link';
                 return;
             }
+
+            this.hideYtInvControls = true;
         }
 
+        this.clearInactivity();
         this.chatService.sendOuterAppInvite(this.partner, this.user, app, this.inviteLink);
-        this.inactivityTimer = 0;
-        this.statusMessage = null;
-        if (app === 'yt') { this.hideYtInvControls = true; }
-    }
 
-    outerAppInviteSent(invInfo: OuterAppInfo): void {
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'sent';
-        this.outerAppInviteModal.componentInstance.outerApp = invInfo.outerApp;
 
         this.outerAppInviteModal.result.then(res => {
             if (res === 'cancel') {
-                this.chatService.outerAppInviteCancel(this.partner, this.user, invInfo.outerApp);
+                this.chatService.outerAppInviteCancel(this.partner, this.user, app);
             }
         });
     }
@@ -654,42 +567,36 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
+    // shared functions - called by socket emitted by partner and by this component
     outerAppInviteAccepted(invInfo: OuterAppInfo): void {
         if (this.outerAppInviteModal) {
             this.outerAppInviteModal.close();
         }
-        // prepare app
-        // yt
+
         if (invInfo.outerApp === 'yt') {
             this.ytUrl = invInfo.outerAppLink ? invInfo.outerAppLink : this.inviteLink;
         }
 
-        // games
         if (invInfo.outerApp === 'gartic' || invInfo.outerApp === 'chess' || invInfo.outerApp === 'tictactoe') {
             if (invInfo.outerAppLink) {
                 this.gameUrl = invInfo.outerAppLink;
             }
 
-            if (invInfo.outerApp === 'gartic') {
-                this.gameType = 'gartic';
-            }
-            if (invInfo.outerApp === 'chess') {
-                this.gameType = 'chess';
-            }
-            if (invInfo.outerApp === 'tictactoe') {
-                this.gameType = 'tictactoe';
-            }
-
+            this.gameType = invInfo.outerApp;
             this.gameAccepted = true;
         }
     }
 
-    outerAppInviteCanceled(invInfo: OuterAppInfo): void {
+    outerAppInviteCanceled(): void {
         this.outerAppInviteModal.close();
-        this.closeGame();
+        this.closeApps();
     }
 
-    toggleOuterAppFunction(outerApp: string, activity: string): void {
+    toggledOuterAppFunction(outerApp: string, activity: string, beingSent: boolean): void {
+        if (activity === 'close') {
+            this.closeApps();
+        }
+
         if (outerApp === 'yt') {
             if (activity === 'playpause') {
                 this.ytPlayState = !this.ytPlayState;
@@ -697,47 +604,40 @@ export class ChatComponent implements OnInit, OnDestroy {
             else if (activity === 'muteunmute') {
                 this.ytMuteState = !this.ytMuteState;
             }
-            else if (activity === 'close') {
-                this.ytUrl = null;
-                this.inviteLink = null;
-                this.ytPlayState = true;
-                this.ytMuteState = false;
-                this.hideYtInvControls = true;
-                this.hideBubbles = false;
-            }
         }
 
-        if (outerApp === 'gartic' || outerApp === 'chess' || outerApp === 'tictactoe') {
-            if (activity === 'close') {
-                this.closeGame();
-            }
+        if (beingSent) {
+            this.chatService.toggleOuterAppFunction(this.partner, this.user, outerApp, activity);
+        }
+    }
+    //
+
+    // opens iframe in html, for user to start setting up an invite url
+    prepareGameInvite(game: string): void {
+        if (!this.partner) {
+            return;
         }
 
-        this.chatService.toggleOuterAppFunction(this.partner, this.user, outerApp, activity);
+        if (game === 'gartic') {
+            this.gameUrl = 'https://www.gartic.io';
+            this.gameType = 'gartic';
+        } else if (game === 'chess') {
+            this.gameUrl = 'https://www.chess.org'
+            this.gameType = 'chess';
+        } else if (game === 'tictactoe') {
+            this.gameUrl = 'https://ultimate-t3.herokuapp.com';
+            this.gameType = 'tictactoe';
+        }
     }
 
-    outerAppFunctionToggledByPartner(receivedInfo: OuterAppInfo): void {
-        if (receivedInfo.outerApp === 'yt') {
-            if (receivedInfo.activity === 'playpause') {
-                this.ytPlayState = !this.ytPlayState;
-            }
-            else if (receivedInfo.activity === 'muteunmute') {
-                this.ytMuteState = !this.ytMuteState;
-            }
-            else if (receivedInfo.activity === 'close') {
-                this.ytUrl = null;
-                this.inviteLink = null;
-                this.ytPlayState = true;
-                this.ytMuteState = false;
-                this.hideYtInvControls = true;
-                this.hideBubbles = false;
-            }
-        }
+    // function called from child component (iframe) - sends app invite to selected game
+    sendGameInvite(gameInfo: { url: string; gameType: string; }): void {
+        this.inviteLink = gameInfo.url;
+        this.sendOuterAppInvite(gameInfo.gameType);
+    }
 
-        if (receivedInfo.outerApp === 'gartic' || receivedInfo.outerApp === 'chess' || receivedInfo.outerApp === 'tictactoe') {
-            if (receivedInfo.activity === 'close') {
-                this.closeGame();
-            }
-        }
+    // function called from child component (iframe) - goes into app activity toggle function which closes the game for user and partner
+    gameSessionClose(): void {
+        this.toggledOuterAppFunction(this.gameType, 'close', true);
     }
 }
