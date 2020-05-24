@@ -8,7 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { AlertMessagesComponent } from './alert-messages/alert-messages.component';
-import { GameContainerComponent } from './game-container/game-container.component';
 import { FormValidationMsgsComponent } from './form-validation-msgs/form-validation-msgs.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,12 +16,10 @@ import { MessageDisplayModalComponent } from './message-display/message-display-
 import { OffClickDirective } from './off-click-directive/off-click.directive';
 import { SafeHtmlPipe } from './safe-html-pipe/safe-html.pipe';
 import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
-import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
 
 @NgModule({
     declarations: [
         AlertMessagesComponent,
-        GameContainerComponent,
         FormValidationMsgsComponent,
         FooterComponent,
         HeaderComponent,
@@ -30,8 +27,7 @@ import { YoutubePlayerComponent } from './youtube-player/youtube-player.componen
         MessageDisplayModalComponent,
         OffClickDirective,
         SafeHtmlPipe,
-        SafeUrlPipe,
-        YoutubePlayerComponent
+        SafeUrlPipe
     ],
     imports: [
         CommonModule,
@@ -40,7 +36,6 @@ import { YoutubePlayerComponent } from './youtube-player/youtube-player.componen
     ],
     exports: [
         AlertMessagesComponent,
-        GameContainerComponent,
         FormValidationMsgsComponent,
         FooterComponent,
         HeaderComponent,
@@ -49,7 +44,6 @@ import { YoutubePlayerComponent } from './youtube-player/youtube-player.componen
         OffClickDirective,
         SafeHtmlPipe,
         SafeUrlPipe,
-        YoutubePlayerComponent
     ],
     providers: [],
     entryComponents: [

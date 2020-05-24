@@ -141,13 +141,15 @@ export class UserSettingsModalComponent implements OnInit {
 
     openEditAvatar(): void {
         this.activeModal.close();
-        const modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+        let modalRef;
 
+        modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
         modalRef.componentInstance.user = this.user;
 
         modalRef.result.then(() => {
         }, () => {
-            this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+            modalRef = this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+            modalRef.componentInstance.user = this.user;
         });
     }
 

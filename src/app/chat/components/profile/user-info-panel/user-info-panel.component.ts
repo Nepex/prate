@@ -14,7 +14,6 @@ import { LevelService } from 'src/app/services/level/level.service';
 import { MessageDisplayModalComponent } from '../../../../shared/message-display/message-display-modal.component';
 import { SessionService } from 'src/app/services/session/session.service';
 import { User } from 'src/app/services/user/user';
-import { UserService } from '../../../../services/user/user.service';
 import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
 
 // Component that's placed on the Chat page (top-right) to display user information and navigation

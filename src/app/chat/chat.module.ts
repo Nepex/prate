@@ -17,44 +17,48 @@ import { SharedModule } from '../shared/shared.module';
 import { ChatComponent } from './chat/chat.component';
 import { UserSettingsModalComponent } from './components/profile/user-settings/user-settings-modal.component';
 import { ChangeAvatarModalComponent } from './components/profile/change-avatar/change-avatar-modal.component';
+import { GameContainerComponent } from './components/game-container/game-container.component';
 import { HelpModalComponent } from './components/help/help-modal.component';
 import { BugReportModalComponent } from './components/bug-report/bug-report-modal.component';
 import { OuterAppInviteModalComponent } from './components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { ViewUserProfileModalComponent } from './components/profile/view-user-profile/view-user-profile-modal.component';
 import { UserInfoPanelComponent } from './components/profile/user-info-panel/user-info-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { YoutubePlayerComponent } from './components/youtube-player/youtube-player.component';
 
 @NgModule({
     declarations: [
+        BugReportModalComponent,
+        ChangeAvatarModalComponent,
         ChatComponent,
+        GameContainerComponent,
+        HelpModalComponent,
+        OuterAppInviteModalComponent,
+        UserInfoPanelComponent,
         UserSettingsModalComponent,
         ViewUserProfileModalComponent,
-        ChangeAvatarModalComponent,
-        UserInfoPanelComponent,
-        OuterAppInviteModalComponent,
-        HelpModalComponent,
-        BugReportModalComponent
+        YoutubePlayerComponent
     ],
     imports: [
+        AngularResizedEventModule,
         BrowserModule,
         BrowserAnimationsModule,
-        AngularResizedEventModule,
-        ReactiveFormsModule,
-        FormsModule,
         ColorPickerModule,
+        FormsModule,
+        ReactiveFormsModule,
         NgbModule,
         MomentModule,
-        TagInputModule,
-        SharedModule
+        SharedModule,
+        TagInputModule
     ],
     providers: [],
     entryComponents: [
-        ChangeAvatarModalComponent,
-        UserSettingsModalComponent,
-        ViewUserProfileModalComponent,
-        OuterAppInviteModalComponent,
         BugReportModalComponent,
-        HelpModalComponent
+        ChangeAvatarModalComponent,
+        HelpModalComponent,
+        OuterAppInviteModalComponent,
+        UserSettingsModalComponent,
+        ViewUserProfileModalComponent
     ]
 })
 export class ChatModule { }
