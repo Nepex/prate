@@ -91,6 +91,7 @@
             (gameClosed)="gameSessionClose($event)"></prt-game-container>
         <!-- End App Containers-->
 
+        <!-- Chat Messages -->
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
@@ -125,7 +126,6 @@
 
                                     {{ m.datetime }}
                                 </div>
-
                             </div>
                         </div>
                     </div>
