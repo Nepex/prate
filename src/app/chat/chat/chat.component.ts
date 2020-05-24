@@ -49,6 +49,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Subs
     loadingRequest: Observable<User>;
     userSettingsChangedSub: Subscription;
+    avatarChangedSub: Subscription;
+
     partnerFoundSub: Subscription;
     messageReceivedSub: Subscription;
 
@@ -159,7 +161,8 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
 
             // set listeners
-            this.userSettingsChangedSub = this.userService.userSettingsChanged.subscribe(res => this.getUser());
+            this.userSettingsChangedSub = this.userService.userSettingsChanged.subscribe(() => this.getUser());
+            this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
 
             this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.matchFound(partner));
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
@@ -195,6 +198,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.userSettingsChangedSub.unsubscribe();
+        this.avatarChangedSub.unsubscribe();
         this.partnerFoundSub.unsubscribe();
         this.messageReceivedSub.unsubscribe();
         this.outerAppInviteReceivedSub.unsubscribe();
@@ -279,22 +283,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // -- Matching --
     searchForMatch(): void {
-        if (this.loadingRequest) {
-            return
-        }
-
-        this.loadingRequest = this.userService.getUser();
-
-        this.loadingRequest.subscribe(res => {
-            this.user = res;
-            this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
-
-            this.loadingRequest = null;
-
-            this.matching = true;
-            this.statusMessage = null;
-            this.chatService.intiateMatching(this.user);
-        });
+        this.matching = true;
+        this.statusMessage = null;
+        this.chatService.intiateMatching(this.user);
     }
 
     cancelMatching(): void {
@@ -467,7 +458,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
 
         this.user.experience = this.user.experience + this.chatTimer;
-
         this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
 
         this.chatTimer = 0;
