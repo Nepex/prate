@@ -76,7 +76,7 @@
         </div>
 
         <div class="col-lg-3 col-2 my-auto">
-            <prt-user-info-panel></prt-user-info-panel>
+            <prt-user-info-panel [user]="user" [partner]="partner" [exp]="user.experience" *ngIf="user"></prt-user-info-panel>
         </div>
     </div>
 

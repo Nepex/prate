@@ -1,6 +1,5 @@
 // Angular
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
 
 // NPM
@@ -10,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BugReportModalComponent } from '../../bug-report/bug-report-modal.component';
 import { ChatService } from 'src/app/services/chat/chat.service';
 import { HelpModalComponent } from '../../help/help-modal.component';
+import { LevelInfo } from 'src/app/services/level/level-info';
 import { LevelService } from 'src/app/services/level/level.service';
 import { MessageDisplayModalComponent } from '../../../../shared/message-display/message-display-modal.component';
 import { SessionService } from 'src/app/services/session/session.service';
@@ -23,79 +23,44 @@ import { UserSettingsModalComponent } from '../user-settings/user-settings-modal
     templateUrl: './user-info-panel.component.html',
     styleUrls: ['./user-info-panel.component.css']
 })
-export class UserInfoPanelComponent implements OnInit, OnDestroy {
-    // Subs
-    loadingRequest: Observable<User>;
-
-    partnerFoundSub: Subscription;
-    userDisconnectSub: Subscription;
-    partnerDisconnectSub: Subscription;
-    avatarChangedSub: Subscription;
-    settingsChangedSub: Subscription;
-
-    // Data Store
-    user: User;
-    partner: User;
+export class UserInfoPanelComponent implements OnInit, OnChanges {
+    // Component Inputs
+    @Input() user: User;
+    @Input() partner: User;
+    @Input() exp: number;
 
     // UI
     navIsCollapsed: boolean = true;
     expCurValue: number;
     expMaxValue: number;
+    levelInfo: LevelInfo;
 
-    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private userService: UserService,
+    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router,
         private chatService: ChatService, private levelService: LevelService) { }
 
-    ngOnInit(): void {
-        this.getUser();
-        this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.partner = partner);
-        this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.updateExpAndClearPartner());
-        this.userDisconnectSub = this.chatService.userDisconnected.subscribe(() => this.updateExpAndClearPartner());
-        this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
-        this.settingsChangedSub = this.userService.userSettingsChanged.subscribe(user => this.user.name = user.name);
-    }
+    ngOnInit(): void { }
 
-    ngOnDestroy(): void {
-        this.partnerFoundSub.unsubscribe();
-        this.partnerDisconnectSub.unsubscribe();
-        this.userDisconnectSub.unsubscribe();
-        this.avatarChangedSub.unsubscribe();
-        this.settingsChangedSub.unsubscribe();
-    }
+    ngOnChanges(changes: { [property: string]: SimpleChange }): void {
+        if (changes.exp) {
+            this.exp = changes.exp.currentValue;
 
-    getUser(): void {
-        if (this.loadingRequest) {
-            return;
+            this.levelInfo = this.levelService.getLevelInfo(this.exp);
+            this.expCurValue = this.levelService.getCurExpBarValue(this.levelInfo, this.exp);
+            this.expMaxValue = this.levelService.getMaxExpBarValue(this.levelInfo);
         }
-        
-        this.loadingRequest = this.userService.getUser();
-
-        this.loadingRequest.subscribe(res => {
-            this.user = res;
-            this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
-            this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
-            this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
-
-            this.loadingRequest = null;
-        });
-    }
-
-    updateExpAndClearPartner(): void {
-        this.partner = null;
-
-        // find a better way to wait for exp reward
-        setTimeout(() => {
-            this.getUser();
-        }, 1000);
     }
 
     openSettingsModal(): void {
+        let modalRef;
+
         if (this.partner) {
-            const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+            modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
             modalRef.componentInstance.message = 'User settings cannot be editted while chatting.';
             return;
         }
 
-        this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef = this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.user = this.user;
     }
 
     openFriendsModal(): void {

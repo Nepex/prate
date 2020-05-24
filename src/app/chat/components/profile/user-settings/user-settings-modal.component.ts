@@ -95,7 +95,7 @@ export class UserSettingsModalComponent implements OnInit {
         private levelService: LevelService) { }
 
     ngOnInit(): void {
-        this.getUser();
+        this.setupModal();
 
         // Track amount of characters in bio message
         this.profileForm.controls['bio'].valueChanges.subscribe((v) => {
@@ -113,19 +113,11 @@ export class UserSettingsModalComponent implements OnInit {
         });
     }
 
-    getUser(): void {
-        this.loadingRequest = this.userService.getUser();
+    setupModal(): void {
+        this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
+        this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
 
-        this.loadingRequest.subscribe(res => {
-            this.user = res;
-            this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
-            this.expCurValue = this.levelService.getCurExpBarValue(this.user.levelInfo, this.user.experience);
-            this.expMaxValue = this.levelService.getMaxExpBarValue(this.user.levelInfo);
-
-            this.initFormValues();
-
-            this.loadingRequest = null;
-        });
+        this.initFormValues();
     }
 
     initFormValues(): void {

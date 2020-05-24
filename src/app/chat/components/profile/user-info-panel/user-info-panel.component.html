@@ -4,7 +4,7 @@
         <!-- User Avatar/Badge -->
         <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right">
 
-        <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge-desktop">
+        <img src="../../../assets/images/badges/{{levelInfo.badge}}" class="user-badge-desktop">
     </div>
     <div class="col-9" *ngIf="user">
         <div class="row">
@@ -16,8 +16,8 @@
                         <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
                     </div>
                     <div class="no-pad-margin user-level-container">
-                        <span class="user-level no-pad-margin">{{ user.levelInfo.rank}} - Level
-                            {{ user.levelInfo.level }}</span>
+                        <span class="user-level no-pad-margin">{{ levelInfo.rank}} - Level
+                            {{ levelInfo.level }}</span>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
             (click)="navIsCollapsed = !navIsCollapsed" (offClick)="navIsCollapsed ? navIsCollapsed : navIsCollapsed = !navIsCollapsed" />
 
         <!-- User Avatar/Badge -->
-        <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge-mobile">
+        <img src="../../../assets/images/badges/{{levelInfo.badge}}" class="user-badge-mobile">
 
         <!-- Navigation Dropdown -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="navIsCollapsed">
