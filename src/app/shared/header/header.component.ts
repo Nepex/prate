@@ -8,8 +8,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { LoginModalComponent } from './../../pages/login/login-modal.component';
 import { SessionService } from './../../services/session/session.service';
-import { User } from 'src/app/services/user/user';
-import { UserService } from 'src/app/services/user/user.service';
+import { User } from '../../services/user/user';
+import { UserService } from '../../services/user/user.service';
 
 // Header component for base website
 @Component({

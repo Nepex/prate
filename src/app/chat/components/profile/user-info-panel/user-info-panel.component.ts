@@ -7,13 +7,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { BugReportModalComponent } from '../../bug-report/bug-report-modal.component';
-import { ChatService } from 'src/app/services/chat/chat.service';
+import { ChatService } from '../../../../services/chat/chat.service';
 import { HelpModalComponent } from '../../help/help-modal.component';
-import { LevelInfo } from 'src/app/services/level/level-info';
-import { LevelService } from 'src/app/services/level/level.service';
+import { LevelInfo } from '../../../../services/level/level-info';
+import { LevelService } from '../../../../services/level/level.service';
 import { MessageDisplayModalComponent } from '../../../../shared/message-display/message-display-modal.component';
-import { SessionService } from 'src/app/services/session/session.service';
-import { User } from 'src/app/services/user/user';
+import { SessionService } from '../../../../services/session/session.service';
+import { User } from '../../../../services/user/user';
 import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
 
 // Component that's placed on the Chat page (top-right) to display user information and navigation

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // App
-import { Update } from 'src/app/services/generic/update';
+import { Update } from '../../services/generic/update';
 
 // Version management page that displays updates
 @Component({

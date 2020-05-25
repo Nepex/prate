@@ -13,7 +13,7 @@ import { Credentials } from '../../services/session/credentials';
 import { PrivacyPolicyModalComponent } from '../privacy-policy/privacy-policy-modal.component';
 import { SessionService } from '../../services/session/session.service';
 import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
-import { TermsModalComponent } from 'src/app/pages/terms/terms-modal.component';
+import { TermsModalComponent } from '../../pages/terms/terms-modal.component';
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../services/user/user';
 

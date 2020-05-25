@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { LevelService } from 'src/app/services/level/level.service';
-import { User } from 'src/app/services/user/user';
-import { UserService } from 'src/app/services/user/user.service';
+import { LevelService } from '../../../../services/level/level.service';
+import { User } from '../../../../services/user/user';
+import { UserService } from '../../../../services/user/user.service';
 
 // Modal for viewing a user's profile
 @Component({

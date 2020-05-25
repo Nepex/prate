@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.component';
-import { User } from 'src/app/services/user/user';
-import { UserService } from 'src/app/services/user/user.service';
+import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
+import { User } from '../../../../services/user/user';
+import { UserService } from '../../../../services/user/user.service';
 
 // Modal for changing the user's profile avatar picture
 @Component({

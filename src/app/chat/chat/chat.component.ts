@@ -15,7 +15,7 @@ import { ChatMessage } from '../../services/chat/chat-message';
 import { ChatService } from '../../services/chat/chat.service';
 import { IsTyping } from '../../services/chat/is-typing';
 import { LevelService } from '../../services/level/level.service';
-import { OuterAppInfo } from 'src/app/services/chat/outer-app-info';
+import { OuterAppInfo } from '../../services/chat/outer-app-info';
 import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';

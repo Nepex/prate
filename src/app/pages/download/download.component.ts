@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
+import { MessageDisplayModalComponent } from '../../shared/message-display/message-display-modal.component';
 
 // Page for downloading external app
 @Component({

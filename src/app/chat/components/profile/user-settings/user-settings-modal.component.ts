@@ -11,7 +11,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
 import { LevelService } from '../../../../services/level/level.service';
-import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
+import { SubmittableFormGroup } from '../../../../shared/submittable-form-group/submittable-form-group';
 import { User } from '../../../../services/user/user';
 import { UserService } from '../../../../services/user/user.service';
 
