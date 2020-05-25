@@ -179,7 +179,7 @@
                 <div class="message-input-container">
                     <!-- Message Input -->
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
-                        formControlName="message" (keypress)="emitIsTyping()" #messageInput
+                        formControlName="message" (input)="emitIsTyping()" #messageInput
                         [ngClass]="{'dark-message-input': user.color_theme === 'dark', 'light-message-input': user.color_theme === 'light'}"
                         *ngIf="user">
 

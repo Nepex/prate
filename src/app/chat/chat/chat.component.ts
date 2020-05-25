@@ -317,11 +317,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     disconnect(): void {
-        this.chatService.disconnect();
-        this.leaveMessage = 'You left the chat';
-        this.clearPartnerAndEndChat();
-        this.stopTimerAndGiveExp();
-
+        if (this.partner) {
+            this.chatService.disconnect();
+            this.partnerIsTyping = false;
+            this.partnerLeftName = null;
+            this.leaveMessage = 'You left the chat';
+            this.clearPartnerAndEndChat();
+            this.stopTimerAndGiveExp();
+        }
     }
 
     partnerDisconnected(): void {
@@ -383,7 +386,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     listenAndEmitDoneTyping(): void {
         const input = document.getElementById('messageInput');
-        const event = fromEvent(input, 'keyup').pipe(map(i => i.currentTarget['value']));
+        const event = fromEvent(input, 'input').pipe(map(i => i.currentTarget['value']));
         const debouncedInput = event.pipe(debounceTime(500));
 
         this.userDoneTypingSub = debouncedInput.subscribe(val => {
