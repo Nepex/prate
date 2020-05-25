@@ -87,7 +87,7 @@
         <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
         </prt-youtube-player>
         <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
-            (canceled)="closeGame($event)" (inviteSent)="sendGameInvite($event)"
+            (canceled)="closeApps()" (inviteSent)="sendGameInvite($event)"
             (gameClosed)="gameSessionClose($event)"></prt-game-container>
         <!-- End App Containers-->
 

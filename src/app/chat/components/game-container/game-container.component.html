@@ -1,4 +1,4 @@
-<div class="game" *ngIf="gameUrl">
+<div class="game" *ngIf="gameUrl" >
     <!-- Invite code instructions -->
     <div class="instructions" *ngIf="!gameAccepted">
         Instructions: <br />
@@ -28,5 +28,5 @@
     </div>
 
     <!-- Game container -->
-    <iframe [src]="gameUrl | safeURL" frameborder="0"></iframe>
+    <iframe [src]="gameUrl | safeURL" frameborder="0" id="myFrame" #myFrame></iframe>
 </div>

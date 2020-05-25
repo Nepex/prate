@@ -78,7 +78,7 @@ export class UserInfoPanelComponent implements OnInit, OnChanges {
 
     logout(): void {
         if (this.partner) {
-            this.chatService.disconnect(this.partner);
+            this.chatService.disconnect();
         }
         this.sessionService.logout();
         this.router.navigateByUrl('/');

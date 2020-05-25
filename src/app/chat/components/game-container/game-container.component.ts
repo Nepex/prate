@@ -1,4 +1,5 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+// Angular
+import { Component, Input, EventEmitter, Output} from '@angular/core';
 
 // Component for the chat page, Displays game pages
 @Component({
@@ -20,7 +21,7 @@ export class GameContainerComponent {
     // UI
     inviteLink: string;
 
-    constructor() { }
+    constructor() {}
 
     cancel(): void {
         this.canceled.emit(true);

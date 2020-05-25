@@ -96,11 +96,6 @@ export class ChatService implements OnDestroy {
         this.socket.emit('searchForMatch', this.user);
     }
 
-    /** Emits to socket to stop looking for a match, clears partner if a match has already been made */
-    public cancelMatching(): void {
-        this.socket.emit('cancelMatching');
-    }
-
     /** Emits message sent to socket */
     public sendMessage(msgObj: ChatMessage): void {
         this.socket.emit('message-send', msgObj);
@@ -232,8 +227,8 @@ export class ChatService implements OnDestroy {
     }
 
     /** Emits to socket when user is disconnected from chat */
-    public disconnect(partner: User): void {
-        this.socket.emit('disconnected', { receiver: partner.clientId });
+    public disconnect(): void {
+        this.socket.disconnect();
         this.userDisconnected.emit();
     }
 
@@ -242,10 +237,5 @@ export class ChatService implements OnDestroy {
         this.socket.on('partnerDisconnected', data => {
             this.partnerDisconnected.emit();
         });
-    }
-
-    /** Disconnects a user from socket */
-    public killSocketConnection(): void {
-        this.socket.emit('killSocketConnection', null);
     }
 }

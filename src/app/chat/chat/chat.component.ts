@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     @ViewChild('messageInput')
     messageInput: ElementRef;
 
-    // Window Listensers (for notifications)
+    // Window Listeners (for notifications)
     isWindowFocused: boolean;
     @HostListener('window:focus', ['$event'])
     onFocus(event: FocusEvent): void {
@@ -183,12 +183,12 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             // if page is refreshed or browser is closed, disconnect the user
             window.onbeforeunload = () => {
-                if (this.matching) {
-                    this.cancelMatching();
-                } else {
-                    this.disconnect();
-                }
+                this.disconnect();
+                return null;
+            };
 
+            window.onpopstate = () => {
+                this.disconnect();
                 return null;
             };
 
@@ -289,12 +289,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     cancelMatching(): void {
-        // if a partner has been found, make sure to emit disconnection
-        if (this.partner) {
-            this.disconnect();
-            return;
-        }
-        this.chatService.cancelMatching();
+        this.chatService.disconnect();
         this.matching = false;
     }
 
@@ -322,7 +317,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     disconnect(): void {
-        this.chatService.disconnect(this.partner);
+        this.chatService.disconnect();
         this.leaveMessage = 'You left the chat';
         this.clearPartnerAndEndChat();
         this.stopTimerAndGiveExp();
@@ -334,7 +329,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.sendNotification('Match left!', 'match-left.mp3')
         }
 
-        this.chatService.killSocketConnection();
+        this.chatService.disconnect();
         this.partnerIsTyping = false;
         this.partnerLeftName = this.partner.name;
         this.leaveMessage = 'has left the chat';
@@ -414,23 +409,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     // --- Time and Exp ---
     accumulateTime(): void {
         this.chatTimerInterval = window.setTimeout(() => {
-            this.chatTimer = this.chatTimer + 10;
             this.inactivityTimer = this.inactivityTimer + 10;
 
-            if (this.inactivityTimer >= 570) {
-                this.statusMessage = 'Inactivity detected, please send a message';
-            }
-
-            // disconnect user after 10 minutes of inactivity
             if (this.inactivityTimer >= 600) {
-
-                // terrible fix for inactivity during game - remove once everything's worked out
-                if (this.gameAccepted) {
-                    return;
-                }
-
-                this.disconnect();
-                return;
+                this.statusMessage = 'Inactivity detected, you will not receive additional experience until a message is sent';
+            } else {
+                this.chatTimer = this.chatTimer + 10;
             }
 
             this.accumulateTime();
@@ -638,5 +622,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     // function called from child component (iframe) - goes into app activity toggle function which closes the game for user and partner
     gameSessionClose(): void {
         this.toggledOuterAppFunction(this.gameType, 'close', true);
+    }
+
+    // function called when game is clicked...stops inactivity from happening
+    gameSessionActivity(): void {
+        console.log('game clicked!')
+        this.clearInactivity();
     }
 }
