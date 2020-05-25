@@ -36,7 +36,30 @@ export class ChatService implements OnDestroy {
 
     constructor(private sessionService: SessionService) { }
 
-    /** Emits object to socket of user currently looking for match, looks for a match every second if nothing is returned */
+    // stop match timer on destroy
+    ngOnDestroy(): void {
+        clearTimeout(this.matchFindRefreshInterval);
+    }
+
+    private connect(): void {
+        this.socket = io(environment.apiServer, {
+            path: environment.socketIoServer
+        });
+    }
+
+    public disconnect(): void {
+        this.socket.disconnect();
+        this.userDisconnected.emit();
+    }
+
+    private listenForPartnerDisconnect(): void {
+        this.socket.on('partnerDisconnected', data => {
+            this.partnerDisconnected.emit();
+        });
+    }
+
+    // --- Matching ---
+    // emits object to socket of user currently looking for match, looks for a match every second if nothing is returned
     public intiateMatching(user: User): void {
         this.connect();
 
@@ -86,22 +109,15 @@ export class ChatService implements OnDestroy {
         });
     }
 
-    /** Stop match timer on destroy */
-    ngOnDestroy(): void {
-        clearTimeout(this.matchFindRefreshInterval);
-    }
-
-    /** Emits to socket that user is looking for a match */
     private lookForMatch(): void {
         this.socket.emit('searchForMatch', this.user);
     }
 
-    /** Emits message sent to socket */
+    // --- Basic Messaging ---
     public sendMessage(msgObj: ChatMessage): void {
         this.socket.emit('message-send', msgObj);
     }
 
-    /** Listens for message received from socket */
     private listenForMessageRecevied(): void {
         this.socket.on('message-received', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
@@ -111,7 +127,22 @@ export class ChatService implements OnDestroy {
         });
     }
 
-    /** Emits app invite sent to socket */
+    public userIsTyping(isTyping: boolean, partner: User): void {
+        const typingObj = {
+            isTyping: isTyping,
+            receiver: partner.clientId
+        };
+
+        this.socket.emit('user-typed', typingObj);
+    }
+
+    private listenForPartnerIsTyping(): void {
+        this.socket.on('user-typed', typingObj => {
+            this.isPartnerTyping.emit(typingObj);
+        });
+    }
+
+    // --- Outer App Control ---
     public sendOuterAppInvite(partner: User, user: User, outerApp: string, outerAppLink: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
@@ -125,7 +156,6 @@ export class ChatService implements OnDestroy {
         this.outerAppInviteSent.emit(msgObj);
     }
 
-    /** Listens for app invite received from socket */
     private listenForOuterAppInvite(): void {
         this.socket.on('outer-app-invite-received', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
@@ -135,7 +165,6 @@ export class ChatService implements OnDestroy {
         });
     }
 
-    /** Emits app invite accepted to socket */
     public outerAppInviteAccept(partner: User, user: User, outerApp: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
@@ -147,7 +176,6 @@ export class ChatService implements OnDestroy {
         this.socket.emit('outer-app-invite-accept', msgObj);
     }
 
-    /** Listens for app invite accepted from socket */
     private listenForOuterAppInviteAccept(): void {
         this.socket.on('outer-app-invite-accept', msgObj => {
             msgObj.datetime = moment().format('hh:mm a');
@@ -157,7 +185,6 @@ export class ChatService implements OnDestroy {
         });
     }
 
-    /** Emits app invite canceled to socket */
     public outerAppInviteCancel(partner: User, user: User, outerApp: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
@@ -169,7 +196,6 @@ export class ChatService implements OnDestroy {
         this.socket.emit('outer-app-invite-cancel', msgObj);
     }
 
-    /** Listens for app invite canceled from socket */
     private listenForOuterAppInviteCancel(): void {
         this.socket.on('outer-app-invite-cancel', msgObj => {
             msgObj.type = 'received';
@@ -178,7 +204,6 @@ export class ChatService implements OnDestroy {
         });
     }
 
-    /** Emits app functions to socket */
     public toggleOuterAppFunction(partner: User, user: User, outerApp: string, activity: string): void {
         const msgObj: OuterAppInfo = {
             sender: user.name,
@@ -191,51 +216,11 @@ export class ChatService implements OnDestroy {
         this.socket.emit('toggle-outer-app-function', msgObj);
     }
 
-    /** Listens for app function changes from socket */
     private listenForToggleOuterAppFunction(): void {
         this.socket.on('toggle-outer-app-function', msgObj => {
             msgObj.type = 'received';
 
             this.toggledOuterAppFunction.emit(msgObj);
-        });
-    }
-
-    /** Emits to socket that user is currently typing */
-    public userIsTyping(isTyping: boolean, partner: User): void {
-        const typingObj = {
-            isTyping: isTyping,
-            receiver: partner.clientId
-        };
-
-        this.socket.emit('user-typed', typingObj);
-    }
-
-    /** Listens for if partner is typing */
-    private listenForPartnerIsTyping(): void {
-        this.socket.on('user-typed', typingObj => {
-            this.isPartnerTyping.emit(typingObj);
-        });
-    }
-
-    /** Connect to socket */
-    private connect(): void {
-        this.socket = io(environment.apiServer, {
-            path: environment.socketIoServer
-        });
-
-        // this.socket = io.connect(environment.apiServer + '/' + environment.socketIoServer);
-    }
-
-    /** Emits to socket when user is disconnected from chat */
-    public disconnect(): void {
-        this.socket.disconnect();
-        this.userDisconnected.emit();
-    }
-
-    /** Listens for if partner disconnects */
-    private listenForPartnerDisconnect(): void {
-        this.socket.on('partnerDisconnected', data => {
-            this.partnerDisconnected.emit();
         });
     }
 }
