@@ -216,16 +216,30 @@ input:focus {
     bottom: 0px;
 }
 
-.message-time {
-    filter: brightness(125%);
-    font-size: 10px;
-    padding-top: 5px;
-}
-
 .message-user {
     filter: brightness(125%);
     font-size: 11px;
     font-weight: 600;
+}
+
+.message-img-preview {
+    height: auto;
+    width: 200px;
+    border-radius: 2%;
+    transition: .5s;
+    z-index: 9001;
+}
+
+.message-img-preview:hover {
+    transform: scale(1.3);
+    transition: .5s;
+    z-index: 9001;
+}
+
+.message-time {
+    filter: brightness(125%);
+    font-size: 10px;
+    padding-top: 5px;
 }
 
 /* Under Chat/Messages */
@@ -251,7 +265,7 @@ input:focus {
 .user-warning-msg {
     position: absolute;
     z-index: 900;
-    left: 25px;
+    right: 25px;
     bottom: 60px
 }
 

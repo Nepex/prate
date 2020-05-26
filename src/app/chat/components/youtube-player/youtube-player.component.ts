@@ -20,10 +20,15 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
     videoPlayer: any;
     videoId: string;
     hidePlayer: boolean = true;
+    firstLoad: boolean = false;
 
     constructor() { }
 
     ngOnInit(): void {
+
+    }
+
+    bindPlayer() {
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         document.body.appendChild(tag);
@@ -44,6 +49,10 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: { [property: string]: SimpleChange }): void {
         if (changes.videoUrl && !changes.videoUrl.firstChange) {
+            // don't actually load this component until first video id is passed (for performance)
+            if (!this.firstLoad) {
+                this.firstLoad = true;
+            }
             this.videoUrl = changes.videoUrl.currentValue;
 
             if (!this.videoUrl) {

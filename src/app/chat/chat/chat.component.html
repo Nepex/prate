@@ -116,8 +116,13 @@
                                 </div>
 
                                 <br />
+                                <span *ngIf="m.previewImg" class="message-img-preview-container">
+                                    <img [src]="m.previewImg | safeURL" class="message-img-preview" /> <br />
+                                </span>
+
                                 <span [innerHTML]="m.message"
-                                    [ngStyle]="{'font-family': m.type === 'sent' ? user.font_face : partner.font_face }"></span>
+                                    [ngStyle]="{'font-family': m.type === 'sent' ? user.font_face : partner.font_face }">
+                                </span>
                                 <br />
 
                                 <div class="float-right message-time">

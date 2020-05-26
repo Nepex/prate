@@ -102,7 +102,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     ytPlayState: boolean = true;
     ytMuteState: boolean = false;
     hideYtInvControls: boolean = true;
-    ytUrlRegex: RegExp = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
     // Games
     gameUrl: string;
     gameType: string;
@@ -187,7 +186,14 @@ export class ChatComponent implements OnInit, OnDestroy {
                 return null;
             };
 
+            // back button is hit
             window.onpopstate = () => {
+                this.disconnect();
+                return null;
+            };
+
+            // if user drops internet
+            window.onoffline = () => {
                 this.disconnect();
                 return null;
             };
@@ -263,6 +269,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     clearPartnerAndEndChat() {
         this.partner = null;
+        this.statusMessage = null;
+        this.partnerIsTyping = false;
         this.chatMessages = [];
         this.matchedWithOverlay = false;
         this.chatFinishedOverlay = true;
@@ -319,7 +327,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     disconnect(): void {
         if (this.partner) {
             this.chatService.disconnect();
-            this.partnerIsTyping = false;
             this.partnerLeftName = null;
             this.leaveMessage = 'You left the chat';
             this.clearPartnerAndEndChat();
@@ -333,7 +340,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
 
         this.chatService.disconnect();
-        this.partnerIsTyping = false;
         this.partnerLeftName = this.partner.name;
         this.leaveMessage = 'has left the chat';
         this.clearPartnerAndEndChat();
@@ -345,19 +351,23 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (!this.messageForm.valid || !this.partner) {
             return;
         }
+        
+        const previewImg = this.imagify(this.messageForm.value.message);
 
         const msgObj: ChatMessage = {
             sender: this.user.name,
             receiver: this.partner.clientId,
             message: this.messageForm.value.message,
             datetime: moment().format('hh:mm a'),
-            type: 'sent'
+            type: 'sent',
+            previewImg: previewImg
         };
 
         this.chatService.sendMessage(msgObj);
 
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
+
         this.chatMessages.push(msgObj);
 
         this.clearInactivity();
@@ -369,6 +379,8 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.sendNotification('New Message', 'notif.mp3');
         }
 
+        console.log(msgObj.previewImg)
+        
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
 
@@ -475,10 +487,22 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     linkify(plainTextMessage: string): string {
-        let urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        let urlRegex = /((http(s)?(\:\/\/))+(www\.)?([\w\-\.\/])*(\.[a-zA-Z]{2,3}\/?))[^\s\b\n|]*[^.,;:\?\!\@\^\$ -]/gi;
         return plainTextMessage.replace(urlRegex, url => {
             return '<a href="' + url + '" target="_blank">' + url + '</a>';
         });
+    }
+
+    imagify(plainTextMessage: string): string {
+        let imageRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/gi;
+
+        const imgUrlArray = plainTextMessage.match(imageRegex);
+
+        if (!imgUrlArray) {
+            return null;
+        }
+
+        return imgUrlArray[0];
     }
 
     // --- Chat Scroll Functionality ---
@@ -515,7 +539,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
 
         if (app === 'yt') {
-            if (!this.ytUrlRegex.test(this.inviteLink)) {
+            const ytUrlRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
+            if (!ytUrlRegex.test(this.inviteLink)) {
                 this.inviteLink = 'Invalid link';
                 return;
             }
@@ -625,11 +650,5 @@ export class ChatComponent implements OnInit, OnDestroy {
     // function called from child component (iframe) - goes into app activity toggle function which closes the game for user and partner
     gameSessionClose(): void {
         this.toggledOuterAppFunction(this.gameType, 'close', true);
-    }
-
-    // function called when game is clicked...stops inactivity from happening
-    gameSessionActivity(): void {
-        console.log('game clicked!')
-        this.clearInactivity();
     }
 }

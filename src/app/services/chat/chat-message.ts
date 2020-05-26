@@ -4,4 +4,5 @@ export class ChatMessage {
     message: string;
     datetime: string;
     type: string;
+    previewImg?: string;
 }
