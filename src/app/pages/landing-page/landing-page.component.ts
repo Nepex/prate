@@ -1,6 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 // NPM
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,9 +20,11 @@ export class LandingPageComponent implements OnInit {
     // UI
     userAuthed: boolean = false;
 
-    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router) {}
+    constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router, private titleService: Title) {}
 
     ngOnInit(): void {
+        this.titleService.setTitle('Prate | Free Chat Matching');
+        
         if (this.sessionService.isAuthenticated()) {
             this.userAuthed = true;
         }

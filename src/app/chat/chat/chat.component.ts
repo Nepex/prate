@@ -152,6 +152,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.titleService.setTitle('Prate');
+        
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {

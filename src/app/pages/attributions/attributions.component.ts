@@ -1,5 +1,6 @@
 // Angular
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 // Attribution page for giving credit to asset creators
 @Component({
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
     templateUrl: './attributions.component.html',
     styleUrls: ['./attributions.component.css']
 })
-export class AttributionsComponent {
-    constructor() { }
+export class AttributionsComponent implements OnInit {
+    constructor(private titleService: Title) { }
+
+    ngOnInit(): void {
+        this.titleService.setTitle('Prate | Attributions');
+    }
 }

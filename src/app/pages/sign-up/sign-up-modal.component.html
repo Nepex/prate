@@ -64,6 +64,13 @@
 </div>
 <!-- Footer -->
 <div class="modal-footer text-center">
-    <span class="footer-text">By registering, you agree to Prate's <a href="#" (click)="openTermsModal()">Terms of Use</a> and <a
-            href="#" (click)="openPrivacyPolicyModal()">Privacy Policy</a>.</span>
+    <span class="footer-text position-relative">
+        <span *ngIf="signUpForm.valid" [@slideInOut]>
+            By registering, you agree to Prate's <a href="#" (click)="openTermsModal()">Terms of Use</a> and <a href="#"
+                (click)="openPrivacyPolicyModal()">Privacy Policy</a>.<br />
+        </span>
+        <span *ngIf="!signUpForm.valid" [@slideInOut]>
+            Your chat data is not stored/shared and Prate will never email you.<br />
+        </span>
+    </span>
 </div>

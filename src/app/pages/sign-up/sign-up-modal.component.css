@@ -1,3 +1,12 @@
+a {
+    color: #666666;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
 .modal-header {
     background-color: #00AFF0;
     border-bottom: 0;
@@ -76,5 +85,5 @@
 .footer-text {
     font-size: 14px;
     padding-bottom: 5px;
-    font-weight: 300;
+    font-weight: 500;
 }

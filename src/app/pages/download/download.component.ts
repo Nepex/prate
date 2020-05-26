@@ -1,5 +1,6 @@
 // Angular
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 // NPM
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,8 +14,12 @@ import { MessageDisplayModalComponent } from '../../shared/message-display/messa
     templateUrl: './download.component.html',
     styleUrls: ['./download.component.css']
 })
-export class DownloadComponent {
-    constructor(private modal: NgbModal) { }
+export class DownloadComponent implements OnInit {
+    constructor(private modal: NgbModal, private titleService: Title) { }
+
+    ngOnInit(): void {
+        this.titleService.setTitle('Prate | Download');
+    }
 
     openComingSoonModal(): void {
         const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });

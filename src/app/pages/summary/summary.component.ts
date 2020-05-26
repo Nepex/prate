@@ -1,5 +1,6 @@
 // Angular
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 // Why Prate? page, shows basic app info
 @Component({
@@ -7,10 +8,14 @@ import { Component } from '@angular/core';
     templateUrl: './summary.component.html',
     styleUrls: ['./summary.component.css']
 })
-export class SummaryComponent {
+export class SummaryComponent implements OnInit {
     fadeMatchIcon: boolean = false;
     fadeCustomIcon: boolean = false;
     fadeProgIcon: boolean = false;
 
-    constructor() {}
+    constructor(private titleService: Title) {}
+
+    ngOnInit(): void {
+        this.titleService.setTitle('Prate | Summary');
+    }
 }

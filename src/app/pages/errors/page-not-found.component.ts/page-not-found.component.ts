@@ -1,5 +1,6 @@
 // Angular
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 // Page for 404 error
 @Component({
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
     templateUrl: './page-not-found.component.html',
     styleUrls: ['./page-not-found.component.css']
 })
-export class PageNotFoundComponent {
-    constructor() { }
+export class PageNotFoundComponent implements OnInit {
+    constructor(private titleService: Title) { }
+
+    ngOnInit(): void {
+        this.titleService.setTitle('Prate | 404 Error');
+    }
 }

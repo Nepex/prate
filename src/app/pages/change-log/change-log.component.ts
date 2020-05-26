@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // App
+import { Title } from '@angular/platform-browser';
 import { Update } from '../../services/generic/update';
 
 // Version management page that displays updates
@@ -16,9 +17,11 @@ export class ChangeLogComponent implements OnInit {
     page: number = 1;
     pageSize: number = 10;
 
-    constructor() { }
+    constructor(private titleService: Title) { }
 
     ngOnInit(): void {
+        this.titleService.setTitle('Prate | Change Log');
+
         this.updates = [
             {
                 title: 'v1.0.17-beta',

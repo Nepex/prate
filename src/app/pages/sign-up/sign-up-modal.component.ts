@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { style, trigger, transition, animate } from '@angular/animations';
 
 // NPM
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,7 +22,15 @@ import { User } from '../../services/user/user';
 @Component({
     selector: 'prt-sign-up-modal',
     templateUrl: './sign-up-modal.component.html',
-    styleUrls: ['./sign-up-modal.component.css']
+    styleUrls: ['./sign-up-modal.component.css'],
+    animations: [
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({ opacity: '0' }),
+                animate('300ms ease-in', style({ opacity: '1.0' }))
+            ])
+        ])
+    ]
 })
 export class SignUpModalComponent {
     // Subs
