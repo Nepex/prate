@@ -26,6 +26,18 @@ i {
     color: #00AFF0;
 }
 
+.sub-heading-link {
+    text-decoration: underline;
+    transition: .5s;;
+}
+
+.sub-heading-link:hover{
+    text-decoration: none;
+    color: #ffffff;
+    text-shadow: 0 0 10px #00AFF0, 0 0 10px #00AFF0;
+    transition: .5s;
+}
+
 .summary-container {
     padding-top: 60px;
 }
@@ -71,6 +83,13 @@ i {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     opacity: .7;
+}
+
+.coming-soon-text {
+    font-size: 18px;
+    color: #00AFF0;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .fade-out-summary-icon {
