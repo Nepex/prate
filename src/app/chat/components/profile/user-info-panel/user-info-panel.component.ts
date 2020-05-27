@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 // NPM
@@ -27,6 +27,10 @@ export class UserInfoPanelComponent implements OnInit, OnChanges {
     @Input() user: User;
     @Input() partner: User;
     @Input() exp: number;
+    @Input() friendsShown: boolean;
+
+    // Component Outputs
+    @Output() friendlistToggled: EventEmitter<boolean> = new EventEmitter();
 
     // UI
     navIsCollapsed: boolean = true;
@@ -62,10 +66,9 @@ export class UserInfoPanelComponent implements OnInit, OnChanges {
         modalRef.componentInstance.user = this.user;
     }
 
-    openFriendsModal(): void {
-        const modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-
-        modalRef.componentInstance.message = "Coming soon...";
+    toggleFriendlist(): void {
+        this.friendsShown = !this.friendsShown;
+        this.friendlistToggled.emit(this.friendsShown);
     }
 
     openHelpModal(): void {

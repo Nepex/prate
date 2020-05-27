@@ -1,0 +1,96 @@
+<div class="background-overlay" *ngIf="showFriends" [@fadeInOut] (click)="closeFriendList()"></div>
+<div [@slideInOut]="showFriends ? 'show' : 'hide'" class="friendlist-container container no-pad-margin" *ngIf="user">
+    <div class="friendlist-header-container">
+        <i class="fas fa-chevron-left cursor-pointer close-btn" (click)="closeFriendList()"></i>
+
+        <div class="row no-pad-margin">
+            <div class="col-4 my-auto user-icon-container no-pad-margin">
+                <div class="user-icon-content">
+                    <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon">
+
+                    <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge">
+                </div>
+            </div>
+            <div class="col-8 no-pad-margin user-info-container">
+                <div class="username-container">
+                    <span class="username">{{ user.name }}</span>
+                </div>
+                <div
+                    [ngClass]="{'online-status-color': !partner && userStatus === 'online', 'away-status-color': !partner && userStatus === 'away', 'matchinged-status-color' : partner || matching}">
+                    <span class="user-status no-pad-margin cursor-pointer" (click)="toggleUserStatus()"><i
+                            class="fas fa-circle"></i></span>
+
+                    <span class="status-text cursor-pointer" (click)="toggleUserStatus()">
+                        <span *ngIf="partner">In Match</span>
+                        <span *ngIf="!partner && userStatus === 'online'">Online</span>
+                        <span *ngIf="!partner && userStatus === 'away'">Away</span>
+                        <span *ngIf="matching">Looking for Match</span>
+                    </span>
+                </div>
+
+                <div class="user-friend-req-count">
+                    Friend Requests (0)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="friendlist-body-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="friendlist-body-heading"><i class="fas fa-caret-down"></i> Online</div>
+            </div>
+        </div>
+
+        <div class="row friend-row no-pad-margin" *ngFor="let u of fakeOnlineUsers">
+            <div class="col-6 friends-status-container no-pad-margin">
+                <div>
+                    <span class="friends-username">{{ u.name }}</span>
+                </div>
+                <div
+                    [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': !partner && u.status === 'away', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
+                    <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
+
+                    <span class="status-text">
+                        <span *ngIf="u.status === 'matched'">In Match</span>
+                        <span *ngIf="u.status === 'online'">Online</span>
+                        <span *ngIf="u.status === 'away'">Away</span>
+                        <span *ngIf="u.status === 'matching'">Looking for Match</span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-6 text-right friends-actions-container no-pad-margin">
+                <div class="float-right">
+                    <i class="fas fa-comment-alt matchinged-status-color cursor-pointer"></i> &nbsp;
+                    <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="friendlist-body-heading"><i class="fas fa-caret-down"></i> Offline</div>
+            </div>
+        </div>
+
+        <div class="row friend-row no-pad-margin" *ngFor="let u of fakeOfflineUsers">
+            <div class="col-6 friends-status-container no-pad-margin">
+                <div>
+                    <span class="friends-username">{{ u.name }}</span>
+                </div>
+                <div>
+                    <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
+
+                    <span class="status-text">
+                        <span>Offline</span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-6 text-right friends-actions-container no-pad-margin">
+                <div class="float-right">
+                    <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

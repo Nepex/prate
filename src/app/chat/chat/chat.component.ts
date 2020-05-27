@@ -142,6 +142,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         { code: ':poop:', img: 'poop.png' },
     ];
 
+    // Friendlist
+    friendsShown: boolean = false;
+
     // Forms
     messageForm: FormGroup = new FormGroup({
         message: new FormControl('', [Validators.maxLength(500), Validators.minLength(1), Validators.required]),
@@ -429,7 +432,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.inactivityTimer = this.inactivityTimer + 10;
 
             if (this.inactivityTimer >= 600) {
-                this.statusMessage = 'Inactivity detected, you will not receive additional experience until a message is sent';
+                this.statusMessage = 'Inactivity detected';
             } else {
                 this.chatTimer = this.chatTimer + 10;
             }
@@ -652,5 +655,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     // function called from child component (iframe) - goes into app activity toggle function which closes the game for user and partner
     gameSessionClose(): void {
         this.toggledOuterAppFunction(this.gameType, 'close', true);
+    }
+
+    // -- Friends --
+    toggleFriendlist(event): void {
+        this.friendsShown = event;
     }
 }

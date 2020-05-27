@@ -1,0 +1,163 @@
+.background-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 901;
+    transition: .25s;
+}
+
+.friendlist-container {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    left: -300px;
+    background-color: rgb(249, 253, 255);
+    overflow-x: hidden;
+    z-index: 901;
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    color: #00AFF0;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 20px;
+    z-index: 901;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+/* Header */
+
+.friendlist-header-container {
+    background-color: rgb(33, 37, 43);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 1);
+    position: relative;
+    height: 82px;
+    top: 0px;
+}
+
+.user-icon-container {
+    padding-right: 10px;
+    position: relative;
+    height: 55px;
+}
+
+.user-icon-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    width: 60px;
+    height: 55px;
+}
+
+.user-icon {
+    height: 55px;
+    width: 60px;
+    border-radius: 50%;
+    position: relative;
+    top: 4px;
+    left: -3px;
+}
+
+.user-badge {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 4px;
+    bottom: -4px;
+}
+
+.user-info-container {
+    padding-top: 5px;
+}
+
+.username-container {
+    padding-top: 5px;
+}
+
+.username {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.user-status {
+    font-weight: 100;
+    font-size: 10px;
+    padding-right: 4px;
+    position: relative;
+    top: -1px;
+}
+
+.status-text {
+    font-size: 11px;
+}
+
+.matchinged-status-color {
+    color: #00AFF0;
+}
+
+.online-status-color {
+    color: rgb(3, 160, 3);
+}
+
+.away-status-color {
+    color: rgb(214, 200, 4);
+}
+
+.dnd-status-color {
+    color: red;
+}
+
+.user-match-status {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.user-friend-req-count {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+/* Body */
+.friendlist-body-heading {
+    font-size: 16px;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.friend-row {
+    transition: .5s;
+}
+
+.friend-row:hover {
+    background: #efefef;
+    transition: .5s;
+}
+
+.friends-username {
+    color: #666666;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.friends-status-container {
+    padding-left: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.friends-actions-container {
+    padding-right: 30px;
+    padding-top: 15px
+}

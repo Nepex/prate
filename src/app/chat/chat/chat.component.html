@@ -1,3 +1,7 @@
+<!-- Friendlist -->
+<prt-friendlist [showFriends]="friendsShown" [user]="user" [partner]="partner" [matching]="matching" (friendlistClosed)="toggleFriendlist(false)"></prt-friendlist>
+
+<!-- Chat -->
 <!-- Matching Overlays -->
 <div class="matching-mask" *ngIf="matching">
     <div class="matching-animation-container">
@@ -76,7 +80,8 @@
         </div>
 
         <div class="col-lg-3 col-2 my-auto">
-            <prt-user-info-panel [user]="user" [partner]="partner" [exp]="user.experience" *ngIf="user"></prt-user-info-panel>
+            <prt-user-info-panel [user]="user" [partner]="partner" [exp]="user.experience" [friendsShown]="friendsShown"
+                (friendlistToggled)="toggleFriendlist($event)" *ngIf="user"></prt-user-info-panel>
         </div>
     </div>
 
@@ -87,8 +92,8 @@
         <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
         </prt-youtube-player>
         <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
-            (canceled)="closeApps()" (inviteSent)="sendGameInvite($event)"
-            (gameClosed)="gameSessionClose($event)"></prt-game-container>
+            (canceled)="closeApps()" (inviteSent)="sendGameInvite($event)" (gameClosed)="gameSessionClose($event)">
+        </prt-game-container>
         <!-- End App Containers-->
 
         <!-- Chat Messages -->

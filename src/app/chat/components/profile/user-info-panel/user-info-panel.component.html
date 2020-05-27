@@ -24,7 +24,7 @@
                 <!-- Navigation Icons -->
                 <div class="lg-nav-icon-container">
                     <i class="fas fa-cog lg-nav-icon" (click)="openSettingsModal()" title="User Settings"></i>
-                    <i class="fas fa-user-friends lg-nav-icon" (click)="openFriendsModal()" title="Show Friends"></i>
+                    <i class="fas fa-user-friends lg-nav-icon" (click)="toggleFriendlist()" title="Friends"></i>
                     <i class="fas fa-question-circle lg-nav-icon" (click)="openHelpModal()" title="Help"></i>
                     <i class="fas fas fa-bug lg-nav-icon" (click)="openBugReportModal()" title="Bug Report"></i>
                     <i class="fas fa-times lg-nav-icon" (click)="logout()" title="Logout"></i>
@@ -63,7 +63,7 @@
                             Settings
                         </span>
                     </li>
-                    <li class="sm-nav-link cursor-pointer" (click)="openFriendsModal()">
+                    <li class="sm-nav-link cursor-pointer" (click)="toggleFriendlist()">
                         <span>
                             <i class="fas fa-user sm-nav-icon friends-mobile-icon-pad"></i>
                             Friends

@@ -107,7 +107,7 @@ export class YoutubePlayerComponent implements OnInit, OnChanges {
             case window['YT'].PlayerState.PAUSED:
                 break;
             case window['YT'].PlayerState.ENDED:
-                this.videoUrl = null;
+                // this.videoUrl = null;
                 break;
         };
     }
