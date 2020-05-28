@@ -291,6 +291,23 @@
                             </span>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-5 option-text option-text-padding text-left">
+                            Img Previews
+                        </div>
+                        <div class="col-5 text-left">
+                            <span class="btn-group btn-group-toggle opt-toggle-grp-pad" ngbRadioGroup name="radioBasic"
+                                formControlName="img_previews">
+                                <label ngbButtonLabel class="opt-toggle-btn">
+                                    <input ngbButton type="radio" [value]="true"> On
+                                </label>
+                                <label ngbButtonLabel class="opt-toggle-btn">
+                                    <input ngbButton type="radio" [value]="false"> Off
+                                </label>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Change Password -->

@@ -365,6 +365,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         const msgObj: ChatMessage = {
             sender: this.user.name,
             receiver: this.partner.clientId,
+            font_face: this.user.font_face,
+            font_color: this.user.font_color,
+            bubble_color: this.user.bubble_color,
+            avatar: this.user.avatar,
             message: this.messageForm.value.message,
             datetime: moment().format('hh:mm a'),
             type: 'sent',
@@ -387,8 +391,6 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.sendNotification('New Message', 'notif.mp3');
         }
 
-        console.log(msgObj.previewImg)
-        
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
 

@@ -16,11 +16,15 @@ export class User {
     color_theme?: string;
     enforce_interests?: boolean;
     sounds?: boolean;
+    img_previews?: boolean;
     webSocketAuth?: string;
     token?: string;
     experience?: number;
     levelInfo?: LevelInfo;
     bio?: string;
+
+    friends?: string[];
+    friend_requests?: string[];
 
     newPassword?: string;
     oldPassword?: string;

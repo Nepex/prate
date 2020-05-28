@@ -55,13 +55,6 @@ export class UserInfoPanelComponent implements OnInit, OnChanges {
 
     openSettingsModal(): void {
         let modalRef;
-
-        if (this.partner) {
-            modalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-            modalRef.componentInstance.message = 'User settings cannot be editted while chatting.';
-            return;
-        }
-
         modalRef = this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         modalRef.componentInstance.user = this.user;
     }

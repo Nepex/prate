@@ -1,5 +1,6 @@
 <!-- Friendlist -->
-<prt-friendlist [showFriends]="friendsShown" [user]="user" [partner]="partner" [matching]="matching" (friendlistClosed)="toggleFriendlist(false)"></prt-friendlist>
+<prt-friendlist [showFriends]="friendsShown" [user]="user" [partner]="partner" [matching]="matching"
+    (friendlistClosed)="toggleFriendlist(false)"></prt-friendlist>
 
 <!-- Chat -->
 <!-- Matching Overlays -->
@@ -103,11 +104,11 @@
                     <div class="position-relative" [hidden]="hideBubbles"
                         [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
                         <div [ngClass]="{ 'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating', 
-                        'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': m.type === 'sent' ? '#' + user.bubble_color : '#' + partner.bubble_color,
-                                    'color': m.type === 'sent' ? '#' + user.font_color : '#' + partner.font_color }">
+                        'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': '#' + m.bubble_color,
+                                    'color': '#' + m.font_color }">
                             <div class="float-left" *ngIf="user.show_avatars">
                                 <div class="position-relative">
-                                    <img [src]="m.type === 'sent' ? '../../../assets/images/avatars/' + user.avatar : '../../../assets/images/avatars/' + partner.avatar"
+                                    <img [src]="'../../../assets/images/avatars/' + m.avatar"
                                         class="user-icon cursor-pointer"
                                         (click)="openViewUserProfileModal(m.type, user.id, partner.id)">
                                     <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
@@ -121,12 +122,11 @@
                                 </div>
 
                                 <br />
-                                <span *ngIf="m.previewImg" class="message-img-preview-container">
+                                <span *ngIf="m.previewImg && user.img_previews" class="message-img-preview-container">
                                     <img [src]="m.previewImg | safeURL" class="message-img-preview" /> <br />
                                 </span>
 
-                                <span [innerHTML]="m.message"
-                                    [ngStyle]="{'font-family': m.type === 'sent' ? user.font_face : partner.font_face }">
+                                <span [innerHTML]="m.message" [ngStyle]="{'font-family': m.font_face }">
                                 </span>
                                 <br />
 
@@ -145,11 +145,11 @@
             <!-- Messages / Under Chat -->
             <div class="user-is-typing" [hidden]="!partnerIsTyping" *ngIf="user && !ytUrl"
                 [ngClass]="{'dark-theme-status-msg': user.color_theme === 'dark', 'light-theme-status-msg': user.color_theme === 'light'}">
-                <span *ngIf="partner">{{ partner.name }} is typing...</span>
+                <span *ngIf="partner">{{ partner.name }} is typing</span>
             </div>
 
             <div class="user-is-typing yt-typing" [hidden]="!partnerIsTyping" *ngIf="user && ytUrl">
-                <span *ngIf="partner">{{ partner.name }} is typing...</span>
+                <span *ngIf="partner">{{ partner.name }} is typing</span>
             </div>
 
             <div class="return-to-bottom-icon" [hidden]="autoScroll" *ngIf="user"

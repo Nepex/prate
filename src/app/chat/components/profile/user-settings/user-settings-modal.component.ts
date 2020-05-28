@@ -86,6 +86,7 @@ export class UserSettingsModalComponent implements OnInit {
         color_theme: new FormControl('', [Validators.required, Validators.maxLength(20)]),
         enforce_interests: new FormControl('', [Validators.required]),
         sounds: new FormControl('', [Validators.required]),
+        img_previews: new FormControl('', [Validators.required]),
         bio: new FormControl('', [Validators.maxLength(200)]),
         oldPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)]),
         newPassword: new FormControl('', [Validators.maxLength(255), Validators.minLength(5)])
@@ -130,6 +131,7 @@ export class UserSettingsModalComponent implements OnInit {
         this.profileForm.controls.color_theme.setValue(this.user.color_theme);
         this.profileForm.controls.enforce_interests.setValue(this.user.enforce_interests);
         this.profileForm.controls.sounds.setValue(this.user.sounds);
+        this.profileForm.controls.img_previews.setValue(this.user.img_previews);
         this.profileForm.controls.bio.setValue(this.user.bio);
 
         this.profileForm.controls.interests.setValue(this.user.interests ? this.user.interests : []);
@@ -237,7 +239,8 @@ export class UserSettingsModalComponent implements OnInit {
             color_theme: this.profileForm.value.color_theme,
             enforce_interests: this.profileForm.value.enforce_interests,
             sounds: this.profileForm.value.sounds,
-            bio: this.profileForm.value.bio,
+            img_previews: this.profileForm.value.img_previews,
+            bio: this.profileForm.value.bio
         };
 
         if (this.profileForm.value.oldPassword && this.profileForm.value.newPassword) {

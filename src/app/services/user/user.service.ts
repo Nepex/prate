@@ -71,6 +71,8 @@ export class UserService {
         delete user.email;
         delete user.avatar;
         delete user.levelInfo;
+        delete user.friends;
+        delete user.friend_requests;
 
         const url = `${this.apiUrl}/${user.id}`;
 
