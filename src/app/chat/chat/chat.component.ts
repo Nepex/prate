@@ -187,18 +187,21 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             // if page is refreshed or browser is closed, disconnect the user
             window.onbeforeunload = () => {
+                this.matching = false;
                 this.disconnect();
                 return null;
             };
 
             // back button is hit
             window.onpopstate = () => {
+                this.matching = false;
                 this.disconnect();
                 return null;
             };
 
             // if user drops internet
             window.onoffline = () => {
+                this.matching = false;
                 this.disconnect();
                 return null;
             };
