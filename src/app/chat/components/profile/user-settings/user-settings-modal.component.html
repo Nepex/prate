@@ -321,18 +321,20 @@
                         </h5>
                     </div>
                 </div>
-                <div class="form-group position-relative" [@slideInOut] *ngIf="showChangePassword">
-                    <prt-form-validation-msgs [control]="profileForm.controls.oldPassword"
-                        [submitted]="profileForm.submitted">
-                    </prt-form-validation-msgs>
-                    <div class="col-12">
-                        <div class="input-group">
-                            <input type="password" class="form-control text-input" formControlName="oldPassword"
-                                autocomplete="off" spellcheck="false" placeholder="Current Password" />
+                <div [@slideInOut] *ngIf="showChangePassword">
+                    <div class="form-group position-relative no-pad-margin">
+                        <prt-form-validation-msgs [control]="profileForm.controls.oldPassword"
+                            [submitted]="profileForm.submitted">
+                        </prt-form-validation-msgs>
+                        <div class="col-12">
+                            <div class="input-group">
+                                <input type="password" class="form-control text-input" formControlName="oldPassword"
+                                    autocomplete="off" spellcheck="false" placeholder="Current Password" />
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group position-relative cpw-input-container">
+                    <div class="form-group position-relative no-pad-margin cpw-input-container">
                         <prt-form-validation-msgs [control]="profileForm.controls.newPassword"
                             [submitted]="profileForm.submitted">
                         </prt-form-validation-msgs>

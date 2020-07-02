@@ -47,16 +47,16 @@ export class FriendListComponent {
     userStatus: string = 'online';
 
     fakeOnlineUsers = [
-        { name: 'caroline', status: 'matched' },
-        { name: 'Shane', status: 'online' },
-        { name: 'Gus', status: 'matching' },
-        { name: 'demetrius', status: 'away' },
-        { name: 'Haley', status: 'online' },
+        // { name: 'caroline', status: 'matched' },
+        // { name: 'Shane', status: 'online' },
+        // { name: 'Gus', status: 'matching' },
+        // { name: 'demetrius', status: 'away' },
+        // { name: 'Haley', status: 'online' },
     ];
 
     fakeOfflineUsers = [
-        { name: 'abigail', status: 'offline' },
-        { name: 'harvey', status: 'offline' },
+        // { name: 'abigail', status: 'offline' },
+        // { name: 'harvey', status: 'offline' },
     ];
 
 

@@ -24,7 +24,14 @@ export class ChangeLogComponent implements OnInit {
 
         this.updates = [
             {
-                title: 'v1.0.17-beta',
+                title: 'v1.0.1-beta',
+                date: 'July 2, 2020',
+                items: [
+                    'Slight bug and styling fixes'
+                ]
+            },
+            {
+                title: 'v1.0.0-beta',
                 date: 'May 21, 2020',
                 items: [
                     'Inactivity rework',
@@ -32,7 +39,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.16-alpha',
+                title: 'v0.0.16-alpha',
                 date: 'May 21, 2020',
                 items: [
                     'Several bug fixes',
@@ -40,7 +47,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.15-alpha',
+                title: 'v0.0.15-alpha',
                 date: 'May 18, 2020',
                 items: [
                     'Games added',
@@ -49,7 +56,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.14-alpha',
+                title: 'v0.0.14-alpha',
                 date: 'May 17, 2020',
                 items: [
                     'Toggle chat bubbles while sharing youtube videos',
@@ -60,7 +67,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.13-alpha',
+                title: 'v0.0.13-alpha',
                 date: 'May 15, 2020',
                 items: [
                     'Sound toggle option',
@@ -70,7 +77,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.12-alpha',
+                title: 'v0.0.12-alpha',
                 date: 'May 14, 2020',
                 items: [
                     'YouTube Video Share',
@@ -79,7 +86,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.11-alpha',
+                title: 'v0.0.11-alpha',
                 date: 'May 10, 2020',
                 items: [
                     'Opensource Avatars added',
@@ -90,7 +97,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.10-alpha',
+                title: 'v0.0.10-alpha',
                 date: 'May 9, 2020',
                 items: [
                     'Help section added',
@@ -98,7 +105,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.9-alpha',
+                title: 'v0.0.9-alpha',
                 date: 'May 7, 2020',
                 items: [
                     'Level badges added and levels fully mapped',
@@ -108,7 +115,7 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.8-alpha',
+                title: 'v0.0.8-alpha',
                 date: 'May 5, 2020',
                 items: [
                     'Home page no longer redirects to chat if logged in',
@@ -117,35 +124,35 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.7-alpha',
+                title: 'v0.0.7-alpha',
                 date: 'May 4, 2020',
                 items: [
                     'Misc bug fixes'
                 ]
             },
             {
-                title: 'v1.0.6-alpha',
+                title: 'v0.0.6-alpha',
                 date: 'May 1, 2019',
                 items: [
                     'Avatar changing'
                 ]
             },
             {
-                title: 'v1.0.5-alpha',
+                title: 'v0.0.5-alpha',
                 date: 'April 30, 2019',
                 items: [
                     'Level ups, ranks, and experience gaining implemented'
                 ]
             },
             {
-                title: 'v1.0.4-alpha',
+                title: 'v0.0.4-alpha',
                 date: 'April 25, 2019',
                 items: [
                     'Interest based matching implemented'
                 ]
             },
             {
-                title: 'v1.0.3-alpha',
+                title: 'v0.0.3-alpha',
                 date: 'April 24, 2019',
                 items: [
                     'Font color/face changing, Bubble color changing',
@@ -153,14 +160,14 @@ export class ChangeLogComponent implements OnInit {
                 ]
             },
             {
-                title: 'v1.0.2-alpha',
+                title: 'v0.0.2-alpha',
                 date: 'April 13, 2019',
                 items: [
                     'Some bug fixes',
                 ]
             },
             {
-                title: 'v1.0.1-alpha',
+                title: 'v0.0.1-alpha',
                 date: 'April 12, 2019',
                 items: [
                     'Footer created',

@@ -44,7 +44,7 @@ export class UserSettingsModalComponent implements OnInit {
     customInterests: string[] = [];
     showInterests: boolean = false;
     showBio: boolean = false;
-    bioLeftLength: string | number = 200;
+    bioLeftLength: any = 200;
     showChangePassword: boolean = false;
     showMiscOpts: boolean = false;
     expCurValue: number;
@@ -99,14 +99,12 @@ export class UserSettingsModalComponent implements OnInit {
         this.setupModal();
 
         // Track amount of characters in bio message
+        if (this.profileForm.value.bio) {
+            this.bioLeftLength = this.bioLeftLength - this.profileForm.value.bio.length;
+        }
+
         this.profileForm.controls['bio'].valueChanges.subscribe((v) => {
-            if (!v) {
-                this.bioLeftLength = 200;
-
-                return;
-            }
-
-            this.bioLeftLength = 200 - v.length;
+            this.bioLeftLength = this.bioLeftLength - v.length;
 
             if (this.bioLeftLength < 0) {
                 this.bioLeftLength = 'Limit exceeded';
