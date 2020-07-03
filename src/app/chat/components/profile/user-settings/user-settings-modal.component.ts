@@ -104,7 +104,7 @@ export class UserSettingsModalComponent implements OnInit {
         }
 
         this.profileForm.controls['bio'].valueChanges.subscribe((v) => {
-            this.bioLeftLength = this.bioLeftLength - v.length;
+            this.bioLeftLength = 200 - v.length;
 
             if (this.bioLeftLength < 0) {
                 this.bioLeftLength = 'Limit exceeded';
