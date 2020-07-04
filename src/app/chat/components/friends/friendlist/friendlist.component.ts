@@ -2,7 +2,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
+// NPM
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 // App
+import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
 import { User } from 'src/app/services/user/user';
 
 // Component for displaying friendlist
@@ -45,25 +49,13 @@ export class FriendListComponent {
 
     // UI
     userStatus: string = 'online';
-
-    fakeOnlineUsers = [
-        // { name: 'caroline', status: 'matched' },
-        // { name: 'Shane', status: 'online' },
-        // { name: 'Gus', status: 'matching' },
-        // { name: 'demetrius', status: 'away' },
-        // { name: 'Haley', status: 'online' },
-    ];
-
-    fakeOfflineUsers = [
-        // { name: 'abigail', status: 'offline' },
-        // { name: 'harvey', status: 'offline' },
-    ];
-
+    onlineUsers = [];
+    offlineUsers = [];
 
     // Component Outputs
     @Output() friendlistClosed: EventEmitter<boolean> = new EventEmitter();
 
-    constructor() { }
+    constructor(private modal: NgbModal) {}
 
     toggleUserStatus() {
         if (this.userStatus === 'online') {
@@ -74,6 +66,13 @@ export class FriendListComponent {
     }
 
     closeFriendList() {
-        this.friendlistClosed.emit()
+        this.friendlistClosed.emit();
+    }
+
+    openAddFriendModal() {
+        this.closeFriendList();
+
+        const modalRef = this.modal.open(AddFriendModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+        modalRef.componentInstance.user = this.user;
     }
 }

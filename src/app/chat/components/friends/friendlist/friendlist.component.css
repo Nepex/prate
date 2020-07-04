@@ -64,7 +64,7 @@
     width: 60px;
     border-radius: 50%;
     position: relative;
-    top: 4px;
+    top: 6px;
     left: -3px;
 }
 
@@ -73,7 +73,7 @@
     width: 20px;
     position: absolute;
     right: 4px;
-    bottom: -4px;
+    bottom: -6px;
 }
 
 .user-info-container {
@@ -123,9 +123,10 @@
     font-size: 12px;
 }
 
-.user-friend-req-count {
-    color: #ffffff;
-    font-size: 12px;
+.friends-btn {
+    font-size: 11px;
+    padding: 2px 7px 2px 7px;
+    margin-top: 5px;
 }
 
 /* Body */

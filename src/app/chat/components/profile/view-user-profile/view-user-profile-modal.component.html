@@ -1,29 +1,31 @@
 <!-- Modal Header -->
-<div class="modal-header no-pad-margin" *ngIf="user">
+<div class="modal-header no-pad-margin" *ngIf="userBeingViewed">
     <div class="container view-user-header">
         <div class="row">
             <div class="col-12 my-auto text-center user-icon-container">
                 <div class="user-icon-content">
-                    <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon">
+                    <img src="../../../assets/images/avatars/{{userBeingViewed.avatar}}" class="user-icon">
 
-                    <img src="../../../assets/images/badges/{{user.levelInfo.badge}}" class="user-badge">
+                    <img src="../../../assets/images/badges/{{userBeingViewed.levelInfo.badge}}" class="user-badge">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12 text-center">
                 <div class="username-container">
-                    <span class="username">{{ user.name }}</span>
+                    <span class="username">{{ userBeingViewed.name }}</span>
                 </div>
                 <div>
-                    <span class="user-level">{{ user.levelInfo.rank }} - Level
-                        {{ user.levelInfo.level }}</span>
+                    <span class="user-level">{{ userBeingViewed.levelInfo.rank }} - Level
+                        {{ userBeingViewed.levelInfo.level }}</span>
                 </div>
 
                 <div>
                     <span class="user-time-spent">Chat time:
-                        {{ (user.experience / 60 / 60).toFixed(0) }} hours</span>
+                        {{ (userBeingViewed.experience / 60 / 60).toFixed(0) }} hours</span>
                 </div>
+
+               
             </div>
         </div>
     </div>
@@ -31,11 +33,16 @@
     <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <!-- Modal Body -->
-<div class="container modal-body no-pad-margin" *ngIf="user">
+<div class="container modal-body no-pad-margin" *ngIf="userBeingViewed">
     <div class="row no-pad-margin">
         <div class="col-12 user-bio">
-            <span *ngIf="!user.bio">This user has not set up their bio.</span>
-            <span *ngIf="user.bio">{{user.bio}}</span>
+            <span *ngIf="!userBeingViewed.bio">This user has not set up their bio.</span>
+            <span *ngIf="userBeingViewed.bio">{{userBeingViewed.bio}}</span>
+        </div>
+
+        <div class="col-12" *ngIf="currentUser.id !== userBeingViewedId">
+            <button class="btn friend-request-btn" (click)="sendFriendRequest()" *ngIf="!friendReqMessage">Send Friend Request</button>
+            <span *ngIf="friendReqMessage" class="friend-req-message">{{ friendReqMessage }}</span>
         </div>
     </div>
 </div>

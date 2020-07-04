@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LevelService } from '../../../../services/level/level.service';
 import { User } from '../../../../services/user/user';
 import { UserService } from '../../../../services/user/user.service';
+import { FriendService } from 'src/app/services/friend/friend.service';
 
 // Modal for viewing a user's profile
 @Component({
@@ -18,23 +19,67 @@ import { UserService } from '../../../../services/user/user.service';
 })
 export class ViewUserProfileModalComponent implements OnInit {
     // Component Inputs
-    @Input() userId: string;
+    @Input() userBeingViewedId: string;
+    @Input() currentUser: User;
 
     // Subs
     loadingRequest: Observable<User>;
 
     // Data Store
-    user: User;
+    userBeingViewed: User;
 
-    constructor(private userService: UserService, public activeModal: NgbActiveModal, private levelService: LevelService) {}
+    // UI
+    friendReqMessage: string;
+
+    constructor(private userService: UserService, public activeModal: NgbActiveModal, private levelService: LevelService, private friendService: FriendService) {}
 
     ngOnInit(): void {
-        this.loadingRequest = this.userService.getById(this.userId);
+        this.loadingRequest = this.userService.getById(this.userBeingViewedId);
 
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
-            this.user = res;
-            this.user.levelInfo = this.levelService.getLevelInfo(this.user.experience);
+            this.userBeingViewed = res;
+            this.userBeingViewed.levelInfo = this.levelService.getLevelInfo(this.userBeingViewed.experience);
+
+            if (this.userBeingViewed.friend_requests.indexOf(this.currentUser.id) > -1) {
+                this.friendReqMessage = 'Friend Request Sent';
+            }
+
+            if (this.currentUser.friend_requests.indexOf(this.userBeingViewedId) > -1) {
+                this.friendReqMessage = `Friend Request Received`;
+            }
+
+            if (this.userBeingViewed.friends.indexOf(this.currentUser.id) > -1) {
+                this.friendReqMessage = `${this.userBeingViewed.name} is your friend`;
+            }
+        });
+    }
+
+    sendFriendRequest(): void {
+        if (this.loadingRequest) {
+            return;
+        }
+
+        const body = {
+            id: this.userBeingViewedId
+        };
+
+        this.loadingRequest = this.friendService.createFriendRequest(body);
+
+        this.loadingRequest.subscribe(res => {
+            this.friendReqMessage = 'Friend Request Sent'
+
+            const receiver = {
+                id: this.userBeingViewedId,
+                name: this.userBeingViewed.name
+            }
+
+            this.friendService.sendFriendRequest(this.currentUser, receiver);
+            this.loadingRequest = null;
+        }, err => {
+            console.log(err);
+            this.friendReqMessage = err.error[0];
+            this.loadingRequest = null;
         });
     }
 }

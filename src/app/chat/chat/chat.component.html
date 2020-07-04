@@ -88,6 +88,12 @@
 
     <!-- Chat Area -->
     <div class="row chat-area">
+        <!-- Notifications Container -->
+        <div class="chat-alerts-container text-center" [@fadeInOut] *ngIf="notifications.length > 0">
+            <div class="chat-alerts">
+                <div class="chat-alert" *ngFor="let n of notifications">{{n.message}}</div>
+            </div>
+        </div>
 
         <!-- App Containers-->
         <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
@@ -95,8 +101,7 @@
         <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
             (canceled)="closeApps()" (inviteSent)="sendGameInvite($event)" (gameClosed)="gameSessionClose($event)">
         </prt-game-container>
-        <!-- End App Containers-->
-
+        
         <!-- Chat Messages -->
         <div class="col-12 no-pad-margin">
             <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">

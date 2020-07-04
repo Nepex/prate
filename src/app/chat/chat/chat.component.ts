@@ -11,8 +11,11 @@ import * as moment from 'moment';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // App
+import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.component';
 import { ChatMessage } from '../../services/chat/chat-message';
 import { ChatService } from '../../services/chat/chat.service';
+import { FriendService } from 'src/app/services/friend/friend.service';
+import { FriendRequest } from 'src/app/services/friend/friend-request';
 import { IsTyping } from '../../services/chat/is-typing';
 import { LevelService } from '../../services/level/level.service';
 import { OuterAppInfo } from '../../services/chat/outer-app-info';
@@ -20,12 +23,25 @@ import { OuterAppInviteModalComponent } from '../components/invites/outer-app-in
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
 
 // Central chat component
 @Component({
     selector: 'prt-chat',
     templateUrl: './chat.component.html',
-    styleUrls: ['./chat.component.css']
+    styleUrls: ['./chat.component.css'],
+    animations: [
+        trigger('fadeInOut', [
+            transition(':enter', [
+                style({ opacity: '0' }),
+                animate('300ms ease-in', style({ opacity: '1.0' }))
+            ]),
+            transition(':leave', [
+                animate('300ms ease-in', style({ opacity: '0' }))
+            ])
+        ])
+    ]
 })
 export class ChatComponent implements OnInit, OnDestroy {
     // HTML Element Refs
@@ -54,6 +70,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     partnerFoundSub: Subscription;
     messageReceivedSub: Subscription;
 
+    friendRequestReceivedSub: Subscription;
+
     outerAppInviteReceivedSub: Subscription;
     outerAppInviteAcceptedSub: Subscription;
     outerAppInviteCanceledSub: Subscription;
@@ -77,6 +95,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     chatFinishedOverlay: boolean = false;
 
     // Chat UI
+    notifications: any = [];
     autoScroll: boolean = true;
     userIsTyping: boolean = false;
     partnerIsTyping: boolean = false;
@@ -151,18 +170,19 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
 
     constructor(private userService: UserService, private chatService: ChatService, private levelService: LevelService, private router: Router, private titleService: Title,
-        private modal: NgbModal) {
+        private modal: NgbModal, private friendService: FriendService) {
     }
 
     ngOnInit(): void {
         this.titleService.setTitle('Prate');
-        
+
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
             // set user
             this.user = res;
             this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
+            this.friendService.connectAndStoreUser(this.user);
 
             // set listeners
             this.userSettingsChangedSub = this.userService.userSettingsChanged.subscribe(() => this.getUser());
@@ -170,6 +190,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.matchFound(partner));
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
+
+            this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.friendRequestReceived(msgObj));
 
             this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
             this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
@@ -245,7 +267,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         let id = msgType === 'sent' ? userId : partnerId;
 
         const modalRef = this.modal.open(ViewUserProfileModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        modalRef.componentInstance.userId = id;
+        modalRef.componentInstance.userBeingViewedId = id;
+        modalRef.componentInstance.currentUser = this.user;
     }
 
     sendNotification(windowTitle: string, soundFile: string) {
@@ -340,6 +363,8 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.clearPartnerAndEndChat();
             this.stopTimerAndGiveExp();
         }
+
+        this.friendService.disconnect();
     }
 
     partnerDisconnected(): void {
@@ -359,7 +384,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (!this.messageForm.valid || !this.partner) {
             return;
         }
-        
+
         const previewImg = this.imagify(this.messageForm.value.message);
 
         const msgObj: ChatMessage = {
@@ -665,5 +690,19 @@ export class ChatComponent implements OnInit, OnDestroy {
     // -- Friends --
     toggleFriendlist(event): void {
         this.friendsShown = event;
+    }
+
+    friendRequestReceived(friendRequest: FriendRequest): void {
+        let notif = {
+            message: `You have received a new friend request from ${friendRequest.senderName}`
+        };
+
+        this.notifications.push(notif);
+
+        setTimeout(() => {
+            this.notifications.splice(this.notifications.indexOf(notif), 1);
+        }, 5000);
+
+        this.user.friend_requests.push(friendRequest.senderId);
     }
 }

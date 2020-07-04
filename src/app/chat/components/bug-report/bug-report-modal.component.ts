@@ -63,11 +63,13 @@ export class BugReportModalComponent {
         this.loadingRequest.subscribe(res => {
             this.disableForm = false;
             this.loadingRequest = null;
+            this.bugReportForm.reset();
             this.bugReportForm['submitted'] = false;
             this.messages.push({ message: 'Bug Report Sent', type: 'success' });
         }, err => {
             this.disableForm = false;
             this.loadingRequest = null;
+            this.bugReportForm.reset();
             this.bugReportForm['submitted'] = false;
             this.messages.push({ message: 'There was a problem sending the report', type: 'error' });
         });

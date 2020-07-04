@@ -29,14 +29,15 @@
                 </div>
 
                 <div class="user-friend-req-count">
-                    Friend Requests (0)
+                    <button class="btn friends-btn" (click)="openAddFriendModal()"><i class="fas fa-plus"></i> Add Friend</button> &nbsp;
+                    <button class="btn friends-btn"><i class="fas fa-users"></i> Requests ({{user.friend_requests.length}})</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="friendlist-body-container">
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-12">
                 <div class="friendlist-body-heading"><i class="fas fa-caret-down"></i> Online</div>
             </div>
@@ -91,9 +92,7 @@
                     <i class="fas fa-times dnd-status-color cursor-pointer"></i>
                 </div>
             </div>
-        </div> -->
-
-        <br /><strong style="padding-left: 10px; font-size: 15px;"><i class="fas fa-exclamation-triangle"></i> Work in Progress</strong>
+        </div>
 
     </div>
 </div>

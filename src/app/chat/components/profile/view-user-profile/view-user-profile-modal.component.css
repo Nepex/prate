@@ -103,6 +103,16 @@
     font-size: 11px;
 }
 
+.friend-request-btn {
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+.friend-req-message {
+    font-size: 11px;
+    color: #ffffff;
+}
+
 .user-bio {
     padding-left: 20px;
     padding-right: 20px;

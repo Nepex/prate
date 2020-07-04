@@ -117,11 +117,30 @@ input:focus {
 /* Body */
 
 /* Chat */
-
 .chat-area {
     position: relative;
     z-index: 899;
     height: calc(100% - 82px);
+}
+
+.chat-alerts-container {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.chat-alerts {
+    display: inline-block;
+    padding-top: 10px;
+}
+
+.chat-alert {
+    font-weight: 600;
+    padding: 5px 20px 5px 20px;
+    background-color: rgba(0, 175, 240, 1);
+    border-radius: 5px;
+    margin-top: 5px;
+    color: #ffffff;
 }
 
 .chat-messages {

@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/shared.module';
 
 // App Components
+import { AddFriendModalComponent } from './components/friends/add-friend/add-friend-modal.component';
 import { ChatComponent } from './chat/chat.component';
 import { UserSettingsModalComponent } from './components/profile/user-settings/user-settings-modal.component';
 import { ChangeAvatarModalComponent } from './components/profile/change-avatar/change-avatar-modal.component';
@@ -29,6 +30,7 @@ import { YoutubePlayerComponent } from './components/youtube-player/youtube-play
 
 @NgModule({
     declarations: [
+        AddFriendModalComponent,
         BugReportModalComponent,
         ChangeAvatarModalComponent,
         ChatComponent,
@@ -55,6 +57,7 @@ import { YoutubePlayerComponent } from './components/youtube-player/youtube-play
     ],
     providers: [],
     entryComponents: [
+        AddFriendModalComponent,
         BugReportModalComponent,
         ChangeAvatarModalComponent,
         HelpModalComponent,

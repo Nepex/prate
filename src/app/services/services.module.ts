@@ -9,6 +9,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 
 // App
 import { ChatService } from './chat/chat.service';
+import { FriendService } from './friend/friend.service';
 import { LevelService } from './level/level.service';
 import { ParamSerializer } from './generic/param-serializer';
 import { SessionService } from './session/session.service';
@@ -26,6 +27,7 @@ import { UserService } from './user/user.service';
     ],
     providers: [
         ChatService,
+        FriendService,
         LevelService,
         ParamSerializer,
         SessionService,

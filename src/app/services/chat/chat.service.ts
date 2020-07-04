@@ -42,8 +42,8 @@ export class ChatService implements OnDestroy {
     }
 
     private connect(): void {
-        this.socket = io(environment.apiServer, {
-            path: environment.socketIoServer
+        this.socket = io(`${environment.apiServer}/chat`, {
+            path: `${environment.socketIoServer}`
         });
     }
 
