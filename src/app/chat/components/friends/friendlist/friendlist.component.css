@@ -142,8 +142,16 @@
 }
 
 .friend-row:hover {
-    background: #efefef;
+    background-color: rgba(0, 0, 0, 0.05);
     transition: .5s;
+}
+
+.friends-user-icon {
+    height: 30px;
+    width: 35px;
+    border-radius: 50%;
+    position: relative;
+    top: 11px;
 }
 
 .friends-username {
@@ -153,9 +161,9 @@
 }
 
 .friends-status-container {
-    padding-left: 30px;
-    padding-bottom: 5px;
     padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 5px;
 }
 
 .friends-actions-container {

@@ -42,6 +42,10 @@
     padding: 0!important;
 }
 
+.alert-message {
+    padding-top: 10px;
+}
+
 .friend-requests-header {
     margin-top: 20px;
     margin-bottom: 20px;

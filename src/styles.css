@@ -41,6 +41,28 @@ html, body {
     position: relative;
 }
 
+/* Text highlight custom color */
+::selection {
+  background: #ddd; 
+}
+
+/* Chrome custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(179, 179, 179);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00AFF0;
+}
+
 .btn:active {
     animation-name: buttonsmash;
     animation-duration: 2s;

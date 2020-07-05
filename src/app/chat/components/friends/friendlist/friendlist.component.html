@@ -29,8 +29,10 @@
                 </div>
 
                 <div class="user-friend-req-count">
-                    <button class="btn friends-btn" (click)="openAddFriendModal()"><i class="fas fa-plus"></i> Add Friend</button> &nbsp;
-                    <button class="btn friends-btn" (click)="openFriendRequestsModal()"><i class="fas fa-users"></i> Requests ({{user.friend_requests.length}})</button>
+                    <button class="btn friends-btn" (click)="openAddFriendModal()"><i class="fas fa-plus"></i> Add
+                        Friend</button> &nbsp;
+                    <button class="btn friends-btn" (click)="openFriendRequestsModal()"><i class="fas fa-users"></i>
+                        Requests ({{user.friend_requests.length}})</button>
                 </div>
             </div>
         </div>
@@ -39,57 +41,73 @@
     <div class="friendlist-body-container">
         <div class="row">
             <div class="col-12">
-                <div class="friendlist-body-heading"><i class="fas fa-caret-down"></i> Online</div>
+                <div class="friendlist-body-heading">
+                    <span class="cursor-pointer" (click)="hideOnlineFriends = !hideOnlineFriends"><i
+                            class="fas" [ngClass]="{'fa-caret-down': !hideOnlineFriends, 'fa-caret-right': hideOnlineFriends}"></i> Online</span>
+                </div>
             </div>
         </div>
 
-        <div class="row friend-row no-pad-margin" *ngFor="let u of fakeOnlineUsers">
-            <div class="col-6 friends-status-container no-pad-margin">
-                <div>
-                    <span class="friends-username">{{ u.name }}</span>
+        <div [@showHide]="hideOnlineFriends ? 'hide' : 'show'">
+            <div class="row friend-row no-pad-margin" *ngFor="let u of onlineUsers">
+                <div class="col-2 text-right no-pad-margin">
+                    <img src="../../../../../assets/images/avatars/{{u.avatar}}" class="img-fluid friends-user-icon cursor-pointer" (click)="openViewUserProfileModal(u.id)"/>
                 </div>
-                <div
-                    [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': !partner && u.status === 'away', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
-                    <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
+                <div class="col-7 friends-status-container no-pad-margin">
+                    <div>
+                        <span class="friends-username">{{ u.name }}</span>
+                    </div>
+                    <div
+                        [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': !partner && u.status === 'away', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
+                        <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
 
-                    <span class="status-text">
-                        <span *ngIf="u.status === 'matched'">In Match</span>
-                        <span *ngIf="u.status === 'online'">Online</span>
-                        <span *ngIf="u.status === 'away'">Away</span>
-                        <span *ngIf="u.status === 'matching'">Looking for Match</span>
-                    </span>
+                        <span class="status-text">
+                            <span *ngIf="u.status === 'matched'">In Match</span>
+                            <span *ngIf="u.status === 'online'">Online</span>
+                            <span *ngIf="u.status === 'away'">Away</span>
+                            <span *ngIf="u.status === 'matching'">Looking for Match</span>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6 text-right friends-actions-container no-pad-margin">
-                <div class="float-right">
-                    <i class="fas fa-comment-alt matchinged-status-color cursor-pointer"></i> &nbsp;
-                    <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                <div class="col-3 text-right friends-actions-container no-pad-margin">
+                    <div class="float-right">
+                        <i class="fas fa-comment-alt matchinged-status-color cursor-pointer"></i> &nbsp;
+                        <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <div class="friendlist-body-heading"><i class="fas fa-caret-down"></i> Offline</div>
+                <div class="friendlist-body-heading">
+                    <span class="cursor-pointer" (click)="hideOfflineFriends = !hideOfflineFriends"><i
+                            class="fas" [ngClass]="{'fa-caret-down': !hideOfflineFriends, 'fa-caret-right': hideOfflineFriends}"></i> Offline</span>
+                </div>
             </div>
         </div>
 
-        <div class="row friend-row no-pad-margin" *ngFor="let u of fakeOfflineUsers">
-            <div class="col-6 friends-status-container no-pad-margin">
-                <div>
-                    <span class="friends-username">{{ u.name }}</span>
+        <div [@showHide]="hideOfflineFriends ? 'hide' : 'show'">
+            <div class="row friend-row no-pad-margin" *ngFor="let u of offlineUsers">
+                <div class="col-2 text-right no-pad-margin">
+                    <img src="../../../../../assets/images/avatars/{{u.avatar}}" class="img-fluid friends-user-icon cursor-pointer" (click)="openViewUserProfileModal(u.id)" />
                 </div>
-                <div>
-                    <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
+                <div class="col-7 friends-status-container no-pad-margin">
+                    <div>
+                        <span class="friends-username">{{ u.name }}</span>
+                    </div>
+                    <div>
+                        <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
 
-                    <span class="status-text">
-                        <span>Offline</span>
-                    </span>
+                        <span class="status-text">
+                            <span>Offline</span>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6 text-right friends-actions-container no-pad-margin">
-                <div class="float-right">
-                    <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                <div class="col-3 text-right friends-actions-container no-pad-margin">
+                    <div class="float-right">
+                        <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                    </div>
                 </div>
             </div>
         </div>

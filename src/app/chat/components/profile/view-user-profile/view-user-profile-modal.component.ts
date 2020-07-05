@@ -49,7 +49,7 @@ export class ViewUserProfileModalComponent implements OnInit {
                 this.friendReqMessage = `Friend Request Received`;
             }
 
-            if (this.userBeingViewed.friends.indexOf(this.currentUser.id) > -1) {
+            if (this.userBeingViewed.friends.indexOf(this.userBeingViewedId) > -1) {
                 this.friendReqMessage = `${this.userBeingViewed.name} is your friend`;
             }
         });

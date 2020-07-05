@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
+import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.component';
 import { FriendService } from 'src/app/services/friend/friend.service';
 import { User } from 'src/app/services/user/user';
 
@@ -26,6 +27,9 @@ export class FriendRequestsModalComponent implements OnInit {
 
     // Data stores
     friends: User[];
+
+    // UI
+    messages: AlertMessage[] = [];
 
     constructor(public activeModal: NgbActiveModal, private friendService: FriendService) { }
 
@@ -60,14 +64,17 @@ export class FriendRequestsModalComponent implements OnInit {
             });
 
             this.friendService.emitFriendRequestHandled(id);
+            this.messages.push({ message: 'Friend request accepted', type: 'success' });
             // emit to person their friend request was accepted, also add logic to friendlist to update accordingly
             this.handleFriendRequest = null;
         }, err => {
+            this.messages.push({ message: err.error[0], type: 'error' });
             this.handleFriendRequest = null;
         });
     }
 
     denyFriendRequest(id: string): void {
+        this.messages = [];
         if (this.handleFriendRequest) {
             return;
         }
@@ -82,8 +89,11 @@ export class FriendRequestsModalComponent implements OnInit {
             });
 
             this.friendService.emitFriendRequestHandled(id);
+            this.messages.push({ message: 'Friend request denied', type: 'success' });
+
             this.handleFriendRequest = null;
         }, err => {
+            this.messages.push({ message: err.error[0], type: 'error' });
             this.handleFriendRequest = null;
         });
     }

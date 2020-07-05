@@ -12,6 +12,10 @@
 <!-- Modal Body -->
 <div class="container modal-body">
     <div class="row no-pad-margin">
+        <div class="col-12 text-center alert-messages" *ngIf="messages.length > 0">
+            <prt-alert-messages [messages]="messages"></prt-alert-messages>
+        </div>
+
         <div class="col-12 fr-col" *ngIf="user.friend_requests.length === 0">
             <span>No new friend requests</span>
         </div>

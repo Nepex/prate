@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 export class FriendService {
     private apiUrl = `${environment.apiBaseUrl}/friends`;
 
+    public onlineFriendsReceived: EventEmitter<User[]> = new EventEmitter();
     public friendRequestReceived: EventEmitter<FriendRequest> = new EventEmitter();
     public friendRequestHandled: EventEmitter<string> = new EventEmitter();
 
@@ -34,6 +35,7 @@ export class FriendService {
         });
 
         this.listenForReceivedFriendRequests();
+        this.listenForReceivedOnlineFriends();
     }
 
     public disconnect(): void {
@@ -50,10 +52,13 @@ export class FriendService {
             webSocketAuth: '3346841372',
             token: this.sessionService.getToken(),
             friends: user.friends,
-            email: user.email
+            email: user.email,
+            status: 'online',
+            avatar: user.avatar
         };
 
         this.socket.emit('storeUserInfo', this.user);
+        this.socket.emit('get-online-friends', this.user.friends);
     }
 
     // Info getters //
@@ -71,6 +76,12 @@ export class FriendService {
         const req = this.http.get<User[]>(url);
 
         return req;
+    }
+
+    public listenForReceivedOnlineFriends(): void {
+        this.socket.on('receive-online-friends', msgObj => {
+            this.onlineFriendsReceived.emit(msgObj);
+        });
     }
 
     // Friend requests //
