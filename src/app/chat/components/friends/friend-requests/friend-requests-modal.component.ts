@@ -21,6 +21,7 @@ export class FriendRequestsModalComponent implements OnInit {
 
     // Subs
     loadingRequest: Observable<User[]>;
+    handleFriendRequest: Observable<User>;
 
     // Data stores
     friends: User[];
@@ -32,7 +33,6 @@ export class FriendRequestsModalComponent implements OnInit {
 
         this.loadingRequest.subscribe(res => {
             this.friends = res;
-            console.log(this.friends);
             this.loadingRequest = null;
         }, err => {
             this.loadingRequest = null;
@@ -41,5 +41,24 @@ export class FriendRequestsModalComponent implements OnInit {
 
     acceptFriendRequest(id: string): void { }
 
-    denyFriendRequest(id: string): void { }
+    denyFriendRequest(id: string): void {
+        if (this.handleFriendRequest) {
+            return;
+        }
+
+        this.handleFriendRequest = this.friendService.denyFriendRequest(id);
+
+        this.handleFriendRequest.subscribe(res => {
+            this.friends.forEach(friend => {
+                if (friend.id === id) {
+                    this.friends.splice(this.friends.indexOf(friend), 1)
+                }
+            });
+
+            this.friendService.emitFriendRequestHandled(id);
+            this.handleFriendRequest = null;
+        }, err => {
+            this.handleFriendRequest = null;
+        });
+     }
 }

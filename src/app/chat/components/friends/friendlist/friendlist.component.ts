@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
 import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
+import { FriendService } from 'src/app/services/friend/friend.service';
 import { User } from 'src/app/services/user/user';
 
 // Component for displaying friendlist
@@ -51,12 +52,14 @@ export class FriendListComponent {
     // Component Outputs
     @Output() friendlistClosed: EventEmitter<boolean> = new EventEmitter();
 
+    // Subs
+
     // UI
     userStatus: string = 'online';
     onlineUsers = [];
     offlineUsers = [];
 
-    constructor(private modal: NgbModal) { }
+    constructor(private modal: NgbModal, private friendService: FriendService) { }
 
     toggleUserStatus(): void {
         if (this.userStatus === 'online') {

@@ -3,7 +3,7 @@
     <div class="container friend-requests-header">
         <div class="row">
             <div class="col-12 my-auto text-center">
-                {{ user.friend_requests.length }} Friend Requests
+                {{ user.friend_requests.length }} Friend Request(s)
             </div>
         </div>
     </div>
@@ -12,7 +12,7 @@
 <!-- Modal Body -->
 <div class="container modal-body">
     <div class="row no-pad-margin">
-        <div class="col-12" *ngIf="user.friend_requests.length === 0">
+        <div class="col-12 fr-col" *ngIf="user.friend_requests.length === 0">
             <span>No new friend requests</span>
         </div>
 
@@ -47,5 +47,5 @@
 </div>
 <!-- Modal Footer -->
 <div class="modal-footer text-center no-pad-margin">
-    <br />
+    <span></span>
 </div>

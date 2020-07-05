@@ -71,6 +71,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     messageReceivedSub: Subscription;
 
     friendRequestReceivedSub: Subscription;
+    friendRequestHandledSub: Subscription;
 
     outerAppInviteReceivedSub: Subscription;
     outerAppInviteAcceptedSub: Subscription;
@@ -192,6 +193,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
 
             this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.friendRequestReceived(msgObj));
+            this.friendRequestHandledSub = this.friendService.friendRequestHandled.subscribe(id => this.user.friend_requests.splice(this.user.friend_requests.indexOf(id)));
 
             this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
             this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));

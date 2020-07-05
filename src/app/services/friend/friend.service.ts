@@ -19,6 +19,7 @@ export class FriendService {
     private apiUrl = `${environment.apiBaseUrl}/friends`;
 
     public friendRequestReceived: EventEmitter<FriendRequest> = new EventEmitter();
+    public friendRequestHandled: EventEmitter<string> = new EventEmitter();
 
     public socket: io.Socket;
 
@@ -89,5 +90,17 @@ export class FriendService {
         this.socket.on('friend-request-received', msgObj => {
             this.friendRequestReceived.emit(msgObj);
         });
+    }
+
+    public denyFriendRequest(id: string): Observable<User> {
+        const url = `${this.apiUrl}/deny-friend-request/${id}`;
+
+        const req = this.http.put<User>(url, null).pipe(map(res => res));
+
+        return req;
+    }
+
+    public emitFriendRequestHandled(id: string): void {
+        this.friendRequestHandled.emit(id);
     }
 }

@@ -91,6 +91,7 @@
 
 .fr-col {
     padding-top: 15px;
+    padding-bottom: 5px !important;
 }
 
 .fr-trs {
@@ -100,6 +101,10 @@
 .table th, .table td {
     padding: 0 !important;
     vertical-align: middle !important;
+}
+
+.table {
+    margin-bottom: 5px !important;
 }
 
 
