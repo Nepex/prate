@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { BugReportModalComponent } from '../../bug-report/bug-report-modal.component';
 import { ChatService } from '../../../../services/chat/chat.service';
-import { FriendService } from 'src/app/services/friend/friend.service';
+import { FriendService } from '../../../../services/friend/friend.service';
 import { HelpModalComponent } from '../../help/help-modal.component';
 import { LevelInfo } from '../../../../services/level/level-info';
 import { LevelService } from '../../../../services/level/level.service';

@@ -72,7 +72,7 @@
                 <div class="col-3 text-right friends-actions-container no-pad-margin">
                     <div class="float-right">
                         <i class="fas fa-comment-alt matchinged-status-color cursor-pointer"></i> &nbsp;
-                        <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                        <i class="fas fa-times dnd-status-color cursor-pointer" (click)="confirmRemoveFriend(u)"></i>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="col-3 text-right friends-actions-container no-pad-margin">
                     <div class="float-right">
-                        <i class="fas fa-times dnd-status-color cursor-pointer"></i>
+                        <i class="fas fa-times dnd-status-color cursor-pointer" (click)="confirmRemoveFriend(u)"></i>
                     </div>
                 </div>
             </div>

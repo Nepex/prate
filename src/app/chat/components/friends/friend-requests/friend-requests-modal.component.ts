@@ -6,9 +6,9 @@ import { Observable, Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.component';
-import { FriendService } from 'src/app/services/friend/friend.service';
-import { User } from 'src/app/services/user/user';
+import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
+import { FriendService } from '../../../../services/friend/friend.service';
+import { User } from '../../../../services/user/user';
 
 // Modal for reviewing friend requests
 @Component({
@@ -38,7 +38,11 @@ export class FriendRequestsModalComponent implements OnInit {
         this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.getFriendRequests());
     }
 
-    getFriendRequests() {
+    getFriendRequests(): void {
+        if (this.loadingRequest) {
+            return;
+        }
+
         this.loadingRequest = this.friendService.getFriendRequests();
 
         this.loadingRequest.subscribe(res => {
@@ -66,7 +70,6 @@ export class FriendRequestsModalComponent implements OnInit {
             this.friendService.emitFriendRequestHandled(id);
             this.friendService.sendAcceptedFriendRequest(this.user.id, id);
             this.messages.push({ message: 'Friend request accepted', type: 'success' });
-            // emit to person their friend request was accepted, also add logic to friendlist to update accordingly
             this.handleFriendRequest = null;
         }, err => {
             this.messages.push({ message: err.error[0], type: 'error' });

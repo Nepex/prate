@@ -11,11 +11,10 @@ import * as moment from 'moment';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.component';
 import { ChatMessage } from '../../services/chat/chat-message';
 import { ChatService } from '../../services/chat/chat.service';
-import { FriendService } from 'src/app/services/friend/friend.service';
-import { FriendRequest } from 'src/app/services/friend/friend-request';
+import { FriendService } from '../../services/friend/friend.service';
+import { FriendRequest } from '../../services/friend/friend-request';
 import { IsTyping } from '../../services/chat/is-typing';
 import { LevelService } from '../../services/level/level.service';
 import { OuterAppInfo } from '../../services/chat/outer-app-info';

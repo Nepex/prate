@@ -9,7 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LevelService } from '../../../../services/level/level.service';
 import { User } from '../../../../services/user/user';
 import { UserService } from '../../../../services/user/user.service';
-import { FriendService } from 'src/app/services/friend/friend.service';
+import { FriendService } from '../../../../services/friend/friend.service';
 
 // Modal for viewing a user's profile
 @Component({
@@ -46,10 +46,10 @@ export class ViewUserProfileModalComponent implements OnInit {
             }
 
             if (this.currentUser.friend_requests.indexOf(this.userBeingViewedId) > -1) {
-                this.friendReqMessage = `Friend Request Received`;
+                this.friendReqMessage = `${this.userBeingViewed.name} has sent you a friend request`;
             }
 
-            if (this.userBeingViewed.friends.indexOf(this.userBeingViewedId) > -1) {
+            if (this.currentUser.friends.indexOf(this.userBeingViewedId) > -1) {
                 this.friendReqMessage = `${this.userBeingViewed.name} is your friend`;
             }
         });

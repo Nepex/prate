@@ -9,10 +9,11 @@ import * as _ from 'underscore';
 
 // App
 import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
+import { ConfirmationModalComponent } from '../../../../shared/confirmation/confirmation-modal.component';
 import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
-import { FriendService } from 'src/app/services/friend/friend.service';
-import { User } from 'src/app/services/user/user';
-import { UserService } from 'src/app/services/user/user.service';
+import { FriendService } from '../../../../services/friend/friend.service';
+import { User } from '../../../../services/user/user';
+import { UserService } from '../../../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../../profile/view-user-profile/view-user-profile-modal.component';
 
 // Component for displaying friendlist
@@ -98,7 +99,7 @@ export class FriendListComponent implements OnInit {
 
     constructor(private modal: NgbModal, private friendService: FriendService, private userService: UserService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.onlineFriendsReceivedSub = this.friendService.onlineFriendsReceived.subscribe(msgObj => this.initFriendlist(msgObj));
         this.checkFriendStatusReceivedSub = this.friendService.checkFriendStatusReceived.subscribe(msgObj => this.pushAcceptedFriend(msgObj));
 
@@ -106,7 +107,7 @@ export class FriendListComponent implements OnInit {
         this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
     }
 
-    initFriendlist(onlineFriends: User[]) {
+    initFriendlist(onlineFriends: User[]): void {
         this.loadingRequest = this.friendService.getFriends();
 
         this.loadingRequest.subscribe(res => {
@@ -130,11 +131,11 @@ export class FriendListComponent implements OnInit {
         });
     }
 
-    acceptedFriendRequestSent(id: string) {
+    acceptedFriendRequestSent(id: string): void {
         this.friendService.checkFriendStatusSend(id);
     }
 
-    pushAcceptedFriend(user: User) {
+    pushAcceptedFriend(user: User): void {
         if (user.status === 'offline') {
             if (this.getUserRequest) {
                 return;
@@ -160,7 +161,7 @@ export class FriendListComponent implements OnInit {
         }
     }
 
-    acceptedFriendRequestReceived(user: User) {
+    acceptedFriendRequestReceived(user: User): void {
         this.onlineUsers.push(user);
         this.sortFriends();
     }
@@ -177,8 +178,18 @@ export class FriendListComponent implements OnInit {
         }
     }
 
-    closeFriendList(): void {
-        this.friendlistClosed.emit();
+    confirmRemoveFriend(user: User): void {
+        const modalRef = this.modal.open(ConfirmationModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.message = `Are you sure you want to remove '${user.name}' from your friendlist?`;
+        
+        modalRef.result.then((result) => {
+            this.removeFriend(user.id);
+        }, (reason) => { });
+    }
+
+    removeFriend(id: string): void {
+        console.log('friend will be removed');
+        // splice, db call, emits
     }
 
     openAddFriendModal(): void {
@@ -197,7 +208,11 @@ export class FriendListComponent implements OnInit {
         modalRef.componentInstance.currentUser = this.user;
     }
 
-    sortFriends() {
+    closeFriendList(): void {
+        this.friendlistClosed.emit();
+    }
+
+    sortFriends(): void {
         this.onlineUsers = _.sortBy(this.onlineUsers, function (o) { return o.name; });
         this.offlineUsers = _.sortBy(this.offlineUsers, function (o) { return o.name; });
     }

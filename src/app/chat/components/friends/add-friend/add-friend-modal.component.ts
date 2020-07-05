@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from 'src/app/shared/alert-messages/alert-messages.component';
-import { FriendService } from 'src/app/services/friend/friend.service';
-import { SubmittableFormGroup } from 'src/app/shared/submittable-form-group/submittable-form-group';
-import { User } from 'src/app/services/user/user';
+import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
+import { FriendService } from '../../../../services/friend/friend.service';
+import { SubmittableFormGroup } from '../../../../shared/submittable-form-group/submittable-form-group';
+import { User } from '../../../../services/user/user';
 
 // Modal for adding friends by email
 @Component({
@@ -50,18 +50,18 @@ export class AddFriendModalComponent {
         this.loadingRequest = this.friendService.createFriendRequest(body);
 
         this.loadingRequest.subscribe(res => {
-            this.loadingRequest = null;
             this.addFriendForm.reset();
             this.addFriendForm['submitted'] = false;
             this.messages.push({ message: 'Friend Request Sent', type: 'success' });
             this.friendService.sendFriendRequest(this.user, null, body.email);
-        }, err => {
             this.loadingRequest = null;
+        }, err => {
             this.addFriendForm.reset();
             this.addFriendForm['submitted'] = false;
             err.error.forEach(error => {
                 this.messages.push({ message: error, type: 'error' });
             });
+            this.loadingRequest = null;
         });
     };
 }

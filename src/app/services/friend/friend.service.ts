@@ -32,7 +32,7 @@ export class FriendService {
 
     constructor(private sessionService: SessionService, private http: HttpClient) { }
 
-    // Socket initiation //
+    // --- Connect/disconnect and initialization ---
     private connect(): void {
         this.socket = io(`${environment.apiServer}/friends`, {
             path: `${environment.socketIoServer}`
@@ -46,7 +46,6 @@ export class FriendService {
 
     public disconnect(): void {
         this.socket.disconnect();
-        // this.userDisconnected.emit();
     }
 
     public connectAndStoreUser(user: User): void {
@@ -67,7 +66,8 @@ export class FriendService {
         this.socket.emit('get-online-friends', this.user.friends);
     }
 
-    // Info getters //
+    // --- Friends info calls ---
+    // Get friends, requests, statuses DB and WS calls
     public getFriends(): Observable<User[]> {
         const url = `${this.apiUrl}/get-friends`;
 
@@ -84,13 +84,14 @@ export class FriendService {
         return req;
     }
 
-    // this is being called in connectAndStoreUser, online friends are fetched immediately
+    // This is being called in connectAndStoreUser, online friends are fetched on initialization
     public listenForReceivedOnlineFriends(): void {
         this.socket.on('receive-online-friends', msgObj => {
             this.onlineFriendsReceived.emit(msgObj);
         });
     }
 
+    // Checks to see if a recipient user of a friend request is online, to display for sending user
     public checkFriendStatusSend(id: string): void {
         this.socket.emit('check-friend-status-send', { id: id });
     }
@@ -101,7 +102,8 @@ export class FriendService {
         });
     }
 
-    // Friend requests //
+    // --- Friend requests ---
+    // Send request DB and WS calls
     public createFriendRequest(receiver: User): Observable<User> {
         const url = `${this.apiUrl}/send-friend-request`;
 
@@ -120,8 +122,6 @@ export class FriendService {
             receiverEmail: receiverEmail ? receiverEmail : null
         };
 
-        console.log(msgObj);
-
         this.socket.emit('friend-request-send', msgObj);
     }
 
@@ -131,6 +131,7 @@ export class FriendService {
         });
     }
 
+    // Accept request DB and WS calls
     public acceptFriendRequest(id: string): Observable<User> {
         const url = `${this.apiUrl}/accept-friend-request/${id}`;
 
@@ -150,6 +151,7 @@ export class FriendService {
         });
     }
 
+    // Deny request DB call
     public denyFriendRequest(id: string): Observable<User> {
         const url = `${this.apiUrl}/deny-friend-request/${id}`;
 
@@ -158,6 +160,14 @@ export class FriendService {
         return req;
     }
 
+    // Tells pages a friend request has been handled and splices that friend request from friend_requests[] 
+    // Whether it's accepted or denied is handled by sendAcceptedFriendRequest, listenForAcceptedFriendRequest, denyFriendRequest
+    public emitFriendRequestHandled(id: string): void {
+        this.friendRequestHandled.emit(id);
+    }
+
+    // --- Friend Removal ---
+    // Remove friend DB and WS calls
     public removeFriend(id: string): Observable<User> {
         const url = `${this.apiUrl}/remove-friend/${id}`;
 
@@ -165,8 +175,9 @@ export class FriendService {
 
         return req;
     }
+    
 
-    public emitFriendRequestHandled(id: string): void {
-        this.friendRequestHandled.emit(id);
-    }
+    // --- Changing Status/Name/Avatar
+
+    // --- Messaging ---
 }

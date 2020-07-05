@@ -1,0 +1,27 @@
+<!-- Modal Header -->
+<div class="modal-header no-pad-margin">
+    <div class="container confirmation-header">
+        <div class="row">
+            <div class="col-12 my-auto text-center">
+                Please Confirm
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Body -->
+<div class="container modal-body">
+    <div class="row no-pad-margin">
+        <div class="col-12 message-col">
+            {{ message }}
+        </div>
+    </div>
+</div>
+<!-- Modal Footer -->
+<div class="modal-footer text-center no-pad-margin">
+    <div class="form-group text-center btn-container">
+        <button class="btn submit-btn cursor-pointer"
+        (click)="activeModal.close('ok')">Yes</button> &nbsp;
+        <button class="btn submit-btn cursor-pointer"
+        (click)="activeModal.dismiss('cancel')">No</button>
+    </div>
+</div>

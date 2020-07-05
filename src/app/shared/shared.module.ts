@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { AlertMessagesComponent } from './alert-messages/alert-messages.component';
+import { ConfirmationModalComponent } from './confirmation/confirmation-modal.component';
 import { FormValidationMsgsComponent } from './form-validation-msgs/form-validation-msgs.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -20,6 +21,7 @@ import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
 @NgModule({
     declarations: [
         AlertMessagesComponent,
+        ConfirmationModalComponent,
         FormValidationMsgsComponent,
         FooterComponent,
         HeaderComponent,
@@ -36,6 +38,7 @@ import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
     ],
     exports: [
         AlertMessagesComponent,
+        ConfirmationModalComponent,
         FormValidationMsgsComponent,
         FooterComponent,
         HeaderComponent,
@@ -47,6 +50,7 @@ import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
     ],
     providers: [],
     entryComponents: [
+        ConfirmationModalComponent,
         MessageDisplayModalComponent
     ]
 })
