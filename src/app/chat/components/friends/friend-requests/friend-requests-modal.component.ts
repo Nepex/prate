@@ -64,6 +64,7 @@ export class FriendRequestsModalComponent implements OnInit {
             });
 
             this.friendService.emitFriendRequestHandled(id);
+            this.friendService.sendAcceptedFriendRequest(this.user.id, id);
             this.messages.push({ message: 'Friend request accepted', type: 'success' });
             // emit to person their friend request was accepted, also add logic to friendlist to update accordingly
             this.handleFriendRequest = null;

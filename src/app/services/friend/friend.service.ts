@@ -19,8 +19,12 @@ export class FriendService {
     private apiUrl = `${environment.apiBaseUrl}/friends`;
 
     public onlineFriendsReceived: EventEmitter<User[]> = new EventEmitter();
+    public checkFriendStatusReceived: EventEmitter<User> = new EventEmitter();
     public friendRequestReceived: EventEmitter<FriendRequest> = new EventEmitter();
     public friendRequestHandled: EventEmitter<string> = new EventEmitter();
+
+    public acceptedFriendRequestSent: EventEmitter<string> = new EventEmitter();
+    public acceptedFriendRequestReceived: EventEmitter<User> = new EventEmitter();
 
     public socket: io.Socket;
 
@@ -36,6 +40,8 @@ export class FriendService {
 
         this.listenForReceivedFriendRequests();
         this.listenForReceivedOnlineFriends();
+        this.listenForAcceptedFriendRequest();
+        this.listenForCheckFriendStatusReceived();
     }
 
     public disconnect(): void {
@@ -78,9 +84,20 @@ export class FriendService {
         return req;
     }
 
+    // this is being called in connectAndStoreUser, online friends are fetched immediately
     public listenForReceivedOnlineFriends(): void {
         this.socket.on('receive-online-friends', msgObj => {
             this.onlineFriendsReceived.emit(msgObj);
+        });
+    }
+
+    public checkFriendStatusSend(id: string): void {
+        this.socket.emit('check-friend-status-send', { id: id });
+    }
+
+    public listenForCheckFriendStatusReceived(): void {
+        this.socket.on('check-friend-status-received', msgObj => {
+            this.checkFriendStatusReceived.emit(msgObj);
         });
     }
 
@@ -99,7 +116,7 @@ export class FriendService {
             senderName: sender.name,
             senderEmail: sender.email,
             receiverId: receiver ? receiver.id : null,
-            receiverName: receiver ? receiver.name : null, 
+            receiverName: receiver ? receiver.name : null,
             receiverEmail: receiverEmail ? receiverEmail : null
         };
 
@@ -120,6 +137,17 @@ export class FriendService {
         const req = this.http.put<User>(url, null).pipe(map(res => res));
 
         return req;
+    }
+
+    public sendAcceptedFriendRequest(userSendingId: string, userReceivingId: string): void {
+        this.socket.emit('accepted-friend-request-send', { userSendingId: userSendingId, userReceivingId: userReceivingId });
+        this.acceptedFriendRequestSent.emit(userReceivingId);
+    }
+
+    public listenForAcceptedFriendRequest() {
+        this.socket.on('accepted-friend-request-received', msgObj => {
+            this.acceptedFriendRequestReceived.emit(msgObj);
+        });
     }
 
     public denyFriendRequest(id: string): Observable<User> {

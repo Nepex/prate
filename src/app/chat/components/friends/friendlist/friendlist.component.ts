@@ -5,12 +5,14 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 // NPM
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as _ from 'underscore';
 
 // App
 import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
 import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
 import { FriendService } from 'src/app/services/friend/friend.service';
 import { User } from 'src/app/services/user/user';
+import { UserService } from 'src/app/services/user/user.service';
 import { ViewUserProfileModalComponent } from '../../profile/view-user-profile/view-user-profile-modal.component';
 
 // Component for displaying friendlist
@@ -78,7 +80,11 @@ export class FriendListComponent implements OnInit {
 
     // Subs
     loadingRequest: Observable<User[]>;
+    getUserRequest: Observable<User>;
     onlineFriendsReceivedSub: Subscription;
+    checkFriendStatusReceivedSub: Subscription;
+    acceptedFriendRequestSentSub: Subscription;
+    acceptedFriendRequestReceivedSub: Subscription;
 
     // UI
     userStatus: string = 'online';
@@ -90,10 +96,14 @@ export class FriendListComponent implements OnInit {
     onlineUsers: User[] = [];
     offlineUsers: User[] = [];
 
-    constructor(private modal: NgbModal, private friendService: FriendService) { }
+    constructor(private modal: NgbModal, private friendService: FriendService, private userService: UserService) { }
 
     ngOnInit() {
         this.onlineFriendsReceivedSub = this.friendService.onlineFriendsReceived.subscribe(msgObj => this.initFriendlist(msgObj));
+        this.checkFriendStatusReceivedSub = this.friendService.checkFriendStatusReceived.subscribe(msgObj => this.pushAcceptedFriend(msgObj));
+
+        this.acceptedFriendRequestSentSub = this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
+        this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
     }
 
     initFriendlist(onlineFriends: User[]) {
@@ -118,6 +128,41 @@ export class FriendListComponent implements OnInit {
         }, err => {
             this.loadingRequest = null;
         });
+    }
+
+    acceptedFriendRequestSent(id: string) {
+        this.friendService.checkFriendStatusSend(id);
+    }
+
+    pushAcceptedFriend(user: User) {
+        if (user.status === 'offline') {
+            if (this.getUserRequest) {
+                return;
+            }
+
+            this.getUserRequest = this.userService.getById(user.id);
+
+            this.getUserRequest.subscribe(res => {
+                const user = {
+                    id: res.id,
+                    name: res.name,
+                    avatar: res.avatar,
+                    status: 'offline'
+                };
+
+                this.offlineUsers.push(user)
+                this.sortFriends();
+                this.getUserRequest = null;
+            });
+        } else {
+            this.onlineUsers.push(user);
+            this.sortFriends();
+        }
+    }
+
+    acceptedFriendRequestReceived(user: User) {
+        this.onlineUsers.push(user);
+        this.sortFriends();
     }
 
     toggleUserStatus(): void {
@@ -150,5 +195,10 @@ export class FriendListComponent implements OnInit {
         const modalRef = this.modal.open(ViewUserProfileModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         modalRef.componentInstance.userBeingViewedId = id;
         modalRef.componentInstance.currentUser = this.user;
+    }
+
+    sortFriends() {
+        this.onlineUsers = _.sortBy(this.onlineUsers, function (o) { return o.name; });
+        this.offlineUsers = _.sortBy(this.offlineUsers, function (o) { return o.name; });
     }
 }

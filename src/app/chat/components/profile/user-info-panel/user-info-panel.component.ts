@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { BugReportModalComponent } from '../../bug-report/bug-report-modal.component';
 import { ChatService } from '../../../../services/chat/chat.service';
+import { FriendService } from 'src/app/services/friend/friend.service';
 import { HelpModalComponent } from '../../help/help-modal.component';
 import { LevelInfo } from '../../../../services/level/level-info';
 import { LevelService } from '../../../../services/level/level.service';
@@ -39,7 +40,7 @@ export class UserInfoPanelComponent implements OnInit, OnChanges {
     levelInfo: LevelInfo;
 
     constructor(private modal: NgbModal, private sessionService: SessionService, private router: Router,
-        private chatService: ChatService, private levelService: LevelService) { }
+        private chatService: ChatService, private levelService: LevelService, private friendService: FriendService) { }
 
     ngOnInit(): void { }
 
@@ -76,6 +77,7 @@ export class UserInfoPanelComponent implements OnInit, OnChanges {
         if (this.partner) {
             this.chatService.disconnect();
         }
+        this.friendService.disconnect();
         this.sessionService.logout();
         this.router.navigateByUrl('/');
     }

@@ -72,6 +72,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     friendRequestReceivedSub: Subscription;
     friendRequestHandledSub: Subscription;
+    acceptedFriendRequestSentSub: Subscription;
+    acceptedFriendRequestReceivedSub: Subscription;
 
     outerAppInviteReceivedSub: Subscription;
     outerAppInviteAcceptedSub: Subscription;
@@ -194,6 +196,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.friendRequestReceived(msgObj));
             this.friendRequestHandledSub = this.friendService.friendRequestHandled.subscribe(id => this.user.friend_requests.splice(this.user.friend_requests.indexOf(id), 1));
+            this.acceptedFriendRequestSentSub = this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
+            this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
 
             this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
             this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
@@ -246,6 +250,10 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.userDoneTypingSub.unsubscribe();
         this.isPartnerTypingSub.unsubscribe();
         this.partnerDisconnectSub.unsubscribe();
+        this.friendRequestReceivedSub.unsubscribe();
+        this.acceptedFriendRequestReceivedSub.unsubscribe();
+        this.acceptedFriendRequestSentSub.unsubscribe();
+        this.friendRequestHandledSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
     }
@@ -694,17 +702,33 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.friendsShown = event;
     }
 
-    friendRequestReceived(friendRequest: FriendRequest): void {
-        let notif = {
-            message: `You have received a new friend request from ${friendRequest.senderName}`
-        };
-
+    pushNotification(notif: { message: string }) {
         this.notifications.push(notif);
 
         setTimeout(() => {
             this.notifications.splice(this.notifications.indexOf(notif), 1);
         }, 5000);
+    };
 
+    friendRequestReceived(friendRequest: FriendRequest): void {
+        let notif = {
+            message: `You have received a new friend request from ${friendRequest.senderName}`
+        };
+
+        this.pushNotification(notif);
         this.user.friend_requests.push(friendRequest.senderId);
+    }
+
+    acceptedFriendRequestSent(id: string) {
+        this.user.friends.push(id);
+    }
+
+    acceptedFriendRequestReceived(user: User): void {
+        let notif = {
+            message: `${user.name} has accepted your friend request`
+        };
+
+        this.pushNotification(notif);
+        this.user.friends.push(user.id);
     }
 }
