@@ -1,6 +1,6 @@
 // Angular
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 // NPM
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +22,7 @@ export class FriendRequestsModalComponent implements OnInit {
     // Subs
     loadingRequest: Observable<User[]>;
     handleFriendRequest: Observable<User>;
+    friendRequestReceivedSub: Subscription;
 
     // Data stores
     friends: User[];
@@ -29,7 +30,12 @@ export class FriendRequestsModalComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal, private friendService: FriendService) { }
 
     ngOnInit(): void {
-        this.loadingRequest = this.friendService.getFriends();
+        this.getFriendRequests();
+        this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.getFriendRequests());
+    }
+
+    getFriendRequests() {
+        this.loadingRequest = this.friendService.getFriendRequests();
 
         this.loadingRequest.subscribe(res => {
             this.friends = res;
@@ -39,7 +45,27 @@ export class FriendRequestsModalComponent implements OnInit {
         });
     }
 
-    acceptFriendRequest(id: string): void { }
+    acceptFriendRequest(id: string): void {
+        if (this.handleFriendRequest) {
+            return;
+        }
+
+        this.handleFriendRequest = this.friendService.acceptFriendRequest(id);
+
+        this.handleFriendRequest.subscribe(res => {
+            this.friends.forEach(friend => {
+                if (friend.id === id) {
+                    this.friends.splice(this.friends.indexOf(friend), 1)
+                }
+            });
+
+            this.friendService.emitFriendRequestHandled(id);
+            // emit to person their friend request was accepted, also add logic to friendlist to update accordingly
+            this.handleFriendRequest = null;
+        }, err => {
+            this.handleFriendRequest = null;
+        });
+    }
 
     denyFriendRequest(id: string): void {
         if (this.handleFriendRequest) {
@@ -60,5 +86,5 @@ export class FriendRequestsModalComponent implements OnInit {
         }, err => {
             this.handleFriendRequest = null;
         });
-     }
+    }
 }

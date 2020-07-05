@@ -27,6 +27,7 @@ export class FriendService {
 
     constructor(private sessionService: SessionService, private http: HttpClient) { }
 
+    // Socket initiation //
     private connect(): void {
         this.socket = io(`${environment.apiServer}/friends`, {
             path: `${environment.socketIoServer}`
@@ -49,13 +50,13 @@ export class FriendService {
             webSocketAuth: '3346841372',
             token: this.sessionService.getToken(),
             friends: user.friends,
-            friend_requests: user.friend_requests,
             email: user.email
         };
 
         this.socket.emit('storeUserInfo', this.user);
     }
 
+    // Info getters //
     public getFriends(): Observable<User[]> {
         const url = `${this.apiUrl}/get-friends`;
 
@@ -64,6 +65,15 @@ export class FriendService {
         return req;
     }
 
+    public getFriendRequests(): Observable<User[]> {
+        const url = `${this.apiUrl}/get-friend-requests`;
+
+        const req = this.http.get<User[]>(url);
+
+        return req;
+    }
+
+    // Friend requests //
     public createFriendRequest(receiver: User): Observable<User> {
         const url = `${this.apiUrl}/send-friend-request`;
 
@@ -76,6 +86,7 @@ export class FriendService {
         const msgObj: FriendRequest = {
             senderId: sender.id,
             senderName: sender.name,
+            senderEmail: sender.email,
             receiverId: receiver ? receiver.id : null,
             receiverName: receiver ? receiver.name : null, 
             receiverEmail: receiverEmail ? receiverEmail : null
@@ -92,8 +103,24 @@ export class FriendService {
         });
     }
 
+    public acceptFriendRequest(id: string): Observable<User> {
+        const url = `${this.apiUrl}/accept-friend-request/${id}`;
+
+        const req = this.http.put<User>(url, null).pipe(map(res => res));
+
+        return req;
+    }
+
     public denyFriendRequest(id: string): Observable<User> {
         const url = `${this.apiUrl}/deny-friend-request/${id}`;
+
+        const req = this.http.put<User>(url, null).pipe(map(res => res));
+
+        return req;
+    }
+
+    public removeFriend(id: string): Observable<User> {
+        const url = `${this.apiUrl}/remove-friend/${id}`;
 
         const req = this.http.put<User>(url, null).pipe(map(res => res));
 
