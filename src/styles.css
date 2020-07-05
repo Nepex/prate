@@ -20,6 +20,10 @@ html, body {
     margin: 0;
 }
 
+.inline-block {
+    display: inline-block;
+}
+
 .btn {
     background-color: #00AFF0;
     color: #ffffff;

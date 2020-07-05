@@ -19,6 +19,7 @@ import { ChatComponent } from './chat/chat.component';
 import { UserSettingsModalComponent } from './components/profile/user-settings/user-settings-modal.component';
 import { ChangeAvatarModalComponent } from './components/profile/change-avatar/change-avatar-modal.component';
 import { FriendListComponent } from './components/friends/friendlist/friendlist.component';
+import { FriendRequestsModalComponent } from './components/friends/friend-requests/friend-requests-modal.component';
 import { GameContainerComponent } from './components/game-container/game-container.component';
 import { HelpModalComponent } from './components/help/help-modal.component';
 import { BugReportModalComponent } from './components/bug-report/bug-report-modal.component';
@@ -35,6 +36,7 @@ import { YoutubePlayerComponent } from './components/youtube-player/youtube-play
         ChangeAvatarModalComponent,
         ChatComponent,
         FriendListComponent,
+        FriendRequestsModalComponent,
         GameContainerComponent,
         HelpModalComponent,
         OuterAppInviteModalComponent,
@@ -60,6 +62,7 @@ import { YoutubePlayerComponent } from './components/youtube-player/youtube-play
         AddFriendModalComponent,
         BugReportModalComponent,
         ChangeAvatarModalComponent,
+        FriendRequestsModalComponent,
         HelpModalComponent,
         OuterAppInviteModalComponent,
         UserSettingsModalComponent,

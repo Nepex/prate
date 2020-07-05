@@ -55,6 +55,14 @@ export class FriendService {
         this.socket.emit('storeUserInfo', this.user);
     }
 
+    public getFriends(): Observable<User[]> {
+        const url = `${this.apiUrl}/get-friends`;
+
+        const req = this.http.get<User[]>(url);
+
+        return req;
+    }
+
     public createFriendRequest(receiver: User): Observable<User> {
         const url = `${this.apiUrl}/send-friend-request`;
 

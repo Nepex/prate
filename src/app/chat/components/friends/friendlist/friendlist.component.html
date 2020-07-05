@@ -30,7 +30,7 @@
 
                 <div class="user-friend-req-count">
                     <button class="btn friends-btn" (click)="openAddFriendModal()"><i class="fas fa-plus"></i> Add Friend</button> &nbsp;
-                    <button class="btn friends-btn"><i class="fas fa-users"></i> Requests ({{user.friend_requests.length}})</button>
+                    <button class="btn friends-btn" (click)="openFriendRequestsModal()"><i class="fas fa-users"></i> Requests ({{user.friend_requests.length}})</button>
                 </div>
             </div>
         </div>

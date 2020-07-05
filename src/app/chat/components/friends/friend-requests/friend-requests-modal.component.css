@@ -1,0 +1,106 @@
+.modal-header {
+    background-color: rgb(33, 37, 43);
+    border-bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-body {
+    background-color: rgb(249, 253, 255);
+    padding: 0;
+}
+
+.modal-footer {
+    background-color: rgb(249, 253, 255);
+    border-top: 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding-top: 0;
+    padding-bottom: 0;
+    justify-content: center;
+}
+
+.close-btn {
+    color: #00AFF0;
+    position: absolute;
+    right: 13px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+::ng-deep>>>.modal-content {
+    border: 0;
+    border-radius: 35px;
+}
+
+::ng-deep>>>.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.friend-requests-header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.user-icon {
+    height: 30px;
+    width: 35px;
+    border-radius: 50%;
+    position: relative;
+    top: 1px;
+    left: -3px;
+}
+
+.action-box {
+    display:inline-block;
+    padding: 10px 15px 10px 15px;
+}
+
+.action-btns {
+    font-size: 15px;
+}
+
+.red {
+    background-color: rgb(255, 121, 121);
+    color: #ffffff;
+    transition: .5s;
+}
+
+.red:hover {
+    background-color: rgb(202, 67, 67);
+    transition: .5s;
+}
+
+.green {
+    background-color: rgb(76, 201, 76);
+    color: #ffffff;
+    transition: .5s;
+}
+
+.green:hover {
+    background-color: rgb(3, 182, 3);
+    transition: .5s;
+}
+
+.fr-col {
+    padding-top: 15px;
+}
+
+.fr-trs {
+    border-bottom: 1px solid #eee;
+}
+
+.table th, .table td {
+    padding: 0 !important;
+    vertical-align: middle !important;
+}
+
+
+

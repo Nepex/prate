@@ -23,7 +23,7 @@ export class AddFriendModalComponent {
     @Input() user: User;
 
     // Subs
-    loadingRequest: Observable<any>;
+    loadingRequest: Observable<User>;
 
     // UI
     messages: AlertMessage[];

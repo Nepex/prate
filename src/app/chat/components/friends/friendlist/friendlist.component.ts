@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
+import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
 import { User } from 'src/app/services/user/user';
 
 // Component for displaying friendlist
@@ -38,7 +39,7 @@ import { User } from 'src/app/services/user/user';
                 animate('300ms ease-in', style({ opacity: '0' }))
             ])
         ])
-    ] 
+    ]
 })
 export class FriendListComponent {
     // Component Inputs
@@ -47,17 +48,17 @@ export class FriendListComponent {
     @Input() partner: User;
     @Input() matching: boolean;
 
+    // Component Outputs
+    @Output() friendlistClosed: EventEmitter<boolean> = new EventEmitter();
+
     // UI
     userStatus: string = 'online';
     onlineUsers = [];
     offlineUsers = [];
 
-    // Component Outputs
-    @Output() friendlistClosed: EventEmitter<boolean> = new EventEmitter();
+    constructor(private modal: NgbModal) { }
 
-    constructor(private modal: NgbModal) {}
-
-    toggleUserStatus() {
+    toggleUserStatus(): void {
         if (this.userStatus === 'online') {
             this.userStatus = 'away';
         } else {
@@ -65,14 +66,17 @@ export class FriendListComponent {
         }
     }
 
-    closeFriendList() {
+    closeFriendList(): void {
         this.friendlistClosed.emit();
     }
 
-    openAddFriendModal() {
-        this.closeFriendList();
+    openAddFriendModal(): void {
+        const modalRef = this.modal.open(AddFriendModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.user = this.user;
+    }
 
-        const modalRef = this.modal.open(AddFriendModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+    openFriendRequestsModal(): void {
+        const modalRef = this.modal.open(FriendRequestsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         modalRef.componentInstance.user = this.user;
     }
 }
