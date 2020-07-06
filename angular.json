@@ -24,7 +24,8 @@
               "src/sitemap.xml"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/angular2-draggable/css/resizable.min.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true

@@ -250,7 +250,6 @@ export class UserSettingsModalComponent implements OnInit {
         this.loadingRequest = this.userService.updateUser(body);
 
         this.loadingRequest.subscribe(res => {
-            this.loadingRequest = null;
             this.profileForm['submitted'] = false;
             this.messages.push({ message: 'Settings saved', type: 'success' });
             this.userService.userSettingsChanged.emit(body);
@@ -264,6 +263,8 @@ export class UserSettingsModalComponent implements OnInit {
             }
             
             this.friendService.sendFriendDataChange(friendData);
+            
+            this.loadingRequest = null;
         }, err => {
             this.loadingRequest = null;
             this.profileForm['submitted'] = false;

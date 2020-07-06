@@ -3,7 +3,9 @@ export class FriendMessageData {
     name: string;
     avatar: string;
     status: string;
-    isTyping?: string;
-    windowFocused?: string;
+    isTyping?: boolean;
+    isFocused?: boolean;
+    isOpen?: boolean;
     messages?: any[];
+    unreadMessages?: boolean;
 };

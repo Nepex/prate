@@ -182,6 +182,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.titleService.setTitle('Prate');
 
+        // unable to set on css, don't allow page growth when friend message is dragged off
+        document.body.style.overflow = 'hidden';
+
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
@@ -199,7 +202,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             // FRIENDS
             this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.friendRequestReceived(msgObj));
             this.friendRequestHandledSub = this.friendService.friendRequestHandled.subscribe(id => this.user.friend_requests.splice(this.user.friend_requests.indexOf(id), 1));
-            
+
             this.acceptedFriendRequestSentSub = this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
             this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
 
@@ -282,11 +285,13 @@ export class ChatComponent implements OnInit, OnDestroy {
             return
         }
 
+        let status = this.user.status;
         this.loadingRequest = this.userService.getUser();
 
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
             this.user = res;
+            this.user.status = status;
             this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
         });
     }
@@ -728,8 +733,41 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.friendsShown = event;
     }
 
-    friendMessageBoxOpened(user: FriendMessageData) {
-        this.friendMessageData.push(user);
+    friendMessageBoxOpened(user: FriendMessageData): void {
+        for (let i = 0; i < this.friendMessageData.length; i++) {
+            // if window / data is already present, don't create anything new
+            if (user.id === this.friendMessageData[i].id)  {
+                this.friendMessageData[i].isOpen = true;
+                this.friendMessageData[i].isFocused = true;
+
+                return;
+            }
+        }
+
+        const body: FriendMessageData = {
+            id: user.id,
+            name: user.name,
+            avatar: user.avatar,
+            status: user.status,
+            isFocused: true,
+            isOpen: true,
+            unreadMessages: false,
+            messages: [],
+            isTyping: false
+        };
+
+        this.friendMessageData.push(body);
+    }
+
+    friendWindowFocused(user: FriendMessageData): void {
+        this.friendMessageData.forEach(friendData => {
+            if (friendData.id === user.id) {
+                friendData.isFocused = true;
+                friendData.unreadMessages = false;
+            } else {
+                friendData.isFocused = false;
+            }
+        });
     }
 
     friendRequestReceived(friendRequest: FriendRequest): void {
@@ -766,7 +804,9 @@ export class ChatComponent implements OnInit, OnDestroy {
             };
         }
 
-        this.pushNotification(notif);
+        if (notif) {
+            this.pushNotification(notif);
+        }
     }
 
     pushNotification(notif: { message: string }) {

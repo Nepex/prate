@@ -1,4 +1,63 @@
-<div class="message-box" ngDraggable [handle]="TopBar">
-    <div class="top-bar" #TopBar>Drag Me</div>
-    test
+<div class="message-box" ngDraggable [position]="windowPosition" [handle]="TopBar" [ngDraggable]="!isMaximized"
+    (mousedown)="isFocused.emit(friendData)" [ngStyle]="{'z-index': friendData.isFocused ? '902' : '901'}"
+    [ngClass]="{'normal-window': !isMaximized, 'maximized-window': isMaximized}">
+    <div class="top-bar" #TopBar
+        [ngStyle]="{'border-top-left-radius': isMaximized ? '0px' : '10px', 'border-top-right-radius': isMaximized ? '0px' : '10px'}">
+        Direct Message
+
+        <div class="float-right">
+            <i class="far cursor-pointer window-action-btn max-restore-btn" (click)="maximizeWindow()"
+                [ngClass]="{'fa-window-maximize': !isMaximized, 'fa-window-restore': isMaximized}"></i> &nbsp;
+            <i class="fas fa-times cursor-pointer window-action-btn" (click)="friendData.isOpen = false"></i>
+        </div>
+    </div>
+
+    <div class="user-info-box">
+        <div class="position-relative">
+            <img src="../../../../../assets/images/avatars/{{friendData.avatar}}" class="img-fluid user-icon" />
+
+            <span class="user-status no-pad-margin"
+                [ngClass]="{'online-status-color': friendData.status === 'online', 'away-status-color': friendData.status === 'away', 'dnd-status-color': friendData.status === 'dnd', 'matchinged-status-color' : friendData.status === 'matched' || friendData.status === 'matching'}">
+                <i class="fas fa-circle"></i>
+            </span>
+
+            <strong>{{ friendData.name }}</strong>
+
+            <div class="float-right">
+                <button class="btn" *ngIf="friendData.status !== 'matching' && friendData.status !== 'matched'">Invite
+                    to Match</button>
+            </div>
+        </div>
+    </div>
+    <div class="message-area"></div>
+    <div class="message-input-area position-relative">
+        <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" (keydown.enter)="sendMessage()" novalidate
+            autocomplete="off">
+            <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
+                formControlName="message" (input)="emitIsTyping()" #messageInput>
+
+            <!-- Emojis -->
+            <div class="emoji-btn-container cursor-pointer"
+                (offClick)="!hideEmojis ? hideEmojis = !hideEmojis : hideEmojis">
+                <img src="../../../../.../../../assets/images/emoji-send.png" class="emoji-btn" title="Emojis"
+                    (click)="hideEmojis = !hideEmojis">
+
+                <div class="emoji-container" [hidden]="hideEmojis">
+                    <div class="row text-center no-pad-margin">
+                        <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
+                            <img src="../../../../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
+                                ngbTooltip="{{e.code}}" placement="top" container="body"
+                                (click)="insertEmojiCodeInMsg(e.code)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Send Message -->
+            <div class="send-btn-container cursor-pointer"><img src="../../../../../assets/images/prt-send.png"
+                    title="Send Message">
+            </div>
+        </form>
+
+    </div>
 </div>

@@ -1,10 +1,11 @@
 <!-- Friendlist -->
-<prt-friendlist [showFriends]="friendsShown" [user]="user" [messageData]="friendMessageData" (messageBoxOpened)="friendMessageBoxOpened($event)"  (friendlistClosed)="toggleFriendlist(false)">
+<prt-friendlist [showFriends]="friendsShown" [user]="user" [messageData]="friendMessageData"
+    (messageBoxOpened)="friendMessageBoxOpened($event)" (friendlistClosed)="toggleFriendlist(false)">
 </prt-friendlist>
 
 <!-- Friend message boxes -->
 <div *ngFor="let f of friendMessageData">
-    <prt-friend-message-box [friendData]="f" [user]="user"></prt-friend-message-box>
+    <prt-friend-message-box [friendData]="f" [user]="user" [hidden]="!f.isOpen" (isFocused)="friendWindowFocused($event)"></prt-friend-message-box>
 </div>
 
 <!-- Chat -->
