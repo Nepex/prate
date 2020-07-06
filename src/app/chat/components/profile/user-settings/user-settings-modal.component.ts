@@ -10,6 +10,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
+import { FriendService } from '../../../../services/friend/friend.service';
 import { LevelService } from '../../../../services/level/level.service';
 import { SubmittableFormGroup } from '../../../../shared/submittable-form-group/submittable-form-group';
 import { User } from '../../../../services/user/user';
@@ -93,7 +94,7 @@ export class UserSettingsModalComponent implements OnInit {
     });
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal,
-        private levelService: LevelService) { }
+        private levelService: LevelService, private friendService: FriendService) { }
 
     ngOnInit(): void {
         this.setupModal();
@@ -254,6 +255,15 @@ export class UserSettingsModalComponent implements OnInit {
             this.messages.push({ message: 'Settings saved', type: 'success' });
             this.userService.userSettingsChanged.emit(body);
             this.user.name = body.name;
+
+            const friendData = {
+                id: this.user.id,
+                name: body.name,
+                avatar: this.user.avatar,
+                status: this.user.status
+            }
+            
+            this.friendService.sendFriendDataChange(friendData);
         }, err => {
             this.loadingRequest = null;
             this.profileForm['submitted'] = false;

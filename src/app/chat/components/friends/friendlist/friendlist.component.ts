@@ -10,6 +10,7 @@ import * as _ from 'underscore';
 // App
 import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
 import { ConfirmationModalComponent } from '../../../../shared/confirmation/confirmation-modal.component';
+import { FriendMessageData } from '../../../../services/friend/friend-message-data';
 import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
 import { FriendService } from '../../../../services/friend/friend.service';
 import { User } from '../../../../services/user/user';
@@ -73,22 +74,27 @@ export class FriendListComponent implements OnInit {
     // Component Inputs
     @Input() showFriends: boolean = false;
     @Input() user: User;
-    @Input() partner: User;
-    @Input() matching: boolean;
+    @Input() messageData: FriendMessageData;
 
     // Component Outputs
     @Output() friendlistClosed: EventEmitter<boolean> = new EventEmitter();
+    @Output() messageBoxOpened: EventEmitter<User> = new EventEmitter();
 
     // Subs
     loadingRequest: Observable<User[]>;
     getUserRequest: Observable<User>;
+    removeFriendRequest: Observable<User>;
+
     onlineFriendsReceivedSub: Subscription;
     checkFriendStatusReceivedSub: Subscription;
+
     acceptedFriendRequestSentSub: Subscription;
     acceptedFriendRequestReceivedSub: Subscription;
+    friendRemovalReceivedSub: Subscription;
+
+    friendDataChangedReceivedSub: Subscription;
 
     // UI
-    userStatus: string = 'online';
     hideOnlineFriends: boolean = false;
     hideOfflineFriends: boolean = false;
 
@@ -105,6 +111,9 @@ export class FriendListComponent implements OnInit {
 
         this.acceptedFriendRequestSentSub = this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
         this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
+        this.friendRemovalReceivedSub = this.friendService.friendRemovalReceived.subscribe(msgObj => this.spliceRemovedFriend(msgObj.id));
+
+        this.friendDataChangedReceivedSub = this.friendService.friendDataChangeReceived.subscribe(msgObj => this.updateFriendData(msgObj));
     }
 
     initFriendlist(onlineFriends: User[]): void {
@@ -123,18 +132,65 @@ export class FriendListComponent implements OnInit {
                 });
             });
 
-            console.log(this.offlineUsers, this.onlineUsers);
-
             this.loadingRequest = null;
         }, err => {
             this.loadingRequest = null;
         });
     }
 
+    openMessageBox(user: User) {
+        this.messageBoxOpened.emit(user);
+    }
+
+    toggleUserStatus(): void {
+        if (this.user.status === 'matching' || this.user.status === 'matched') {
+            return;
+        }
+
+        if (this.user.status === 'online') {
+            this.user.status = 'away';
+        } else if (this.user.status === 'away') {
+            this.user.status = 'dnd';
+        } else if (this.user.status === 'dnd') {
+            this.user.status = 'online';
+        }
+
+        this.friendService.sendFriendDataChange(this.user)
+    }
+
+    updateFriendData(user: User) {
+        this.onlineUsers.forEach(onlineFriend => {
+            if (onlineFriend.id === user.id) {
+                onlineFriend.name = user.name;
+                onlineFriend.avatar = user.avatar;
+                onlineFriend.status = user.status;
+
+                if (user.status === 'offline') {
+                    this.onlineUsers.splice(this.onlineUsers.indexOf(onlineFriend), 1);
+                    this.offlineUsers.push(onlineFriend);
+                }
+            }
+        });
+
+        if (user.status === 'online' && user.firstConnect) {
+            this.offlineUsers.forEach(offlineFriend => {
+                if (offlineFriend.id === user.id) {
+                    this.offlineUsers.splice(this.offlineUsers.indexOf(offlineFriend), 1);
+                    offlineFriend.status = 'online';
+                    this.onlineUsers.push(offlineFriend);
+                }
+            });
+        }
+
+        this.sortFriends();
+    }
+
+    // Called when a friend request is accepted sender-side
     acceptedFriendRequestSent(id: string): void {
         this.friendService.checkFriendStatusSend(id);
     }
 
+    // When adding a friend, check to see if they're online/offline, then pushes them into friendlist
     pushAcceptedFriend(user: User): void {
         if (user.status === 'offline') {
             if (this.getUserRequest) {
@@ -166,30 +222,43 @@ export class FriendListComponent implements OnInit {
         this.sortFriends();
     }
 
-    toggleUserStatus(): void {
-        if (this.userStatus === 'matching' || this.partner) {
-            return;
-        }
-
-        if (this.userStatus === 'online') {
-            this.userStatus = 'away';
-        } else {
-            this.userStatus = 'online';
-        }
-    }
-
     confirmRemoveFriend(user: User): void {
         const modalRef = this.modal.open(ConfirmationModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         modalRef.componentInstance.message = `Are you sure you want to remove '${user.name}' from your friendlist?`;
-        
+
         modalRef.result.then((result) => {
             this.removeFriend(user.id);
         }, (reason) => { });
     }
 
     removeFriend(id: string): void {
-        console.log('friend will be removed');
-        // splice, db call, emits
+        if (this.removeFriendRequest) {
+            return;
+        }
+
+        this.removeFriendRequest = this.friendService.removeFriend(id);
+
+        this.removeFriendRequest.subscribe(res => {
+            this.friendService.sendFriendRemoval(this.user.id, id);
+            this.spliceRemovedFriend(id);
+            this.removeFriendRequest = null;
+        }, err => {
+            this.removeFriendRequest = null;
+        });
+    }
+
+    spliceRemovedFriend(id: string): void {
+        for (let i = 0; i < this.onlineUsers.length; i++) {
+            if (id === this.onlineUsers[i].id) {
+                this.onlineUsers.splice(i, 1);
+            }
+        }
+
+        for (let i = 0; i < this.offlineUsers.length; i++) {
+            if (id === this.offlineUsers[i].id) {
+                this.offlineUsers.splice(i, 1);
+            }
+        }
     }
 
     openAddFriendModal(): void {

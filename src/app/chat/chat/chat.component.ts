@@ -5,6 +5,7 @@ import { map, debounceTime } from 'rxjs/operators';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 // NPM
 import * as moment from 'moment';
@@ -13,6 +14,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { ChatMessage } from '../../services/chat/chat-message';
 import { ChatService } from '../../services/chat/chat.service';
+import { FriendMessageData } from '../../services/friend/friend-message-data';
 import { FriendService } from '../../services/friend/friend.service';
 import { FriendRequest } from '../../services/friend/friend-request';
 import { IsTyping } from '../../services/chat/is-typing';
@@ -22,8 +24,6 @@ import { OuterAppInviteModalComponent } from '../components/invites/outer-app-in
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-
 
 // Central chat component
 @Component({
@@ -73,6 +73,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     friendRequestHandledSub: Subscription;
     acceptedFriendRequestSentSub: Subscription;
     acceptedFriendRequestReceivedSub: Subscription;
+    friendRemovalSentSub: Subscription;
+    friendRemovalReceivedSub: Subscription;
+    friendDataChangeReceivedSub: Subscription;
 
     outerAppInviteReceivedSub: Subscription;
     outerAppInviteAcceptedSub: Subscription;
@@ -165,6 +168,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // Friendlist
     friendsShown: boolean = false;
+    friendMessageData: FriendMessageData[] = [];
 
     // Forms
     messageForm: FormGroup = new FormGroup({
@@ -184,27 +188,37 @@ export class ChatComponent implements OnInit, OnDestroy {
             // set user
             this.user = res;
             this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
+            this.user.status = 'online';
             this.friendService.connectAndStoreUser(this.user);
 
             // set listeners
+            // SETTINGS
             this.userSettingsChangedSub = this.userService.userSettingsChanged.subscribe(() => this.getUser());
             this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
 
-            this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.matchFound(partner));
-            this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
-
+            // FRIENDS
             this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.friendRequestReceived(msgObj));
             this.friendRequestHandledSub = this.friendService.friendRequestHandled.subscribe(id => this.user.friend_requests.splice(this.user.friend_requests.indexOf(id), 1));
+            
             this.acceptedFriendRequestSentSub = this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
             this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
 
+            this.friendRemovalSentSub = this.friendService.friendRemovalSent.subscribe(id => this.user.friends.splice(this.user.friends.indexOf(id, 1)));
+            this.friendRemovalReceivedSub = this.friendService.friendRemovalReceived.subscribe(msgObj => this.user.friends.splice(this.user.friends.indexOf(msgObj.id, 1)));
+
+            this.friendDataChangeReceivedSub = this.friendService.friendDataChangeReceived.subscribe(msgObj => this.friendStatusChange(msgObj));
+
+            // APPS
             this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
             this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
             this.outerAppInviteCanceledSub = this.chatService.outerAppInviteCanceled.subscribe(() => this.outerAppInviteCanceled());
             this.toggledOuterAppFunctionSub = this.chatService.toggledOuterAppFunction.subscribe(msgObj => this.toggledOuterAppFunction(msgObj.outerApp, msgObj.activity, false));
 
-            this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
+            // PARTNER ACTIVITY
+            this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.matchFound(partner));
             this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.partnerDisconnected());
+            this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
+            this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
             this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
 
             // timeout because of dark styling needing a user obj present (see html)
@@ -215,21 +229,24 @@ export class ChatComponent implements OnInit, OnDestroy {
             // if page is refreshed or browser is closed, disconnect the user
             window.onbeforeunload = () => {
                 this.matching = false;
-                this.disconnect();
+                this.disconnectFromMatch();
+                this.disconnectFromFriends();
                 return null;
             };
 
             // back button is hit
             window.onpopstate = () => {
                 this.matching = false;
-                this.disconnect();
+                this.disconnectFromMatch();
+                this.disconnectFromFriends();
                 return null;
             };
 
             // if user drops internet
             window.onoffline = () => {
                 this.matching = false;
-                this.disconnect();
+                this.disconnectFromMatch();
+                this.disconnectFromFriends();
                 return null;
             };
 
@@ -253,6 +270,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.acceptedFriendRequestReceivedSub.unsubscribe();
         this.acceptedFriendRequestSentSub.unsubscribe();
         this.friendRequestHandledSub.unsubscribe();
+        this.friendRemovalReceivedSub.unsubscribe();
+        this.friendRemovalSentSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
     }
@@ -331,18 +350,21 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // -- Matching --
     searchForMatch(): void {
+        this.changeUserStatus('matching');
         this.matching = true;
         this.statusMessage = null;
         this.chatService.intiateMatching(this.user);
     }
 
     cancelMatching(): void {
+        this.changeUserStatus('online');
         this.chatService.disconnect();
         this.matching = false;
     }
 
     // if user is already matched/matching or auth failure
     matchError(err: string): void {
+        this.changeUserStatus('online');
         this.matching = false;
         this.statusMessage = err;
     }
@@ -352,6 +374,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.sendNotification('Match found!', 'match-found.mp3');
         }
 
+        this.changeUserStatus('matched');
         this.matching = false;
         this.partner = partner;
         this.matchFoundAnimation = true;
@@ -364,15 +387,18 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.accumulateTime();
     }
 
-    disconnect(): void {
+    disconnectFromMatch(): void {
         if (this.partner) {
             this.chatService.disconnect();
+            this.changeUserStatus('online');
             this.partnerLeftName = null;
             this.leaveMessage = 'You left the chat';
             this.clearPartnerAndEndChat();
             this.stopTimerAndGiveExp();
         }
+    }
 
+    disconnectFromFriends() {
         this.friendService.disconnect();
     }
 
@@ -382,6 +408,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
 
         this.chatService.disconnect();
+        this.changeUserStatus('online');
         this.partnerLeftName = this.partner.name;
         this.leaveMessage = 'has left the chat';
         this.clearPartnerAndEndChat();
@@ -701,13 +728,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.friendsShown = event;
     }
 
-    pushNotification(notif: { message: string }) {
-        this.notifications.push(notif);
-
-        setTimeout(() => {
-            this.notifications.splice(this.notifications.indexOf(notif), 1);
-        }, 5000);
-    };
+    friendMessageBoxOpened(user: FriendMessageData) {
+        this.friendMessageData.push(user);
+    }
 
     friendRequestReceived(friendRequest: FriendRequest): void {
         let notif = {
@@ -729,5 +752,37 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.pushNotification(notif);
         this.user.friends.push(user.id);
+    }
+
+    friendStatusChange(user: User): void {
+        let notif;
+        if (user.status === 'online' && user.firstConnect) {
+            notif = {
+                message: `${user.name} has come online`
+            };
+        } else if (user.status === 'offline') {
+            notif = {
+                message: `${user.name} has went offline`
+            };
+        }
+
+        this.pushNotification(notif);
+    }
+
+    pushNotification(notif: { message: string }) {
+        if (this.notifications.length === 5) {
+            return;
+        }
+
+        this.notifications.push(notif);
+
+        setTimeout(() => {
+            this.notifications.splice(this.notifications.indexOf(notif), 1);
+        }, 5000);
+    };
+
+    changeUserStatus(status: string) {
+        this.user.status = status;
+        this.friendService.sendFriendDataChange(this.user);
     }
 }

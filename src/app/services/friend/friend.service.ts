@@ -20,11 +20,18 @@ export class FriendService {
 
     public onlineFriendsReceived: EventEmitter<User[]> = new EventEmitter();
     public checkFriendStatusReceived: EventEmitter<User> = new EventEmitter();
+
     public friendRequestReceived: EventEmitter<FriendRequest> = new EventEmitter();
     public friendRequestHandled: EventEmitter<string> = new EventEmitter();
 
     public acceptedFriendRequestSent: EventEmitter<string> = new EventEmitter();
     public acceptedFriendRequestReceived: EventEmitter<User> = new EventEmitter();
+
+    public friendRemovalSent: EventEmitter<string> = new EventEmitter();
+    public friendRemovalReceived: EventEmitter<string> = new EventEmitter();
+
+    public friendDataChangeSent: EventEmitter<User> = new EventEmitter();
+    public friendDataChangeReceived: EventEmitter<User> = new EventEmitter();
 
     public socket: io.Socket;
 
@@ -39,9 +46,14 @@ export class FriendService {
         });
 
         this.listenForReceivedFriendRequests();
+
         this.listenForReceivedOnlineFriends();
-        this.listenForAcceptedFriendRequest();
         this.listenForCheckFriendStatusReceived();
+
+        this.listenForAcceptedFriendRequest();
+        this.listenForReceivedFriendRemoval();
+
+        this.listenForFriendDataChangeReceived();
     }
 
     public disconnect(): void {
@@ -175,9 +187,37 @@ export class FriendService {
 
         return req;
     }
-    
+
+    public sendFriendRemoval(userSendingId: string, userReceivingId: string): void {
+        this.socket.emit('friend-removal-send', { userSendingId: userSendingId, userReceivingId: userReceivingId });
+        this.friendRemovalSent.emit(userReceivingId);
+    }
+
+    public listenForReceivedFriendRemoval(): void {
+        this.socket.on('friend-removal-received', msgObj => {
+            this.friendRemovalReceived.emit(msgObj);
+        });
+    }
 
     // --- Changing Status/Name/Avatar
+    public sendFriendDataChange(user: User): void {
+        const body = {
+            id: user.id,
+            name: user.name,
+            avatar: user.avatar,
+            status: user.status
+        };
+
+        this.socket.emit('friend-data-change-send', body);
+        this.friendDataChangeSent.emit(body);
+    }
+
+    public listenForFriendDataChangeReceived(): void {
+        this.socket.on('friend-data-change-received', msgObj => {
+            this.friendDataChangeReceived.emit(msgObj);
+        });
+    }
+
 
     // --- Messaging ---
 }

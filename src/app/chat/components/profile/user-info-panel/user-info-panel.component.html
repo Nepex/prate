@@ -13,7 +13,9 @@
                 <div class="float-left">
                     <div class="no-pad-margin">
                         <span class="username no-pad-margin">{{ user.name }}</span>
-                        <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
+                        <span class="user-status no-pad-margin" [ngClass]="{'online-status-color': user.status === 'online', 'away-status-color': user.status === 'away', 'dnd-status-color': user.status === 'dnd', 'matchinged-status-color' : user.status === 'matched' || user.status === 'matching'}">
+                            <i class="fas fa-circle"></i>
+                        </span>
                     </div>
                     <div class="no-pad-margin user-level-container">
                         <span class="user-level no-pad-margin">{{ levelInfo.rank}} - Level

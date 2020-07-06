@@ -16,15 +16,16 @@
                     <span class="username">{{ user.name }}</span>
                 </div>
                 <div
-                    [ngClass]="{'online-status-color': !partner && userStatus === 'online', 'away-status-color': !partner && userStatus === 'away', 'matchinged-status-color' : partner || matching}">
+                    [ngClass]="{'online-status-color': user.status === 'online', 'away-status-color': user.status === 'away', 'dnd-status-color': user.status === 'dnd', 'matchinged-status-color' : user.status === 'matched' || user.status === 'matching'}">
                     <span class="user-status no-pad-margin cursor-pointer" (click)="toggleUserStatus()"><i
                             class="fas fa-circle"></i></span>
 
                     <span class="status-text cursor-pointer" (click)="toggleUserStatus()">
-                        <span *ngIf="partner">In Match</span>
-                        <span *ngIf="!partner && userStatus === 'online'">Online</span>
-                        <span *ngIf="!partner && userStatus === 'away'">Away</span>
-                        <span *ngIf="matching">Looking for Match</span>
+                        <span *ngIf="user.status === 'matched'">In Match</span>
+                        <span *ngIf="user.status === 'online'">Online</span>
+                        <span *ngIf="user.status === 'away'">Away</span>
+                        <span *ngIf="user.status === 'dnd'">Do Not Disturb</span>
+                        <span *ngIf="user.status === 'matching'">Looking for Match</span>
                     </span>
                 </div>
 
@@ -58,20 +59,21 @@
                         <span class="friends-username">{{ u.name }}</span>
                     </div>
                     <div
-                        [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': !partner && u.status === 'away', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
+                        [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': u.status === 'away', 'dnd-status-color': u.status === 'dnd', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
                         <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
 
                         <span class="status-text">
                             <span *ngIf="u.status === 'matched'">In Match</span>
                             <span *ngIf="u.status === 'online'">Online</span>
                             <span *ngIf="u.status === 'away'">Away</span>
+                            <span *ngIf="u.status === 'dnd'">Do Not Disturb</span>
                             <span *ngIf="u.status === 'matching'">Looking for Match</span>
                         </span>
                     </div>
                 </div>
                 <div class="col-3 text-right friends-actions-container no-pad-margin">
                     <div class="float-right">
-                        <i class="fas fa-comment-alt matchinged-status-color cursor-pointer"></i> &nbsp;
+                        <i class="fas fa-comment-alt matchinged-status-color cursor-pointer" (click)="openMessageBox(u)"></i> &nbsp;
                         <i class="fas fa-times dnd-status-color cursor-pointer" (click)="confirmRemoveFriend(u)"></i>
                     </div>
                 </div>

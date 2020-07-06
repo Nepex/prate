@@ -26,6 +26,7 @@ export class User {
     friends?: string[];
     friend_requests?: string[];
     status?: string;
+    firstConnect?: boolean;
 
     newPassword?: string;
     oldPassword?: string;

@@ -7,6 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 // NPM
 import { TagInputModule } from 'ngx-chips';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { AngularDraggableModule } from 'angular2-draggable';
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { MomentModule } from 'ngx-moment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,6 +49,7 @@ import { YoutubePlayerComponent } from './components/youtube-player/youtube-play
         YoutubePlayerComponent
     ],
     imports: [
+        AngularDraggableModule,
         AngularResizedEventModule,
         BrowserModule,
         BrowserAnimationsModule,

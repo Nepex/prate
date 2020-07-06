@@ -7,6 +7,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
+import { FriendService } from '../../../../services/friend/friend.service';
 import { User } from '../../../../services/user/user';
 import { UserService } from '../../../../services/user/user.service';
 
@@ -66,7 +67,7 @@ export class ChangeAvatarModalComponent implements OnInit {
 
     ];
 
-    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal) { }
+    constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal, private friendService: FriendService) { }
 
     ngOnInit(): void {
         this.selectedAvatar = this.user.avatar;
@@ -92,8 +93,18 @@ export class ChangeAvatarModalComponent implements OnInit {
 
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
-            this.activeModal.dismiss();
+
+            const friendData = {
+                id: this.user.id,
+                name: this.user.name,
+                avatar: this.selectedAvatar,
+                status: this.user.status
+            };
+            
+            this.friendService.sendFriendDataChange(friendData);
+
             this.userService.avatarChanged.emit(this.selectedAvatar);
+            this.activeModal.dismiss();
         }, err => {
             this.loadingRequest = null;
             err.error.forEach(error => {
