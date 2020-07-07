@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 // NPM
@@ -36,6 +36,7 @@ import { UserService } from '../../../../services/user/user.service';
 export class UserSettingsModalComponent implements OnInit {
     // Subs
     loadingRequest: Observable<User>;
+    avatarChangedSub: Subscription;
 
     // Data Stores
     user: User;
@@ -99,6 +100,8 @@ export class UserSettingsModalComponent implements OnInit {
 
     ngOnInit(): void {
         this.setupModal();
+
+        this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
 
         // Track amount of characters in bio message
         if (this.profileForm.value.bio) {
