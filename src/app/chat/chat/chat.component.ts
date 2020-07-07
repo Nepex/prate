@@ -382,7 +382,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.changeUserStatus('matching');
         this.matching = true;
         this.statusMessage = null;
-        this.chatService.intiateMatching(this.user);
+        this.chatService.intiateMatching(this.user, null);
     }
 
     cancelMatching(): void {
@@ -964,8 +964,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.matchInviteModal.close();
         }
 
-        console.log('accepted!')
-        // do backend stuff to force match
+        this.chatService.intiateMatching(this.user, invInfo.senderId);
     }
 
     matchInviteCanceled(): void {

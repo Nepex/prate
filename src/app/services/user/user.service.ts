@@ -68,6 +68,7 @@ export class UserService {
 
         user.experience = user.experience + secsSpentChatting;
 
+        delete user.status;
         delete user.email;
         delete user.avatar;
         delete user.levelInfo;

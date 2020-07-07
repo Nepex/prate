@@ -60,7 +60,7 @@ export class ChatService implements OnDestroy {
 
     // --- Matching ---
     // emits object to socket of user currently looking for match, looks for a match every second if nothing is returned
-    public intiateMatching(user: User): void {
+    public intiateMatching(user: User, forcedMatchWith: string): void {
         this.connect();
 
         this.socket.on('matchError', err => {
@@ -75,8 +75,13 @@ export class ChatService implements OnDestroy {
             enforce_interests: user.enforce_interests,
             webSocketAuth: '3346841372',
             token: this.sessionService.getToken(),
-            levelInfo: user.levelInfo
+            levelInfo: user.levelInfo,
+            forcedMatchedWith: null
         };
+
+        if (forcedMatchWith) {
+            this.user.forcedMatchedWith = forcedMatchWith;
+        }
 
         this.socket.emit('authAndStoreUserInfo', this.user);
 

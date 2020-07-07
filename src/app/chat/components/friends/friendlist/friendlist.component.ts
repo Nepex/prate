@@ -9,6 +9,7 @@ import * as _ from 'underscore';
 
 // App
 import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
+import { ChatService } from 'src/app/services/chat/chat.service';
 import { ConfirmationModalComponent } from '../../../../shared/confirmation/confirmation-modal.component';
 import { FriendMessageData } from '../../../../services/friend/friend-message-data';
 import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
@@ -111,7 +112,7 @@ export class FriendListComponent implements OnInit {
     onlineUsers: User[] = [];
     offlineUsers: User[] = [];
 
-    constructor(private modal: NgbModal, private friendService: FriendService, private userService: UserService) { }
+    constructor(private modal: NgbModal, private friendService: FriendService, private userService: UserService, private chatService: ChatService) { }
 
     ngOnInit(): void {
         this.onlineFriendsReceivedSub = this.friendService.onlineFriendsReceived.subscribe(msgObj => this.initFriendlist(msgObj));
@@ -297,8 +298,6 @@ export class FriendListComponent implements OnInit {
         if (this.matchInviteModal) {
             this.matchInviteModal.close();
         }
-
-        // do force logic here
     }
 
     openAddFriendModal(): void {

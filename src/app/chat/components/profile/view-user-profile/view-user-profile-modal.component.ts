@@ -77,7 +77,6 @@ export class ViewUserProfileModalComponent implements OnInit {
             this.friendService.sendFriendRequest(this.currentUser, receiver);
             this.loadingRequest = null;
         }, err => {
-            console.log(err);
             this.friendReqMessage = err.error[0];
             this.loadingRequest = null;
         });
