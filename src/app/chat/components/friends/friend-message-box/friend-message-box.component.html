@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="message-area" id="chatMessages" (scroll)="chatScrolled()">
+    <div class="message-area" id="{{friendData.id}}" (scroll)="chatScrolled()">
         <div *ngFor="let m of friendData.messages" (resized)="checkForAutoScroll()">
             <div class="position-relative" [hidden]="hideBubbles"
                 [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
@@ -75,7 +75,7 @@
         <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" (keydown.enter)="sendMessage()" novalidate
             autocomplete="off">
             <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
-                formControlName="message" (input)="emitIsTyping()" #messageInput>
+                formControlName="message" (input)="emitIsTyping()" #messageInput spellcheck="false" autofocus>
 
             <!-- Emojis -->
             <div class="emoji-btn-container cursor-pointer"

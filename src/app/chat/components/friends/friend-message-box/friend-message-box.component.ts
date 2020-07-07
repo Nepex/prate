@@ -170,14 +170,14 @@ export class FriendMessageBoxComponent implements OnInit {
     }
 
     scrollToChatBottom(): void {
-        let element = document.getElementById('chatMessages');
+        let element = document.getElementById(this.friendData.id);
 
         element.scrollTop = element.scrollHeight;
     }
 
     // if chat is scrolled, check if user is at the bottom, if not, allow for free scrolling
     chatScrolled(): void {
-        let element = document.getElementById('chatMessages');
+        let element = document.getElementById(this.friendData.id);
         let atBottom = (element.scrollTop + element.offsetHeight + 90) >= element.scrollHeight;
 
         if (atBottom) {
@@ -189,7 +189,7 @@ export class FriendMessageBoxComponent implements OnInit {
 
     // If user is at the bottom, auto scroll chat with messages sent/received
     checkForAutoScroll(): void {
-        let element = document.getElementById('chatMessages');
+        let element = document.getElementById(this.friendData.id);
 
         if (this.autoScroll) {
             element.scrollTop = element.scrollHeight;

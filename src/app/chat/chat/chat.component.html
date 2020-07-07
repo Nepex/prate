@@ -1,6 +1,6 @@
 <!-- Friendlist -->
 <prt-friendlist [showFriends]="friendsShown" [user]="user" [messageData]="friendMessageData"
-    (messageBoxOpened)="friendMessageBoxOpened($event)" (friendlistClosed)="toggleFriendlist(false)">
+    (messageBoxOpened)="friendMessageBoxOpened($event)" [friendsWithUnreadMessages]="friendsWithUnreadMessages" (friendlistClosed)="toggleFriendlist(false)">
 </prt-friendlist>
 
 <!-- Friend message boxes -->
@@ -88,7 +88,7 @@
 
         <div class="col-lg-3 col-2 my-auto">
             <prt-user-info-panel [user]="user" [partner]="partner" [exp]="user.experience" [friendsShown]="friendsShown"
-                (friendlistToggled)="toggleFriendlist($event)" *ngIf="user"></prt-user-info-panel>
+                (friendlistToggled)="toggleFriendlist($event)" [friendsWithUnreadMessages]="friendsWithUnreadMessages" *ngIf="user"></prt-user-info-panel>
         </div>
     </div>
 
@@ -204,7 +204,7 @@
                     <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
                         formControlName="message" (input)="emitIsTyping()" #messageInput
                         [ngClass]="{'dark-message-input': user.color_theme === 'dark', 'light-message-input': user.color_theme === 'light'}"
-                        *ngIf="user">
+                        *ngIf="user" spellcheck="false">
 
 
                     <!-- Games -->

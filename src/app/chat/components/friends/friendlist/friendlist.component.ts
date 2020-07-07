@@ -1,5 +1,5 @@
 // Angular
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, SimpleChange } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -74,7 +74,8 @@ export class FriendListComponent implements OnInit {
     // Component Inputs
     @Input() showFriends: boolean = false;
     @Input() user: User;
-    @Input() messageData: FriendMessageData;
+    @Input() friendsWithUnreadMessages: string[];
+    @Input() messageData: FriendMessageData[];
 
     // Component Outputs
     @Output() friendlistClosed: EventEmitter<boolean> = new EventEmitter();

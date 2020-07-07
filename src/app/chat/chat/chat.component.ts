@@ -173,6 +173,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Friendlist
     friendsShown: boolean = false;
     friendMessageData: FriendMessageData[] = [];
+    friendsWithUnreadMessages: string[] = [];
 
     // Forms
     messageForm: FormGroup = new FormGroup({
@@ -779,15 +780,17 @@ export class ChatComponent implements OnInit, OnDestroy {
 
                 if (!friendData.isFocused) {
                     friendData.unreadMessages = true;
+                    this.friendsWithUnreadMessages.push(msgObj.sender);
 
                     let notif = { message: `You have received a new message from ${msgObj.senderName}` };
 
-                    this.sendNotification('New Friend Message', 'notif.mp3');
+                    // this.sendNotification('New Friend Message', 'notif.mp3');
                     this.pushNotification(notif);
                 }
             }
         });
 
+        // pop a new window if it's the first message
         if (!friendConversationExists) {
             const body: FriendMessageData = {
                 id: msgObj.sender,
@@ -814,6 +817,7 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.friendMessageData[i].isOpen = true;
                 this.friendMessageData[i].isFocused = true;
                 this.friendMessageData[i].unreadMessages = false;
+                this.removeUnreadMessageAlert(user.id);
 
                 return;
             }
@@ -839,8 +843,17 @@ export class ChatComponent implements OnInit, OnDestroy {
             if (friendData.id === user.id) {
                 friendData.isFocused = true;
                 friendData.unreadMessages = false;
+                this.removeUnreadMessageAlert(user.id);
             } else {
                 friendData.isFocused = false;
+            }
+        });
+    }
+
+    removeUnreadMessageAlert(id: string) {
+        this.friendsWithUnreadMessages.forEach(unreadId => {
+            if (unreadId === id) {
+                this.friendsWithUnreadMessages.splice(this.friendsWithUnreadMessages.indexOf(id), 1);
             }
         });
     }
@@ -877,7 +890,21 @@ export class ChatComponent implements OnInit, OnDestroy {
             notif = {
                 message: `${user.name} has went offline`
             };
+
+            this.friendMessageData.forEach(friendData => {
+                if (friendData.id === user.id) {
+                    this.friendMessageData.splice(this.friendMessageData.indexOf(friendData, 1));
+                }
+            });
         }
+
+        this.friendMessageData.forEach(friendData => {
+            if (friendData.id === user.id) {
+                friendData.name = user.name;
+                friendData.avatar = user.avatar;
+                friendData.status = user.status;
+            }
+        });
 
         if (notif) {
             this.pushNotification(notif);

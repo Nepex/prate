@@ -27,8 +27,8 @@ import { GameContainerComponent } from './components/game-container/game-contain
 import { HelpModalComponent } from './components/help/help-modal.component';
 import { BugReportModalComponent } from './components/bug-report/bug-report-modal.component';
 import { OuterAppInviteModalComponent } from './components/invites/outer-app-invite/outer-app-invite-modal.component';
-import { ViewUserProfileModalComponent } from './components/profile/view-user-profile/view-user-profile-modal.component';
 import { UserInfoPanelComponent } from './components/profile/user-info-panel/user-info-panel.component';
+import { ViewUserProfileModalComponent } from './components/profile/view-user-profile/view-user-profile-modal.component';
 import { YoutubePlayerComponent } from './components/youtube-player/youtube-player.component';
 
 @NgModule({

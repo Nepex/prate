@@ -27,6 +27,9 @@
                 <div class="lg-nav-icon-container">
                     <i class="fas fa-cog lg-nav-icon" (click)="openSettingsModal()" title="User Settings"></i>
                     <i class="fas fa-user-friends lg-nav-icon" (click)="toggleFriendlist()" title="Friends"></i>
+                    <span class="unread-msg-indicator" *ngIf="friendsWithUnreadMessages.length > 0">
+                        <i class="fas fa-comment-dots" ngbTooltip="Unread Messages!" placement="bottom" container="body"></i>
+                    </span>
                     <i class="fas fa-question-circle lg-nav-icon" (click)="openHelpModal()" title="Help"></i>
                     <i class="fas fas fa-bug lg-nav-icon" (click)="openBugReportModal()" title="Bug Report"></i>
                     <i class="fas fa-times lg-nav-icon" (click)="logout()" title="Logout"></i>
@@ -48,6 +51,11 @@
 <!-- Mobile View -->
 <div class="row mobile-container">
     <div class="col-12 my-auto user-icon-container" *ngIf="user">
+        <!-- Unread message indicator-->
+        <div class="unread-msg-indicator-mobile" *ngIf="friendsWithUnreadMessages.length > 0">
+            <i class="fas fa-comment-dots" ngbTooltip="New Messages" placement="left" container="body"></i>
+        </div>
+
         <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right cursor-pointer"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             (click)="navIsCollapsed = !navIsCollapsed" (offClick)="navIsCollapsed ? navIsCollapsed : navIsCollapsed = !navIsCollapsed" />

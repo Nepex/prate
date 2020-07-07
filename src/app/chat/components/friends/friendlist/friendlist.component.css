@@ -118,6 +118,10 @@
     color: red;
 }
 
+.unread-msg-color {
+    color: rgb(235, 152, 0);
+}
+
 .user-match-status {
     color: #ffffff;
     font-size: 12px;
