@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 // NPM
 import * as io from 'socket.io-client';
+import * as moment from 'moment';
 
 // App
 import { environment } from './../../../environments/environment';
@@ -12,11 +13,16 @@ import { FriendRequest } from './friend-request';
 import { SessionService } from '../session/session.service';
 import { User } from './../user/user';
 import { Observable } from 'rxjs';
+import { ChatMessage } from '../chat/chat-message';
 
 // Service for managing chat connections
 @Injectable()
 export class FriendService {
     private apiUrl = `${environment.apiBaseUrl}/friends`;
+
+    public friendMessageSent: EventEmitter<ChatMessage> = new EventEmitter();
+    public friendMessageReceived: EventEmitter<ChatMessage> = new EventEmitter();
+    public isFriendTyping: EventEmitter<void> = new EventEmitter();
 
     public onlineFriendsReceived: EventEmitter<User[]> = new EventEmitter();
     public checkFriendStatusReceived: EventEmitter<User> = new EventEmitter();
@@ -44,6 +50,9 @@ export class FriendService {
         this.socket = io(`${environment.apiServer}/friends`, {
             path: `${environment.socketIoServer}`
         });
+
+        this.listenForFriendMessageRecevied();
+        this.listenForFriendIsTyping();
 
         this.listenForReceivedFriendRequests();
 
@@ -220,4 +229,33 @@ export class FriendService {
 
 
     // --- Messaging ---
+    public sendFriendMessage(msgObj: ChatMessage): void {
+        this.socket.emit('friend-message-send', msgObj);
+        this.friendMessageSent.emit(msgObj);
+    }
+
+    private listenForFriendMessageRecevied(): void {
+        this.socket.on('friend-message-received', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.friendMessageReceived.emit(msgObj);
+        });
+    }
+
+    public userIsTyping(isTyping: boolean, friend: User, sender: User): void {
+        const typingObj = {
+            isTyping: isTyping,
+            sender: sender.id,
+            receiver: friend.id
+        };
+
+        this.socket.emit('user-typed', typingObj);
+    }
+
+    private listenForFriendIsTyping(): void {
+        this.socket.on('friend-typed', typingObj => {
+            this.isFriendTyping.emit(typingObj);
+        });
+    }
 }

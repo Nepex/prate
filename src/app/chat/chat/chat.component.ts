@@ -77,6 +77,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     friendRemovalReceivedSub: Subscription;
     friendDataChangeReceivedSub: Subscription;
 
+    friendMessageSentSub: Subscription;
+    friendMessageReceivedSub: Subscription;
+    isFriendTypingSub: Subscription;
+
     outerAppInviteReceivedSub: Subscription;
     outerAppInviteAcceptedSub: Subscription;
     outerAppInviteCanceledSub: Subscription;
@@ -211,6 +215,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             this.friendDataChangeReceivedSub = this.friendService.friendDataChangeReceived.subscribe(msgObj => this.friendStatusChange(msgObj));
 
+            this.isFriendTypingSub = this.friendService.isFriendTyping.subscribe(msgObj => this.isFriendTyping(msgObj));
+            this.friendMessageSentSub = this.friendService.friendMessageSent.subscribe(msgObj => this.friendMessageSent(msgObj));
+            this.friendMessageReceivedSub = this.friendService.friendMessageReceived.subscribe(msgObj => this.friendMessageReceived(msgObj));
+
             // APPS
             this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
             this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
@@ -275,6 +283,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.friendRequestHandledSub.unsubscribe();
         this.friendRemovalReceivedSub.unsubscribe();
         this.friendRemovalSentSub.unsubscribe();
+        this.isFriendTypingSub.unsubscribe()
+        this.friendMessageSentSub.unsubscribe();
+        this.friendMessageReceivedSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
     }
@@ -733,12 +744,76 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.friendsShown = event;
     }
 
+    isFriendTyping(typingObj): void {
+        this.friendMessageData.forEach(friendData => {
+            if (friendData.id === typingObj.sender) {
+                if (typingObj.isTyping) {
+                    friendData.isTyping = true;
+                } else {
+                    friendData.isTyping = false;
+                }
+            }
+        });
+    }
+
+    friendMessageSent(msgObj: ChatMessage) {
+        msgObj.message = this.linkify(msgObj.message);
+        msgObj.message = this.emojify(msgObj.message);
+
+        this.friendMessageData.forEach(friendData => {
+            if (friendData.id === msgObj.receiver) {
+                friendData.messages.push(msgObj);
+            }
+        });
+    }
+
+    friendMessageReceived(msgObj: ChatMessage): void {
+        let friendConversationExists;
+        msgObj.message = this.linkify(msgObj.message);
+        msgObj.message = this.emojify(msgObj.message);
+
+        this.friendMessageData.forEach(friendData => {
+            if (friendData.id === msgObj.sender) {
+                friendConversationExists = true;
+                friendData.messages.push(msgObj);
+
+                if (!friendData.isFocused) {
+                    friendData.unreadMessages = true;
+
+                    let notif = { message: `You have received a new message from ${msgObj.senderName}` };
+
+                    this.sendNotification('New Friend Message', 'notif.mp3');
+                    this.pushNotification(notif);
+                }
+            }
+        });
+
+        if (!friendConversationExists) {
+            const body: FriendMessageData = {
+                id: msgObj.sender,
+                name: msgObj.senderName,
+                avatar: msgObj.avatar,
+                status: msgObj.status,
+                isFocused: true,
+                isOpen: true,
+                unreadMessages: false,
+                messages: [],
+                isTyping: false
+            };
+
+            body.messages.push(msgObj);
+
+            this.friendMessageData.push(body);
+        }
+    }
+
     friendMessageBoxOpened(user: FriendMessageData): void {
         for (let i = 0; i < this.friendMessageData.length; i++) {
             // if window / data is already present, don't create anything new
-            if (user.id === this.friendMessageData[i].id)  {
+            if (user.id === this.friendMessageData[i].id) {
                 this.friendMessageData[i].isOpen = true;
                 this.friendMessageData[i].isFocused = true;
+                this.friendMessageData[i].unreadMessages = false;
 
                 return;
             }
