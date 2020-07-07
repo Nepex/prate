@@ -1,5 +1,6 @@
 <div class="background-overlay" *ngIf="showFriends" [@fadeInOut] (click)="closeFriendList()"></div>
-<div [@slideInOut]="showFriends ? 'show' : 'hide'" class="friendlist-container container no-pad-margin" *ngIf="user">
+<div [@slideInOut]="showFriends ? 'show' : 'hide'" class="friendlist-container container no-pad-margin" *ngIf="user"
+[ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">
     <div class="friendlist-header-container">
         <i class="fas fa-chevron-left cursor-pointer close-btn" (click)="closeFriendList()"></i>
 
@@ -56,7 +57,7 @@
                 </div>
                 <div class="col-7 friends-status-container no-pad-margin">
                     <div>
-                        <span class="friends-username">{{ u.name }} <span *ngIf="friendsWithUnreadMessages.indexOf(u.id) > -1"><i class="fas fa-comment-dots unread-msg-color"></i></span></span> 
+                        <span class="friends-username" [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">{{ u.name }} <span *ngIf="friendsWithUnreadMessages.indexOf(u.id) > -1"><i class="fas fa-comment-dots unread-msg-color"></i></span></span> 
                     </div>
                     <div
                         [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': u.status === 'away', 'dnd-status-color': u.status === 'dnd', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
@@ -96,7 +97,7 @@
                 </div>
                 <div class="col-7 friends-status-container no-pad-margin">
                     <div>
-                        <span class="friends-username">{{ u.name }}</span>
+                        <span class="friends-username" [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">{{ u.name }}</span>
                     </div>
                     <div>
                         <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>

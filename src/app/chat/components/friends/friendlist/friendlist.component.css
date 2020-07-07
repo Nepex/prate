@@ -174,3 +174,32 @@
     padding-right: 30px;
     padding-top: 15px
 }
+
+/* Themes */
+.light-icon-img {
+    filter: brightness(100%);
+}
+
+.dark-icon-img {
+    filter: brightness(110%);
+}
+
+.light-pop-container {
+    background-color: #efefef !important;
+    color: #666666 !important;
+}
+
+.dark-pop-container {
+    background-color: #111111 !important;
+    color: #efefef !important;
+}
+
+.light-general-colors {
+    background-color: rgb(249, 253, 255) !important;
+    color: #000000 !important;
+}
+
+.dark-general-colors {
+    background-color: #111111 !important;
+    color: #eeeeee !important;
+}

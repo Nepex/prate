@@ -1,6 +1,6 @@
 <div class="message-box" ngDraggable [position]="windowPosition" [handle]="TopBar" [ngDraggable]="!isMaximized"
     (mousedown)="isFocused.emit(friendData)" [ngStyle]="{'z-index': friendData.isFocused ? '902' : '901'}"
-    [ngClass]="{'normal-window': !isMaximized, 'maximized-window': isMaximized}" *ngIf="user">
+    [ngClass]="{'normal-window': !isMaximized, 'maximized-window': isMaximized, 'dark-general-colors': user.color_theme === 'dark'}" *ngIf="user">
     <div class="top-bar" #TopBar
         [ngStyle]="{'border-top-left-radius': isMaximized ? '0px' : '10px', 'border-top-right-radius': isMaximized ? '0px' : '10px'}">
         Direct Message
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="user-info-box">
+    <div class="user-info-box" [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
         <div class="position-relative">
             <img src="../../../../../assets/images/avatars/{{friendData.avatar}}" class="img-fluid user-icon" />
 
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="message-area" id="{{friendData.id}}" (scroll)="chatScrolled()">
+    <div class="message-area" id="{{friendData.id}}" (scroll)="chatScrolled()" [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">
         <div *ngFor="let m of friendData.messages" (resized)="checkForAutoScroll()">
             <div class="position-relative" [hidden]="hideBubbles"
                 [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div class="message-input-area">
+    <div class="message-input-area" [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
         <div class="user-is-typing" [hidden]="!friendData.isTyping" *ngIf="user">
             {{ friendData.name }} is typing
         </div>
@@ -75,7 +75,8 @@
         <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" (keydown.enter)="sendMessage()" novalidate
             autocomplete="off">
             <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
-                formControlName="message" (input)="emitIsTyping()" #messageInput spellcheck="false" autofocus>
+                formControlName="message" (input)="emitIsTyping()" #messageInput spellcheck="false" autofocus
+                [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
 
             <!-- Emojis -->
             <div class="emoji-btn-container cursor-pointer"
@@ -83,7 +84,7 @@
                 <img src="../../../../.../../../assets/images/emoji-send.png" class="emoji-btn" title="Emojis"
                     (click)="hideEmojis = !hideEmojis">
 
-                <div class="emoji-container" [hidden]="hideEmojis">
+                <div class="emoji-container" [hidden]="hideEmojis" [ngClass]="{'dark-pop-container': user.color_theme === 'dark', 'light-pop-container': user.color_theme === 'light'}">
                     <div class="row text-center no-pad-margin">
                         <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
                             <img src="../../../../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
