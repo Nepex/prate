@@ -1,6 +1,8 @@
 export class OuterAppInfo {
     sender: string;
-    receiver: string;
+    senderId?: string;
+    receiver?: string;
+    receiverId?: string;
     type: string;
     outerApp: string;
     outerAppLink?: string;

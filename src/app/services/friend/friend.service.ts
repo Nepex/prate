@@ -2,6 +2,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 // NPM
 import * as io from 'socket.io-client';
@@ -12,7 +13,7 @@ import { environment } from './../../../environments/environment';
 import { FriendRequest } from './friend-request';
 import { SessionService } from '../session/session.service';
 import { User } from './../user/user';
-import { Observable } from 'rxjs';
+import { OuterAppInfo } from '../chat/outer-app-info';
 import { ChatMessage } from '../chat/chat-message';
 
 // Service for managing chat connections
@@ -39,6 +40,14 @@ export class FriendService {
     public friendDataChangeSent: EventEmitter<User> = new EventEmitter();
     public friendDataChangeReceived: EventEmitter<User> = new EventEmitter();
 
+    public matchInviteReceived: EventEmitter<OuterAppInfo> = new EventEmitter();
+    public matchInviteSent: EventEmitter<OuterAppInfo> = new EventEmitter();
+    public matchInviteAccepted: EventEmitter<void> = new EventEmitter();
+    public matchInviteCanceled: EventEmitter<void> = new EventEmitter();
+
+    public matchInviteSentFromMessageBox: EventEmitter<User> = new EventEmitter();
+
+
     public socket: io.Socket;
 
     private user: User;
@@ -63,6 +72,10 @@ export class FriendService {
         this.listenForReceivedFriendRemoval();
 
         this.listenForFriendDataChangeReceived();
+
+        this.listenForMatchInviteReceived();
+        this.listenForMatchInviteAccept();
+        this.listenForMatchInviteCancel();
     }
 
     public disconnect(): void {
@@ -258,4 +271,73 @@ export class FriendService {
             this.isFriendTyping.emit(typingObj);
         });
     }
+
+    // --- Invite to Match ---
+    public sendMatchInvite(friend: User, user: User, outerApp: string): void {
+        const msgObj: OuterAppInfo = {
+            sender: user.name,
+            senderId: user.id,
+            receiverId: friend.id,
+            outerApp: outerApp,
+            type: 'sent'
+        };
+
+        this.socket.emit('match-invite-send', msgObj);
+        this.matchInviteSent.emit(msgObj);
+    }
+
+    sendMatchInviteFromMessageBox(friend: User) {
+        this.matchInviteSentFromMessageBox.emit(friend);
+    }
+
+    private listenForMatchInviteReceived(): void {
+        this.socket.on('match-invite-received', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.matchInviteReceived.emit(msgObj);
+        });
+    }
+
+    public matchInviteAccept(friendId: string, user: User, outerApp: string): void {
+        const msgObj: OuterAppInfo = {
+            sender: user.name,
+            senderId: user.id,
+            receiverId: friendId,
+            outerApp: outerApp,
+            type: 'sent'
+        };
+
+        this.socket.emit('match-invite-accept', msgObj);
+    }
+
+    private listenForMatchInviteAccept(): void {
+        this.socket.on('match-invite-accept', msgObj => {
+            msgObj.datetime = moment().format('hh:mm a');
+            msgObj.type = 'received';
+
+            this.matchInviteAccepted.emit(msgObj);
+        });
+    }
+
+    public matchInviteCancel(friendId: string, user: User, outerApp: string): void {
+        const msgObj: OuterAppInfo = {
+            sender: user.name,
+            senderId: user.id,
+            receiverId: friendId,
+            outerApp: outerApp,
+            type: 'sent'
+        };
+
+        this.socket.emit('match-invite-cancel', msgObj);
+    }
+
+    private listenForMatchInviteCancel(): void {
+        this.socket.on('match-invite-cancel', msgObj => {
+            msgObj.type = 'received';
+
+            this.matchInviteCanceled.emit();
+        });
+    }
+
 }

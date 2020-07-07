@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 // NPM
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'underscore';
 
 // App
@@ -13,6 +13,7 @@ import { ConfirmationModalComponent } from '../../../../shared/confirmation/conf
 import { FriendMessageData } from '../../../../services/friend/friend-message-data';
 import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
 import { FriendService } from '../../../../services/friend/friend.service';
+import { OuterAppInviteModalComponent } from '../../invites/outer-app-invite/outer-app-invite-modal.component';
 import { User } from '../../../../services/user/user';
 import { UserService } from '../../../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../../profile/view-user-profile/view-user-profile-modal.component';
@@ -95,9 +96,15 @@ export class FriendListComponent implements OnInit {
 
     friendDataChangedReceivedSub: Subscription;
 
+    matchInviteCanceledSub: Subscription;
+    matchInviteAcceptedSub: Subscription;
+
+    matchInviteSentFromMessageBoxSub: Subscription;
+
     // UI
     hideOnlineFriends: boolean = false;
     hideOfflineFriends: boolean = false;
+    matchInviteModal: NgbModalRef;
 
     // Data Stores
     friends: User[];
@@ -115,6 +122,11 @@ export class FriendListComponent implements OnInit {
         this.friendRemovalReceivedSub = this.friendService.friendRemovalReceived.subscribe(msgObj => this.spliceRemovedFriend(msgObj.id));
 
         this.friendDataChangedReceivedSub = this.friendService.friendDataChangeReceived.subscribe(msgObj => this.updateFriendData(msgObj));
+
+        this.matchInviteCanceledSub = this.friendService.matchInviteCanceled.subscribe(() => this.matchInviteCanceled());
+        this.matchInviteAcceptedSub = this.friendService.matchInviteAccepted.subscribe(msgObj => this.matchInviteAccepted(msgObj));
+
+        this.matchInviteSentFromMessageBoxSub = this.friendService.matchInviteSentFromMessageBox.subscribe(msgObj => this.sendMatchInvite(msgObj));
     }
 
     initFriendlist(onlineFriends: User[]): void {
@@ -260,6 +272,33 @@ export class FriendListComponent implements OnInit {
                 this.offlineUsers.splice(i, 1);
             }
         }
+    }
+
+    sendMatchInvite(friend: User): void {
+        this.friendService.sendMatchInvite(friend, this.user, 'match');
+
+        this.matchInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        this.matchInviteModal.componentInstance.type = 'sent';
+
+        this.matchInviteModal.result.then(res => {
+            if (res === 'cancel') {
+                this.friendService.matchInviteCancel(friend.id, this.user, 'match');
+            }
+        });
+    }
+
+    matchInviteCanceled(): void {
+        if (this.matchInviteModal) {
+            this.matchInviteModal.close();
+        }
+    }
+
+    matchInviteAccepted(obj): void {
+        if (this.matchInviteModal) {
+            this.matchInviteModal.close();
+        }
+
+        // do force logic here
     }
 
     openAddFriendModal(): void {

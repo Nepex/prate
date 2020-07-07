@@ -77,6 +77,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     friendRemovalReceivedSub: Subscription;
     friendDataChangeReceivedSub: Subscription;
 
+    matchInviteReceivedSub: Subscription;
+    matchInviteAcceptedSub: Subscription;
+    matchInviteCanceledSub: Subscription;
+
     friendMessageSentSub: Subscription;
     friendMessageReceivedSub: Subscription;
     isFriendTypingSub: Subscription;
@@ -174,6 +178,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     friendsShown: boolean = false;
     friendMessageData: FriendMessageData[] = [];
     friendsWithUnreadMessages: string[] = [];
+    matchInviteModal: NgbModalRef;
 
     // Forms
     messageForm: FormGroup = new FormGroup({
@@ -219,6 +224,10 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.isFriendTypingSub = this.friendService.isFriendTyping.subscribe(msgObj => this.isFriendTyping(msgObj));
             this.friendMessageSentSub = this.friendService.friendMessageSent.subscribe(msgObj => this.friendMessageSent(msgObj));
             this.friendMessageReceivedSub = this.friendService.friendMessageReceived.subscribe(msgObj => this.friendMessageReceived(msgObj));
+
+            this.matchInviteReceivedSub = this.friendService.matchInviteReceived.subscribe(msgObj => this.matchInviteReceived(msgObj));
+            this.matchInviteAcceptedSub = this.friendService.matchInviteAccepted.subscribe(msgObj => this.matchInviteAccepted(msgObj));
+            this.matchInviteCanceledSub = this.friendService.matchInviteCanceled.subscribe(() => this.matchInviteCanceled());
 
             // APPS
             this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
@@ -287,6 +296,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.isFriendTypingSub.unsubscribe()
         this.friendMessageSentSub.unsubscribe();
         this.friendMessageReceivedSub.unsubscribe();
+        this.matchInviteReceivedSub.unsubscribe();
+        this.matchInviteAcceptedSub.unsubscribe();
+        this.matchInviteCanceledSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
     }
@@ -929,6 +941,37 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.friendMessageData.splice(this.friendMessageData.indexOf(friend), 1)
             }
         });
+    }
+
+    matchInviteReceived(invInfo: OuterAppInfo): void {
+        this.matchInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        this.matchInviteModal.componentInstance.user = invInfo.sender;
+        this.matchInviteModal.componentInstance.type = 'received';
+        this.matchInviteModal.componentInstance.outerApp = invInfo.outerApp;
+
+        this.matchInviteModal.result.then(res => {
+            if (res === 'accept') {
+                this.matchInviteAccepted(invInfo);
+                this.friendService.matchInviteAccept(invInfo.senderId, this.user, invInfo.outerApp);
+            } else if (res === 'cancel') {
+                this.friendService.matchInviteCancel(invInfo.senderId, this.user, invInfo.outerApp);
+            }
+        });
+    }
+
+    matchInviteAccepted(invInfo: OuterAppInfo): void {
+        if (this.matchInviteModal) {
+            this.matchInviteModal.close();
+        }
+
+        console.log('accepted!')
+        // do backend stuff to force match
+    }
+
+    matchInviteCanceled(): void {
+        if (this.matchInviteModal) {
+            this.matchInviteModal.close();
+        }
     }
 
     pushNotification(notif: { message: string }) {

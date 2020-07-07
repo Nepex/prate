@@ -27,7 +27,7 @@
             <strong>{{ friendData.name }}</strong>
 
             <div class="float-right">
-                <button class="btn" *ngIf="friendData.status !== 'matching' && friendData.status !== 'matched'">Invite
+                <button class="btn" *ngIf="friendData.status !== 'matching' && friendData.status !== 'matched'" (click)="sendMatchInvite(friendData)">Invite
                     to Match</button>
             </div>
         </div>

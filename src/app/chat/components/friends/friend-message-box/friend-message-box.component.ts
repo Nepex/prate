@@ -127,6 +127,10 @@ export class FriendMessageBoxComponent implements OnInit {
         }
     }
 
+    sendMatchInvite(friend: User) {
+        this.friendService.sendMatchInviteFromMessageBox(friend);
+    }
+
     // Chat Formatting
     insertEmojiCodeInMsg(code: string): void {
         let message = this.messageForm.value.message;
