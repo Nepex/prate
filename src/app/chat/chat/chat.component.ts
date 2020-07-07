@@ -211,8 +211,8 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.acceptedFriendRequestSentSub = this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
             this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
 
-            this.friendRemovalSentSub = this.friendService.friendRemovalSent.subscribe(id => this.user.friends.splice(this.user.friends.indexOf(id, 1)));
-            this.friendRemovalReceivedSub = this.friendService.friendRemovalReceived.subscribe(msgObj => this.user.friends.splice(this.user.friends.indexOf(msgObj.id, 1)));
+            this.friendRemovalSentSub = this.friendService.friendRemovalSent.subscribe(id => this.friendRemovalSent(id));
+            this.friendRemovalReceivedSub = this.friendService.friendRemovalReceived.subscribe(msgObj => this.friendRemovalSent(msgObj.id));
 
             this.friendDataChangeReceivedSub = this.friendService.friendDataChangeReceived.subscribe(msgObj => this.friendStatusChange(msgObj));
 
@@ -909,6 +909,26 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (notif) {
             this.pushNotification(notif);
         }
+    }
+
+    friendRemovalSent(id) {
+        this.user.friends.splice(this.user.friends.indexOf(id, 1))
+
+        this.friendMessageData.forEach(friend => {
+            if (friend.id === id) {
+                this.friendMessageData.splice(this.friendMessageData.indexOf(friend), 1)
+            }
+        });
+    }
+
+    friendRemovalReceived(id) {
+        this.user.friends.splice(this.user.friends.indexOf(id, 1))
+
+        this.friendMessageData.forEach(friend => {
+            if (friend.id === id) {
+                this.friendMessageData.splice(this.friendMessageData.indexOf(friend), 1)
+            }
+        });
     }
 
     pushNotification(notif: { message: string }) {

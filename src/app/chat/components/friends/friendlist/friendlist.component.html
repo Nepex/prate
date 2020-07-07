@@ -55,7 +55,7 @@
                 <div class="col-2 text-right no-pad-margin">
                     <img src="../../../../../assets/images/avatars/{{u.avatar}}" class="img-fluid friends-user-icon cursor-pointer" (click)="openViewUserProfileModal(u.id)"/>
                 </div>
-                <div class="col-7 friends-status-container no-pad-margin">
+                <div class="col-6 friends-status-container no-pad-margin">
                     <div>
                         <span class="friends-username" [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">{{ u.name }} <span *ngIf="friendsWithUnreadMessages.indexOf(u.id) > -1"><i class="fas fa-comment-dots unread-msg-color"></i></span></span> 
                     </div>
@@ -72,10 +72,11 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-3 text-right friends-actions-container no-pad-margin">
+                <div class="col-4 text-right friends-actions-container no-pad-margin">
                     <div class="float-right">
-                        <i class="fas fa-comment-alt matchinged-status-color cursor-pointer" (click)="openMessageBox(u)"></i> &nbsp;
-                        <i class="fas fa-times dnd-status-color cursor-pointer" (click)="confirmRemoveFriend(u)"></i>
+                        <i class="fas fa-paper-plane online-status-color cursor-pointer" *ngIf="u.status !== 'matching' && u.status !== 'matched'" title="Invite to Match"></i> &nbsp;
+                        <i class="fas fa-comment-alt matchinged-status-color cursor-pointer" (click)="openMessageBox(u); closeFriendList()" title="Direct Message"></i> &nbsp;
+                        <i class="fas fa-times dnd-status-color cursor-pointer" (click)="confirmRemoveFriend(u);" title="Remove Friend"></i>
                     </div>
                 </div>
             </div>

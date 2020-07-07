@@ -1,19 +1,21 @@
 <div class="message-box" ngDraggable [position]="windowPosition" [handle]="TopBar" [ngDraggable]="!isMaximized"
     (mousedown)="isFocused.emit(friendData)" [ngStyle]="{'z-index': friendData.isFocused ? '902' : '901'}"
-    [ngClass]="{'normal-window': !isMaximized, 'maximized-window': isMaximized, 'dark-general-colors': user.color_theme === 'dark'}" *ngIf="user">
+    [ngClass]="{'normal-window': !isMaximized, 'maximized-window': isMaximized, 'dark-general-colors': user.color_theme === 'dark'}"
+    *ngIf="user">
     <div class="top-bar" #TopBar
         [ngStyle]="{'border-top-left-radius': isMaximized ? '0px' : '10px', 'border-top-right-radius': isMaximized ? '0px' : '10px'}">
         Direct Message
 
         <div class="float-right">
+            <i class="fas fa-eye-slash cursor-pointer window-action-btn"
+                (click)="friendData.isOpen = false; friendData.isFocused = false" title="Hide Window"></i> &nbsp;
             <i class="far cursor-pointer window-action-btn max-restore-btn" (click)="maximizeWindow()"
-                [ngClass]="{'fa-window-maximize': !isMaximized, 'fa-window-restore': isMaximized}"></i> &nbsp;
-            <i class="fas fa-times cursor-pointer window-action-btn"
-                (click)="friendData.isOpen = false; friendData.isFocused = false"></i>
+                [ngClass]="{'fa-window-maximize': !isMaximized, 'fa-window-restore': isMaximized}" title="Maximize/Restore"></i>
         </div>
     </div>
 
-    <div class="user-info-box" [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
+    <div class="user-info-box"
+        [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
         <div class="position-relative">
             <img src="../../../../../assets/images/avatars/{{friendData.avatar}}" class="img-fluid user-icon" />
 
@@ -30,7 +32,8 @@
             </div>
         </div>
     </div>
-    <div class="message-area" id="{{friendData.id}}" (scroll)="chatScrolled()" [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">
+    <div class="message-area" id="{{friendData.id}}" (scroll)="chatScrolled()"
+        [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">
         <div *ngFor="let m of friendData.messages" (resized)="checkForAutoScroll()">
             <div class="position-relative" [hidden]="hideBubbles"
                 [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
@@ -63,7 +66,8 @@
         </div>
     </div>
 
-    <div class="message-input-area" [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
+    <div class="message-input-area"
+        [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
         <div class="user-is-typing" [hidden]="!friendData.isTyping" *ngIf="user">
             {{ friendData.name }} is typing
         </div>
@@ -84,7 +88,8 @@
                 <img src="../../../../.../../../assets/images/emoji-send.png" class="emoji-btn" title="Emojis"
                     (click)="hideEmojis = !hideEmojis">
 
-                <div class="emoji-container" [hidden]="hideEmojis" [ngClass]="{'dark-pop-container': user.color_theme === 'dark', 'light-pop-container': user.color_theme === 'light'}">
+                <div class="emoji-container" [hidden]="hideEmojis"
+                    [ngClass]="{'dark-pop-container': user.color_theme === 'dark', 'light-pop-container': user.color_theme === 'light'}">
                     <div class="row text-center no-pad-margin">
                         <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
                             <img src="../../../../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
@@ -96,8 +101,8 @@
             </div>
 
             <!-- Send Message -->
-            <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img src="../../../../../assets/images/prt-send.png"
-                    title="Send Message">
+            <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
+                    src="../../../../../assets/images/prt-send.png" title="Send Message">
             </div>
         </form>
 

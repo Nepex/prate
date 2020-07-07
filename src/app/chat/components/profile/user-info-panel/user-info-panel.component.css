@@ -134,7 +134,15 @@
     color: rgb(235, 152, 0);
     position: absolute;
     top: -10px;
-    left: 33px;
+    left: 38px;
+    font-size: 8px;
+}
+
+.friend-request-indicator {
+    color: rgb(235, 152, 0);
+    position: absolute;
+    top: -10px;
+    left: 25px;
     font-size: 8px;
 }
 
@@ -144,7 +152,17 @@
     width: 20px;
     position: absolute;
     right: 11px;
-    bottom: 20px;
+    bottom: 22px;
+    z-index: 899;
+}
+
+.friend-request-indicator-mobile {
+    color: rgb(235, 152, 0);
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 11px;
+    bottom: 42px;
     z-index: 899;
 }
 

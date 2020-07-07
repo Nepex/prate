@@ -1,5 +1,5 @@
 .message-box {
-    background-color: rgb(249, 253, 255);
+    background-color: #ffffff;
     color: #ffffff;
     /* border: 1px solid rgb(33, 37, 43); */
     box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
@@ -30,13 +30,12 @@
 
 .window-action-btn {
     color: #00AFF0;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .max-restore-btn {
     font-size: 18px;
     position: relative;
-    top: -.5px;
 }
 
 .window-action-btn:hover {

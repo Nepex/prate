@@ -60,6 +60,7 @@ export class UserInfoPanelComponent implements OnInit, OnChanges {
         let modalRef;
         modalRef = this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         modalRef.componentInstance.user = this.user;
+        console.log(this.user)
     }
 
     toggleFriendlist(): void {
