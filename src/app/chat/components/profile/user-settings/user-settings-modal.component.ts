@@ -41,6 +41,7 @@ export class UserSettingsModalComponent implements OnInit {
     user: User;
 
     // UI
+    gateRequest: boolean = false;
     messages: AlertMessage[];
     customInterests: string[] = [];
     showInterests: boolean = false;
@@ -219,9 +220,11 @@ export class UserSettingsModalComponent implements OnInit {
             this.profileForm.controls.newPassword.updateValueAndValidity();
         }
 
-        if (!this.profileForm.valid || this.loadingRequest) {
+        if (!this.profileForm.valid || this.loadingRequest || this.gateRequest) {
             return;
         }
+
+        this.gateRequest = true;
 
         this.pushCustomInterestsToForm();
 
@@ -264,6 +267,10 @@ export class UserSettingsModalComponent implements OnInit {
             
             this.friendService.sendFriendDataChange(friendData);
             
+            setTimeout(() => {
+                this.gateRequest = false;
+            }, 1000);
+
             this.loadingRequest = null;
         }, err => {
             this.loadingRequest = null;
