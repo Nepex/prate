@@ -144,19 +144,19 @@ export class ChatComponent implements OnInit, OnDestroy {
     hideEmojis: boolean = true;
     emojis: { code: string; img: string; }[] = [
         { code: ':smile:', img: 'smile.png' },
-        { code: ':smile-eyesclosed:', img: 'smile-eyesclosed.png' },
-        { code: ':smile-open:', img: 'smile-open.png' },
-        { code: ':smile-tongue:', img: 'smile-tongue.png' },
+        { code: ':joy:', img: 'smile-eyesclosed.png' },
+        { code: ':yay:', img: 'smile-open.png' },
+        { code: ':silly:', img: 'smile-tongue.png' },
         { code: ':cool:', img: 'cool.png' },
-        { code: ':laugh:', img: 'laugh.png' },
-        { code: ':laugh-crying:', img: 'laugh-crying.png' },
-        { code: ':crying-happy:', img: 'crying-happy.png' },
+        { code: ':lol:', img: 'laugh.png' },
+        { code: ':rofl:', img: 'laugh-crying.png' },
+        { code: ':happycry:', img: 'crying-happy.png' },
 
-        { code: ':frown:', img: 'frown.png' },
-        { code: ':frown-angry:', img: 'frown-angry.png' },
-        { code: ':frown-exhausted:', img: 'frown-exhausted.png' },
-        { code: ':frown-sad:', img: 'frown-sad.png' },
-        { code: ':crying-sad:', img: 'crying-sad.png' },
+        { code: ':sad:', img: 'frown.png' },
+        { code: ':disappointed:', img: 'frown-angry.png' },
+        { code: ':exhausted:', img: 'frown-exhausted.png' },
+        { code: ':frown:', img: 'frown-sad.png' },
+        { code: ':cry:', img: 'crying-sad.png' },
 
         { code: ':confused:', img: 'confused.png' },
         { code: ':uncertain:', img: 'uncertain.png' },
@@ -403,6 +403,12 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.sendNotification('Match found!', 'match-found.mp3');
         }
 
+        // close friend windows
+        this.friendMessageData.forEach(friend => {
+            friend.isOpen = false;
+            friend.isFocused = false;
+        });
+
         this.changeUserStatus('matched');
         this.matching = false;
         this.partner = partner;
@@ -470,6 +476,11 @@ export class ChatComponent implements OnInit, OnDestroy {
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
 
+        // performance - splice 100th message
+        if (this.chatMessages.length >= 100) {
+            this.chatMessages.splice(this.chatMessages.length - 1, 1);
+        }
+
         this.chatMessages.push(msgObj);
 
         this.clearInactivity();
@@ -483,6 +494,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
+
+        // performance - splice 100th message
+        if (this.chatMessages.length >= 100) {
+            this.chatMessages.splice(this.chatMessages.length - 1, 1);
+        }
 
         this.chatMessages.push(msgObj);
     }
@@ -634,7 +650,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // -- App Invites --
     sendOuterAppInvite(app: string): void {
-        if (this.inviteLink.length > 1000 || !this.inviteLink || !this.partner) {
+        if ((this.inviteLink && this.inviteLink.length > 1000) || !this.inviteLink || !this.partner) {
             return;
         }
 
@@ -662,6 +678,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     outerAppInviteReceived(invInfo: OuterAppInfo): void {
+        if (!this.isWindowFocused) {
+            this.sendNotification('Invite Received!', 'notif.mp3');
+        }
+
         this.outerAppInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.outerAppInviteModal.componentInstance.user = invInfo.sender;
         this.outerAppInviteModal.componentInstance.type = 'received';
@@ -775,6 +795,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.friendMessageData.forEach(friendData => {
             if (friendData.id === msgObj.receiver) {
+                // performance - splice 100th message
+                if (friendData.messages.length >= 100) {
+                    friendData.messages.splice(friendData.messages.length - 1, 1);
+                }
+
                 friendData.messages.push(msgObj);
             }
         });
@@ -788,6 +813,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.friendMessageData.forEach(friendData => {
             if (friendData.id === msgObj.sender) {
                 friendConversationExists = true;
+
+                // performance - splice 100th message
+                if (friendData.messages.length >= 100) {
+                    friendData.messages.splice(friendData.messages.length - 1, 1);
+                }
+
                 friendData.messages.push(msgObj);
 
                 if (!friendData.isFocused) {
@@ -798,6 +829,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
                     // this.sendNotification('New Friend Message', 'notif.mp3');
                     this.pushNotification(notif);
+                }
+
+                if (!friendData.isOpen) {
+                    this.sendNotification('Prate', 'notif.mp3')
                 }
             }
         });
@@ -819,6 +854,11 @@ export class ChatComponent implements OnInit, OnDestroy {
             body.messages.push(msgObj);
 
             this.friendMessageData.push(body);
+            this.sendNotification('Prate', 'notif.mp3')
+        }
+
+        if (!this.isWindowFocused) {
+            this.titleService.setTitle(`${msgObj.senderName} sent you a message`);
         }
     }
 

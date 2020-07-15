@@ -75,6 +75,7 @@ export class OuterAppInviteModalComponent implements OnInit {
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
             this.ytVideoTitle = res.items[0].snippet.title;
+            console.log(res);
         });
     }
 }

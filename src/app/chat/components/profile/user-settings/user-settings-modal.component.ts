@@ -145,17 +145,18 @@ export class UserSettingsModalComponent implements OnInit {
     }
 
     openEditAvatar(): void {
-        this.activeModal.close();
+        // uncomment these lines if wanting to have user settings close when avatar changing is opened
+        // this.activeModal.close();
         let modalRef;
 
         modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
         modalRef.componentInstance.user = this.user;
 
-        modalRef.result.then(() => {
-        }, () => {
-            modalRef = this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
-            modalRef.componentInstance.user = this.user;
-        });
+        // modalRef.result.then(() => {
+        // }, () => {
+        //     modalRef = this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
+        //     modalRef.componentInstance.user = this.user;
+        // });
     }
 
     toggleInterest(val: string): void {

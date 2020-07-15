@@ -81,10 +81,11 @@
     font-size: 11px;
     color: #111111;
     position: absolute;
-    top: 100%;
+    /* top: 102%; */
     left: 45%;
     transform: translate(-45%, -100%);
     -ms-transform: translate(-45%, -100%);
+    pointer-events: none;
 }
 
 /* Navigation */
@@ -134,7 +135,7 @@
     color: rgb(235, 152, 0);
     position: absolute;
     top: -10px;
-    left: 38px;
+    left: 39px;
     font-size: 8px;
 }
 
@@ -142,7 +143,7 @@
     color: rgb(235, 152, 0);
     position: absolute;
     top: -10px;
-    left: 25px;
+    left: 27px;
     font-size: 8px;
 }
 

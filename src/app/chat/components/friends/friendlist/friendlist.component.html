@@ -52,33 +52,33 @@
 
         <div [@showHide]="hideOnlineFriends ? 'hide' : 'show'">
             <div class="row friend-row no-pad-margin" *ngFor="let u of onlineUsers">
-                <div class="col-2 text-right no-pad-margin">
-                    <img src="../../../../../assets/images/avatars/{{u.avatar}}" class="img-fluid friends-user-icon cursor-pointer" (click)="openViewUserProfileModal(u.id)"/>
-                </div>
-                <div class="col-6 friends-status-container no-pad-margin">
-                    <div>
-                        <span class="friends-username" [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">{{ u.name }} <span *ngIf="friendsWithUnreadMessages.indexOf(u.id) > -1"><i class="fas fa-comment-dots unread-msg-color"></i></span></span> 
+                    <div class="col-2 text-right no-pad-margin">
+                        <img src="../../../../../assets/images/avatars/{{u.avatar}}" class="img-fluid friends-user-icon cursor-pointer" (click)="openViewUserProfileModal(u.id)"/>
                     </div>
-                    <div
-                        [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': u.status === 'away', 'dnd-status-color': u.status === 'dnd', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
-                        <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
+                    <div class="col-6 friends-status-container no-pad-margin" (click)="openMessageBox(u); closeFriendList();">
+                        <div>
+                            <span class="friends-username" [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">{{ u.name }} <span *ngIf="friendsWithUnreadMessages.indexOf(u.id) > -1"><i class="fas fa-comment-dots unread-msg-color"></i></span></span> 
+                        </div>
+                        <div
+                            [ngClass]="{'online-status-color': u.status === 'online', 'away-status-color': u.status === 'away', 'dnd-status-color': u.status === 'dnd', 'matchinged-status-color' : u.status === 'matching' || u.status === 'matched'}">
+                            <span class="user-status no-pad-margin"><i class="fas fa-circle"></i></span>
 
-                        <span class="status-text">
-                            <span *ngIf="u.status === 'matched'">In Match</span>
-                            <span *ngIf="u.status === 'online'">Online</span>
-                            <span *ngIf="u.status === 'away'">Away</span>
-                            <span *ngIf="u.status === 'dnd'">Do Not Disturb</span>
-                            <span *ngIf="u.status === 'matching'">Looking for Match</span>
-                        </span>
+                            <span class="status-text">
+                                <span *ngIf="u.status === 'matched'">In Match</span>
+                                <span *ngIf="u.status === 'online'">Online</span>
+                                <span *ngIf="u.status === 'away'">Away</span>
+                                <span *ngIf="u.status === 'dnd'">Do Not Disturb</span>
+                                <span *ngIf="u.status === 'matching'">Looking for Match</span>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-4 text-right friends-actions-container no-pad-margin">
-                    <div class="float-right">
-                        <i class="fas fa-paper-plane online-status-color cursor-pointer" *ngIf="u.status !== 'matching' && u.status !== 'matched'" (click)='sendMatchInvite(u)' title="Invite to Match"></i> &nbsp;
-                        <i class="fas fa-comment-alt matchinged-status-color cursor-pointer" (click)="openMessageBox(u); closeFriendList()" title="Direct Message"></i> &nbsp;
-                        <i class="fas fa-times dnd-status-color cursor-pointer" (click)="confirmRemoveFriend(u);" title="Remove Friend"></i>
+                    <div class="col-4 text-right friends-actions-container no-pad-margin" (click)="openMessageBox(u); closeFriendList();">
+                        <div class="float-right">
+                            <i class="fas fa-paper-plane online-status-color cursor-pointer" *ngIf="u.status !== 'matching' && u.status !== 'matched'" (click)='sendMatchInvite(u)' title="Invite to Match"></i> &nbsp;
+                            <i class="fas fa-comment-alt matchinged-status-color cursor-pointer" (click)="openMessageBox(u); closeFriendList()" title="Direct Message"></i> &nbsp;
+                            <i class="fas fa-times dnd-status-color cursor-pointer" (click)="confirmRemoveFriend(u);" title="Remove Friend"></i>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
 

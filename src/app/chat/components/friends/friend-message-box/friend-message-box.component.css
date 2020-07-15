@@ -290,11 +290,23 @@
 
 .user-is-typing {
     position: absolute;
-    z-index: 902;
+    z-index: 901;
     left: 20px;
     bottom: 77px;
     color: #666;
 }
+
+.user-is-typing:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+    animation: ellipsis steps(4, end) 900ms infinite;
+    content: "\2026";
+    /* ascii code for the ellipsis character */
+    width: 0px;
+}
+
 
 .return-to-bottom-icon {
     position: absolute;

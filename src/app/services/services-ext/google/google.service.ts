@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class GoogleService {
     private http: HttpClient;
-    private googleApiKey: string = 'AIzaSyCcHzGUWPieUbZ7IZHhmBpcQ22mkeuEmuU';
+    private googleApiKey: string = 'AIzaSyDTwtfy2tQH95iyosqWYAQ-JDjF7Hzfyb0';
 
     constructor(handler: HttpBackend) {
         this.http = new HttpClient(handler);
