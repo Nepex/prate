@@ -72,7 +72,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-4 text-right friends-actions-container no-pad-margin" (click)="openMessageBox(u); closeFriendList();">
+                    <div class="col-4 text-right friends-actions-container no-pad-margin">
                         <div class="float-right">
                             <i class="fas fa-paper-plane online-status-color cursor-pointer" *ngIf="u.status !== 'matching' && u.status !== 'matched'" (click)='sendMatchInvite(u)' title="Invite to Match"></i> &nbsp;
                             <i class="fas fa-comment-alt matchinged-status-color cursor-pointer" (click)="openMessageBox(u); closeFriendList()" title="Direct Message"></i> &nbsp;

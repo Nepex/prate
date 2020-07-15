@@ -24,6 +24,7 @@ import { OuterAppInviteModalComponent } from '../components/invites/outer-app-in
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
+import { FriendRequestsModalComponent } from '../components/friends/friend-requests/friend-requests-modal.component';
 
 // Central chat component
 @Component({
@@ -825,9 +826,14 @@ export class ChatComponent implements OnInit, OnDestroy {
                     friendData.unreadMessages = true;
                     this.friendsWithUnreadMessages.push(msgObj.sender);
 
-                    let notif = { message: `You have received a new message from ${msgObj.senderName}` };
+                    // make notification clickable
+                    let notif = { message: `You have received a new message from ${msgObj.senderName}`, type: 'friend-message', friend: {
+                        id: msgObj.sender,
+                        name: msgObj.senderName,
+                        avatar: msgObj.avatar,
+                        status: msgObj.status
+                    } };
 
-                    // this.sendNotification('New Friend Message', 'notif.mp3');
                     this.pushNotification(notif);
                 }
 
@@ -912,7 +918,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     friendRequestReceived(friendRequest: FriendRequest): void {
         let notif = {
-            message: `You have received a new friend request from ${friendRequest.senderName}`
+            message: `You have received a new friend request from ${friendRequest.senderName}`,
+            type: 'friend-request'
         };
 
         this.pushNotification(notif);
@@ -925,7 +932,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     acceptedFriendRequestReceived(user: User): void {
         let notif = {
-            message: `${user.name} has accepted your friend request`
+            message: `${user.name} has accepted your friend request`,
+            type: 'no-action'
         };
 
         this.pushNotification(notif);
@@ -936,11 +944,13 @@ export class ChatComponent implements OnInit, OnDestroy {
         let notif;
         if (user.status === 'online' && user.firstConnect) {
             notif = {
-                message: `${user.name} has come online`
+                message: `${user.name} has come online`,
+                type: 'no-action'
             };
         } else if (user.status === 'offline') {
             notif = {
-                message: `${user.name} has went offline`
+                message: `${user.name} has went offline`,
+                type: 'no-action'
             };
 
             this.friendMessageData.forEach(friendData => {
@@ -964,6 +974,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     friendRemovalSent(id) {
+        this.friendsWithUnreadMessages.splice(this.friendsWithUnreadMessages.indexOf(id), 1);
         this.user.friends.splice(this.user.friends.indexOf(id, 1))
 
         this.friendMessageData.forEach(friend => {
@@ -974,6 +985,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     friendRemovalReceived(id) {
+        this.friendsWithUnreadMessages.splice(this.friendsWithUnreadMessages.indexOf(id), 1);
         this.user.friends.splice(this.user.friends.indexOf(id, 1))
 
         this.friendMessageData.forEach(friend => {
@@ -984,6 +996,10 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     matchInviteReceived(invInfo: OuterAppInfo): void {
+        if (!this.isWindowFocused) {
+            this.sendNotification('Invite Received!', 'notif.mp3');
+        }
+
         this.matchInviteModal = this.modal.open(OuterAppInviteModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         this.matchInviteModal.componentInstance.user = invInfo.sender;
         this.matchInviteModal.componentInstance.type = 'received';
@@ -1011,6 +1027,11 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (this.matchInviteModal) {
             this.matchInviteModal.close();
         }
+    }
+
+    openFriendRequestsModal(): void {
+        const modalRef = this.modal.open(FriendRequestsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.user = this.user;
     }
 
     pushNotification(notif: { message: string }) {

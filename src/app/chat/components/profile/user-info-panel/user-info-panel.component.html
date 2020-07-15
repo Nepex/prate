@@ -28,11 +28,11 @@
                 <div class="lg-nav-icon-container">
                     <i class="fas fa-cog lg-nav-icon" (click)="openSettingsModal()" title="User Settings"></i>
                     <i class="fas fa-user-friends lg-nav-icon" (click)="toggleFriendlist()" title="Friends"></i>
-                    <span class="unread-msg-indicator" *ngIf="friendsWithUnreadMessages.length > 0">
+                    <span class="unread-msg-indicator cursor-pointer" *ngIf="friendsWithUnreadMessages.length > 0" (click)="toggleFriendlist()">
                         <i class="fas fa-comment-dots" ngbTooltip="New Messages" placement="bottom"
                             container="body"></i>
                     </span>
-                    <span class="friend-request-indicator" *ngIf="user.friend_requests">
+                    <span class="friend-request-indicator cursor-pointer" *ngIf="user.friend_requests" (click)="openFriendRequestsModal()">
                         <i class="fas fa-user-plus" ngbTooltip="New Friend Requests" placement="bottom"
                             container="body" *ngIf="user.friend_requests.length > 0"></i>
                     </span>
@@ -58,12 +58,12 @@
 <div class="row mobile-container">
     <div class="col-12 my-auto user-icon-container" *ngIf="user">
         <!-- Unread message indicator-->
-        <div class="unread-msg-indicator-mobile" *ngIf="friendsWithUnreadMessages.length > 0">
+        <div class="unread-msg-indicator-mobile cursor-pointer" *ngIf="friendsWithUnreadMessages.length > 0" (click)="toggleFriendlist()">
             <i class="fas fa-comment-dots" ngbTooltip="New Messages" placement="left" container="body"></i>
         </div>
 
         <!-- Friend request indicator-->
-        <div class="friend-request-indicator-mobile" *ngIf="user.friend_requests">
+        <div class="friend-request-indicator-mobile cursor-pointer" *ngIf="user.friend_requests" (click)="openFriendRequestsModal()">
             <i class="fas fa-user-plus" ngbTooltip="New Friend Requests" placement="left" container="body" *ngIf="user.friend_requests.length > 0"></i>
         </div>
 

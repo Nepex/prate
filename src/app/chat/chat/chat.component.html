@@ -98,7 +98,9 @@
         <div class="chat-alerts-container text-center" *ngIf="notifications.length > 0" [@fadeInOut]>
             <div class="chat-alerts">
                 <div class="chat-alert" *ngFor="let n of notifications;">
-                    <span *ngIf="n" [@fadeInOut]>{{n.message}}</span>
+                    <span *ngIf="n && n.type === 'no-action'" [@fadeInOut]>{{n.message}}</span>
+                    <span *ngIf="n && n.type === 'friend-request'" class="cursor-pointer" (click)="openFriendRequestsModal()" [@fadeInOut]>{{n.message}}</span>
+                    <span *ngIf="n && n.type === 'friend-message'" class="cursor-pointer" (click)="friendMessageBoxOpened(n.friend)" [@fadeInOut]>{{n.message}}</span>
                 </div>
             </div>
         </div>
