@@ -6,38 +6,10 @@
     position: absolute;
 }
 
-.normal-window {
-    width: 500px;
-    height: 500px;
-    border-radius: 10px;
-}
-
 .maximized-window {
     width: 100%;
     height: 100%;
     border-radius: 0px;
-}
-
-.top-bar {
-    background-color: rgb(33, 37, 43);
-    position: relative;
-    width: 100%;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 8px;
-    height: 40px;
-}
-
-.top-bar-mobile {
-    background-color: rgb(33, 37, 43);
-    position: relative;
-    width: 100%;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 8px;
-    height: 40px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
 }
 
 .window-action-btn {
@@ -330,11 +302,20 @@
 
 /* if on mobile, just force full screen always */
 @media (min-width: 344px) {
+    .top-bar-mobile {
+        background-color: rgb(33, 37, 43);
+        position: relative;
+        width: 100%;
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 8px;
+        height: 40px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        display: block;
+    }
     .top-bar {
         display: none;
-    }
-    .top-bar-mobile {
-        display: block;
     }
     .normal-window {
         width: 100%;
@@ -345,6 +326,13 @@
 
 @media (min-width: 992px) {
     .top-bar {
+        background-color: rgb(33, 37, 43);
+        position: relative;
+        width: 100%;
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 8px;
+        height: 40px;
         display: block;
     }
     .top-bar-mobile {
@@ -355,5 +343,4 @@
         height: 500px;
         border-radius: 10px;
     }
-    
 }

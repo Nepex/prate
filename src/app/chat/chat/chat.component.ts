@@ -95,8 +95,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     isPartnerTypingSub: Subscription;
     partnerDisconnectSub: Subscription;
     matchingErrorSub: Subscription;
-    connectionDroppedSub: Subscription;
-
 
     // Data Stores
     matching: boolean = false;
@@ -245,9 +243,6 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
             this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
 
-            this.connectionDroppedSub = this.chatService.connectionDropped.subscribe(() => {this.disconnectFromMatch(); this.clearPartnerAndEndChat();});
-
-
             // timeout because of dark styling needing a user obj present (see html)
             setTimeout(() => {
                 this.listenAndEmitDoneTyping();
@@ -305,7 +300,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.matchInviteReceivedSub.unsubscribe();
         this.matchInviteAcceptedSub.unsubscribe();
         this.matchInviteCanceledSub.unsubscribe();
-        this.connectionDroppedSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
     }
@@ -483,11 +477,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
 
-        // performance - splice 100th message
-        if (this.chatMessages.length >= 100) {
-            this.chatMessages.splice(this.chatMessages.length - 1, 1);
-        }
-
         this.chatMessages.push(msgObj);
 
         this.clearInactivity();
@@ -501,11 +490,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         msgObj.message = this.linkify(msgObj.message);
         msgObj.message = this.emojify(msgObj.message);
-
-        // performance - splice 100th message
-        if (this.chatMessages.length >= 100) {
-            this.chatMessages.splice(this.chatMessages.length - 1, 1);
-        }
 
         this.chatMessages.push(msgObj);
     }
@@ -802,11 +786,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.friendMessageData.forEach(friendData => {
             if (friendData.id === msgObj.receiver) {
-                // performance - splice 100th message
-                if (friendData.messages.length >= 100) {
-                    friendData.messages.splice(friendData.messages.length - 1, 1);
-                }
-
                 friendData.messages.push(msgObj);
             }
         });
@@ -821,11 +800,6 @@ export class ChatComponent implements OnInit, OnDestroy {
             if (friendData.id === msgObj.sender) {
                 friendConversationExists = true;
 
-                // performance - splice 100th message
-                if (friendData.messages.length >= 100) {
-                    friendData.messages.splice(friendData.messages.length - 1, 1);
-                }
-
                 friendData.messages.push(msgObj);
 
                 if (!friendData.isFocused) {
@@ -833,12 +807,14 @@ export class ChatComponent implements OnInit, OnDestroy {
                     this.friendsWithUnreadMessages.push(msgObj.sender);
 
                     // make notification clickable
-                    let notif = { message: `You have received a new message from ${msgObj.senderName}`, type: 'friend-message', friend: {
-                        id: msgObj.sender,
-                        name: msgObj.senderName,
-                        avatar: msgObj.avatar,
-                        status: msgObj.status
-                    } };
+                    let notif = {
+                        message: `You have received a new message from ${msgObj.senderName}`, type: 'friend-message', friend: {
+                            id: msgObj.sender,
+                            name: msgObj.senderName,
+                            avatar: msgObj.avatar,
+                            status: msgObj.status
+                        }
+                    };
 
                     this.pushNotification(notif);
                 }
