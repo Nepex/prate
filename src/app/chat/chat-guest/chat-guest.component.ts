@@ -8,7 +8,6 @@ import { Title } from '@angular/platform-browser';
 
 // NPM
 import * as moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // App
@@ -160,7 +159,7 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
         // set user
         this.user =
         {
-            id: uuidv4(),
+            id: this.newGuid(),
             name: 'a',
             email: 'a@a.com',
             font_face: 'Lato',
@@ -251,6 +250,7 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
 
         modalRef.result.then(res => {
             this.user.name = res;
+            console.log(this.user.id)
         });
     }
 
@@ -264,6 +264,13 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
             audio.load();
             audio.play();
         }
+    }
+
+    newGuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 
     toggleBubbles(): void {

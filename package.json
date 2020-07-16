@@ -33,7 +33,6 @@
     "socket.io-client": "^2.2.0",
     "tslib": "^1.9.0",
     "underscore": "^1.10.2",
-    "uuid": "^8.2.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
