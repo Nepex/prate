@@ -1,6 +1,6 @@
 <div class="modal-header no-pad-margin">
     <img src="../../../assets/images/prt-icon-white.png" class="img-fluid mx-auto prt-icon" />
-    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()" *ngIf="showClose"></i>
 </div>
 <div class="container modal-body">
     <div class="row">

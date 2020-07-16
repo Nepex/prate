@@ -15,6 +15,7 @@ import { SessionService } from '../session/session.service';
 import { User } from './../user/user';
 import { OuterAppInfo } from '../chat/outer-app-info';
 import { ChatMessage } from '../chat/chat-message';
+import { ChatService } from '../chat/chat.service';
 
 // Service for managing chat connections
 @Injectable()
@@ -47,12 +48,14 @@ export class FriendService {
 
     public matchInviteSentFromMessageBox: EventEmitter<User> = new EventEmitter();
 
+    private connectionCheckInterval: number;
+    private timeSinceLastServerComm: number = 0;
 
     public socket: io.Socket;
 
     private user: User;
 
-    constructor(private sessionService: SessionService, private http: HttpClient) { }
+    constructor(private sessionService: SessionService, private chatService: ChatService, private http: HttpClient) { }
 
     // --- Connect/disconnect and initialization ---
     private connect(): void {
@@ -76,10 +79,36 @@ export class FriendService {
         this.listenForMatchInviteReceived();
         this.listenForMatchInviteAccept();
         this.listenForMatchInviteCancel();
+
+        this.connectionListener();
+        this.connectionChecker();
     }
 
     public disconnect(): void {
+        clearTimeout(this.connectionCheckInterval);
+        this.timeSinceLastServerComm = 0;
+
         this.socket.disconnect();
+    }
+
+    private connectionListener(): void {
+        this.socket.on('pong', () => {
+            this.timeSinceLastServerComm = 0;
+        });
+    }
+
+    private connectionChecker(): void {
+        this.connectionCheckInterval = window.setTimeout(() => {
+            this.timeSinceLastServerComm = this.timeSinceLastServerComm + 1;
+
+            if (this.timeSinceLastServerComm >= 4) {
+                // tell client they have lost connection
+                clearTimeout(this.connectionCheckInterval);
+                this.chatService.webSocketDropped.emit();
+            }
+
+            this.connectionChecker();
+        }, 1000);
     }
 
     public connectAndStoreUser(user: User): void {

@@ -25,6 +25,7 @@ import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
 import { FriendRequestsModalComponent } from '../components/friends/friend-requests/friend-requests-modal.component';
+import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
 
 // Central chat component
 @Component({
@@ -95,6 +96,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     isPartnerTypingSub: Subscription;
     partnerDisconnectSub: Subscription;
     matchingErrorSub: Subscription;
+    webSocketDroppedSub: Subscription;
 
     // Data Stores
     matching: boolean = false;
@@ -107,6 +109,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     matchFoundAnimation: boolean = false;
     matchedWithOverlay: boolean = false;
     chatFinishedOverlay: boolean = false;
+    messageDisplayModalRef: NgbModalRef;
 
     // Chat UI
     notifications: any = [];
@@ -243,6 +246,9 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
             this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
 
+            this.webSocketDroppedSub = this.chatService.webSocketDropped.subscribe(err => this.alertWebSocketDropped());
+
+
             // timeout because of dark styling needing a user obj present (see html)
             setTimeout(() => {
                 this.listenAndEmitDoneTyping();
@@ -300,6 +306,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.matchInviteReceivedSub.unsubscribe();
         this.matchInviteAcceptedSub.unsubscribe();
         this.matchInviteCanceledSub.unsubscribe();
+        this.webSocketDroppedSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
     }
@@ -349,6 +356,17 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.scrollToChatBottom();
             }, 200);
         }
+    }
+
+    alertWebSocketDropped() {
+        if (this.messageDisplayModalRef) {
+            return;
+        }
+
+        this.messageDisplayModalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
+
+        this.messageDisplayModalRef.componentInstance.message = "You have lost connection, Please refresh the page.";
+        this.messageDisplayModalRef.componentInstance.showClose = false;
     }
 
     clearInactivity() {
@@ -456,6 +474,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (!this.messageForm.valid || !this.partner) {
             return;
         }
+        
+        this.titleService.setTitle('Prate');
 
         const previewImg = this.imagify(this.messageForm.value.message);
 

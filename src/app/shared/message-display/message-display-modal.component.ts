@@ -13,6 +13,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class MessageDisplayModalComponent {
     // UI
     @Input() message: string;
+    @Input() showClose: boolean = true;
 
     constructor(public activeModal: NgbActiveModal) { }
 }

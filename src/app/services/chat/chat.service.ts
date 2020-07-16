@@ -29,6 +29,8 @@ export class ChatService implements OnInit, OnDestroy {
     public userDisconnected: EventEmitter<boolean> = new EventEmitter();
     public matchingError: EventEmitter<void> = new EventEmitter();
 
+    public webSocketDropped: EventEmitter<void> = new EventEmitter();
+
     public socket: io.Socket;
 
     private user: User;
@@ -52,6 +54,8 @@ export class ChatService implements OnInit, OnDestroy {
     }
 
     public disconnect(): void {
+        clearTimeout(this.matchFindRefreshInterval);
+
         this.socket.disconnect();
         this.userDisconnected.emit();
     }
