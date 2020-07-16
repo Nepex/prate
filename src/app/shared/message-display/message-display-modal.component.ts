@@ -15,5 +15,10 @@ export class MessageDisplayModalComponent {
     @Input() message: string;
     @Input() showClose: boolean = true;
 
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) {
+        window.onpopstate = () => {
+            this.activeModal.close('cancel');
+            return null;
+        };
+     }
 }

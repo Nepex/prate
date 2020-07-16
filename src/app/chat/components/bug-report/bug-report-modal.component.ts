@@ -33,6 +33,11 @@ export class BugReportModalComponent {
     });
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService) {
+        window.onpopstate = () => {
+            this.activeModal.close();
+            return null;
+        };
+
         // Track amount of characters on message
         this.bugReportForm.controls['message'].valueChanges.subscribe((v) => {
             if (!v) {

@@ -208,7 +208,6 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
             this.user.status = 'online';
             this.friendService.connectAndStoreUser(this.user);
-            console.log(this.user);
 
             // set listeners
             // SETTINGS
@@ -1023,8 +1022,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (this.matchInviteModal) {
             this.matchInviteModal.close();
         }
-
-        console.log(this.user.id, invInfo.senderId)
 
         this.chatService.intiateMatching(this.user, invInfo.senderId);
     }

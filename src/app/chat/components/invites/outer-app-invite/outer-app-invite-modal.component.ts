@@ -55,6 +55,11 @@ export class OuterAppInviteModalComponent implements OnInit {
         if (this.outerApp === 'yt' && this.url) {
             this.getVideoInfo();
         }
+
+        window.onpopstate = () => {
+            this.activeModal.close('cancel');
+            return null;
+        };
     }
 
     passBack(answer: string): void {

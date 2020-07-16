@@ -96,7 +96,12 @@ export class UserSettingsModalComponent implements OnInit {
     });
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal,
-        private levelService: LevelService, private friendService: FriendService) { }
+        private levelService: LevelService, private friendService: FriendService) {
+        window.onpopstate = () => {
+            this.activeModal.close();
+            return null;
+        };
+    }
 
     ngOnInit(): void {
         this.setupModal();
@@ -268,9 +273,9 @@ export class UserSettingsModalComponent implements OnInit {
                 avatar: this.user.avatar,
                 status: this.user.status
             }
-            
+
             this.friendService.sendFriendDataChange(friendData);
-            
+
             setTimeout(() => {
                 this.gateRequest = false;
             }, 1000);

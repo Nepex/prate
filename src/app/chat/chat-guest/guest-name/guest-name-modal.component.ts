@@ -26,7 +26,12 @@ export class GuestNameModalComponent {
     chooseGuestNameForm: SubmittableFormGroup = new SubmittableFormGroup({
         name: new FormControl('', [Validators.required, Validators.maxLength(25), Validators.pattern(this.userRegex)])
     });
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal) {
+        window.onpopstate = () => {
+            this.activeModal.close();
+            return null;
+        };
+    }
 
     chooseGuestName(): void {
         this.messages = [];

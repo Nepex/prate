@@ -251,8 +251,6 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
 
         modalRef.result.then(res => {
             this.user.name = res;
-
-            console.log(this.user)
         });
     }
 
@@ -404,8 +402,6 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
         msgObj.message = this.emojify(msgObj.message);
 
         this.chatMessages.push(msgObj);
-
-        console.log(this.chatMessages)
 
         this.clearInactivity();
         this.messageForm.reset();

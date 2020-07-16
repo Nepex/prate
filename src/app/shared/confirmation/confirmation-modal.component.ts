@@ -13,5 +13,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ConfirmationModalComponent {
     @Input() message;
 
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) { 
+        window.onpopstate = () => {
+            this.activeModal.close('cancel');
+            return null;
+        };
+    }
 }

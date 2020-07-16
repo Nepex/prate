@@ -31,7 +31,12 @@ export class ViewUserProfileModalComponent implements OnInit {
     // UI
     friendReqMessage: string;
 
-    constructor(private userService: UserService, public activeModal: NgbActiveModal, private levelService: LevelService, private friendService: FriendService) {}
+    constructor(private userService: UserService, public activeModal: NgbActiveModal, private levelService: LevelService, private friendService: FriendService) {
+        window.onpopstate = () => {
+            this.activeModal.close();
+            return null;
+        };
+    }
 
     ngOnInit(): void {
         this.loadingRequest = this.userService.getById(this.userBeingViewedId);

@@ -28,7 +28,12 @@ export class HelpModalComponent {
         { rank: 'Prismatic', img: '../../../assets/images/badges/prismatic.png', level: '100', rewards: 'N/A' }
     ];
 
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) {
+        window.onpopstate = () => {
+            this.activeModal.close();
+            return null;
+        };
+     }
 }
 
 export class Rank {
