@@ -185,7 +185,7 @@ export class UserSettingsModalComponent implements OnInit {
                 }
             }
 
-            if (isCustomInterest && this.profileForm.value.interests.indexOf(this.customInterests[i]) === -1) {
+            if (isCustomInterest && this.profileForm.value.interests.indexOf(this.customInterests[i].toLowerCase()) === -1) {
                 this.profileForm.value.interests.push(this.customInterests[i].toLowerCase());
             }
         }
