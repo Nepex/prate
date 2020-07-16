@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
+import { FriendService } from '../../../../services/friend/friend.service';
 import { LevelService } from '../../../../services/level/level.service';
 import { User } from '../../../../services/user/user';
 import { UserService } from '../../../../services/user/user.service';
-import { FriendService } from '../../../../services/friend/friend.service';
 
 // Modal for viewing a user's profile
 @Component({

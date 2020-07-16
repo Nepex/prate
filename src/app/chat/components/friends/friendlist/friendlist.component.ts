@@ -1,5 +1,5 @@
 // Angular
-import { Component, Input, Output, EventEmitter, OnInit, SimpleChange } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -90,16 +90,14 @@ export class FriendListComponent implements OnInit {
 
     onlineFriendsReceivedSub: Subscription;
     checkFriendStatusReceivedSub: Subscription;
+    friendDataChangedReceivedSub: Subscription;
 
     acceptedFriendRequestSentSub: Subscription;
     acceptedFriendRequestReceivedSub: Subscription;
     friendRemovalReceivedSub: Subscription;
 
-    friendDataChangedReceivedSub: Subscription;
-
-    matchInviteCanceledSub: Subscription;
     matchInviteAcceptedSub: Subscription;
-
+    matchInviteCanceledSub: Subscription;
     matchInviteSentFromMessageBoxSub: Subscription;
 
     // UI
@@ -130,6 +128,7 @@ export class FriendListComponent implements OnInit {
         this.matchInviteSentFromMessageBoxSub = this.friendService.matchInviteSentFromMessageBox.subscribe(msgObj => this.sendMatchInvite(msgObj));
     }
 
+    // --- General Purpose Functions ---
     initFriendlist(onlineFriends: User[]): void {
         this.loadingRequest = this.friendService.getFriends();
 
@@ -156,6 +155,22 @@ export class FriendListComponent implements OnInit {
         this.messageBoxOpened.emit(user);
     }
 
+    openViewUserProfileModal(id: string): void {
+        const modalRef = this.modal.open(ViewUserProfileModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.userBeingViewedId = id;
+        modalRef.componentInstance.currentUser = this.user;
+    }
+
+    sortFriends(): void {
+        this.onlineUsers = _.sortBy(this.onlineUsers, function (o) { return o.name; });
+        this.offlineUsers = _.sortBy(this.offlineUsers, function (o) { return o.name; });
+    }
+
+    closeFriendList(): void {
+        this.friendlistClosed.emit();
+    }
+
+    // --- Friend Data Changers ---
     toggleUserStatus(): void {
         if (this.user.status === 'matching' || this.user.status === 'matched') {
             return;
@@ -199,6 +214,17 @@ export class FriendListComponent implements OnInit {
         this.sortFriends();
     }
 
+    // --- Friend Request Handles ---
+    openAddFriendModal(): void {
+        const modalRef = this.modal.open(AddFriendModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.user = this.user;
+    }
+
+    openFriendRequestsModal(): void {
+        const modalRef = this.modal.open(FriendRequestsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.user = this.user;
+    }
+
     // Called when a friend request is accepted sender-side
     acceptedFriendRequestSent(id: string): void {
         this.friendService.checkFriendStatusSend(id);
@@ -236,6 +262,7 @@ export class FriendListComponent implements OnInit {
         this.sortFriends();
     }
 
+    // --- Friend Remove Handles ---
     confirmRemoveFriend(user: User): void {
         const modalRef = this.modal.open(ConfirmationModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
         modalRef.componentInstance.message = `Are you sure you want to remove '${user.name}' from your friendlist?`;
@@ -275,6 +302,7 @@ export class FriendListComponent implements OnInit {
         }
     }
 
+    // --- Match Invites ---
     sendMatchInvite(friend: User): void {
         this.friendService.sendMatchInvite(friend, this.user, 'match');
 
@@ -298,30 +326,5 @@ export class FriendListComponent implements OnInit {
         if (this.matchInviteModal) {
             this.matchInviteModal.close();
         }
-    }
-
-    openAddFriendModal(): void {
-        const modalRef = this.modal.open(AddFriendModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        modalRef.componentInstance.user = this.user;
-    }
-
-    openFriendRequestsModal(): void {
-        const modalRef = this.modal.open(FriendRequestsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        modalRef.componentInstance.user = this.user;
-    }
-
-    openViewUserProfileModal(id: string): void {
-        const modalRef = this.modal.open(ViewUserProfileModalComponent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        modalRef.componentInstance.userBeingViewedId = id;
-        modalRef.componentInstance.currentUser = this.user;
-    }
-
-    closeFriendList(): void {
-        this.friendlistClosed.emit();
-    }
-
-    sortFriends(): void {
-        this.onlineUsers = _.sortBy(this.onlineUsers, function (o) { return o.name; });
-        this.offlineUsers = _.sortBy(this.offlineUsers, function (o) { return o.name; });
     }
 }

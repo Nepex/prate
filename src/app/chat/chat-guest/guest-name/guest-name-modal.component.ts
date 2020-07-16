@@ -1,7 +1,6 @@
 // Angular
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 // NPM
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,7 +8,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { AlertMessage } from '../../../shared/alert-messages/alert-messages.component';
 import { SubmittableFormGroup } from '../../../shared/submittable-form-group/submittable-form-group';
-import { User } from '../../../services/user/user';
 
 // Modal for choosing guest name
 @Component({

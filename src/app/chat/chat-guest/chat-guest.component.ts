@@ -13,16 +13,16 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { ChatMessage } from '../../services/chat/chat-message';
 import { ChatService } from '../../services/chat/chat.service';
+import { GuestNameModalComponent } from './guest-name/guest-name-modal.component';
 import { IsTyping } from '../../services/chat/is-typing';
 import { LevelService } from '../../services/level/level.service';
+import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
 import { OuterAppInfo } from '../../services/chat/outer-app-info';
 import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
-import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
-import { GuestNameModalComponent } from './guest-name/guest-name-modal.component';
 
-// Central chat component
+// Central guest chat component
 @Component({
     selector: 'prt-chat-guest',
     templateUrl: './chat-guest.component.html',
@@ -245,15 +245,6 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
         clearTimeout(this.chatTimerInterval);
     }
 
-    openChooseGuestName(): void {
-        const modalRef = this.modal.open(GuestNameModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-
-        modalRef.result.then(res => {
-            this.user.name = res;
-            console.log(this.user.id)
-        });
-    }
-
     // -- General Purpose Functions --
     sendNotification(windowTitle: string, soundFile: string) {
         this.titleService.setTitle(windowTitle);
@@ -264,6 +255,14 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
             audio.load();
             audio.play();
         }
+    }
+
+    openChooseGuestName(): void {
+        const modalRef = this.modal.open(GuestNameModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+
+        modalRef.result.then(res => {
+            this.user.name = res;
+        });
     }
 
     newGuid() {

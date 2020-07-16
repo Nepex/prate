@@ -8,16 +8,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { BugReportModalComponent } from '../../bug-report/bug-report-modal.component';
 import { ChatService } from '../../../../services/chat/chat.service';
+import { FriendRequestsModalComponent } from '../../friends/friend-requests/friend-requests-modal.component';
 import { FriendService } from '../../../../services/friend/friend.service';
 import { HelpModalComponent } from '../../help/help-modal.component';
 import { LevelInfo } from '../../../../services/level/level-info';
 import { LevelService } from '../../../../services/level/level.service';
-import { MessageDisplayModalComponent } from '../../../../shared/message-display/message-display-modal.component';
 import { SessionService } from '../../../../services/session/session.service';
 import { User } from '../../../../services/user/user';
 import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
-import { FriendMessageData } from '../../../../services/friend/friend-message-data';
-import { FriendRequestsModalComponent } from '../../friends/friend-requests/friend-requests-modal.component';
 
 // Component that's placed on the Chat page (top-right) to display user information and navigation
 @Component({

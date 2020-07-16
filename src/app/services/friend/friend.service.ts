@@ -9,13 +9,13 @@ import * as io from 'socket.io-client';
 import * as moment from 'moment';
 
 // App
-import { environment } from './../../../environments/environment';
-import { FriendRequest } from './friend-request';
-import { SessionService } from '../session/session.service';
-import { User } from './../user/user';
-import { OuterAppInfo } from '../chat/outer-app-info';
 import { ChatMessage } from '../chat/chat-message';
 import { ChatService } from '../chat/chat.service';
+import { environment } from './../../../environments/environment';
+import { FriendRequest } from './friend-request';
+import { OuterAppInfo } from '../chat/outer-app-info';
+import { SessionService } from '../session/session.service';
+import { User } from './../user/user';
 
 // Service for managing chat connections
 @Injectable()
@@ -91,6 +91,7 @@ export class FriendService {
         this.socket.disconnect();
     }
 
+    // These two functions make sure user has an active connection to the websocket (helps with phone dimming inactivity)
     private connectionListener(): void {
         this.socket.on('pong', () => {
             this.timeSinceLastServerComm = 0;
@@ -129,7 +130,7 @@ export class FriendService {
         this.socket.emit('get-online-friends', this.user.friends);
     }
 
-    // --- Friends info calls ---
+    // --- Friends Info/data Calls ---
     // Get friends, requests, statuses DB and WS calls
     public getFriends(): Observable<User[]> {
         const url = `${this.apiUrl}/get-friends`;
@@ -250,7 +251,7 @@ export class FriendService {
         });
     }
 
-    // --- Changing Status/Name/Avatar
+    // --- Changing Status/Name/Avatar ---
     public sendFriendDataChange(user: User): void {
         const body = {
             id: user.id,
@@ -268,7 +269,6 @@ export class FriendService {
             this.friendDataChangeReceived.emit(msgObj);
         });
     }
-
 
     // --- Messaging ---
     public sendFriendMessage(msgObj: ChatMessage): void {

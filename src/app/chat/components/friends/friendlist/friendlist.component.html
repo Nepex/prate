@@ -1,6 +1,10 @@
+<!-- Faded Black Background -->
 <div class="background-overlay" *ngIf="showFriends" [@fadeInOut] (click)="closeFriendList()"></div>
+
+<!-- Flyout Friendlist -->
 <div [@slideInOut]="showFriends ? 'show' : 'hide'" class="friendlist-container container no-pad-margin" *ngIf="user"
 [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">
+    <!-- Header -->
     <div class="friendlist-header-container">
         <i class="fas fa-chevron-left cursor-pointer close-btn" (click)="closeFriendList()"></i>
 
@@ -40,7 +44,10 @@
         </div>
     </div>
 
+    <!-- Body -->
     <div class="friendlist-body-container">
+
+        <!-- Online Friends -->
         <div class="row">
             <div class="col-12">
                 <div class="friendlist-body-heading">
@@ -82,6 +89,7 @@
             </div>
         </div>
 
+        <!-- Offline Friends -->
         <div class="row">
             <div class="col-12">
                 <div class="friendlist-body-heading">

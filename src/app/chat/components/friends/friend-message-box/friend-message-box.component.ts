@@ -8,10 +8,10 @@ import { Subscription, fromEvent } from 'rxjs';
 import * as moment from 'moment';
 
 // App
-import { FriendMessageData } from '../../../../services/friend/friend-message-data';
-import { User } from '../../../../services/user/user';
-import { FriendService } from '../../../../services/friend/friend.service';
 import { ChatMessage } from '../../../../services/chat/chat-message';
+import { FriendMessageData } from '../../../../services/friend/friend-message-data';
+import { FriendService } from '../../../../services/friend/friend.service';
+import { User } from '../../../../services/user/user';
 
 // Modal for reviewing friend requests
 @Component({
@@ -90,7 +90,28 @@ export class FriendMessageBoxComponent implements OnInit {
         }, 500);
     }
 
+    // General functions
+    maximizeWindow(): void {
+        if (!this.isMaximized) {
+            this.windowPosition = { x: 0, y: 0 };
+            this.isMaximized = true;
+        } else {
+            this.windowPosition = { x: 0, y: 0 };
+            this.isMaximized = false;
+        }
+    }
+
+    sendMatchInvite(friend: User) {
+        this.friendService.sendMatchInviteFromMessageBox(friend);
+    }
+
     // --- Chatting ---
+    // Prevent line breaks in text area
+    onEnterPress(event) {
+        this.sendMessage();
+        event.preventDefault();
+    }
+
     sendMessage(): void {
         if (!this.messageForm.valid) {
             return;
@@ -115,25 +136,6 @@ export class FriendMessageBoxComponent implements OnInit {
 
         this.friendService.sendFriendMessage(msgObj);
         this.messageForm.reset();
-    }
-
-    onEnterPress(event) {
-        this.sendMessage();
-        event.preventDefault();
-    }
-
-    maximizeWindow(): void {
-        if (!this.isMaximized) {
-            this.windowPosition = { x: 0, y: 0 };
-            this.isMaximized = true;
-        } else {
-            this.windowPosition = { x: 0, y: 0 };
-            this.isMaximized = false;
-        }
-    }
-
-    sendMatchInvite(friend: User) {
-        this.friendService.sendMatchInviteFromMessageBox(friend);
     }
 
     // Chat Formatting
@@ -184,7 +186,7 @@ export class FriendMessageBoxComponent implements OnInit {
         element.scrollTop = element.scrollHeight;
     }
 
-    // if chat is scrolled, check if user is at the bottom, if not, allow for free scrolling
+    // If chat is scrolled, check if user is at the bottom, if not, allow for free scrolling
     chatScrolled(): void {
         let element = document.getElementById(this.friendData.id);
         let atBottom = (element.scrollTop + element.offsetHeight + 90) >= element.scrollHeight;

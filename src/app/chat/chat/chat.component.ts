@@ -5,7 +5,7 @@ import { map, debounceTime } from 'rxjs/operators';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { trigger, style, transition, animate } from '@angular/animations';
 
 // NPM
 import * as moment from 'moment';
@@ -17,15 +17,15 @@ import { ChatService } from '../../services/chat/chat.service';
 import { FriendMessageData } from '../../services/friend/friend-message-data';
 import { FriendService } from '../../services/friend/friend.service';
 import { FriendRequest } from '../../services/friend/friend-request';
+import { FriendRequestsModalComponent } from '../components/friends/friend-requests/friend-requests-modal.component';
 import { IsTyping } from '../../services/chat/is-typing';
 import { LevelService } from '../../services/level/level.service';
+import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
 import { OuterAppInfo } from '../../services/chat/outer-app-info';
 import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
 import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
-import { FriendRequestsModalComponent } from '../components/friends/friend-requests/friend-requests-modal.component';
-import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
 
 // Central chat component
 @Component({
@@ -789,6 +789,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.friendsShown = event;
     }
 
+    // Friend Messaging
     isFriendTyping(typingObj): void {
         this.friendMessageData.forEach(friendData => {
             if (friendData.id === typingObj.sender) {
@@ -871,6 +872,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
+    // Message Boxes
     friendMessageBoxOpened(user: FriendMessageData): void {
         for (let i = 0; i < this.friendMessageData.length; i++) {
             // if window / data is already present, don't create anything new
@@ -919,6 +921,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Friend Requests
+    openFriendRequestsModal(): void {
+        const modalRef = this.modal.open(FriendRequestsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
+        modalRef.componentInstance.user = this.user;
+    }
+
     friendRequestReceived(friendRequest: FriendRequest): void {
         let notif = {
             message: `You have received a new friend request from ${friendRequest.senderName}`,
@@ -941,6 +949,35 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.pushNotification(notif);
         this.user.friends.push(user.id);
+    }
+
+    // Friend Removals
+    friendRemovalSent(id) {
+        this.friendsWithUnreadMessages.splice(this.friendsWithUnreadMessages.indexOf(id), 1);
+        this.user.friends.splice(this.user.friends.indexOf(id, 1))
+
+        this.friendMessageData.forEach(friend => {
+            if (friend.id === id) {
+                this.friendMessageData.splice(this.friendMessageData.indexOf(friend), 1)
+            }
+        });
+    }
+
+    friendRemovalReceived(id) {
+        this.friendsWithUnreadMessages.splice(this.friendsWithUnreadMessages.indexOf(id), 1);
+        this.user.friends.splice(this.user.friends.indexOf(id, 1))
+
+        this.friendMessageData.forEach(friend => {
+            if (friend.id === id) {
+                this.friendMessageData.splice(this.friendMessageData.indexOf(friend), 1)
+            }
+        });
+    }
+
+    // Friend Statuses
+    changeUserStatus(status: string) {
+        this.user.status = status;
+        this.friendService.sendFriendDataChange(this.user);
     }
 
     friendStatusChange(user: User): void {
@@ -976,28 +1013,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
-    friendRemovalSent(id) {
-        this.friendsWithUnreadMessages.splice(this.friendsWithUnreadMessages.indexOf(id), 1);
-        this.user.friends.splice(this.user.friends.indexOf(id, 1))
-
-        this.friendMessageData.forEach(friend => {
-            if (friend.id === id) {
-                this.friendMessageData.splice(this.friendMessageData.indexOf(friend), 1)
-            }
-        });
-    }
-
-    friendRemovalReceived(id) {
-        this.friendsWithUnreadMessages.splice(this.friendsWithUnreadMessages.indexOf(id), 1);
-        this.user.friends.splice(this.user.friends.indexOf(id, 1))
-
-        this.friendMessageData.forEach(friend => {
-            if (friend.id === id) {
-                this.friendMessageData.splice(this.friendMessageData.indexOf(friend), 1)
-            }
-        });
-    }
-
+    // Friend Match Invites
     matchInviteReceived(invInfo: OuterAppInfo): void {
         if (!this.isWindowFocused) {
             this.sendNotification('Invite Received!', 'notif.mp3');
@@ -1032,11 +1048,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
     }
 
-    openFriendRequestsModal(): void {
-        const modalRef = this.modal.open(FriendRequestsModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
-        modalRef.componentInstance.user = this.user;
-    }
-
+    // Friend Notifications
     pushNotification(notif: { message: string }) {
         if (this.notifications.length === 5) {
             return;
@@ -1048,9 +1060,4 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.notifications.splice(this.notifications.indexOf(notif), 1);
         }, 5000);
     };
-
-    changeUserStatus(status: string) {
-        this.user.status = status;
-        this.friendService.sendFriendDataChange(this.user);
-    }
 }

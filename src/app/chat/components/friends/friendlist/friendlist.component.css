@@ -1,3 +1,53 @@
+/* Color/Theme References */
+.light-icon-img {
+    filter: brightness(100%);
+}
+
+.dark-icon-img {
+    filter: brightness(110%);
+}
+
+.light-pop-container {
+    background-color: #efefef !important;
+    color: #666666 !important;
+}
+
+.dark-pop-container {
+    background-color: #111111 !important;
+    color: #efefef !important;
+}
+
+.light-general-colors {
+    background-color: rgb(249, 253, 255) !important;
+    color: #000000 !important;
+}
+
+.dark-general-colors {
+    background-color: #111111 !important;
+    color: #eeeeee !important;
+}
+
+.matchinged-status-color {
+    color: #00AFF0;
+}
+
+.online-status-color {
+    color: rgb(3, 160, 3);
+}
+
+.away-status-color {
+    color: rgb(214, 200, 4);
+}
+
+.dnd-status-color {
+    color: red;
+}
+
+.unread-msg-color {
+    color: rgb(235, 152, 0);
+}
+
+/* Friend list */
 .background-overlay {
     position: absolute;
     width: 100%;
@@ -33,7 +83,6 @@
 }
 
 /* Header */
-
 .friendlist-header-container {
     background-color: rgb(33, 37, 43);
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 1);
@@ -102,26 +151,6 @@
     font-size: 11px;
 }
 
-.matchinged-status-color {
-    color: #00AFF0;
-}
-
-.online-status-color {
-    color: rgb(3, 160, 3);
-}
-
-.away-status-color {
-    color: rgb(214, 200, 4);
-}
-
-.dnd-status-color {
-    color: red;
-}
-
-.unread-msg-color {
-    color: rgb(235, 152, 0);
-}
-
 .user-match-status {
     color: #ffffff;
     font-size: 12px;
@@ -173,33 +202,4 @@
 .friends-actions-container {
     padding-right: 30px;
     padding-top: 15px
-}
-
-/* Themes */
-.light-icon-img {
-    filter: brightness(100%);
-}
-
-.dark-icon-img {
-    filter: brightness(110%);
-}
-
-.light-pop-container {
-    background-color: #efefef !important;
-    color: #666666 !important;
-}
-
-.dark-pop-container {
-    background-color: #111111 !important;
-    color: #efefef !important;
-}
-
-.light-general-colors {
-    background-color: rgb(249, 253, 255) !important;
-    color: #000000 !important;
-}
-
-.dark-general-colors {
-    background-color: #111111 !important;
-    color: #eeeeee !important;
 }

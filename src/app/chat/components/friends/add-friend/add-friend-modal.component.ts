@@ -33,6 +33,7 @@ export class AddFriendModalComponent {
     addFriendForm: SubmittableFormGroup = new SubmittableFormGroup({
         email: new FormControl('', [Validators.required, Validators.maxLength(60), Validators.pattern(this.emailRegex)]),
     });
+    
     constructor(public activeModal: NgbActiveModal, private friendService: FriendService) {
         window.onpopstate = () => {
             this.activeModal.close('cancel');

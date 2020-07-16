@@ -20,18 +20,6 @@
     justify-content: center;
 }
 
-.close-btn {
-    color: #00AFF0;
-    position: absolute;
-    right: 13px;
-    top: 10px;
-    font-size: 20px;
-}
-
-.close-btn:hover {
-    color: #ffffff;
-}
-
 ::ng-deep>>>.modal-content {
     border: 0;
     border-radius: 35px;
@@ -49,15 +37,15 @@
     font-size: 18px;
 }
 
-.message-col {
-    margin-top: 16px;
-    margin-bottom: 0px;
-}
-
 .text-col {
     margin-top: 16px;
     padding-left: 40px;
     padding-right: 40px;
+}
+
+.input-col {
+    margin-top: 16px;
+    margin-bottom: 0px;
 }
 
 .name-input {
@@ -73,6 +61,7 @@
     margin-left: 20px;
     margin-right: 20px;
 }
+
 .send-btn-container  {
     margin-bottom: 20px;
 }

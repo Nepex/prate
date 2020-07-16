@@ -1,5 +1,5 @@
 // Angular
-import { Injectable, EventEmitter, Output, OnDestroy, OnInit } from '@angular/core';
+import { Injectable, EventEmitter, OnDestroy } from '@angular/core';
 
 // NPM
 import * as moment from 'moment';
@@ -14,7 +14,7 @@ import { User } from './../user/user';
 
 // Service for managing chat connections
 @Injectable()
-export class ChatService implements OnInit, OnDestroy {
+export class ChatService implements OnDestroy {
     public partner: EventEmitter<User> = new EventEmitter();
     public messageReceived: EventEmitter<ChatMessage> = new EventEmitter();
     public isPartnerTyping: EventEmitter<void> = new EventEmitter();
@@ -39,8 +39,6 @@ export class ChatService implements OnInit, OnDestroy {
     constructor(private sessionService: SessionService) {
 
     }
-
-    ngOnInit(): void { }
 
     // stop match timer on destroy
     ngOnDestroy(): void {
