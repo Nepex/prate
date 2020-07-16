@@ -39,8 +39,8 @@ export class FriendMessageBoxComponent implements OnInit {
     userIsTyping: boolean = false;
     isMaximized: boolean = false;
     windowPosition = {
-        x: 20,
-        y: 20
+        x: 0,
+        y: 0
     };
 
     // Emojis
@@ -117,12 +117,17 @@ export class FriendMessageBoxComponent implements OnInit {
         this.messageForm.reset();
     }
 
+    onEnterPress(event) {
+        this.sendMessage();
+        event.preventDefault();
+    }
+
     maximizeWindow(): void {
         if (!this.isMaximized) {
             this.windowPosition = { x: 0, y: 0 };
             this.isMaximized = true;
         } else {
-            this.windowPosition = { x: 20, y: 20 };
+            this.windowPosition = { x: 0, y: 0 };
             this.isMaximized = false;
         }
     }

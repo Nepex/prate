@@ -10,7 +10,17 @@
             <i class="fas fa-eye-slash cursor-pointer window-action-btn"
                 (click)="friendData.isOpen = false; friendData.isFocused = false" title="Hide Window"></i> &nbsp;
             <i class="far cursor-pointer window-action-btn max-restore-btn" (click)="maximizeWindow()"
-                [ngClass]="{'fa-window-maximize': !isMaximized, 'fa-window-restore': isMaximized}" title="Maximize/Restore"></i>
+                [ngClass]="{'fa-window-maximize': !isMaximized, 'fa-window-restore': isMaximized}"
+                title="Maximize/Restore"></i>
+        </div>
+    </div>
+
+    <div class="top-bar-mobile">
+        Direct Message
+
+        <div class="float-right">
+            <i class="fas fa-eye-slash cursor-pointer window-action-btn"
+                (click)="friendData.isOpen = false; friendData.isFocused = false" title="Hide Window"></i> &nbsp;
         </div>
     </div>
 
@@ -27,7 +37,8 @@
             <strong>{{ friendData.name }}</strong>
 
             <div class="float-right">
-                <button class="btn" *ngIf="friendData.status !== 'matching' && friendData.status !== 'matched'" (click)="sendMatchInvite(friendData)">Invite
+                <button class="btn" *ngIf="friendData.status !== 'matching' && friendData.status !== 'matched'"
+                    (click)="sendMatchInvite(friendData)">Invite
                     to Match</button>
             </div>
         </div>
@@ -78,9 +89,10 @@
 
         <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" (keydown.enter)="sendMessage()" novalidate
             autocomplete="off">
-            <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
+            <textarea class="message-input" id="messageInput" placeholder="Type something to send. . ."
                 formControlName="message" (input)="emitIsTyping()" #messageInput spellcheck="false" autofocus
-                [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}">
+                (keydown.enter)="onEnterPress($event)"
+                [ngClass]="{'dark-general-colors': user.color_theme === 'dark', 'light-general-colors': user.color_theme === 'light'}"></textarea>
 
             <!-- Emojis -->
             <div class="emoji-btn-container cursor-pointer"

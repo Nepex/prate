@@ -1020,6 +1020,8 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.matchInviteModal.close();
         }
 
+        console.log(this.user.id, invInfo.senderId)
+
         this.chatService.intiateMatching(this.user, invInfo.senderId);
     }
 

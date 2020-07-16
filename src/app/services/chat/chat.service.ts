@@ -1,5 +1,5 @@
 // Angular
-import { Injectable, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Injectable, EventEmitter, Output, OnDestroy, OnInit } from '@angular/core';
 
 // NPM
 import * as moment from 'moment';
@@ -14,7 +14,7 @@ import { User } from './../user/user';
 
 // Service for managing chat connections
 @Injectable()
-export class ChatService implements OnDestroy {
+export class ChatService implements OnInit, OnDestroy {
     public partner: EventEmitter<User> = new EventEmitter();
     public messageReceived: EventEmitter<ChatMessage> = new EventEmitter();
     public isPartnerTyping: EventEmitter<void> = new EventEmitter();
@@ -24,7 +24,7 @@ export class ChatService implements OnDestroy {
     public outerAppInviteAccepted: EventEmitter<void> = new EventEmitter();
     public outerAppInviteCanceled: EventEmitter<void> = new EventEmitter();
     public toggledOuterAppFunction: EventEmitter<void> = new EventEmitter();
-    
+
     public partnerDisconnected: EventEmitter<boolean> = new EventEmitter();
     public userDisconnected: EventEmitter<boolean> = new EventEmitter();
     public matchingError: EventEmitter<void> = new EventEmitter();
@@ -34,7 +34,11 @@ export class ChatService implements OnDestroy {
     private user: User;
     private matchFindRefreshInterval: number;
 
-    constructor(private sessionService: SessionService) { }
+    constructor(private sessionService: SessionService) {
+
+    }
+
+    ngOnInit(): void {}
 
     // stop match timer on destroy
     ngOnDestroy(): void {
