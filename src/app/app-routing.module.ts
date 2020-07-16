@@ -7,6 +7,7 @@ import { AttributionsComponent } from './pages/attributions/attributions.compone
 import { AuthGuard } from './auth-guard.service';
 import { ChangeLogComponent } from './pages/change-log/change-log.component';
 import { ChatComponent } from './chat/chat/chat.component';
+import { ChatGuestComponent } from './chat/chat-guest/chat-guest.component';
 import { DevelopersComponent } from './pages/developers/developers.component';
 import { DownloadComponent } from './pages/download/download.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'developers', component: DevelopersComponent },
   { path: 'download', component: DownloadComponent },
   { path: 'summary', component: SummaryComponent },
+  { path: 'chat-guest', component: ChatGuestComponent },
 
   // private
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },

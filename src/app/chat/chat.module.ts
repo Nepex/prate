@@ -18,12 +18,14 @@ import { SharedModule } from '../shared/shared.module';
 // App Components
 import { AddFriendModalComponent } from './components/friends/add-friend/add-friend-modal.component';
 import { ChatComponent } from './chat/chat.component';
+import { ChatGuestComponent } from './chat-guest/chat-guest.component';
 import { UserSettingsModalComponent } from './components/profile/user-settings/user-settings-modal.component';
 import { ChangeAvatarModalComponent } from './components/profile/change-avatar/change-avatar-modal.component';
 import { FriendListComponent } from './components/friends/friendlist/friendlist.component';
 import { FriendMessageBoxComponent } from './components/friends/friend-message-box/friend-message-box.component';
 import { FriendRequestsModalComponent } from './components/friends/friend-requests/friend-requests-modal.component';
 import { GameContainerComponent } from './components/game-container/game-container.component';
+import { GuestNameModalComponent } from './chat-guest/guest-name/guest-name-modal.component';
 import { HelpModalComponent } from './components/help/help-modal.component';
 import { BugReportModalComponent } from './components/bug-report/bug-report-modal.component';
 import { OuterAppInviteModalComponent } from './components/invites/outer-app-invite/outer-app-invite-modal.component';
@@ -37,10 +39,12 @@ import { YoutubePlayerComponent } from './components/youtube-player/youtube-play
         BugReportModalComponent,
         ChangeAvatarModalComponent,
         ChatComponent,
+        ChatGuestComponent,
         FriendListComponent,
         FriendMessageBoxComponent,
         FriendRequestsModalComponent,
         GameContainerComponent,
+        GuestNameModalComponent,
         HelpModalComponent,
         OuterAppInviteModalComponent,
         UserInfoPanelComponent,
@@ -67,6 +71,7 @@ import { YoutubePlayerComponent } from './components/youtube-player/youtube-play
         BugReportModalComponent,
         ChangeAvatarModalComponent,
         FriendRequestsModalComponent,
+        GuestNameModalComponent,
         HelpModalComponent,
         OuterAppInviteModalComponent,
         UserSettingsModalComponent,

@@ -1,0 +1,47 @@
+<form (ngSubmit)="chooseGuestName()" [formGroup]="chooseGuestNameForm" novalidate>
+    <!-- Modal Header -->
+    <div class="modal-header no-pad-margin">
+        <div class="container choose-guest-name-header">
+            <div class="row">
+                <div class="col-12 my-auto text-center">
+                    Choose Name
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Body -->
+    <div class="container modal-body">
+        <div class="row">
+            <div class="col-12 text-col text-center">
+                Please be aware you are browsing in Guest Mode. By using Prate you agree to the Terms of Use and Privacy Policy. <br /> <br />
+                It it highly recommended you create an account to experience all of Prate's features.
+            </div>
+        </div>
+
+        <div class="row no-pad-margin">
+            <div class="col-12 message-col">
+                <div *ngIf="messages">
+                    <prt-alert-messages [messages]="messages"></prt-alert-messages>
+                </div>
+
+                <div class="form-group position-relative name-input">
+                    <prt-form-validation-msgs [control]="chooseGuestNameForm.controls.name"
+                        [submitted]="chooseGuestNameForm.submitted">
+                    </prt-form-validation-msgs>
+                    <div class="col-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control text-input" formControlName="name" name="name"
+                                id="name" spellcheck="false" autocomplete="off" placeholder="Choose your name" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Footer -->
+    <div class="modal-footer text-center no-pad-margin">
+        <div class="form-group text-center send-btn-container">
+            <input type="submit" value="CONTINUE" class="btn submit-btn cursor-pointer" />
+        </div>
+    </div>
+</form>

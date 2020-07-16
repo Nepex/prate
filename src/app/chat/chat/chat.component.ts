@@ -201,12 +201,14 @@ export class ChatComponent implements OnInit, OnDestroy {
 
         this.loadingRequest = this.userService.getUser();
 
+
         this.loadingRequest.subscribe(res => {
             // set user
             this.user = res;
             this.user.levelInfo = this.levelService.getLevelInfo(res.experience);
             this.user.status = 'online';
             this.friendService.connectAndStoreUser(this.user);
+            console.log(this.user);
 
             // set listeners
             // SETTINGS

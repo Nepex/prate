@@ -22,6 +22,7 @@ export class User {
     experience?: number;
     levelInfo?: LevelInfo;
     bio?: string;
+    isGuest?: boolean;
 
     friends?: string[];
     friend_requests?: string[];

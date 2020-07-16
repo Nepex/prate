@@ -11,4 +11,5 @@ export class ChatMessage {
     type: string;
     previewImg?: string;
     status?: string;
+    isGuest?: boolean;
 }

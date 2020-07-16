@@ -24,6 +24,14 @@ export class ChangeLogComponent implements OnInit {
 
         this.updates = [
             {
+                title: 'v1.1.4-beta',
+                date: 'July 16, 2020',
+                items: [
+                    'Guest Mode',
+                    'Phone dimming disconnection alert'
+                ]
+            },
+            {
                 title: 'v1.1.3-beta',
                 date: 'July 15, 2020',
                 items: [

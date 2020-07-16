@@ -1,15 +1,3 @@
-<!-- Friendlist -->
-<prt-friendlist [showFriends]="friendsShown" [user]="user" [messageData]="friendMessageData"
-    (messageBoxOpened)="friendMessageBoxOpened($event)" [friendsWithUnreadMessages]="friendsWithUnreadMessages"
-    (friendlistClosed)="toggleFriendlist(false)">
-</prt-friendlist>
-
-<!-- Friend message boxes -->
-<div *ngFor="let f of friendMessageData">
-    <prt-friend-message-box [friendData]="f" [user]="user" [hidden]="!f.isOpen"
-        (isFocused)="friendWindowFocused($event)"></prt-friend-message-box>
-</div>
-
 <!-- Chat -->
 <!-- Matching Overlays -->
 <div class="matching-mask" *ngIf="matching">
@@ -89,27 +77,11 @@
         </div>
 
         <div class="col-lg-3 col-2 my-auto">
-            <prt-user-info-panel [user]="user" [partner]="partner" [exp]="user.experience" [friendsShown]="friendsShown"
-                (friendlistToggled)="toggleFriendlist($event)" [friendsWithUnreadMessages]="friendsWithUnreadMessages"
-                *ngIf="user"></prt-user-info-panel>
         </div>
     </div>
 
     <!-- Chat Area -->
     <div class="row chat-area">
-        <!-- Notifications Container -->
-        <div class="chat-alerts-container text-center" *ngIf="notifications.length > 0" [@fadeInOut]>
-            <div class="chat-alerts">
-                <div class="chat-alert" *ngFor="let n of notifications;">
-                    <span *ngIf="n && n.type === 'no-action'" [@fadeInOut]>{{n.message}}</span>
-                    <span *ngIf="n && n.type === 'friend-request'" class="cursor-pointer"
-                        (click)="openFriendRequestsModal()" [@fadeInOut]>{{n.message}}</span>
-                    <span *ngIf="n && n.type === 'friend-message'" class="cursor-pointer"
-                        (click)="friendMessageBoxOpened(n.friend)" [@fadeInOut]>{{n.message}}</span>
-                </div>
-            </div>
-        </div>
-
         <!-- App Containers-->
         <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
         </prt-youtube-player>
@@ -124,33 +96,17 @@
                     <div class="position-relative" [hidden]="hideBubbles"
                         [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
                         <div [ngClass]="{ 'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating', 
-                        'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': '#' + m.bubble_color,
-                                    'color': '#' + m.font_color }">
-                            <div class="float-left" *ngIf="user.show_avatars && !m.isGuest">
+                    'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': '#' + m.bubble_color,
+                                'color': '#' + m.font_color }">
+                            <div class="float-left" *ngIf="user.show_avatars">
                                 <div class="position-relative">
-                                    <img [src]="'../../../assets/images/avatars/' + m.avatar"
-                                        class="user-icon cursor-pointer"
-                                        (click)="openViewUserProfileModal(m.type, user.id, partner.id)">
-                                    <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
-                                        class="user-badge cursor-pointer"
-                                        (click)="openViewUserProfileModal(m.type, user.id, partner.id)">
-                                </div>
-                            </div>
-
-                            <div class="float-left" *ngIf="user.show_avatars && m.isGuest">
-                                <div class="position-relative">
-                                    <img [src]="'../../../assets/images/avatars/' + m.avatar"
-                                        class="user-icon">
+                                    <img [src]="'../../../assets/images/avatars/' + m.avatar" class="user-icon">
                                     <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
                                         class="user-badge">
                                 </div>
                             </div>
                             <div [ngStyle]="{'margin-left': user.show_avatars ? '65px' : '0px' }">
-                                <div class="float-left message-user" *ngIf="!m.isGuest"><span class="cursor-pointer"
-                                        (click)="openViewUserProfileModal(m.type, user.id, partner.id)">{{ m.sender }}</span>
-                                </div>
-
-                                <div class="float-left message-user" *ngIf="m.isGuest"><span>{{ m.sender }}</span>
+                                <div class="float-left message-user"><span>{{ m.sender }}</span>
                                 </div>
 
                                 <br />

@@ -34,6 +34,10 @@ export class LandingPageComponent implements OnInit {
         this.router.navigateByUrl('/chat');
     }
 
+    goToChatGuest(): void {
+        this.router.navigateByUrl('/chat-guest');
+    }
+
     openSignUpModal(): void {
         this.modal.open(SignUpModalComponent, { centered: true, backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
     }
