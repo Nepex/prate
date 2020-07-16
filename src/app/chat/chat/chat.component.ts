@@ -95,6 +95,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     isPartnerTypingSub: Subscription;
     partnerDisconnectSub: Subscription;
     matchingErrorSub: Subscription;
+    connectionDroppedSub: Subscription;
+
 
     // Data Stores
     matching: boolean = false;
@@ -243,6 +245,9 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
             this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
 
+            this.connectionDroppedSub = this.chatService.connectionDropped.subscribe(() => {this.disconnectFromMatch(); this.clearPartnerAndEndChat();});
+
+
             // timeout because of dark styling needing a user obj present (see html)
             setTimeout(() => {
                 this.listenAndEmitDoneTyping();
@@ -300,6 +305,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.matchInviteReceivedSub.unsubscribe();
         this.matchInviteAcceptedSub.unsubscribe();
         this.matchInviteCanceledSub.unsubscribe();
+        this.connectionDroppedSub.unsubscribe();
 
         clearTimeout(this.chatTimerInterval);
     }

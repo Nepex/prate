@@ -29,6 +29,9 @@ export class ChatService implements OnInit, OnDestroy {
     public userDisconnected: EventEmitter<boolean> = new EventEmitter();
     public matchingError: EventEmitter<void> = new EventEmitter();
 
+    public connectionDropped: EventEmitter<void> = new EventEmitter();
+
+
     public socket: io.Socket;
 
     private user: User;
@@ -38,7 +41,7 @@ export class ChatService implements OnInit, OnDestroy {
 
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     // stop match timer on destroy
     ngOnDestroy(): void {
@@ -54,6 +57,12 @@ export class ChatService implements OnInit, OnDestroy {
     public disconnect(): void {
         this.socket.disconnect();
         this.userDisconnected.emit();
+    }
+
+    public listenForConnectionDrop(): void {
+        this.socket.on('connection-drop', data => {
+            this.connectionDropped.emit();
+        });
     }
 
     private listenForPartnerDisconnect(): void {
@@ -110,6 +119,8 @@ export class ChatService implements OnInit, OnDestroy {
                 this.listenForOuterAppInviteCancel();
 
                 this.listenForToggleOuterAppFunction();
+
+                this.listenForConnectionDrop();
             }
         });
     }

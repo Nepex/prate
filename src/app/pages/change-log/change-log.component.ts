@@ -24,6 +24,14 @@ export class ChangeLogComponent implements OnInit {
 
         this.updates = [
             {
+                title: 'v1.1.3-beta',
+                date: 'July 15, 2020',
+                items: [
+                    'QoL Changes',
+                    'More fonts'
+                ]
+            },
+            {
                 title: 'v1.1.2-beta',
                 date: 'July 7, 2020',
                 items: [
