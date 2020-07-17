@@ -364,7 +364,7 @@ export class ChatComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.messageDisplayModalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop : 'static', keyboard : false, windowClass: 'modal-holder' });
+        this.messageDisplayModalRef = this.modal.open(MessageDisplayModalComponent, { centered: true, size: 'sm', backdrop: 'static', keyboard: false, windowClass: 'modal-holder' });
 
         this.messageDisplayModalRef.componentInstance.message = "You have lost connection, Please refresh the page.";
         this.messageDisplayModalRef.componentInstance.showClose = false;
@@ -475,7 +475,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (!this.messageForm.valid || !this.partner) {
             return;
         }
-        
+
         this.titleService.setTitle('Prate');
 
         const previewImg = this.imagify(this.messageForm.value.message);
@@ -592,6 +592,26 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     // -- Message Formatting --
+    addChatFormatting(type: string): void {
+        let message = this.messageForm.value.message;
+        let append;
+        if (!message) { message = ''; }
+
+        if (type === 'bold') {
+            append = ' <b>Text here</b>';
+        } else if (type === 'italic') {
+            append = ' <i>Text here</i>';
+        } if (type === 'underline') {
+            append = ' <u>Text here</u>';
+        } if (type === 'heading') {
+            append = ' <h3>Text here</h3>';
+        }
+
+        this.messageForm.value.message = this.messageForm.controls.message.setValue(message + append);
+        this.hideEmojis = true;
+        this.messageInput.nativeElement.focus();
+    }
+
     insertEmojiCodeInMsg(code: string): void {
         let message = this.messageForm.value.message;
         if (!message) { message = ''; }

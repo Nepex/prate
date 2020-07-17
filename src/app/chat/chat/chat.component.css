@@ -430,6 +430,11 @@ input:focus {
     padding-bottom: 10px;
 }
 
+.chat-format-icon-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .emoji-icon {
     height: 25px;
     width: 25px;

@@ -24,6 +24,13 @@ export class ChangeLogComponent implements OnInit {
 
         this.updates = [
             {
+                title: 'v1.1.5-beta',
+                date: 'July 16, 2020',
+                items: [
+                    'Chat formatting buttons'
+                ]
+            },
+            {
                 title: 'v1.1.4-beta',
                 date: 'July 16, 2020',
                 items: [

@@ -139,6 +139,26 @@ export class FriendMessageBoxComponent implements OnInit {
     }
 
     // Chat Formatting
+    addChatFormatting(type: string): void {
+        let message = this.messageForm.value.message;
+        let append;
+        if (!message) { message = ''; }
+
+        if (type === 'bold') {
+            append = ' <b>Text here</b>';
+        } else if (type === 'italic') {
+            append = ' <i>Text here</i>';
+        } if (type === 'underline') {
+            append = ' <u>Text here</u>';
+        } if (type === 'heading') {
+            append = ' <h3>Text here</h3>';
+        }
+
+        this.messageForm.value.message = this.messageForm.controls.message.setValue(message + append);
+        this.hideEmojis = true;
+        this.messageInput.nativeElement.focus();
+    }
+
     insertEmojiCodeInMsg(code: string): void {
         let message = this.messageForm.value.message;
         if (!message) { message = ''; }
