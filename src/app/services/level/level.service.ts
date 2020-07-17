@@ -132,9 +132,18 @@ export class LevelService {
 
     public getLevelInfo(experience: number): LevelInfo {
         for (let i = 0; i < this.levelInfo.length; i++) {
+            // max level condition
+            if (i + 1 > this.levelInfo.length) {
+                const levelInfo = Object.assign({}, this.levelInfo[i]); // copy or else it will modify the original array
+                levelInfo.experienceNeeded = 46963200;
+
+                return levelInfo;
+            }
+
             if (experience < this.levelInfo[i + 1].experienceNeeded) {
                 const levelInfo = Object.assign({}, this.levelInfo[i]); // copy or else it will modify the original array
                 levelInfo.experienceNeeded = this.levelInfo[i + 1].experienceNeeded; // get exp needed for next level
+
 
                 return levelInfo;
             }
@@ -144,7 +153,7 @@ export class LevelService {
     public checkIfLevelUp(newExpValue: number, userLevelInfo: LevelInfo): LevelInfo {
         for (let i = 0; i < this.levelInfo.length; i++) {
             // future case: make sure array doesn't break
-            if (i + 1 > this.levelInfo.length || i + 2 > this.levelInfo.length) {
+            if (i + 1 > this.levelInfo.length) {
                 return null;
             }
 
@@ -189,6 +198,10 @@ export class LevelService {
                 return curExp;
             }
 
+            if (userLevelInfo.level === 105) {
+                return 0;
+            }
+
             if (userLevelInfo.level === this.levelInfo[i].level) {
                 let value = curExp - this.levelInfo[i].experienceNeeded;
 
@@ -201,6 +214,10 @@ export class LevelService {
         for (let i = 0; i < this.levelInfo.length; i++) {
             if (userLevelInfo.level === 1) {
                 return userLevelInfo.experienceNeeded;
+            }
+
+            if (userLevelInfo.level === 105) {
+                return userLevelInfo[104].experienceNeeded;
             }
 
             if (userLevelInfo.level === this.levelInfo[i].level) {

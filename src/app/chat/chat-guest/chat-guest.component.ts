@@ -37,7 +37,7 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
     isWindowFocused: boolean;
     @HostListener('window:focus', ['$event'])
     onFocus(event: FocusEvent): void {
-        this.titleService.setTitle('Prate');
+        this.titleService.setTitle('Prate | Guest Mode');
         this.isWindowFocused = true;
 
     }
@@ -151,7 +151,7 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.titleService.setTitle('Prate');
+        this.titleService.setTitle('Prate | Guest Mode');
 
         // unable to set on css, don't allow page growth when friend message is dragged off
         document.body.style.overflow = 'hidden';
@@ -160,7 +160,7 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
         this.user =
         {
             id: this.newGuid(),
-            name: 'a',
+            name: 'Guest',
             email: 'a@a.com',
             font_face: 'Lato',
             font_color: '666666',
@@ -384,7 +384,7 @@ export class ChatGuestComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.titleService.setTitle('Prate');
+        this.titleService.setTitle('Prate | Guest Mode');
 
         const previewImg = this.imagify(this.messageForm.value.message);
 
