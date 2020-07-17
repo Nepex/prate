@@ -11,7 +11,7 @@ const createWindow = () => {
     win = new BrowserWindow({
         width: 800,
         height: 600,
-        icon: path.join(__dirname.slice, 'favicon.ico'),
+        icon: path.join(__dirname.slice(0, -4), 'dist/favicon.ico'),
     });
 
     // and load the index.html of the app.
