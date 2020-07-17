@@ -1,7 +1,7 @@
 {
   "name": "prate",
   "version": "1.1.5",
-  "main": "./src/electron.js",
+  "main": "./src/electron/electron.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,8 +11,8 @@
     "e2e": "ng e2e",
     "electron": "electron .",
     "electron-build": "ng build --prod --base-href ./ && npm run electron .",
-    "build-win": "electron-packager . Prate --platform=win32",
-    "build-mac": "electron-packager . Prate --platform=darwin"
+    "build-win": "electron-packager . Prate --platform=win32 --icon=./src/favicon.ico --asar",
+    "build-mac": "electron-packager . Prate --platform=darwin --icon=./src/favicon.ico --asar"
   },
   "private": true,
   "dependencies": {

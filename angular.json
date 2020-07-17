@@ -22,7 +22,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/sitemap.xml",
-              "src/main.js"
+              "src/main.js",
+              "src/package.json"
             ],
             "styles": [
               "src/styles.css",

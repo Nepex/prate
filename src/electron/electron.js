@@ -1,17 +1,51 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
+let isQuiting;
+let tray;
+
+app.on('before-quit', function () {
+  isQuiting = true;
+});
 
 const createWindow = () => {
     // Create the browser window.
     win = new BrowserWindow({
         width: 800,
         height: 600,
-        icon: path.join(__dirname.slice(0, -4), 'dist/favicon.ico'),
+        icon: path.join(__dirname.slice(0, -12), 'dist/favicon.ico'),
+    });
+
+    tray = new Tray(path.join(__dirname.slice(0, -12), 'dist/favicon.ico'));
+
+    tray.setContextMenu(Menu.buildFromTemplate([
+        {
+            label: 'Open', click: function () {
+                win.show();
+            }
+        },
+        {
+            label: 'Quit', click: function () {
+                isQuiting = true;
+                app.quit();
+            }
+        }
+    ]));
+
+    tray.on('double-click', function(event) {
+        win.show();
+    });
+
+    win.on('close', function (event) {
+        if (!isQuiting) {
+            event.preventDefault();
+            win.hide();
+            event.returnValue = false;
+        }
     });
 
     // and load the index.html of the app.
@@ -21,14 +55,15 @@ const createWindow = () => {
         slashes: true
     }));
 
-    console.log(__dirname);
+    win.setMenuBarVisibility(false)
 
     // Emitted when the window is closed.
     win.on('closed', () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null;
+
+        // win = null;
     });
 }
 
