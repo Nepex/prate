@@ -41,6 +41,11 @@ html, body {
     position: relative;
 }
 
+.no-outline {
+    outline: none !important;
+    border: none !important;
+}
+
 /* Text highlight custom color */
 ::selection {
   background: #ddd; 
