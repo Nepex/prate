@@ -24,6 +24,16 @@ export class ChangeLogComponent implements OnInit {
 
         this.updates = [
             {
+                title: 'v1.1.6-beta',
+                date: 'July 18, 2020',
+                items: [
+                    'Desktop Executable Release',
+                    'Windows (stable)',
+                    'Linux (stable - missing app icon)',
+                    'Mac (untested)'
+                ]
+            },
+            {
                 title: 'v1.1.5-beta',
                 date: 'July 16, 2020',
                 items: [
