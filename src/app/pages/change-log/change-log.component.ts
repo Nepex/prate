@@ -230,3 +230,4 @@ export class ChangeLogComponent implements OnInit {
         ]
     }
 }
+
