@@ -53,11 +53,16 @@
     <div class="message-area" id="{{friendData.id}}" (scroll)="chatScrolled()"
         [ngClass]="{'dark-general-colors': user.color_theme === 'dark'}">
         <div *ngFor="let m of friendData.messages" (resized)="checkForAutoScroll()">
-            <div class="position-relative" [hidden]="hideBubbles"
+            <div class="position-relative"
                 [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
-                <div [ngClass]="{ 'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating', 
-                'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': '#' + m.bubble_color,
-                            'color': '#' + m.font_color }">
+                <div [ngClass]="{ 
+                    'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating' && user.color_theme === 'light', 
+                    'left-bubble': (m.type === 'received' || user.bubble_layout === 'all_left') && user.color_theme === 'light',
+                    'dark-right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating' && user.color_theme === 'dark', 
+                    'dark-left-bubble': (m.type === 'received' || user.bubble_layout === 'all_left') &&  user.color_theme === 'dark'}"
+                    [ngStyle]="{
+                        'background-color': '#' + m.bubble_color,
+                        'color': '#' + m.font_color }">
                     <div style="margin-left: 0px;">
                         <div class="float-left message-user">
                             {{ m.senderName }}
@@ -106,7 +111,8 @@
             <div class="emoji-btn-container cursor-pointer"
                 (offClick)="!hideEmojis ? hideEmojis = !hideEmojis : hideEmojis">
                 <img src="../../../../.../../../assets/images/emoji-send.png" class="emoji-btn" title="Emojis"
-                    (click)="hideEmojis = !hideEmojis">
+                    (click)="hideEmojis = !hideEmojis"
+                    [ngClass]="{'dark-icon-img': user.color_theme === 'dark', 'light-icon-img': user.color_theme === 'light'}">
 
                 <div class="emoji-container" [hidden]="hideEmojis"
                     [ngClass]="{'dark-pop-container': user.color_theme === 'dark', 'light-pop-container': user.color_theme === 'light'}">
@@ -138,8 +144,9 @@
             </div>
 
             <!-- Send Message -->
-            <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
-                    src="../../../../../assets/images/prt-send.png" title="Send Message">
+            <div class="send-btn-container cursor-pointer" (click)="sendMessage()">
+                <img src="../../../../../assets/images/prt-send.png" title="Send Message"
+                    [ngClass]="{'dark-icon-img': user.color_theme === 'dark', 'light-icon-img': user.color_theme === 'light'}">
             </div>
         </form>
 

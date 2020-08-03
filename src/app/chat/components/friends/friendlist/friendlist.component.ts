@@ -162,8 +162,8 @@ export class FriendListComponent implements OnInit {
     }
 
     sortFriends(): void {
-        this.onlineUsers = _.sortBy(this.onlineUsers, function (o) { return o.name; });
-        this.offlineUsers = _.sortBy(this.offlineUsers, function (o) { return o.name; });
+        this.onlineUsers = _.sortBy(this.onlineUsers, function (o) { return o.name.toLowerCase(); });
+        this.offlineUsers = _.sortBy(this.offlineUsers, function (o) { return o.name.toLowerCase(); });
     }
 
     closeFriendList(): void {

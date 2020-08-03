@@ -123,8 +123,12 @@
                 <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
                     <div class="position-relative" [hidden]="hideBubbles"
                         [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
-                        <div [ngClass]="{ 'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating', 
-                        'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': '#' + m.bubble_color,
+                        <div [ngClass]="{ 
+                        'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating' && user.color_theme === 'light', 
+                        'left-bubble': (m.type === 'received' || user.bubble_layout === 'all_left') && user.color_theme === 'light',
+                        'dark-right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating' && user.color_theme === 'dark', 
+                        'dark-left-bubble': (m.type === 'received' || user.bubble_layout === 'all_left') &&  user.color_theme === 'dark'}"
+                            [ngStyle]="{'background-color': '#' + m.bubble_color,
                                     'color': '#' + m.font_color }">
                             <div class="float-left" *ngIf="user.show_avatars && !m.isGuest">
                                 <div class="position-relative">
@@ -139,8 +143,7 @@
 
                             <div class="float-left" *ngIf="user.show_avatars && m.isGuest">
                                 <div class="position-relative">
-                                    <img [src]="'../../../assets/images/avatars/' + m.avatar"
-                                        class="user-icon">
+                                    <img [src]="'../../../assets/images/avatars/' + m.avatar" class="user-icon">
                                     <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
                                         class="user-badge">
                                 </div>
@@ -292,7 +295,7 @@
                                         (click)="insertEmojiCodeInMsg(e.code)" />
                                 </div>
                             </div>
-                            
+
                             <hr style="margin-bottom: 0px; margin-top: 5px;">
 
                             <div class="row text-center no-pad-margin">
@@ -303,10 +306,11 @@
                                     <i class="fas fa-italic cursor-pointer" (click)="addChatFormatting('italic')"></i>
                                 </div>
                                 <div class="col-3 no-pad-margin emoji-icon-container text-center">
-                                    <i class="fas fa-underline cursor-pointer" (click)="addChatFormatting('underline')"></i>
+                                    <i class="fas fa-underline cursor-pointer"
+                                        (click)="addChatFormatting('underline')"></i>
                                 </div>
                                 <div class="col-3 no-pad-margin emoji-icon-container text-center">
-                                    <i class="fas fa-heading cursor-pointer" (click)="addChatFormatting('heading')"></i> 
+                                    <i class="fas fa-heading cursor-pointer" (click)="addChatFormatting('heading')"></i>
                                 </div>
                             </div>
                         </div>

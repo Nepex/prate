@@ -52,7 +52,7 @@
             <div class="col-12">
                 <div class="friendlist-body-heading">
                     <span class="cursor-pointer" (click)="hideOnlineFriends = !hideOnlineFriends"><i
-                            class="fas" [ngClass]="{'fa-caret-down': !hideOnlineFriends, 'fa-caret-right': hideOnlineFriends}"></i> Online</span>
+                            class="fas" [ngClass]="{'fa-caret-down': !hideOnlineFriends, 'fa-caret-right': hideOnlineFriends}"></i> Online ({{ onlineUsers.length }})</span>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
             <div class="col-12">
                 <div class="friendlist-body-heading">
                     <span class="cursor-pointer" (click)="hideOfflineFriends = !hideOfflineFriends"><i
-                            class="fas" [ngClass]="{'fa-caret-down': !hideOfflineFriends, 'fa-caret-right': hideOfflineFriends}"></i> Offline</span>
+                            class="fas" [ngClass]="{'fa-caret-down': !hideOfflineFriends, 'fa-caret-right': hideOfflineFriends}"></i> Offline ({{ offlineUsers.length }})</span>
                 </div>
             </div>
         </div>

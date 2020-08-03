@@ -26,7 +26,7 @@ import { UserService } from '../../services/user/user.service';
 @Component({
     selector: 'prt-chat-guest',
     templateUrl: './chat-guest.component.html',
-    styleUrls: ['./chat-guest.component.css'],
+    styleUrls: ['../chat/chat.component.css'],
 })
 export class ChatGuestComponent implements OnInit, OnDestroy {
     // HTML Element Refs

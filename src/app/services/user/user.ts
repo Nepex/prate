@@ -29,6 +29,7 @@ export class User {
     status?: string;
     firstConnect?: boolean;
     forcedMatchedWith?: string;
+    matchedBasedOn?: string;
 
     newPassword?: string;
     oldPassword?: string;
