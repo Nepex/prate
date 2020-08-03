@@ -44,6 +44,7 @@ export class ViewUserProfileModalComponent implements OnInit {
         this.loadingRequest.subscribe(res => {
             this.loadingRequest = null;
             this.userBeingViewed = res;
+            console.log(res)
             this.userBeingViewed.levelInfo = this.levelService.getLevelInfo(this.userBeingViewed.experience);
 
             if (this.userBeingViewed.friend_requests.indexOf(this.currentUser.id) > -1) {

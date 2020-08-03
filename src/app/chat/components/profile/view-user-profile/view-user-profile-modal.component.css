@@ -122,3 +122,28 @@
     color: #ffffff;
     padding-bottom: 20px;
 }
+
+.bio-title {
+    padding-bottom: 7px;
+}
+
+.user-interests {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 12px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+
+.interests-title {
+    padding-bottom: 10px;
+}
+
+.interest-tag {
+    border-radius: 12px;
+    background-color: #00AFF0;
+    margin: 3px;
+    padding: 5px 8px 5px 8px;
+}

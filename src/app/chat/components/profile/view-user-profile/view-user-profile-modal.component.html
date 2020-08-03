@@ -25,7 +25,7 @@
                         {{ (userBeingViewed.experience / 60 / 60).toFixed(0) }} hours</span>
                 </div>
 
-               
+
             </div>
         </div>
     </div>
@@ -36,13 +36,25 @@
 <div class="container modal-body no-pad-margin" *ngIf="userBeingViewed">
     <div class="row no-pad-margin">
         <div class="col-12 user-bio">
-            <span *ngIf="!userBeingViewed.bio">This user has not set up their bio.</span>
+            <div class="bio-title"><strong><i class="fas fa-id-card"></i>&nbsp; Bio</strong></div>
+            <span *ngIf="!userBeingViewed.bio">{{ userBeingViewed.name }} has not set up their bio.</span>
             <span *ngIf="userBeingViewed.bio">{{userBeingViewed.bio}}</span>
         </div>
 
+        <div class="col-12 user-interests">
+            <div class="interests-title"><strong>Interests</strong></div>
+            <span *ngIf="userBeingViewed.interests.length === 0">No interests</span>
+            <span *ngIf="userBeingViewed.interests.length > 0">
+                <span *ngFor="let interest of userBeingViewed.interests" class="interest-tag">
+                    <strong>{{ interest | titlecase }}</strong>
+                </span>
+            </span>
+        </div>
+
         <div class="col-12" *ngIf="currentUser.id !== userBeingViewedId">
-            <button class="btn friend-request-btn" (click)="sendFriendRequest()" *ngIf="!friendReqMessage">Send Friend Request</button>
-            <span *ngIf="friendReqMessage" class="friend-req-message">{{ friendReqMessage }}</span>
+            <button class="btn friend-request-btn" (click)="sendFriendRequest()" *ngIf="!friendReqMessage">Send Friend
+                Request</button>
+            <span *ngIf="friendReqMessage" class="friend-req-message"><i>{{ friendReqMessage }}</i></span>
         </div>
     </div>
 </div>
