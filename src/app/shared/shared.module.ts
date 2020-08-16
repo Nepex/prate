@@ -7,16 +7,18 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessagesComponent } from './alert-messages/alert-messages.component';
-import { ConfirmationModalComponent } from './confirmation/confirmation-modal.component';
-import { FormValidationMsgsComponent } from './form-validation-msgs/form-validation-msgs.component';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
-import { InterestFormatPipe } from './interest-format-pipe/interest-format.pipe';
-import { MessageDisplayModalComponent } from './message-display/message-display-modal.component';
-import { OffClickDirective } from './off-click-directive/off-click.directive';
-import { SafeHtmlPipe } from './safe-html-pipe/safe-html.pipe';
-import { SafeUrlPipe } from './safe-url-pipe/safe-url.pipe';
+import { AlertMessagesComponent } from './components/alert-messages/alert-messages.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { FormValidationMsgsComponent } from './components/form-validation-msgs/form-validation-msgs.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { InterestFormatPipe } from './pipes/interest-format-pipe/interest-format.pipe';
+import { MessageDisplayModalComponent } from './components/message-display-modal/message-display-modal.component';
+import { OffClickDirective } from './directives/off-click-directive/off-click.directive';
+import { SafeHtmlPipe } from './pipes/safe-html-pipe/safe-html.pipe';
+import { SafeUrlPipe } from './pipes/safe-url-pipe/safe-url.pipe';
+
+// App
 
 @NgModule({
     declarations: [

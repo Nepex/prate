@@ -9,6 +9,7 @@ import { PagesModule } from './pages/pages.module';
 import { ChatModule } from './chat/chat.module';
 import { ServicesExternalModule } from './services/services-ext/services-external.module';
 import { ServicesModule } from './services/services.module';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { ServicesModule } from './services/services.module';
   imports: [
     AppRoutingModule,
     ChatModule,
-    PagesModule,
+    HomeModule,
     ServicesExternalModule,
     ServicesModule
   ],

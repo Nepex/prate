@@ -3,16 +3,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // App
-import { AttributionsComponent } from './pages/attributions/attributions.component';
-import { AuthGuard } from './auth-guard.service';
-import { ChangeLogComponent } from './pages/change-log/change-log.component';
-import { ChatComponent } from './chat/chat/chat.component';
-import { ChatGuestComponent } from './chat/chat-guest/chat-guest.component';
-import { DevelopersComponent } from './pages/developers/developers.component';
-import { DownloadComponent } from './pages/download/download.component';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { PageNotFoundComponent } from './pages/errors/page-not-found.component.ts/page-not-found.component';
-import { SummaryComponent } from './pages/summary/summary.component';
+import { AuthGuard } from './core/guards/auth-guard.service';
+import { AttributionsComponent } from './modules/home/attributions/attributions.component';
+import { ChangeLogComponent } from './modules/home/change-log/change-log.component';
+import { ChatComponent } from './modules/chat/chat.component';
+import { DevelopersComponent } from './modules/home/developers/developers.component';
+import { DownloadComponent } from './modules/home/download/download.component';
+import { LandingPageComponent } from './modules/home/landing-page/landing-page.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { SummaryComponent } from './modules/home/summary/summary.component';
 
 export const routes: Routes = [
   // public
@@ -22,7 +21,7 @@ export const routes: Routes = [
   { path: 'developers', component: DevelopersComponent },
   { path: 'download', component: DownloadComponent },
   { path: 'summary', component: SummaryComponent },
-  { path: 'chat-guest', component: ChatGuestComponent },
+  // { path: 'chat-guest', component: ChatGuestComponent },
 
   // private
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
