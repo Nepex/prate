@@ -6,9 +6,9 @@ import { Observable, Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
-import { FriendService } from '../../../../services/friend/friend.service';
-import { User } from '../../../../services/user/user';
+import { AlertMessage } from 'src/app/shared/models/generic';
+import { FriendService } from 'src/app/core/services';
+import { User } from 'src/app/shared/models';
 
 // Modal for reviewing friend requests
 @Component({

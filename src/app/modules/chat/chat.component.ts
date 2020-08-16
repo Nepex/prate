@@ -12,20 +12,13 @@ import * as moment from 'moment';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { ChatMessage } from '../../services/chat/chat-message';
-import { ChatService } from '../../services/chat/chat.service';
-import { FriendMessageData } from '../../services/friend/friend-message-data';
-import { FriendService } from '../../services/friend/friend.service';
-import { FriendRequest } from '../../services/friend/friend-request';
-import { FriendRequestsModalComponent } from '../components/friends/friend-requests/friend-requests-modal.component';
-import { IsTyping } from '../../services/chat/is-typing';
-import { LevelService } from '../../services/level/level.service';
-import { MessageDisplayModalComponent } from 'src/app/shared/message-display/message-display-modal.component';
-import { OuterAppInfo } from '../../services/chat/outer-app-info';
-import { OuterAppInviteModalComponent } from '../components/invites/outer-app-invite/outer-app-invite-modal.component';
-import { User } from '../../services/user/user';
-import { UserService } from '../../services/user/user.service';
-import { ViewUserProfileModalComponent } from '../components/profile/view-user-profile/view-user-profile-modal.component';
+import { User, ChatMessage, FriendMessageData, IsTyping, OuterAppInfo, FriendRequest } from '../../shared/models';
+import { ViewUserProfileModalComponent } from '../profile/view-user-profile/view-user-profile-modal.component';
+import { MessageDisplayModalComponent } from '../../shared/components/message-display-modal/message-display-modal.component';
+import { OuterAppInviteModalComponent } from './modals/invite-modal/outer-app-invite-modal.component';
+import { FriendRequestsModalComponent } from '../friends/friend-requests-modal/friend-requests-modal.component';
+import { UserService, ChatService, LevelService, FriendService } from 'src/app/core/services';
+
 
 // Central chat component
 @Component({

@@ -6,10 +6,9 @@ import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { LoginModalComponent } from '../../../modules/auth/login/login-modal.component';
-import { SessionService } from '../../../core/services/session.service';
+import { LoginModalComponent } from 'src/app/modules/auth/login-modal/login-modal.component';
+import { SessionService, UserService } from 'src/app/core/services';
 import { User } from '../../models';
-import { UserService } from '../../../core/services/user.service';
 
 // Header component for base website
 @Component({

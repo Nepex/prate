@@ -39,10 +39,16 @@ import { ViewUserProfileModalComponent } from './view-user-profile/view-user-pro
         TagInputModule
     ],
     providers: [],
+    exports: [
+        ChangeAvatarModalComponent,
+        UserInfoPanelComponent,
+        UserSettingsModalComponent,
+        ViewUserProfileModalComponent,
+    ],
     entryComponents: [
         ChangeAvatarModalComponent,
         UserSettingsModalComponent,
         ViewUserProfileModalComponent,
     ]
 })
-export class ChatModule { }
+export class ProfileModule { }

@@ -12,11 +12,12 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
 import { FormValidationMsgsComponent } from './components/form-validation-msgs/form-validation-msgs.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { InterestFormatPipe } from './pipes/interest-format-pipe/interest-format.pipe';
+import { InterestFormatPipe } from './pipes/interest-format.pipe';
 import { MessageDisplayModalComponent } from './components/message-display-modal/message-display-modal.component';
 import { OffClickDirective } from './directives/off-click-directive/off-click.directive';
-import { SafeHtmlPipe } from './pipes/safe-html-pipe/safe-html.pipe';
-import { SafeUrlPipe } from './pipes/safe-url-pipe/safe-url.pipe';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 // App
 
@@ -30,6 +31,7 @@ import { SafeUrlPipe } from './pipes/safe-url-pipe/safe-url.pipe';
         InterestFormatPipe,
         MessageDisplayModalComponent,
         OffClickDirective,
+        PageNotFoundComponent,
         SafeHtmlPipe,
         SafeUrlPipe
     ],

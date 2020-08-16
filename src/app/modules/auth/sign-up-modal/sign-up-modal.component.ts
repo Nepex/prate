@@ -9,14 +9,11 @@ import { style, trigger, transition, animate } from '@angular/animations';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from '../../shared/alert-messages/alert-messages.component';
-import { Credentials } from '../../services/session/credentials';
-import { PrivacyPolicyModalComponent } from '../privacy-policy/privacy-policy-modal.component';
-import { SessionService } from '../../services/session/session.service';
-import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
-import { TermsModalComponent } from '../../pages/terms/terms-modal.component';
-import { UserService } from '../../services/user/user.service';
-import { User } from '../../services/user/user';
+import { AlertMessage, Credentials } from '../../../shared/models/generic';
+import { PrivacyPolicyModalComponent } from '../../home/privacy-policy-modal/privacy-policy-modal.component';
+import { TermsModalComponent } from '../../home/terms-modal/terms-modal.component';
+import { User, SubmittableFormGroup } from '../../../shared/models';
+import { UserService, SessionService } from 'src/app/core/services';
 
 // Modal for creating new users
 @Component({

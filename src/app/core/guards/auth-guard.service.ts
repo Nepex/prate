@@ -3,7 +3,7 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { Injectable } from '@angular/core';
 
 // App
-import { SessionService } from './services/session/session.service';
+import { SessionService } from '../services';
 
 // Service for redirecting away from URLs if user is not authenticated
 @Injectable()

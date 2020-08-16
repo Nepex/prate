@@ -8,12 +8,8 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 
 // App
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { ChatService } from './services/chat.service';
-import { FriendService } from './services/friend.service';
-import { LevelService } from './services/level.service';
+import { ChatService, FriendService, LevelService, SessionService, UserService } from './services';
 import { ParamSerializer } from './http/param-serializer';
-import { SessionService } from './services/session.service';
-import { UserService } from './services/user.service';
 
 @NgModule({
     declarations: [

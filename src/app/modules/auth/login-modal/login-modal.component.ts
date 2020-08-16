@@ -8,11 +8,9 @@ import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from '../../shared/alert-messages/alert-messages.component';
-import { Credentials } from './../../services/session/credentials';
-import { SessionService } from '../../services/session/session.service';
-import { SubmittableFormGroup } from '../../shared/submittable-form-group/submittable-form-group';
-import { User } from '../../services/user/user';
+import { AlertMessage, Credentials } from '../../../shared/models/generic';
+import { SessionService } from '../../../core/services';
+import { User, SubmittableFormGroup } from '../../../shared/models';
 
 // Modal for logging users in
 @Component({

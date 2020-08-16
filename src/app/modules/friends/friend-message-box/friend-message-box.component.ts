@@ -8,10 +8,8 @@ import { Subscription, fromEvent } from 'rxjs';
 import * as moment from 'moment';
 
 // App
-import { ChatMessage } from '../../../../services/chat/chat-message';
-import { FriendMessageData } from '../../../../services/friend/friend-message-data';
-import { FriendService } from '../../../../services/friend/friend.service';
-import { User } from '../../../../services/user/user';
+import { User, FriendMessageData, ChatMessage } from '../../../shared/models';
+import { FriendService } from '../../../core/services';
 
 // Modal for reviewing friend requests
 @Component({

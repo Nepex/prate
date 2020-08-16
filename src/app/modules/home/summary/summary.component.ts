@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { SignUpModalComponent } from '../../auth/sign-up/sign-up-modal.component';
+import { SignUpModalComponent } from '../../auth/sign-up-modal/sign-up-modal.component';
 
 // Why Prate? page, shows basic app info
 @Component({

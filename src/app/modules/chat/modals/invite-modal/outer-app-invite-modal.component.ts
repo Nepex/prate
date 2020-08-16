@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { GoogleService } from '../../../../services/services-ext/google/google.service';
-import { User } from '../../../../services/user/user';
+import { GoogleService } from '../../../../core/services-external/google/google.service';
+import { User } from '../../../../shared/models';
 
 // Modal for accepting/canceling outside application invites
 @Component({

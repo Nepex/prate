@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { tap } from 'rxjs/operators';
 
 // App
-import { SessionService } from './session/session.service';
+import { SessionService } from '../services';
 
 // Intercepts HTTP requests and adds required headers (for all calls from services.module)
 @Injectable()

@@ -7,10 +7,9 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from '../../../shared/alert-messages/alert-messages.component';
-import { BugReport } from '../../../services/generic/bug-report';
-import { SubmittableFormGroup } from '../../../shared/submittable-form-group/submittable-form-group';
-import { UserService } from '../../../services/user/user.service';
+import { AlertMessage } from '../../../../shared/models/generic';
+import { BugReport, SubmittableFormGroup } from '../../../../shared/models';
+import { UserService } from '../../../../core/services';
 
 // Modal for client to send bug reports
 @Component({

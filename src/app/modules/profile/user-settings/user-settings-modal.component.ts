@@ -10,10 +10,8 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // App
 import { AlertMessage } from '../../../shared/models/generic';
 import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
-import { FriendService } from '../../../core/services/friend.service';
-import { LevelService } from '../../../core/services/level.service';
-import { UserService } from '../../../core/services/user.service';
 import { User, SubmittableFormGroup } from '../../../shared/models';
+import { UserService, LevelService, FriendService } from 'src/app/core/services';
 
 // Modal for managing user settings
 @Component({

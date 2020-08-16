@@ -8,15 +8,12 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'underscore';
 
 // App
-import { AddFriendModalComponent } from '../add-friend/add-friend-modal.component';
-import { ChatService } from 'src/app/services/chat/chat.service';
-import { ConfirmationModalComponent } from '../../../../shared/confirmation/confirmation-modal.component';
-import { FriendMessageData } from '../../../../services/friend/friend-message-data';
-import { FriendRequestsModalComponent } from '../friend-requests/friend-requests-modal.component';
-import { FriendService } from '../../../../services/friend/friend.service';
-import { OuterAppInviteModalComponent } from '../../invites/outer-app-invite/outer-app-invite-modal.component';
-import { User } from '../../../../services/user/user';
-import { UserService } from '../../../../services/user/user.service';
+import { AddFriendModalComponent } from '../add-friend-modal/add-friend-modal.component';
+import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
+import { FriendService, UserService, ChatService } from 'src/app/core/services';
+import { FriendRequestsModalComponent } from '../friend-requests-modal/friend-requests-modal.component';
+import { OuterAppInviteModalComponent } from '../../chat/modals/invite-modal/outer-app-invite-modal.component';
+import { User, FriendMessageData } from '../../../shared/models';
 import { ViewUserProfileModalComponent } from '../../profile/view-user-profile/view-user-profile-modal.component';
 
 // Component for displaying friendlist

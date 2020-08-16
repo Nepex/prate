@@ -7,9 +7,8 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { AlertMessage } from '../../../shared/models/generic';
-import { FriendService } from '../../../core/services/friend.service';
 import { User } from '../../../shared/models';
-import { UserService } from '../../../core/services/user.service';
+import { UserService, FriendService } from 'src/app/core/services';
 
 // Modal for changing the user's profile avatar picture
 @Component({

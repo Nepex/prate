@@ -2,14 +2,16 @@
 import { NgModule } from '@angular/core';
 
 // App
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from './core/guards/auth-guard.service';
+import { AuthModule } from './modules/auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PagesModule } from './pages/pages.module';
-import { ChatModule } from './chat/chat.module';
-import { ServicesExternalModule } from './services/services-ext/services-external.module';
-import { ServicesModule } from './services/services.module';
+import { ChatModule } from './modules/chat/chat.module';
+import { CoreModule } from './core/core.module';
 import { HomeModule } from './modules/home/home.module';
+import { ProfileModule } from './modules/profile/profile.module';
+import { ServicesExternalModule } from './core/services-external/services-external.module';
+import { FriendsModule } from './modules/friends/friends.module';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,16 @@ import { HomeModule } from './modules/home/home.module';
   ],
   imports: [
     AppRoutingModule,
+    AuthModule,
+    CoreModule,
     ChatModule,
+    FriendsModule,
     HomeModule,
+    ProfileModule,
     ServicesExternalModule,
-    ServicesModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: []
+  entryComponents: [],
 })
 export class AppModule { }

@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { SessionService } from '../../../core/services/session.service';
-import { SignUpModalComponent } from '../../auth/sign-up/sign-up-modal.component';
+import { SignUpModalComponent } from '../../auth/sign-up-modal/sign-up-modal.component';
 
 // Home page, first page loaded
 @Component({

@@ -7,10 +7,9 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from '../../../../shared/alert-messages/alert-messages.component';
-import { FriendService } from '../../../../services/friend/friend.service';
-import { SubmittableFormGroup } from '../../../../shared/submittable-form-group/submittable-form-group';
-import { User } from '../../../../services/user/user';
+import { AlertMessage } from '../../../shared/models/generic';
+import { FriendService } from '../../../core/services';
+import { User, SubmittableFormGroup } from '../../../shared/models';
 
 // Modal for adding friends by email
 @Component({

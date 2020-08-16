@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 
 // NPM
+import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App Modules
@@ -16,7 +17,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PrivacyPolicyModalComponent } from './privacy-policy-modal/privacy-policy-modal.component';
 import { SummaryComponent } from './summary/summary.component';
 import { TermsModalComponent } from './terms-modal/terms-modal.component';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -35,6 +35,9 @@ import { CommonModule } from '@angular/common';
         SharedModule
     ],
     providers: [],
-    entryComponents: []
+    entryComponents: [
+        PrivacyPolicyModalComponent,
+        TermsModalComponent
+    ]
 })
 export class HomeModule { }

@@ -7,12 +7,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { BugReportModalComponent } from '../../chat/modals/bug-report-modal/bug-report-modal.component';
-import { ChatService } from '../../../core/services/chat.service';
-import { FriendService } from '../../../core/services/friend.service';
-import { FriendRequestsModalComponent } from '../../friends/friend-requests/friend-requests-modal.component';
-import { LevelService } from '../../../core/services/level.service';
+import { FriendRequestsModalComponent } from '../../friends/friend-requests-modal/friend-requests-modal.component';
 import { HelpModalComponent } from '../../chat/modals/help-modal/help-modal.component';
-import { SessionService } from '../../../core/services/session.service';
+import { SessionService, ChatService, LevelService, FriendService } from 'src/app/core/services';
 import { User, LevelInfo } from '../../../shared/models';
 import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
 
