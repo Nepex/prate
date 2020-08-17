@@ -1,6 +1,5 @@
 // Angular
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -28,8 +27,7 @@ import { ViewUserProfileModalComponent } from './view-user-profile/view-user-pro
         ViewUserProfileModalComponent,
     ],
     imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
+        CommonModule,
         ColorPickerModule,
         FormsModule,
         ReactiveFormsModule,

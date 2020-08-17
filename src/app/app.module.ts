@@ -1,3 +1,6 @@
+// Angular
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 // NPM
 import { NgModule } from '@angular/core';
 
@@ -20,12 +23,11 @@ import { FriendsModule } from './modules/friends/friends.module';
   imports: [
     AppRoutingModule,
     AuthModule,
+    BrowserAnimationsModule,
     CoreModule,
     ChatModule,
-    FriendsModule,
     HomeModule,
-    ProfileModule,
-    ServicesExternalModule,
+    ServicesExternalModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

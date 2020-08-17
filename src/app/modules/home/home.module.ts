@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App Modules
+import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 // App
@@ -31,6 +32,7 @@ import { TermsModalComponent } from './terms-modal/terms-modal.component';
     ],
     imports: [
         CommonModule,
+        HomeRoutingModule,
         NgbModule,
         SharedModule
     ],

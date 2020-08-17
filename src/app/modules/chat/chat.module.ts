@@ -1,6 +1,5 @@
 // Angular
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -10,6 +9,7 @@ import { MomentModule } from 'ngx-moment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App Modules
+import { ChatRoutingModule } from './chat-routing.module';
 import { FriendsModule } from '../friends/friends.module';
 import { ProfileModule } from '../profile/profile.module';
 import { SharedModule } from '../../shared/shared.module';
@@ -37,8 +37,8 @@ import { GuestNameModalComponent } from './modals/guest-name-modal/guest-name-mo
     ],
     imports: [
         AngularResizedEventModule,
-        BrowserModule,
-        BrowserAnimationsModule,
+        CommonModule,
+        ChatRoutingModule,
         FriendsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -53,6 +53,6 @@ import { GuestNameModalComponent } from './modals/guest-name-modal/guest-name-mo
         GuestNameModalComponent,
         HelpModalComponent
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ChatModule { }
