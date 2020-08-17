@@ -16,7 +16,7 @@ import { User, SubmittableFormGroup } from '../../../shared/models';
 @Component({
     selector: 'prt-login-modal',
     templateUrl: './login-modal.component.html',
-    styleUrls: ['./login-modal.component.css']
+    styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent {
     // Subs

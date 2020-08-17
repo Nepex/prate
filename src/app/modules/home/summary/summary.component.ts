@@ -12,7 +12,7 @@ import { SignUpModalComponent } from '../../auth/sign-up-modal/sign-up-modal.com
 @Component({
     selector: 'prt-summary',
     templateUrl: './summary.component.html',
-    styleUrls: ['./summary.component.css']
+    styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnInit {
     fadeMatchIcon: boolean = false;

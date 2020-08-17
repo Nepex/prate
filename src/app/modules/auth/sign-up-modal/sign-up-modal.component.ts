@@ -19,7 +19,7 @@ import { UserService, SessionService } from 'src/app/core/services';
 @Component({
     selector: 'prt-sign-up-modal',
     templateUrl: './sign-up-modal.component.html',
-    styleUrls: ['./sign-up-modal.component.css'],
+    styleUrls: ['./sign-up-modal.component.scss'],
     animations: [
         trigger('slideInOut', [
             transition(':enter', [

@@ -20,7 +20,7 @@ import { ViewUserProfileModalComponent } from '../../profile/view-user-profile/v
 @Component({
     selector: 'prt-friendlist',
     templateUrl: './friendlist.component.html',
-    styleUrls: ['./friendlist.component.css'],
+    styleUrls: ['./friendlist.component.scss'],
     animations: [
         trigger('slideInOut', [
             state('show', style({

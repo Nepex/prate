@@ -5,7 +5,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core
 @Component({
     selector: 'prt-youtube-player',
     templateUrl: './youtube-player.component.html',
-    styleUrls: ['./youtube-player.component.css']
+    styleUrls: ['./youtube-player.component.scss']
 })
 export class YoutubePlayerComponent implements OnInit, OnChanges {
     // Component Inputs

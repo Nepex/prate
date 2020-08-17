@@ -17,7 +17,7 @@ import { UserService, LevelService, FriendService } from 'src/app/core/services'
 @Component({
     selector: 'prt-user-settings-modal',
     templateUrl: './user-settings-modal.component.html',
-    styleUrls: ['./user-settings-modal.component.css'],
+    styleUrls: ['./user-settings-modal.component.scss'],
     animations: [
         trigger('slideInOut', [
             transition(':enter', [

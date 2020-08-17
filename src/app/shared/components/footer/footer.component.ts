@@ -12,7 +12,7 @@ import { PrivacyPolicyModalComponent } from '../../../modules/home/privacy-polic
 @Component({
     selector: 'prt-footer',
     templateUrl: './footer.component.html',
-    styleUrls: ['./footer.component.css']
+    styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
     constructor(private modal: NgbModal) { }

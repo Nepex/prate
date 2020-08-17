@@ -12,7 +12,7 @@ import { MessageDisplayModalComponent } from '../../../shared/components/message
 @Component({
     selector: 'prt-download',
     templateUrl: './download.component.html',
-    styleUrls: ['./download.component.css']
+    styleUrls: ['./download.component.scss']
 })
 export class DownloadComponent implements OnInit {
     constructor(private modal: NgbModal, private titleService: Title) { }

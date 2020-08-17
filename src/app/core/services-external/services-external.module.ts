@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 // App
-import { GoogleService } from './google/google.service';
+import { GoogleService } from './google.service';
 
 @NgModule({
     declarations: [],

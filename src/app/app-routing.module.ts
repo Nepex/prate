@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // App
-import { AuthGuard } from './core/guards/auth-guard.service';
+import { AuthGuard } from './core/helpers/auth-guard.service';
 import { AttributionsComponent } from './modules/home/attributions/attributions.component';
 import { ChangeLogComponent } from './modules/home/change-log/change-log.component';
 import { ChatComponent } from './modules/chat/chat.component';

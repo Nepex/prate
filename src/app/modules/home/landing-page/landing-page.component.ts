@@ -14,7 +14,7 @@ import { SignUpModalComponent } from '../../auth/sign-up-modal/sign-up-modal.com
 @Component({
     selector: 'prt-landing-page',
     templateUrl: './landing-page.component.html',
-    styleUrls: ['./landing-page.component.css']
+    styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
     // UI

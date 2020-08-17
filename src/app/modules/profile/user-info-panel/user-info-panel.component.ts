@@ -17,7 +17,7 @@ import { UserSettingsModalComponent } from '../user-settings/user-settings-modal
 @Component({
     selector: 'prt-user-info-panel',
     templateUrl: './user-info-panel.component.html',
-    styleUrls: ['./user-info-panel.component.css']
+    styleUrls: ['./user-info-panel.component.scss']
 })
 export class UserInfoPanelComponent implements OnInit, OnChanges {
     // Component Inputs

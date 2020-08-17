@@ -9,7 +9,7 @@ import { Update } from '../../../shared/models';
 @Component({
     selector: 'prt-change-log',
     templateUrl: './change-log.component.html',
-    styleUrls: ['./change-log.component.css']
+    styleUrls: ['./change-log.component.scss']
 })
 export class ChangeLogComponent implements OnInit {
     // UI

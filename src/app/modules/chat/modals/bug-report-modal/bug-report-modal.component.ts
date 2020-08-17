@@ -15,7 +15,7 @@ import { UserService } from '../../../../core/services';
 @Component({
     selector: 'prt-bug-report-modal',
     templateUrl: './bug-report-modal.component.html',
-    styleUrls: ['./bug-report-modal.component.css']
+    styleUrls: ['./bug-report-modal.component.scss']
 })
 export class BugReportModalComponent {
     // Subs

@@ -1,0 +1,282 @@
+<!-- Chat -->
+<!-- Matching Overlays -->
+<div class="matching-mask" *ngIf="matching">
+    <div class="matching-animation-container">
+        <img src="../../assets/images/prate-matching-animation.gif" />
+        <br />
+        <button class="btn matching-btn" for="matching-button" (click)="cancelMatching()">CANCEL</button>
+    </div>
+</div>
+
+<div class="matching-mask" *ngIf="matchFoundAnimation">
+    <div class="matching-animation-container">
+        <img src="../../assets/images/prate-matched-animation.gif" />
+    </div>
+</div>
+
+<div class="matching-mask" *ngIf="matchedWithOverlay">
+    <div class="matching-animation-container">
+        <img src="../../assets/images/prate-matchedwith-background.png" />
+
+        <div class="matched-info-dialog-text text-center">
+            <img src="../../assets/images/prate-match-info-animation.gif" />
+            <br />
+            Matched with <br /><strong class="partner-left-name">{{ partner.name }}</strong><br /><br />
+            Based on:<br /> {{ partner.matchedBasedOn | interestFormat }}
+        </div>
+
+        <button class="btn matching-btn" for="matching-button" (click)="matchedWithOverlay = false">SAY HI!</button>
+    </div>
+</div>
+
+<div class="matching-mask" *ngIf="chatFinishedOverlay">
+    <div class="matching-animation-container">
+        <img src="../../assets/images/prate-matchedwith-background.png" />
+
+        <div class="match-finished-info-dialog-text text-center">
+            <div>
+                <img src="../../assets/images/prate-match-info-animation.gif" />
+                <br />
+                <strong class="partner-left-name">{{ this.partnerLeftName }}</strong><br />
+                {{ this.leaveMessage }}
+            </div>
+
+            <div class="exp-overlay-msg" [ngStyle]="{'padding-top': rankUpMessage ? '12px' : '35px'}"
+                [innerHTML]="expMessage"></div>
+            <div class="rank-up-overlay-msg" [innerHTML]="rankUpMessage" *ngIf="rankUpMessage"></div>
+        </div>
+
+        <button class="btn matching-btn" for="matching-button" (click)="chatFinishedOverlay = false">OK</button>
+    </div>
+</div>
+
+<!-- Dark Theme Background -->
+<div class="dark-theme" *ngIf="user && user.color_theme === 'dark'"></div>
+
+<div class="container-fluid h-100">
+
+    <!-- Header -->
+    <div class="row header">
+        <div class="col-lg-8 col-2 my-auto">
+            <div class="float-left text-center">
+                <a href="/"><img class="menu-logo cursor-pointer" src="../../assets/images/prt-icon.png" /></a>
+            </div>
+            <!-- Desktop buttons -->
+            <button class="btn match-btn-lg" for="match-button" (click)="searchForMatch()"
+                *ngIf="!partner && !matching">FIND A MATCH!</button>
+            <button class="btn match-btn-lg" for="match-button" (click)="disconnectFromMatch()" *ngIf="partner">LEAVE
+                CHAT</button>
+        </div>
+
+        <!-- Mobile buttons -->
+        <div class="col-lg-1 col-8 text-center my-auto mx-auto">
+            <button class="btn match-btn-sm" for="match-button" (click)="searchForMatch()"
+                *ngIf="!partner && !matching">FIND A MATCH!</button>
+            <button class="btn match-btn-sm" for="match-button" (click)="disconnectFromMatch()" *ngIf="partner">LEAVE
+                CHAT</button>
+        </div>
+
+        <div class="col-lg-3 col-2 my-auto">
+        </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="row chat-area">
+        <!-- App Containers-->
+        <prt-youtube-player [playState]="ytPlayState" [muteState]="ytMuteState" [videoUrl]="ytUrl">
+        </prt-youtube-player>
+        <prt-game-container *ngIf="gameUrl" [gameUrl]="gameUrl" [gameType]="gameType" [gameAccepted]="gameAccepted"
+            (canceled)="closeApps()" (inviteSent)="sendGameInvite($event)" (gameClosed)="gameSessionClose($event)">
+        </prt-game-container>
+
+        <!-- Chat Messages -->
+        <div class="col-12 no-pad-margin">
+            <div class="chat-messages" id="chatMessages" (scroll)="chatScrolled()">
+                <div *ngFor="let m of chatMessages" (resized)="checkForAutoScroll()">
+                    <div class="position-relative" [hidden]="hideBubbles"
+                        [ngClass]="{ 'text-right': m.type === 'sent' && user.bubble_layout === 'alternating' }">
+                        <div [ngClass]="{ 'right-bubble': m.type === 'sent' && user.bubble_layout === 'alternating', 
+                    'left-bubble': m.type === 'received' || user.bubble_layout === 'all_left' }" [ngStyle]="{'background-color': '#' + m.bubble_color,
+                                'color': '#' + m.font_color }">
+                            <div class="float-left" *ngIf="user.show_avatars">
+                                <div class="position-relative">
+                                    <img [src]="'../../../assets/images/avatars/' + m.avatar" class="user-icon">
+                                    <img [src]="m.type === 'sent' ? '../../../assets/images/badges/' + user.levelInfo.badge : '../../../assets/images/badges/' + partner.levelInfo.badge"
+                                        class="user-badge">
+                                </div>
+                            </div>
+                            <div [ngStyle]="{'margin-left': user.show_avatars ? '65px' : '0px' }">
+                                <div class="float-left message-user"><span>{{ m.sender }}</span>
+                                </div>
+
+                                <br />
+                                <span *ngIf="m.previewImg && user.img_previews" class="message-img-preview-container">
+                                    <img [src]="m.previewImg | safeURL" class="message-img-preview" /> <br />
+                                </span>
+
+                                <span [innerHTML]="m.message" [ngStyle]="{'font-family': m.font_face }">
+                                </span>
+                                <br />
+
+                                <div class="float-right message-time">
+                                    <span *ngIf="m.type === 'sent'">Sent</span>
+                                    <span *ngIf="m.type === 'received'">Received</span>
+
+                                    {{ m.datetime }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages / Under Chat -->
+            <div class="user-is-typing" [hidden]="!partnerIsTyping" *ngIf="user && !ytUrl"
+                [ngClass]="{'dark-theme-status-msg': user.color_theme === 'dark', 'light-theme-status-msg': user.color_theme === 'light'}">
+                <span *ngIf="partner">{{ partner.name }} is typing</span>
+            </div>
+
+            <div class="user-is-typing yt-typing" [hidden]="!partnerIsTyping" *ngIf="user && ytUrl">
+                <span *ngIf="partner">{{ partner.name }} is typing</span>
+            </div>
+
+            <div class="return-to-bottom-icon" [hidden]="autoScroll" *ngIf="user"
+                [ngClass]="{'dark-theme-status-msg': user.color_theme === 'dark', 'light-theme-status-msg': user.color_theme === 'light'}">
+                <i class="fas fa-chevron-down cursor-pointer" (click)="scrollToChatBottom()"></i>
+            </div>
+
+            <div class="user-warning-msg" [hidden]="!statusMessage" *ngIf="user"
+                [ngClass]="{'dark-theme-status-msg': user.color_theme === 'dark', 'light-theme-status-msg': user.color_theme === 'light'}">
+                {{ statusMessage }}
+            </div>
+
+            <!-- Floating YouTube Video Controls -->
+            <div class="yt-play-controls" *ngIf="ytUrl">
+                <div class="col-12">
+                    <i class="fas cursor-pointer" [ngClass]="{'fa-play': !ytPlayState, 'fa-pause': ytPlayState}"
+                        ngbTooltip="Toggle Play/Pause" placement="top" container="body"
+                        (click)="toggledOuterAppFunction('yt', 'playpause', true)"></i>
+                    &nbsp;
+                    <i class="fas cursor-pointer"
+                        [ngClass]="{'fa-volume-up': !ytMuteState, 'fa-volume-mute': ytMuteState}"
+                        ngbTooltip="Toggle Mute/Un-Mute" placement="top" container="body"
+                        (click)="toggledOuterAppFunction('yt', 'muteunmute', true)"></i>
+                    &nbsp;
+                    <i class="fas cursor-pointer"
+                        [ngClass]="{'fa-comment': !hideBubbles, 'fa-comment-slash': hideBubbles}"
+                        ngbTooltip="Hide/Show Bubbles" placement="top" container="body" (click)="toggleBubbles();"></i>
+                    &nbsp;
+                    <i class="fas fas fa-times cursor-pointer" ngbTooltip="Close Video" placement="top" container="body"
+                        (click)="toggledOuterAppFunction('yt', 'close', true)"></i>
+                </div>
+            </div>
+
+            <!-- Message input field & App/Emoji Controllers -->
+            <form (ngSubmit)="sendMessage()" [formGroup]="messageForm" (keydown.enter)="sendMessage()" novalidate
+                autocomplete="off">
+                <div class="message-input-container">
+                    <!-- Message Input -->
+                    <input type="text" class="message-input" id="messageInput" placeholder="Type something to send. . ."
+                        formControlName="message" (input)="emitIsTyping()" #messageInput
+                        [ngClass]="{'dark-message-input': user.color_theme === 'dark', 'light-message-input': user.color_theme === 'light'}"
+                        *ngIf="user" spellcheck="false">
+
+
+                    <!-- Games -->
+                    <div class="game-btn-container cursor-pointer"
+                        (offClick)="!hideGames ? hideGames = !hideGames : hideGames"><img
+                            src="../../assets/images/game-send.png" class="game-btn" title="Games"
+                            (click)="hideGames = !hideGames" *ngIf="user && !ytUrl"
+                            [ngClass]="{'dark-icon-img': user.color_theme === 'dark', 'light-icon-img': user.color_theme === 'light'}">
+
+                        <div *ngIf="user" class="game-container" [hidden]="hideGames"
+                            [ngClass]="{'dark-pop-container': user.color_theme === 'dark', 'light-pop-container': user.color_theme === 'light'}">
+                            <div class="row text-center no-pad-margin">
+                                <div class="col-4 no-pad-margin game-icon-container">
+                                    <i class="fas fa-paint-brush cursor-pointer" ngbTooltip="Drawing | gartic.io"
+                                        placement="top" container="body" (click)="prepareGameInvite('gartic')"></i>
+                                </div>
+
+                                <div class="col-4 no-pad-margin game-icon-container">
+                                    <i class="fas fa-chess-pawn cursor-pointer" ngbTooltip="Chess | chess.org"
+                                        placement="top" container="body" (click)="prepareGameInvite('chess')"></i>
+                                </div>
+
+                                <div class="col-4 no-pad-margin game-icon-container">
+                                    <i class="fas fa-hashtag cursor-pointer"
+                                        ngbTooltip="TicTacToe | ultimate-t3.herokuapp.com" placement="top"
+                                        container="body" (click)="prepareGameInvite('tictactoe')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Youtube -->
+                    <div class="yt-ctrl-btn-container cursor-pointer"
+                        (offClick)="!hideYtInvControls ? hideYtInvControls = !hideYtInvControls : hideYtInvControls">
+                        <img src="../../assets/images/yt-send.png" class="yt-ctrl-btn" title="YouTube Share"
+                            (click)="hideYtInvControls = !hideYtInvControls" *ngIf="!ytUrl && user"
+                            [ngClass]="{'dark-icon-img': user.color_theme === 'dark', 'light-icon-img': user.color_theme === 'light'}">
+                        <div class="yt-ctrl-container" [hidden]="hideYtInvControls">
+                            <div class="row text-center no-pad-margin">
+                                <div class="col-9 no-pad-margin">
+                                    <input type="text" class="yt-send-input" ngbTooltip="Paste YouTube Link"
+                                        placement="top" container="body" [(ngModel)]="inviteLink"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <div class="col-3"><i class="fas fa-paper-plane cursor-pointer yt-send-inv-icon"
+                                        ngbTooltip="Send Invite" placement="top" container="body"
+                                        (click)="sendOuterAppInvite('yt')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emojis -->
+                    <div class="emoji-btn-container cursor-pointer"
+                        (offClick)="!hideEmojis ? hideEmojis = !hideEmojis : hideEmojis"><img
+                            src="../../assets/images/emoji-send.png" class="emoji-btn" title="Emojis"
+                            (click)="hideEmojis = !hideEmojis" *ngIf="user"
+                            [ngClass]="{'dark-icon-img': user.color_theme === 'dark', 'light-icon-img': user.color_theme === 'light'}">
+
+                        <div *ngIf="user" class="emoji-container" [hidden]="hideEmojis"
+                            [ngClass]="{'dark-pop-container': user.color_theme === 'dark', 'light-pop-container': user.color_theme === 'light'}">
+                            <div class="row text-center no-pad-margin">
+                                <div class="col-3 no-pad-margin emoji-icon-container" *ngFor="let e of emojis">
+                                    <img src="../../assets/images/emojis/{{e.img}}" class="emoji-icon cursor-pointer"
+                                        ngbTooltip="{{e.code}}" placement="top" container="body"
+                                        (click)="insertEmojiCodeInMsg(e.code)" />
+                                </div>
+                            </div>
+
+                            <hr style="margin-bottom: 0px; margin-top: 5px;">
+
+                            <div class="row text-center no-pad-margin">
+                                <div class="col-3 no-pad-margin emoji-icon-container text-center">
+                                    <i class="fas fa-bold cursor-pointer" (click)="addChatFormatting('bold')"></i>
+                                </div>
+                                <div class="col-3 no-pad-margin emoji-icon-container text-center">
+                                    <i class="fas fa-italic cursor-pointer" (click)="addChatFormatting('italic')"></i>
+                                </div>
+                                <div class="col-3 no-pad-margin emoji-icon-container text-center">
+                                    <i class="fas fa-underline cursor-pointer"
+                                        (click)="addChatFormatting('underline')"></i>
+                                </div>
+                                <div class="col-3 no-pad-margin emoji-icon-container text-center">
+                                    <i class="fas fa-heading cursor-pointer" (click)="addChatFormatting('heading')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Send Message -->
+                    <div class="send-btn-container cursor-pointer" (click)="sendMessage()"><img
+                            src="../../assets/images/prt-send.png" title="Send Message" *ngIf="user"
+                            [ngClass]="{'dark-icon-img': user.color_theme === 'dark', 'light-icon-img': user.color_theme === 'light'}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

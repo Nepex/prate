@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 
 // App
-import { AuthGuard } from './core/guards/auth-guard.service';
+import { AuthGuard } from './core/helpers/auth-guard.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

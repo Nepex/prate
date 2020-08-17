@@ -15,7 +15,7 @@ import { FriendService } from '../../../core/services';
 @Component({
     selector: 'prt-friend-message-box',
     templateUrl: './friend-message-box.component.html',
-    styleUrls: ['./friend-message-box.component.css']
+    styleUrls: ['./friend-message-box.component.scss']
 })
 export class FriendMessageBoxComponent implements OnInit {
     // HTML Element Refs

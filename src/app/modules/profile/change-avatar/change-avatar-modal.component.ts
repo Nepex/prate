@@ -14,7 +14,7 @@ import { UserService, FriendService } from 'src/app/core/services';
 @Component({
     selector: 'prt-change-avatar-modal',
     templateUrl: './change-avatar-modal.component.html',
-    styleUrls: ['./change-avatar-modal.component.css']
+    styleUrls: ['./change-avatar-modal.component.scss']
 })
 export class ChangeAvatarModalComponent implements OnInit {
     // Component Inputs

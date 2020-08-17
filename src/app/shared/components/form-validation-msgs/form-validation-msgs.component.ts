@@ -14,7 +14,7 @@ import { FormControl } from '@angular/forms';
     <span *ngIf="(control.touched || submitted) && !control.errors">
         <span class="checkmark">&#10003;</span>
     </span>`,
-    styleUrls: ['./form-validation-msgs.component.css']
+    styleUrls: ['./form-validation-msgs.component.scss']
 })
 export class FormValidationMsgsComponent {
     // UI

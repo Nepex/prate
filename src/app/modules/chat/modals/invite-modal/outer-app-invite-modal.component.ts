@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { GoogleService } from '../../../../core/services-external/google/google.service';
+import { GoogleService } from '../../../../core/services-external/google.service';
 import { User } from '../../../../shared/models';
 
 // Modal for accepting/canceling outside application invites
 @Component({
     selector: 'prt-outer-app-invite-modal',
     templateUrl: './outer-app-invite-modal.component.html',
-    styleUrls: ['./outer-app-invite-modal.component.css']
+    styleUrls: ['./outer-app-invite-modal.component.scss']
 })
 export class OuterAppInviteModalComponent implements OnInit {
     // Component Inputs

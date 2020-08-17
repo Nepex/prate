@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
     selector: 'prt-attributions',
     templateUrl: './attributions.component.html',
-    styleUrls: ['./attributions.component.css']
+    styleUrls: ['./attributions.component.scss']
 })
 export class AttributionsComponent implements OnInit {
     constructor(private titleService: Title) { }

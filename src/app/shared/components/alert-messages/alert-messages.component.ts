@@ -16,7 +16,7 @@ import { AlertMessage } from '../../models/generic';
 
         </div>        
     </div>`,
-    styleUrls: ['./alert-messages.component.css']
+    styleUrls: ['./alert-messages.component.scss']
 })
 export class AlertMessagesComponent {
     // UI

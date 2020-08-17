@@ -8,7 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'prt-help-modal',
     templateUrl: './help-modal.component.html',
-    styleUrls: ['./help-modal.component.css']
+    styleUrls: ['./help-modal.component.scss']
 })
 export class HelpModalComponent {
     // UI

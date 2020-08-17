@@ -19,8 +19,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
-// App
-
 @NgModule({
     declarations: [
         AlertMessagesComponent,

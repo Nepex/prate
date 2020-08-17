@@ -13,7 +13,7 @@ import { UserService, LevelService, FriendService } from 'src/app/core/services'
 @Component({
     selector: 'prt-view-user-profile-modal',
     templateUrl: './view-user-profile-modal.component.html',
-    styleUrls: ['./view-user-profile-modal.component.css']
+    styleUrls: ['./view-user-profile-modal.component.scss']
 })
 export class ViewUserProfileModalComponent implements OnInit {
     // Component Inputs

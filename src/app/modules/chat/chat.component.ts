@@ -24,7 +24,7 @@ import { UserService, ChatService, LevelService, FriendService } from 'src/app/c
 @Component({
     selector: 'prt-chat',
     templateUrl: './chat.component.html',
-    styleUrls: ['./chat.component.css'],
+    styleUrls: ['./chat.component.scss'],
     animations: [
         trigger('fadeInOut', [
             transition(':enter', [

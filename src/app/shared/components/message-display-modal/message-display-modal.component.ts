@@ -8,7 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'prt-message-display',
     templateUrl: './message-display-modal.component.html',
-    styleUrls: ['./message-display-modal.component.css']
+    styleUrls: ['./message-display-modal.component.scss']
 })
 export class MessageDisplayModalComponent {
     // UI

@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
     selector: 'prt-developers',
     templateUrl: './developers.component.html',
-    styleUrls: ['./developers.component.css']
+    styleUrls: ['./developers.component.scss']
 })
 export class DevelopersComponent implements OnInit {
     constructor(private titleService: Title) { }

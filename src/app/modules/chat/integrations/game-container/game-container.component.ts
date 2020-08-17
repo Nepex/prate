@@ -5,7 +5,7 @@ import { Component, Input, EventEmitter, Output} from '@angular/core';
 @Component({
     selector: 'prt-game-container',
     templateUrl: './game-container.component.html',
-    styleUrls: ['./game-container.component.css']
+    styleUrls: ['./game-container.component.scss']
 })
 export class GameContainerComponent {
     // Component Inputs

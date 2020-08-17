@@ -14,7 +14,7 @@ import { User } from 'src/app/shared/models';
 @Component({
     selector: 'prt-friend-requests-modal',
     templateUrl: './friend-requests-modal.component.html',
-    styleUrls: ['./friend-requests-modal.component.css']
+    styleUrls: ['./friend-requests-modal.component.scss']
 })
 export class FriendRequestsModalComponent implements OnInit {
     // Component inputs

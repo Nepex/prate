@@ -7,7 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 @Component({
   selector: 'prt-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   animations: [
     trigger('showHide', [
       state('show', style({

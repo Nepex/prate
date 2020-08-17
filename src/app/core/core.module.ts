@@ -7,9 +7,9 @@ import { NgModule } from '@angular/core';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 
 // App
-import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { AuthInterceptor } from './helpers/auth-interceptor';
 import { ChatService, FriendService, LevelService, SessionService, UserService } from './services';
-import { ParamSerializer } from './http/param-serializer';
+import { ParamSerializer } from './helpers/param-serializer';
 
 @NgModule({
     declarations: [

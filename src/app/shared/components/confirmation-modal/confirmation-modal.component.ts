@@ -8,7 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'prt-confirmation-modal',
     templateUrl: './confirmation-modal.component.html',
-    styleUrls: ['./confirmation-modal.component.css']
+    styleUrls: ['./confirmation-modal.component.scss']
 })
 export class ConfirmationModalComponent {
     @Input() message;

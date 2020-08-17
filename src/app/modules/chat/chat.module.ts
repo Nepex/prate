@@ -21,11 +21,15 @@ import { GameContainerComponent } from './integrations/game-container/game-conta
 import { HelpModalComponent } from './modals/help-modal/help-modal.component';
 import { OuterAppInviteModalComponent } from './modals/invite-modal/outer-app-invite-modal.component';
 import { YoutubePlayerComponent } from './integrations/youtube-player/youtube-player.component';
+import { ChatGuestComponent } from './chat-guest/chat-guest.component';
+import { GuestNameModalComponent } from './modals/guest-name-modal/guest-name-modal.component';
 
 @NgModule({
     declarations: [
         BugReportModalComponent,
         ChatComponent,
+        ChatGuestComponent,
+        GuestNameModalComponent,
         GameContainerComponent,
         HelpModalComponent,
         OuterAppInviteModalComponent,
@@ -46,6 +50,7 @@ import { YoutubePlayerComponent } from './integrations/youtube-player/youtube-pl
     providers: [],
     entryComponents: [
         BugReportModalComponent,
+        GuestNameModalComponent,
         HelpModalComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
