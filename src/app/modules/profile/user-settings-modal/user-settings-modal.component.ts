@@ -9,7 +9,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { AlertMessage } from '../../../shared/models/generic';
-import { ChangeAvatarModalComponent } from '../change-avatar/change-avatar-modal.component';
+import { ChangeAvatarModalComponent } from '../change-avatar-modal/change-avatar-modal.component';
 import { User, SubmittableFormGroup } from '../../../shared/models';
 import { UserService, LevelService, FriendService } from 'src/app/core/services';
 

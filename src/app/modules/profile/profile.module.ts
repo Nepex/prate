@@ -13,10 +13,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../shared/shared.module';
 
 // App Components
-import { ChangeAvatarModalComponent } from './change-avatar/change-avatar-modal.component';
+import { ChangeAvatarModalComponent } from './change-avatar-modal/change-avatar-modal.component';
 import { UserInfoPanelComponent } from './user-info-panel/user-info-panel.component';
-import { UserSettingsModalComponent } from './user-settings/user-settings-modal.component';
-import { ViewUserProfileModalComponent } from './view-user-profile/view-user-profile-modal.component';
+import { UserSettingsModalComponent } from './user-settings-modal/user-settings-modal.component';
+import { ViewUserProfileModalComponent } from './view-user-profile-modal/view-user-profile-modal.component';
 
 
 @NgModule({

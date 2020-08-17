@@ -26,7 +26,7 @@
               "src/package.json"
             ],
             "styles": [
-              "src/assets/scss/main.scss",
+              "src/assets/scss/_main.scss",
               "node_modules/angular2-draggable/css/resizable.min.css"
             ],
             "scripts": [],

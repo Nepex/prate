@@ -7,7 +7,6 @@
 
 .modal-body {
     background-color: rgb(249, 253, 255);
-    ;
     padding-top: 20px;
     padding-bottom: 0;
 }
@@ -20,16 +19,6 @@
     padding-top: 0;
     padding-bottom: 0;
     justify-content: center;
-}
-
-::ng-deep>>>.modal-content {
-    border: 0;
-    border-radius: 35px;
-}
-
-::ng-deep>>>.modal {
-    text-align: center;
-    padding: 0!important;
 }
 
 .close-btn {

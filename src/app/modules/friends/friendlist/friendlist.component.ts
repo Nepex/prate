@@ -14,7 +14,7 @@ import { FriendService, UserService, ChatService } from 'src/app/core/services';
 import { FriendRequestsModalComponent } from '../friend-requests-modal/friend-requests-modal.component';
 import { OuterAppInviteModalComponent } from '../../chat/modals/invite-modal/outer-app-invite-modal.component';
 import { User, FriendMessageData } from '../../../shared/models';
-import { ViewUserProfileModalComponent } from '../../profile/view-user-profile/view-user-profile-modal.component';
+import { ViewUserProfileModalComponent } from '../../profile/view-user-profile-modal/view-user-profile-modal.component';
 
 // Component for displaying friendlist
 @Component({

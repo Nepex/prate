@@ -13,7 +13,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { User, ChatMessage, FriendMessageData, IsTyping, OuterAppInfo, FriendRequest } from '../../shared/models';
-import { ViewUserProfileModalComponent } from '../profile/view-user-profile/view-user-profile-modal.component';
+import { ViewUserProfileModalComponent } from '../profile/view-user-profile-modal/view-user-profile-modal.component';
 import { MessageDisplayModalComponent } from '../../shared/components/message-display-modal/message-display-modal.component';
 import { OuterAppInviteModalComponent } from './modals/invite-modal/outer-app-invite-modal.component';
 import { FriendRequestsModalComponent } from '../friends/friend-requests-modal/friend-requests-modal.component';

@@ -11,7 +11,7 @@ import { FriendRequestsModalComponent } from '../../friends/friend-requests-moda
 import { HelpModalComponent } from '../../chat/modals/help-modal/help-modal.component';
 import { SessionService, ChatService, LevelService, FriendService } from 'src/app/core/services';
 import { User, LevelInfo } from '../../../shared/models';
-import { UserSettingsModalComponent } from '../user-settings/user-settings-modal.component';
+import { UserSettingsModalComponent } from '../user-settings-modal/user-settings-modal.component';
 
 // Component that's placed on the Chat page (top-right) to display user information and navigation
 @Component({

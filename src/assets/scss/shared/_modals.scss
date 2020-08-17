@@ -1,0 +1,64 @@
+
+// Default
+.modal-header {
+    background-color: rgb(33, 37, 43);
+    border-bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-body {
+    background-color: rgb(249, 253, 255);
+    // padding: 0;
+}
+
+.modal-footer {
+    background-color: rgb(249, 253, 255);
+    border-top: 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    justify-content: center;
+}
+
+.modal-close-btn {
+    color: #00AFF0;
+    position: absolute;
+    right: 13px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.modal-close-btn:hover {
+    color: #ffffff;
+}
+
+// Blue Modals
+.modal-blue-header {
+    background-color: #00AFF0;
+    border-bottom: 0;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+}
+
+.modal-blue-body {
+    background-color: #00AFF0;
+}
+
+.modal-blue-footer {
+    background-color: #00AFF0;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+    justify-content: center;
+}
+
+.modal-blue-close-btn {
+    color: rgba(255, 255, 255, .7);
+    position: absolute;
+    right: 18px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.modal-blue-close-btn:hover {
+    color: #ffffff;
+}

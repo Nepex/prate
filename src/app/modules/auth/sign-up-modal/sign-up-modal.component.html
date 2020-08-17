@@ -1,10 +1,10 @@
 <!-- Header -->
-<div class="modal-header no-pad-margin">
+<div class="modal-blue-header no-pad-margin">
     <img src="../../assets/images/prt-icon-white.png" class="img-fluid mx-auto prt-icon" />
-    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+    <i class="fas fa-times cursor-pointer modal-blue-close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <!-- Body -->
-<div class="container modal-body">
+<div class="container modal-blue-body">
     <div class="row">
         <div class="col-12 text-center">
             <prt-alert-messages [messages]="messages"></prt-alert-messages>
@@ -63,7 +63,7 @@
     </div>
 </div>
 <!-- Footer -->
-<div class="modal-footer text-center">
+<div class="modal-blue-footer text-center">
     <span class="footer-text position-relative">
         <span *ngIf="signUpForm.valid" [@slideInOut]>
             By registering, you agree to Prate's <a href="#" (click)="openTermsModal()">Terms of Use</a> and <a href="#"
