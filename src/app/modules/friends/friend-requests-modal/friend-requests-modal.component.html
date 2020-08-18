@@ -1,13 +1,13 @@
 <!-- Modal Header -->
 <div class="modal-header no-pad-margin">
-    <div class="container friend-requests-header">
+    <div class="container modal-title">
         <div class="row">
             <div class="col-12 my-auto text-center">
                 {{ user.friend_requests.length }} Friend Request(s)
             </div>
         </div>
     </div>
-    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+    <i class="fas fa-times cursor-pointer modal-close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <!-- Modal Body -->
 <div class="container modal-body">

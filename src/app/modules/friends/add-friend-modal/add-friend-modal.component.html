@@ -1,14 +1,14 @@
 <form (ngSubmit)="sendFriendRequest()" [formGroup]="addFriendForm" novalidate>
     <!-- Modal Header -->
     <div class="modal-header no-pad-margin">
-        <div class="container add-friend-header">
+        <div class="container modal-title">
             <div class="row">
                 <div class="col-12 my-auto text-center">
                     Send Friend Request
                 </div>
             </div>
         </div>
-        <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+        <i class="fas fa-times cursor-pointer modal-close-btn" (click)="activeModal.dismiss()"></i>
     </div>
     <!-- Modal Body -->
     <div class="container modal-body">
@@ -24,7 +24,7 @@
                     </prt-form-validation-msgs>
                     <div class="col-12">
                         <div class="input-group">
-                            <input type="text" class="form-control text-input" formControlName="email" name="email"
+                            <input type="text" class="form-control modal-text-input" formControlName="email" name="email"
                                 id="email" spellcheck="false" autocomplete="off" placeholder="Enter your friend's email" />
                         </div>
                     </div>

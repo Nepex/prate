@@ -1,11 +1,12 @@
-@import '../shared/modals';
+@import "../shared/modals";
 
-html, body {
+html,
+body {
     height: 100%;
     min-height: 100%;
-    font-family: 'Lato', sans-serif;
+    font-family: $FONT_PRIMARY;
     font-size: 14px;
-    color: #666666;
+    color: $TEXT_PRIMARY;
 
     background-image: url("../images/prt-background.png");
     background-repeat: no-repeat;
@@ -19,15 +20,6 @@ html, body {
 
 .inline-block {
     display: inline-block;
-}
-
-.btn {
-    background-color: #00AFF0;
-    color: #ffffff;
-}
-
-.btn:hover {
-    background-color: rgb(1, 156, 212);
 }
 
 .cursor-pointer {
@@ -45,29 +37,72 @@ html, body {
 
 /* Text highlight custom color */
 ::selection {
-  background: #ddd; 
+    background: $GRAY_ONE;
 }
 
 /* Chrome custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff;
+    background: $WHITE;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(179, 179, 179);
+    background: $GRAY_TWO;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00AFF0;
+    background: $PRIMARY;
+}
+
+.btn {
+    background-color: $PRIMARY;
+    color: $WHITE;
+}
+
+.btn:hover {
+    background-color: $PRIMARY_LIGHT;
 }
 
 .btn:active {
     animation-name: buttonsmash;
     animation-duration: 2s;
+}
+
+.submit-btn {
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+    padding: 10px 50px 10px 50px;
+    font-weight: 600;
+    font-size: 18px;
+    border: 0;
+}
+
+.white-submit-btn {
+    border-radius: 20px;
+    margin: 10px 0 0 0;
+    padding: 10px 50px 10px 50px;
+    font-weight: 600;
+    font-size: 18px;
+    background-color: $WHITE;
+    color: $TEXT_PRIMARY;
+    border: 0;
+
+    &:hover {
+        background-color: $GRAY_ONE;
+        transition: 0.5s;
+    }
+}
+
+.btn,
+.white-submit-btn {
+    &:active,
+    &:focus {
+        outline: none !important;
+        border: none !important;
+    }
 }
 
 @keyframes buttonsmash {
@@ -79,37 +114,6 @@ html, body {
     }
 }
 
-@keyframes modal-b-fade {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.5;
-    }
-}
-
-@keyframes modal-fade {
-    from {
-        top: -100px;
-        opacity: 0;
-    }
-    to {
-        top: 0;
-        opacity: 1;
-    }
-}
-
-/* .modal-backdrop {
-    opacity: 0.5;
-    animation: ease-in-out .25s modal-b-fade;
-    transition: all .25s ease-in-out;
-} */
-
-.modal-holder {
-    animation: ease-in-out .25s modal-fade;
-    transition: all .25s ease-in-out;
-}
-
 @media (min-width: 344px) {
     .wrapper {
         min-height: 100%;
@@ -117,7 +121,6 @@ html, body {
         margin: 0 auto -37px;
         padding: 0 0 37px;
     }
-    
 
     .v-center-content {
         height: calc(100% - 55px);

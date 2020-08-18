@@ -1,13 +1,13 @@
-<div class="modal-header no-pad-margin">
-    <img src="../../../assets/images/prt-icon-white.png" class="img-fluid mx-auto prt-icon" />
-    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()" *ngIf="showClose"></i>
+<div class="modal-blue-header no-pad-margin">
+    <img src="../../../assets/images/prt-icon-white.png" class="img-fluid mx-auto modal-prt-logo" />
+    <i class="fas fa-times cursor-pointer modal-blue-close-btn" (click)="activeModal.dismiss()" *ngIf="showClose"></i>
 </div>
-<div class="container modal-body">
+<div class="container modal-blue-body">
     <div class="row">
         <div class="col-12 text-center">
         </div>
     </div>
 </div>
-<div class="modal-footer text-center">
-   {{ message }}
+<div class="modal-blue-footer text-center">
+   <div class="message">{{ message }}</div>
 </div>

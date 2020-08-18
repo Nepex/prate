@@ -1,16 +1,16 @@
 <!-- Modal Header -->
 <div class="modal-header no-pad-margin">
-    <div class="container help-header">
+    <div class="container modal-title">
         <div class="row">
             <div class="col-12 my-auto text-center">
                 Prate Help
             </div>
         </div>
     </div>
-    <i class="fas fa-times cursor-pointer close-btn" (click)="activeModal.dismiss()"></i>
+    <i class="fas fa-times cursor-pointer modal-close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <!-- Modal Body -->
-<div class="container modal-body">
+<div class="container modal-body no-pad-margin">
     <div class="row no-pad-margin">
         <!-- Tab navigation -->
         <div class="col-3 text-center help-tab cursor-pointer" (click)="selectedTab = 'basics'"

@@ -1,6 +1,6 @@
 <!-- Header -->
 <div class="modal-blue-header no-pad-margin">
-    <img src="../../assets/images/prt-icon-white.png" class="img-fluid mx-auto prt-icon" />
+    <img src="../../assets/images/prt-icon-white.png" class="img-fluid mx-auto modal-prt-logo" />
     <i class="fas fa-times cursor-pointer modal-blue-close-btn" (click)="activeModal.dismiss()"></i>
 </div>
 <!-- Body -->
@@ -15,7 +15,7 @@
                     </prt-form-validation-msgs>
                     <div class="col-12">
                         <div class="input-group">
-                            <input type="text" class="form-control text-input" formControlName="name" autocomplete="off"
+                            <input type="text" class="form-control modal-text-input" formControlName="name" autocomplete="off"
                                 spellcheck="false" autofocus placeholder="Enter your default name" />
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                     </prt-form-validation-msgs>
                     <div class="col-12">
                         <div class="input-group">
-                            <input type="text" class="form-control text-input" formControlName="email" name="email"
+                            <input type="text" class="form-control modal-text-input" formControlName="email" name="email"
                                 id="email" spellcheck="false" autocomplete="off" placeholder="Email" />
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         [submitted]="signUpForm.submitted"></prt-form-validation-msgs>
                     <div class="col-12">
                         <div class="input-group">
-                            <input type="password" class="form-control text-input" formControlName="password"
+                            <input type="password" class="form-control modal-text-input" formControlName="password"
                                 placeholder="Password" />
                         </div>
                     </div>
@@ -48,14 +48,14 @@
                         [submitted]="signUpForm.submitted"></prt-form-validation-msgs>
                     <div class="col-12">
                         <div class="input-group">
-                            <input type="password" class="form-control text-input" formControlName="passwordConfirm"
+                            <input type="password" class="form-control modal-text-input" formControlName="passwordConfirm"
                                 placeholder="Confirm Password" />
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group text-center">
-                    <input type="submit" value="HOP IN!" class="submit-btn cursor-pointer" />
+                <div class="form-group text-center no-pad-margin">
+                    <input type="submit" value="HOP IN!" class="white-submit-btn cursor-pointer" />
                 </div>
             </form>
 
@@ -64,7 +64,7 @@
 </div>
 <!-- Footer -->
 <div class="modal-blue-footer text-center">
-    <span class="footer-text position-relative">
+    <span class="modal-footer-text position-relative">
         <span *ngIf="signUpForm.valid" [@slideInOut]>
             By registering, you agree to Prate's <a href="#" (click)="openTermsModal()">Terms of Use</a> and <a href="#"
                 (click)="openPrivacyPolicyModal()">Privacy Policy</a>.<br />

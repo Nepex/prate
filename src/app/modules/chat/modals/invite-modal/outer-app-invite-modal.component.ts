@@ -17,7 +17,7 @@ import { User } from '../../../../shared/models';
 })
 export class OuterAppInviteModalComponent implements OnInit {
     // Component Inputs
-    @Input() User: User;
+    @Input() user: User;
     @Input() type: string; // 'sent' or 'received'
     @Input() outerApp: string; // 'yt', 'gartic', etc
     @Input() url: string;
