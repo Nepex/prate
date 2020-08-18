@@ -7,3 +7,25 @@
     border: 0;
     background: transparent;
 }
+
+ngb-pagination ul > li.active > a {
+    background-color: $PRIMARY !important;
+    border: 1px solid $GRAY_THREE !important;
+    box-shadow: none !important;
+    outline: none !important;
+
+    &:hover {
+        background-color: $PRIMARY_DARKEN !important;
+        color: $WHITE !important;
+    }
+}
+
+ngb-pagination ul > li:not(.active) > a {
+    color: $TEXT_PRIMARY;
+    box-shadow: none !important;
+    outline: none !important;
+
+    &:hover {
+        color: $TEXT_PRIMARY !important;
+    }
+}

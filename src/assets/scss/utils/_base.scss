@@ -35,12 +35,10 @@ body {
     border: none !important;
 }
 
-/* Text highlight custom color */
 ::selection {
     background: $GRAY_ONE;
 }
 
-/* Chrome custom scrollbar */
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -57,18 +55,44 @@ body {
     background: $PRIMARY;
 }
 
+.page-title {
+    font-size: 35px;
+    font-weight: 600;
+    color: $PRIMARY;
+    margin-bottom: 30px;
+    margin-top: 40px;
+}
+
+.heading {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.sub-heading {
+    font-size: 18px;
+    font-weight: 600;
+}
+
 .btn {
     background-color: $PRIMARY;
     color: $WHITE;
 }
 
 .btn:hover {
-    background-color: $PRIMARY_LIGHT;
+    background-color: $PRIMARY_DARKEN;
 }
 
 .btn:active {
     animation-name: buttonsmash;
     animation-duration: 2s;
+}
+
+.lrg-btn {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 50px;
+    padding: 20px 30px 20px 30px;
+    border-radius: 20px;
 }
 
 .submit-btn {

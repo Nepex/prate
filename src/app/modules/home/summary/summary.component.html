@@ -2,7 +2,7 @@
 
     <prt-header [selectedTab]="'SUMMARY'"></prt-header>
 
-    <div class="row no-pad-margin text-center footer-pad">
+    <div class="row no-pad-margin text-center content-container">
         <div class="col-12">
 
             <!-- Why Prate? -->
@@ -49,8 +49,8 @@
                     <div class="illustration-img-container">
                         <img src="../../../assets/images/whyprate-matched.jpg" class="img-fluid illustration-img"
                             (mouseenter)="fadeMatchIcon = true" (mouseleave)="fadeMatchIcon = false">
-                        <i class="fas fa-user-check summary-icon"
-                            [ngClass]="{'fade-out-summary-icon' : fadeMatchIcon === true}"></i>
+                        <i class="fas fa-user-check illustration-icon"
+                            [ngClass]="{'fade-out-illustration-icon' : fadeMatchIcon === true}"></i>
                     </div>
                 </div>
             </div>
@@ -61,8 +61,8 @@
                     <div class="illustration-img-container">
                         <img src="../../../assets/images/why-prate-customization.jpg" class="img-fluid illustration-img"
                             (mouseenter)="fadeCustomIcon = true" (mouseleave)="fadeCustomIcon = false">
-                        <i class="fas fa-edit summary-icon"
-                            [ngClass]="{'fade-out-summary-icon' : fadeCustomIcon === true}"></i>
+                        <i class="fas fa-edit illustration-icon"
+                            [ngClass]="{'fade-out-illustration-icon' : fadeCustomIcon === true}"></i>
                     </div>
                 </div>
 
@@ -83,8 +83,8 @@
                 <div class="col-sm-8 offset-sm-2 d-xs-block d-sm-block d-sm-block d-lg-none d-xl-none">
                     <img src="../../../assets/images/why-prate-customization.jpg" class="img-fluid illustration-img"
                         (mouseenter)="fadeCustomIcon = true" (mouseleave)="fadeCustomIcon = false">
-                    <i class="fas fa-edit summary-icon"
-                        [ngClass]="{'fade-out-summary-icon' : fadeCustomIcon === true}"></i>
+                    <i class="fas fa-edit illustration-icon"
+                        [ngClass]="{'fade-out-illustration-icon' : fadeCustomIcon === true}"></i>
                 </div>
             </div>
 
@@ -107,8 +107,8 @@
                     <div class="illustration-img-container">
                         <img src="../../../assets/images/whyprate-progression.jpg" class="img-fluid illustration-img"
                             (mouseenter)="fadeProgIcon = true" (mouseleave)="fadeProgIcon = false">
-                        <i class="fas fa-chart-line summary-icon"
-                            [ngClass]="{'fade-out-summary-icon' : fadeProgIcon === true}"></i>
+                        <i class="fas fa-chart-line illustration-icon"
+                            [ngClass]="{'fade-out-illustration-icon' : fadeProgIcon === true}"></i>
                     </div>
                 </div>
             </div>
