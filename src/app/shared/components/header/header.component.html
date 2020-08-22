@@ -7,17 +7,16 @@
         <!-- Mobile/Desktop Menu -->
         <nav class="navbar-expand-lg">
             <a class="navbar-brand d-block d-lg-none"></a>
-            <button class="navbar-toggler no-outline" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                (click)="isCollapsed = !isCollapsed"
+            <button class="navbar-toggler no-outline" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed"
                 (offClick)="isCollapsed ? isCollapsed : isCollapsed = !isCollapsed">
                 <i class="fas fa-bars nav-icon"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
                 <ul class="navbar-nav mr-auto nav-items">
-                    <li class="header-link d-block d-lg-none" *ngIf="userAuthed"><a
-                        href="/chat">Chat</a></li>
+                    <li class="header-link d-block d-lg-none" *ngIf="userAuthed"><a href="/chat">Chat</a></li>
                     <li class="header-link" [ngClass]="{ 'active': selectedTab === 'SUMMARY'}"><a href="/summary">Why
                             Prate?</a></li>
                     <li class="header-link d-none d-lg-block d-xl-block"
@@ -38,8 +37,7 @@
             Login
         </div>
 
-        <div class="log-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="logout()"
-            *ngIf="userAuthed">
+        <div class="log-link-div d-none d-lg-block d-xl-block cursor-pointer" (click)="logout()" *ngIf="userAuthed">
             Logout
         </div>
     </div>

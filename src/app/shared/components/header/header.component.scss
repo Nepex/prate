@@ -1,96 +1,119 @@
-a {
-    color: #666766
-}
+@import "../../../../assets/scss/utils/variables";
 
-nav {
-    display: inline-block;
-}
+.header-container {
+    height: 120px;
+    padding: 40px 80px 40px 80px;
 
-.menu-logo-sm {
-    height: 40px;
-    width: 40px;
-    float: right;
-}
-
-.nav-icon {
-    position: relative;
-    top: -5px;
-}
-
-.log-link-div {
-    border: 5px solid #00AFF0;
-    border-radius: 25px;
-    margin-top: 8px;
-    font-size: 20px;
-    font-weight: 600;
-    padding: 0px 23px 5px 23px;
-
-    position: absolute;
-    right: 85px;
-    top: 40px;
-    z-index: 2;
-}
-
-@media (min-width: 344px) {
-    // .active {}
-
-    .header-container {
-        height: 50px;
-        padding: 5px;
+    a {
+        color: $TEXT_PRIMARY;
     }
-    .nav-items {
-        position: absolute;
-        background-color: #eee;
-        z-index: 1;
-        padding: 15px;
-        box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
-        margin-left: 27px;
-        border-radius: 5px;
-    }
-    .header-link {
-        padding: 0;
-    }
-    a:hover {
-        text-decoration: none;
-    }
-}
 
-@media (min-width: 992px) {
+    nav {
+        display: inline-block;
+    }
+
+    .menu-logo-sm {
+        height: 40px;
+        width: 40px;
+        float: right;
+    }
+
+    .nav-icon {
+        position: relative;
+        top: -5px;
+    }
+
     .nav-items {
         background-color: transparent;
         position: relative;
         padding: 0;
         box-shadow: none;
         margin-left: 0;
+
+        .header-link {
+            font-size: 18px;
+            font-weight: 600;
+            padding-left: 50px;
+            position: relative;
+            top: -8px;
+
+            a {
+                &:hover {
+                    color: $WHITE;
+                    text-decoration: none;
+                    transition: 0.5s;
+                    text-shadow: 0 0 10px $PRIMARY, 0 0 10px $PRIMARY;
+                }
+
+                @media (max-width: 992px) {
+                    &:hover {
+                        color: $TEXT_PRIMARY;
+                        text-decoration: none;
+                        text-shadow: none;
+                    }
+                }
+            }
+
+            &.active {
+                color: $WHITE;
+                text-decoration: none;
+                transition: 0.5s;
+                text-shadow: 0 0 10px $PRIMARY, 0 0 10px #00aff0;
+
+                a {
+                    color: $WHITE;
+
+                    @media (max-width: 992px) {
+                        color: $TEXT_PRIMARY;
+                    }
+                }
+
+                @media (max-width: 992px) {
+                    color: $TEXT_PRIMARY;
+                    text-decoration: none;
+                    text-shadow: none;
+                }
+            }
+
+            @media (max-width: 992px) {
+                font-size: 14px;
+                font-weight: 400;
+                padding: 0;
+            }
+        }
+
+        @media (max-width: 992px) {
+            position: absolute;
+            background-color: $GRAY_THREE;
+            z-index: 1;
+            padding: 20px 15px 10px 15px;
+            box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
+            margin-left: 27px;
+            border-radius: 5px;
+        }
     }
-    .header-container {
-        height: 120px;
-        padding: 40px 80px 40px 80px;
-    }
-    .header-link {
-        font-size: 18px;
+
+    .log-link-div {
+        border: 5px solid $PRIMARY;
+        border-radius: 25px;
+        margin-top: 8px;
+        font-size: 20px;
         font-weight: 600;
-        padding-left: 50px;
-        position: relative;
-        top: -8px;
+        padding: 0px 23px 5px 23px;
+
+        position: absolute;
+        right: 85px;
+        top: 40px;
+        z-index: 2;
+
+        &:hover {
+            background-color: $PRIMARY;
+            color: #ffffff;
+        }
     }
-    .header-link > a:hover {
-        color: #ffffff;
-        text-decoration: none;
-        transition: .5s;
-        text-shadow: 0 0 10px #00AFF0, 0 0 10px #00AFF0;
-    }
-    .active {
-        color: #ffffff;
-        text-decoration: none;
-        transition: .5s;
-        text-shadow: 0 0 10px #00AFF0, 0 0 10px #00AFF0;
-    }
-    .active > a {
-        color: #ffffff;
-    }
-    .log-link-div:hover {
-        background-color: #00AFF0;
-        color: #ffffff;
+
+    @media (max-width: 992px) {
+        height: 50px;
+        padding: 5px;
     }
 }

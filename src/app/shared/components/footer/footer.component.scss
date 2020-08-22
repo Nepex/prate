@@ -1,9 +1,9 @@
-.copyright-container {
-    font-size: 11px;
-    font-weight: 600;
-}
-
 .footer-container {
     position: relative;
     bottom: 0px;
+
+    .copyright-container {
+        font-size: 11px;
+        font-weight: 600;
+    }
 }
