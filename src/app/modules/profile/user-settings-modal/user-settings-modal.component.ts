@@ -8,10 +8,10 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // App
-import { AlertMessage } from '../../../shared/models/generic';
+import { AlertMessage, ChipsValidators } from '../../../shared/models/generic';
 import { ChangeAvatarModalComponent } from '../change-avatar-modal/change-avatar-modal.component';
 import { User, SubmittableFormGroup } from '../../../shared/models';
-import { UserService, LevelService, FriendService } from 'src/app/core/services';
+import { UserService, LevelService, FriendService } from '../../../core/services';
 
 // Modal for managing user settings
 @Component({
@@ -33,7 +33,6 @@ import { UserService, LevelService, FriendService } from 'src/app/core/services'
 export class UserSettingsModalComponent implements OnInit {
     // Subs
     loadingRequest: Observable<User>;
-    avatarChangedSub: Subscription;
 
     // Data Stores
     user: User;
@@ -103,7 +102,7 @@ export class UserSettingsModalComponent implements OnInit {
     ngOnInit(): void {
         this.setupModal();
 
-        this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
+        this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
 
         // Track amount of characters in bio message
         if (this.profileForm.value.bio) {
@@ -147,18 +146,10 @@ export class UserSettingsModalComponent implements OnInit {
     }
 
     openEditAvatar(): void {
-        // uncomment these lines if wanting to have user settings close when avatar changing is opened
-        // this.activeModal.close();
         let modalRef;
 
         modalRef = this.modal.open(ChangeAvatarModalComponent, { centered: true, backdrop: 'static', keyboard: false });
         modalRef.componentInstance.user = this.user;
-
-        // modalRef.result.then(() => {
-        // }, () => {
-        //     modalRef = this.modal.open(UserSettingsModalComponent, { centered: true, backdrop: 'static', keyboard: false });
-        //     modalRef.componentInstance.user = this.user;
-        // });
     }
 
     toggleInterest(val: string): void {
@@ -286,8 +277,4 @@ export class UserSettingsModalComponent implements OnInit {
             });
         });
     };
-}
-
-export class ChipsValidators {
-    customInterestMaxLength?: boolean | null | string;
 }

@@ -1,4 +1,4 @@
-<div class="game" *ngIf="gameUrl" >
+<div class="game" *ngIf="gameUrl">
     <!-- Invite code instructions -->
     <div class="instructions" *ngIf="!gameAccepted">
         Instructions: <br />
@@ -17,7 +17,8 @@
             1.) Under 'Online Game' click 'Start'
         </span>
         <br />
-        <input type="text" class="form-control invite-link-input" placeholder="Paste invite code here" [(ngModel)]="inviteLink" />
+        <input type="text" class="form-control invite-link-input" placeholder="Paste invite code here"
+            [(ngModel)]="inviteLink" />
         <button class="btn" (click)="sendInvite(inviteLink)">Send Invite</button> &nbsp;
         <button class="btn" (click)="cancel()">Cancel</button>
     </div>

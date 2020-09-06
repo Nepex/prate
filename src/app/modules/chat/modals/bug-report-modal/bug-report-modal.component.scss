@@ -1,31 +1,30 @@
+@import '../../../../../assets/scss/utils/variables';
+
 .alert-messages {
     margin-bottom: 10px;
 }
 
-.bug-report-input {
-    border-radius: 10px;
-    font-weight: 500;
-    color: #666666;
-    height: 50px;
-    font-size: 15px;
-    resize: none;
-    height: 200px;
-    font-weight: 500;
-    padding-top: 12px;
-}
-
 .message-col {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    .bug-report-input {
+        border-radius: 10px;
+        font-weight: 500;
+        color: $TEXT_PRIMARY;
+        height: 50px;
+        font-size: 15px;
+        resize: none;
+        height: 200px;
+        font-weight: 500;
+        padding-top: 12px;
+    }
+
+    .char-left-msg {
+        text-align: right;
+        font-size: 13px;
+        padding-right: 10px;
+        padding-top: 5px;
+    }
 }
 
-.char-left-msg {
-    text-align: right;
-    font-size: 13px;
-    padding-right: 10px;
-    padding-top: 5px;
-}
-
-.send-btn-container  {
+.send-btn-container {
     margin-bottom: 20px;
 }

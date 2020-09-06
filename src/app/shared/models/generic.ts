@@ -21,3 +21,7 @@ export class AlertMessage {
     message: string;
     type: string; // accepts 'success' and 'error'
 }
+
+export class ChipsValidators {
+    customInterestMaxLength?: boolean | null | string;
+}

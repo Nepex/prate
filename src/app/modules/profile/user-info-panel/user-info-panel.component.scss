@@ -26,12 +26,6 @@
     pointer-events: none;
 }
 
-.username {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 12px;
-}
-
 .user-status {
     font-weight: 100;
     font-size: 9px;
@@ -81,10 +75,8 @@
     font-size: 11px;
     color: #111111;
     position: absolute;
-    /* top: 102%; */
     left: 45%;
     transform: translate(-45%, -100%);
-    -ms-transform: translate(-45%, -100%);
     pointer-events: none;
 }
 

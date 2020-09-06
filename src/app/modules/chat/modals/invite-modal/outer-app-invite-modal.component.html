@@ -17,7 +17,8 @@
                 titled: <strong><span *ngIf="ytVideoTitle">{{ ytVideoTitle }}</span></strong>
             </span>
 
-            <span *ngIf="type === 'received' && outerApp !== 'yt'">{{ user }} has invited you to: {{ outerApp.charAt(0).toUpperCase() + outerApp.slice(1) }}!</span>
+            <span *ngIf="type === 'received' && outerApp !== 'yt'">{{ user }} has invited you to:
+                {{ outerApp.charAt(0).toUpperCase() + outerApp.slice(1) }}!</span>
 
             <span *ngIf="type === 'sent'">Waiting for answer...</span>
         </div>

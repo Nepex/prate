@@ -58,38 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // Subs
     loadingRequest: Observable<User>;
-    userSettingsChangedSub: Subscription;
-    avatarChangedSub: Subscription;
-
-    partnerFoundSub: Subscription;
-    messageReceivedSub: Subscription;
-
-    friendRequestReceivedSub: Subscription;
-    friendRequestHandledSub: Subscription;
-    acceptedFriendRequestSentSub: Subscription;
-    acceptedFriendRequestReceivedSub: Subscription;
-    friendRemovalSentSub: Subscription;
-    friendRemovalReceivedSub: Subscription;
-    friendDataChangeReceivedSub: Subscription;
-
-    matchInviteReceivedSub: Subscription;
-    matchInviteAcceptedSub: Subscription;
-    matchInviteCanceledSub: Subscription;
-
-    friendMessageSentSub: Subscription;
-    friendMessageReceivedSub: Subscription;
-    isFriendTypingSub: Subscription;
-
-    outerAppInviteReceivedSub: Subscription;
-    outerAppInviteAcceptedSub: Subscription;
-    outerAppInviteCanceledSub: Subscription;
-    toggledOuterAppFunctionSub: Subscription;
-
     userDoneTypingSub: Subscription;
-    isPartnerTypingSub: Subscription;
-    partnerDisconnectSub: Subscription;
-    matchingErrorSub: Subscription;
-    webSocketDroppedSub: Subscription;
 
     // Data Stores
     matching: boolean = false;
@@ -204,43 +173,43 @@ export class ChatComponent implements OnInit, OnDestroy {
 
             // set listeners
             // SETTINGS
-            this.userSettingsChangedSub = this.userService.userSettingsChanged.subscribe(() => this.getUser());
-            this.avatarChangedSub = this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
+            this.userService.userSettingsChanged.subscribe(() => this.getUser());
+            this.userService.avatarChanged.subscribe(avatar => this.user.avatar = avatar);
 
             // FRIENDS
-            this.friendRequestReceivedSub = this.friendService.friendRequestReceived.subscribe(msgObj => this.friendRequestReceived(msgObj));
-            this.friendRequestHandledSub = this.friendService.friendRequestHandled.subscribe(id => this.user.friend_requests.splice(this.user.friend_requests.indexOf(id), 1));
+            this.friendService.friendRequestReceived.subscribe(msgObj => this.friendRequestReceived(msgObj));
+            this.friendService.friendRequestHandled.subscribe(id => this.user.friend_requests.splice(this.user.friend_requests.indexOf(id), 1));
 
-            this.acceptedFriendRequestSentSub = this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
-            this.acceptedFriendRequestReceivedSub = this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
+            this.friendService.acceptedFriendRequestSent.subscribe(id => this.acceptedFriendRequestSent(id));
+            this.friendService.acceptedFriendRequestReceived.subscribe(msgObj => this.acceptedFriendRequestReceived(msgObj));
 
-            this.friendRemovalSentSub = this.friendService.friendRemovalSent.subscribe(id => this.friendRemovalSent(id));
-            this.friendRemovalReceivedSub = this.friendService.friendRemovalReceived.subscribe(msgObj => this.friendRemovalSent(msgObj.id));
+            this.friendService.friendRemovalSent.subscribe(id => this.friendRemovalSent(id));
+            this.friendService.friendRemovalReceived.subscribe(msgObj => this.friendRemovalSent(msgObj.id));
 
-            this.friendDataChangeReceivedSub = this.friendService.friendDataChangeReceived.subscribe(msgObj => this.friendStatusChange(msgObj));
+            this.friendService.friendDataChangeReceived.subscribe(msgObj => this.friendStatusChange(msgObj));
 
-            this.isFriendTypingSub = this.friendService.isFriendTyping.subscribe(msgObj => this.isFriendTyping(msgObj));
-            this.friendMessageSentSub = this.friendService.friendMessageSent.subscribe(msgObj => this.friendMessageSent(msgObj));
-            this.friendMessageReceivedSub = this.friendService.friendMessageReceived.subscribe(msgObj => this.friendMessageReceived(msgObj));
+            this.friendService.isFriendTyping.subscribe(msgObj => this.isFriendTyping(msgObj));
+            this.friendService.friendMessageSent.subscribe(msgObj => this.friendMessageSent(msgObj));
+            this.friendService.friendMessageReceived.subscribe(msgObj => this.friendMessageReceived(msgObj));
 
-            this.matchInviteReceivedSub = this.friendService.matchInviteReceived.subscribe(msgObj => this.matchInviteReceived(msgObj));
-            this.matchInviteAcceptedSub = this.friendService.matchInviteAccepted.subscribe(msgObj => this.matchInviteAccepted(msgObj));
-            this.matchInviteCanceledSub = this.friendService.matchInviteCanceled.subscribe(() => this.matchInviteCanceled());
+            this.friendService.matchInviteReceived.subscribe(msgObj => this.matchInviteReceived(msgObj));
+            this.friendService.matchInviteAccepted.subscribe(msgObj => this.matchInviteAccepted(msgObj));
+            this.friendService.matchInviteCanceled.subscribe(() => this.matchInviteCanceled());
 
             // APPS
-            this.outerAppInviteReceivedSub = this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
-            this.outerAppInviteAcceptedSub = this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
-            this.outerAppInviteCanceledSub = this.chatService.outerAppInviteCanceled.subscribe(() => this.outerAppInviteCanceled());
-            this.toggledOuterAppFunctionSub = this.chatService.toggledOuterAppFunction.subscribe(msgObj => this.toggledOuterAppFunction(msgObj.outerApp, msgObj.activity, false));
+            this.chatService.outerAppInviteReceived.subscribe(msgObj => this.outerAppInviteReceived(msgObj));
+            this.chatService.outerAppInviteAccepted.subscribe(msgObj => this.outerAppInviteAccepted(msgObj));
+            this.chatService.outerAppInviteCanceled.subscribe(() => this.outerAppInviteCanceled());
+            this.chatService.toggledOuterAppFunction.subscribe(msgObj => this.toggledOuterAppFunction(msgObj.outerApp, msgObj.activity, false));
 
             // PARTNER ACTIVITY
-            this.partnerFoundSub = this.chatService.partner.subscribe(partner => this.matchFound(partner));
-            this.partnerDisconnectSub = this.chatService.partnerDisconnected.subscribe(() => this.partnerDisconnected());
-            this.isPartnerTypingSub = this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
-            this.messageReceivedSub = this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
-            this.matchingErrorSub = this.chatService.matchingError.subscribe(err => this.matchError(err));
+            this.chatService.partner.subscribe(partner => this.matchFound(partner));
+            this.chatService.partnerDisconnected.subscribe(() => this.partnerDisconnected());
+            this.chatService.isPartnerTyping.subscribe(typingObj => this.isPartnerTyping(typingObj));
+            this.chatService.messageReceived.subscribe(msgObj => this.messageReceived(msgObj));
+            this.chatService.matchingError.subscribe(err => this.matchError(err));
 
-            this.webSocketDroppedSub = this.chatService.webSocketDropped.subscribe(err => this.alertWebSocketDropped());
+            this.chatService.webSocketDropped.subscribe(err => this.alertWebSocketDropped());
 
 
             // timeout because of dark styling needing a user obj present (see html)
@@ -277,31 +246,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.userSettingsChangedSub.unsubscribe();
-        this.avatarChangedSub.unsubscribe();
-        this.partnerFoundSub.unsubscribe();
-        this.messageReceivedSub.unsubscribe();
-        this.outerAppInviteReceivedSub.unsubscribe();
-        this.outerAppInviteAcceptedSub.unsubscribe();
-        this.outerAppInviteCanceledSub.unsubscribe();
-        this.toggledOuterAppFunctionSub.unsubscribe();
-        this.userDoneTypingSub.unsubscribe();
-        this.isPartnerTypingSub.unsubscribe();
-        this.partnerDisconnectSub.unsubscribe();
-        this.friendRequestReceivedSub.unsubscribe();
-        this.acceptedFriendRequestReceivedSub.unsubscribe();
-        this.acceptedFriendRequestSentSub.unsubscribe();
-        this.friendRequestHandledSub.unsubscribe();
-        this.friendRemovalReceivedSub.unsubscribe();
-        this.friendRemovalSentSub.unsubscribe();
-        this.isFriendTypingSub.unsubscribe()
-        this.friendMessageSentSub.unsubscribe();
-        this.friendMessageReceivedSub.unsubscribe();
-        this.matchInviteReceivedSub.unsubscribe();
-        this.matchInviteAcceptedSub.unsubscribe();
-        this.matchInviteCanceledSub.unsubscribe();
-        this.webSocketDroppedSub.unsubscribe();
-
         clearTimeout(this.chatTimerInterval);
     }
 

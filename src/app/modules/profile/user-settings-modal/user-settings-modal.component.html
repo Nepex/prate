@@ -16,8 +16,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 text-center">
-                    <div class="no-pad-margin username-container">
+                <div class="col-12 text-center user-info-container">
+                    <div class="no-pad-margin">
                         <span class="username no-pad-margin">{{ user.name }}</span>
                     </div>
                     <div class="no-pad-margin">
@@ -45,28 +45,28 @@
         <i class="fas fa-times cursor-pointer modal-close-btn" (click)="activeModal.dismiss()"></i>
     </div>
     <!-- Modal Body -->
-    <div class="container modal-body">
+    <div class="container modal-body user-body">
         <div class="row">
             <div class="col-12 text-center">
                 <prt-alert-messages [messages]="messages"></prt-alert-messages>
 
                 <!-- Main Settings -->
                 <div class="text-left">
-                    <h5 class="form-header">Name</h5>
+                    <h5 class="form-label">Name</h5>
                 </div>
                 <div class="form-group position-relative">
                     <prt-form-validation-msgs [control]="profileForm.controls.name" [submitted]="profileForm.submitted">
                     </prt-form-validation-msgs>
                     <div class="col-12">
                         <div class="input-group">
-                            <input type="text" class="form-control modal-text-input" formControlName="name" autocomplete="off"
-                                spellcheck="false" />
+                            <input type="text" class="form-control modal-text-input" formControlName="name"
+                                autocomplete="off" spellcheck="false" />
                         </div>
                     </div>
                 </div>
 
                 <div class="text-left">
-                    <h5 class="form-header">Font</h5>
+                    <h5 class="form-label">Font</h5>
                 </div>
                 <div class="form-group position-relative">
                     <div class="col-12">
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="text-left">
-                    <h5 class="form-header">Font Color</h5>
+                    <h5 class="form-label">Font Color</h5>
                 </div>
                 <div class="form-group position-relative">
                     <div class="col-12">
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="text-left">
-                    <h5 class="form-header">Bubble Color</h5>
+                    <h5 class="form-label">Bubble Color</h5>
                 </div>
                 <div class="form-group position-relative">
                     <div class="col-12">
@@ -147,7 +147,7 @@
 
                 <!-- Interests  -->
                 <div class="text-left">
-                    <h5 class="form-header">
+                    <h5 class="form-label">
                         <span class="cursor-pointer" (click)="showInterests = !showInterests">
                             Interests <i class="fas"
                                 [ngClass]="{'fa-caret-right' : !showInterests, 'fa-caret-down' : showInterests }"></i>
@@ -185,7 +185,7 @@
 
                 <!-- Bio -->
                 <div class="text-left">
-                    <h5 class="form-header">
+                    <h5 class="form-label">
                         <span class="cursor-pointer" (click)="showBio = !showBio">
                             Bio <i class="fas"
                                 [ngClass]="{'fa-caret-right' : !showBio, 'fa-caret-down' : showBio }"></i>
@@ -209,7 +209,7 @@
 
                 <!-- Options -->
                 <div class="text-left">
-                    <h5 class="form-header">
+                    <h5 class="form-label">
                         <span class="cursor-pointer" (click)="showMiscOpts = !showMiscOpts">
                             Options <i class="fas"
                                 [ngClass]="{'fa-caret-right' : !showMiscOpts, 'fa-caret-down' : showMiscOpts }"></i>
@@ -319,7 +319,7 @@
                 <!-- Change Password -->
                 <div class="text-left">
                     <div class="text-left">
-                        <h5 class="form-header">
+                        <h5 class="form-label">
                             <span class="cursor-pointer" (click)="showChangePassword = !showChangePassword">
                                 Change Password <i class="fas"
                                     [ngClass]="{'fa-caret-right' : !showChangePassword, 'fa-caret-down' : showChangePassword }"></i>
@@ -334,8 +334,9 @@
                         </prt-form-validation-msgs>
                         <div class="col-12">
                             <div class="input-group">
-                                <input type="password" class="form-control modal-text-input" formControlName="oldPassword"
-                                    autocomplete="off" spellcheck="false" placeholder="Current Password" />
+                                <input type="password" class="form-control modal-text-input"
+                                    formControlName="oldPassword" autocomplete="off" spellcheck="false"
+                                    placeholder="Current Password" />
                             </div>
                         </div>
                     </div>
@@ -346,8 +347,9 @@
                         </prt-form-validation-msgs>
                         <div class="col-12">
                             <div class="input-group">
-                                <input type="password" class="form-control modal-text-input" formControlName="newPassword"
-                                    autocomplete="off" spellcheck="false" placeholder="New Password" />
+                                <input type="password" class="form-control modal-text-input"
+                                    formControlName="newPassword" autocomplete="off" spellcheck="false"
+                                    placeholder="New Password" />
                             </div>
                         </div>
                     </div>

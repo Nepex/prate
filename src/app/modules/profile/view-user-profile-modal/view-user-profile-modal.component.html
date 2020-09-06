@@ -11,8 +11,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 text-center">
-                <div class="username-container">
+            <div class="col-12 text-center user-info-container">
+                <div>
                     <span class="username">{{ userBeingViewed.name }}</span>
                 </div>
                 <div>
@@ -51,7 +51,7 @@
             </span>
         </div>
 
-        <div class="col-12" *ngIf="currentUser.id !== userBeingViewedId">
+        <div class="col-12 friend-requests" *ngIf="currentUser.id !== userBeingViewedId">
             <button class="btn friend-request-btn" (click)="sendFriendRequest()" *ngIf="!friendReqMessage">Send Friend
                 Request</button>
             <span *ngIf="friendReqMessage" class="friend-req-message"><i>{{ friendReqMessage }}</i></span>

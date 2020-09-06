@@ -1,324 +1,217 @@
-/* Header */
+@import "../../../../assets/scss/utils/variables";
 
+/* Header */
 .user-header {
     margin-top: 20px;
     margin-bottom: 20px;
-}
 
-.user-icon {
-    height: 55px;
-    width: 60px;
-    border-radius: 50%;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}
+    .user-icon-container {
+        padding-right: 10px;
+        position: relative;
+        height: 55px;
 
-.user-icon-container {
-    padding-right: 10px;
-    position: relative;
-    height: 55px;
-}
+        .user-icon-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 60px;
+            height: 55px;
 
-.user-icon-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-    width: 60px;
-    height: 55px;
-}
+            .user-icon {
+                top: 2px;
+            }
 
-.user-icon-edit-btn {
-    transition: .5s ease;
-    opacity: 0;
-    text-align: center;
-    color: #dddddd;
-    font-size: 16px;
-    height: 55px;
-    width: 60px;
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: -3px;
-    background-color: rgba(0, 0, 0, .5);
-}
+            .user-icon-edit-btn {
+                transition: 0.5s ease;
+                opacity: 0;
+                text-align: center;
+                color: $GRAY_ONE;
+                font-size: 16px;
+                height: 55px;
+                width: 60px;
+                border-radius: 50%;
+                position: absolute;
+                top: 2px;
+                left: -3px;
+                background-color: rgba(0, 0, 0, 0.5);
 
-.user-edit-icon {
-    position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-55%, -50%);
-    -ms-transform: translate(-55%, -50%);
-}
+                .user-edit-icon {
+                    position: absolute;
+                    top: 50%;
+                    left: 55%;
+                    transform: translate(-55%, -50%);
+                }
+            }
 
-.user-badge {
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    right: 4px;
-    bottom: -2px;
-}
+            .user-badge {
+                bottom: -2px;
+                transition: 0.5s ease;
+                opacity: 1;
+                cursor: pointer;
+            }
 
-.user-icon-content .user-badge {
-    transition: .5s ease;
-    opacity: 1;
-    cursor: pointer;
-}
+            &:hover {
+                .user-badge {
+                    transition: 0.5s ease;
+                    opacity: 0;
+                }
 
-.user-icon-content:hover .user-badge {
-    transition: .5s ease;
-    opacity: 0;
-    cursor: pointer;
-}
+                .user-icon-edit-btn {
+                    opacity: 1;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
 
-.user-icon-content:hover .user-icon-edit-btn {
-    opacity: 1;
-    cursor: pointer;
-}
+    .user-info-container {
+        padding-top: 5px;
+    }
 
-.username-container {
-    padding-top: 5px;
-}
+    .progress-container {
+        margin: 0;
+        padding: 15px 18px 0px 18px;
 
-.username {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 12px;
-}
+        .exp-text-container {
+            opacity: 0;
+            font-size: 11px;
+            color: #111111;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            -ms-transform: translate(-50%, -100%);
+            pointer-events: none;
+        }
 
-.user-status {
-    color: green;
-    font-weight: 100;
-    font-size: 9px;
-    padding-left: 5px;
-    position: relative;
-    top: -1px;
-}
-
-.user-level {
-    color: #ffffff;
-    font-size: 11px;
-}
-
-.user-time-spent {
-    color: #ffffff;
-    font-size: 11px;
-}
-
-.progress-container {
-    margin: 0;
-    padding: 15px 18px 0px 18px;
-}
-
-.progress-container:hover .exp-text-container {
-    transition: .5s ease;
-    opacity: 1;
-}
-
-.exp-text-container {
-    opacity: 0;
-    font-size: 11px;
-    color: #111111;
-    position: absolute;
-    /* top: 100%; */
-    left: 50%;
-    transform: translate(-50%, -100%);
-    -ms-transform: translate(-50%, -100%);
-    pointer-events: none;
+        &:hover {
+            .exp-text-container {
+                transition: 0.5s ease;
+                opacity: 1;
+            }
+        }
+    }
 }
 
 /* Body */
+.user-body {
+    .form-label {
+        padding-left: 37px;
+        font-weight: 600;
+    }
 
-.form-header {
-    padding-left: 37px;
-    font-weight: 600;
+    .color-input {
+        border-radius: 10px;
+        height: 25px;
+        width: 100%;
+        margin-left: 20px;
+        margin-right: 20px;
+        border: 1px solid #eee;
+    }
+
+    .preview-bubble-container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-left: 15px;
+        margin-right: 25px;
+
+        .right-bubble::after {
+            bottom: 45px;
+        }
+    }
+
+    .interest-container {
+        padding-left: 40px;
+        margin-bottom: 14px;
+
+        .interest-title {
+            margin-left: 3px;
+        }
+
+        .interest-checkbox {
+            position: relative;
+            top: 1.5px;
+        }
+    }
+
+    .custom-interests-container {
+        padding-left: 45px;
+        padding-right: 55px;
+    }
+
+    .bio-container {
+        margin-bottom: 0px;
+
+        .bio-col {
+            padding-left: 35px;
+            padding-right: 35px;
+
+            .text-area {
+                resize: none;
+                height: 200px;
+                font-weight: 500;
+                padding-top: 12px;
+            }
+
+            .char-left-msg {
+                text-align: right;
+                font-size: 13px;
+                padding-right: 27px;
+                padding-top: 5px;
+            }
+        }
+    }
+
+    .options-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        .option-text {
+            padding-left: 55px;
+            padding-top: 5px;
+        }
+
+        .option-text-padding {
+            padding-top: 10px;
+        }
+
+        .opt-toggle-btn {
+            background-color: #e6e6e6;
+            color: #444444;
+            outline: none;
+            border: 1px solid #7e7e7e;
+
+            &.active,
+            &.focus {
+                background-color: $PRIMARY;
+                color: $WHITE;
+                outline: none !important;
+                box-shadow: none !important;
+                transition: 0.5s;
+            }
+
+            &:active {
+                animation-name: none !important;
+            }
+        }
+
+        .opt-toggle-grp-pad {
+            padding-top: 5px;
+        }
+    }
+
+    .cpw-input-container {
+        padding-top: 3px;
+    }
 }
 
-.color-input {
-    border-radius: 10px;
-    height: 25px;
-    width: 100%;
-    margin-left: 20px;
-    margin-right: 20px;
-    border: 1px solid #eee;
-}
+::ng-deep {
+    .color-picker .arrow.arrow-bottom {
+        display: none !important;
+    }
 
-::ng-deep>>>.color-picker .arrow.arrow-bottom {
-    display: none !important;
-}
-
-.interest-container {
-    padding-left: 40px;
-    margin-bottom: 14px;
-}
-
-.interest-title {
-    margin-left: 3px;
-}
-
-.interest-checkbox {
-    position: relative;
-    top: 1.5px;
-}
-
-.custom-interests-container {
-    padding-left: 45px;
-    padding-right: 55px;
-}
-
-::ng-deep>>>.ng2-tag-input__text-input {
-    background-color: rgb(249, 253, 255);
-}
-
-.bio-container {
-    margin-bottom: 0px;
-}
-
-.text-area {
-    resize: none;
-    height: 200px;
-    font-weight: 500;
-    padding-top: 12px;
-}
-
-.bio-col {
-    padding-left: 35px;
-    padding-right: 35px;
-}
-
-.char-left-msg {
-    text-align: right;
-    font-size: 13px;
-    padding-right: 27px;
-    padding-top: 5px;
-}
-
-.options-container {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.option-text {
-    padding-left: 55px;
-    padding-top: 5px;
-}
-
-.option-text-padding {
-    padding-top: 10px;
-}
-
-.opt-toggle-btn {
-    background-color: #e6e6e6;
-    color: #444444;
-    outline: none;
-    border: 1px solid #7e7e7e;
-}
-
-.opt-toggle-btn:active {
-    animation-name: none !important;
-}
-
-.opt-toggle-grp-pad {
-    padding-top: 5px;
-}
-
-.active, .focus {
-    background-color: #00AFF0;
-    color: #ffffff;
-    outline: none !important;
-    box-shadow: none !important;
-    transition: .5s;
-}
-
-.cpw-input-container {
-    padding-top: 3px;
-}
-
-/* Preview Bubble */
-
-.preview-bubble-container {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-left: 15px;
-    margin-right: 25px;
-}
-
-.left-bubble {
-    background: #efefef;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
-    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
-    line-height: 1.3;
-    margin: 5px 35px 25px 35px;
-    min-width: 100px;
-    display: inline-block;
-    padding: 15px;
-    max-width: 90%;
-    overflow-wrap: break-word;
-}
-
-.right-bubble {
-    background: #efefef;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
-    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
-    line-height: 1.3;
-    margin: 5px 35px 25px 35px;
-    min-width: 100px;
-    display: inline-block;
-    padding: 15px;
-    text-align: left;
-    max-width: 90%;
-    overflow-wrap: break-word;
-}
-
-.left-bubble::after {
-    background-color: inherit;
-    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .2);
-    content: "\00a0";
-    display: block;
-    height: 20px;
-    left: -25px;
-    top: 20%;
-    position: relative;
-    transform: rotate( 45deg);
-    -moz-transform: rotate( 45deg);
-    -ms-transform: rotate( 45deg);
-    -o-transform: rotate( 45deg);
-    -webkit-transform: rotate( 45deg);
-    width: 20px;
-}
-
-.right-bubble::after {
-    background-color: inherit;
-    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .3);
-    content: "\00a0";
-    display: block;
-    height: 20px;
-    right: 25px;
-    bottom: 45px;
-    position: absolute;
-    transform: rotate( 225deg);
-    -moz-transform: rotate( 225deg);
-    -ms-transform: rotate( 225deg);
-    -o-transform: rotate( 225deg);
-    -webkit-transform: rotate( 225deg);
-    width: 20px;
-}
-
-.message-time {
-    filter: brightness(125%);
-    font-size: 10px;
-    padding-top: 5px;
-}
-
-.message-user {
-    filter: brightness(125%);
-    font-size: 11px;
-    font-weight: 700;
+    .ng2-tag-input__text-input {
+        background-color: rgb(249, 253, 255);
+    }
 }
