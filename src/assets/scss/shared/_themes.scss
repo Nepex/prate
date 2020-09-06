@@ -1,0 +1,27 @@
+.light-icon-img {
+    filter: brightness(100%);
+}
+
+.dark-icon-img {
+    filter: brightness(110%);
+}
+
+.light-pop-container {
+    background-color: $GRAY_FOUR !important;
+    color: $TEXT_PRIMARY !important;
+}
+
+.dark-pop-container {
+    background-color: $BLACK_GRAY !important;
+    color: $GRAY_FOUR !important;
+}
+
+.light-general-colors {
+    background-color: $WHITE_BLUE !important;
+    color: $BLACK !important;
+}
+
+.dark-general-colors {
+    background-color: $BLACK_GRAY !important;
+    color: $GRAY_THREE !important;
+}

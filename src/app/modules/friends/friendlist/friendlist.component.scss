@@ -1,51 +1,4 @@
-/* Color/Theme References */
-.light-icon-img {
-    filter: brightness(100%);
-}
-
-.dark-icon-img {
-    filter: brightness(110%);
-}
-
-.light-pop-container {
-    background-color: #efefef !important;
-    color: #666666 !important;
-}
-
-.dark-pop-container {
-    background-color: #111111 !important;
-    color: #efefef !important;
-}
-
-.light-general-colors {
-    background-color: rgb(249, 253, 255) !important;
-    color: #000000 !important;
-}
-
-.dark-general-colors {
-    background-color: #111111 !important;
-    color: #eeeeee !important;
-}
-
-.matchinged-status-color {
-    color: #00AFF0;
-}
-
-.online-status-color {
-    color: rgb(3, 160, 3);
-}
-
-.away-status-color {
-    color: rgb(214, 200, 4);
-}
-
-.dnd-status-color {
-    color: red;
-}
-
-.unread-msg-color {
-    color: rgb(235, 152, 0);
-}
+@import "../../../../assets/scss/utils/variables";
 
 /* Friend list */
 .background-overlay {
@@ -54,7 +7,7 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 901;
-    transition: .25s;
+    transition: 0.25s;
 }
 
 .friendlist-container {
@@ -63,103 +16,71 @@
     position: fixed;
     top: 0;
     left: -300px;
-    background-color: rgb(249, 253, 255);
+    background-color: $WHITE_BLUE;
     overflow-x: hidden;
     z-index: 901;
     box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .close-btn {
-    color: #00AFF0;
+    color: $PRIMARY;
     position: absolute;
     right: 15px;
     top: 10px;
     font-size: 20px;
     z-index: 901;
-}
 
-.close-btn:hover {
-    color: #ffffff;
+    &:hover {
+        color: $WHITE;
+    }
 }
 
 /* Header */
 .friendlist-header-container {
-    background-color: rgb(33, 37, 43);
+    background-color: $GRAY_BLUE;
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 1);
     position: relative;
     height: 82px;
     top: 0px;
-}
 
-.user-icon-container {
-    padding-right: 10px;
-    position: relative;
-    height: 55px;
-}
+    .user-icon-container {
+        padding-right: 10px;
+        position: relative;
+        height: 55px;
 
-.user-icon-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-    width: 60px;
-    height: 55px;
-}
+        .user-icon {
+            top: 6px;
+            left: -3px;
+        }
 
-.user-icon {
-    height: 55px;
-    width: 60px;
-    border-radius: 50%;
-    position: relative;
-    top: 6px;
-    left: -3px;
-}
+        .user-badge {
+            bottom: -6px;
+        }
+    }
 
-.user-badge {
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    right: 4px;
-    bottom: -6px;
-}
+    .user-info-container {
+        padding-top: 5px;
 
-.user-info-container {
-    padding-top: 5px;
-}
+        .username-container {
+            padding-top: 5px;
+        }
 
-.username-container {
-    padding-top: 5px;
-}
+        .user-status {
+            padding-right: 4px;
+            position: relative;
+            top: -1px;
+        }
 
-.username {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 12px;
-}
+        .status-text {
+            font-size: 11px;
+        }
+    }
 
-.user-status {
-    font-weight: 100;
-    font-size: 10px;
-    padding-right: 4px;
-    position: relative;
-    top: -1px;
-}
-
-.status-text {
-    font-size: 11px;
-}
-
-.user-match-status {
-    color: #ffffff;
-    font-size: 12px;
-}
-
-.friends-btn {
-    font-size: 11px;
-    padding: 2px 7px 2px 7px;
-    margin-top: 5px;
+    .friends-btn {
+        font-size: 11px;
+        padding: 2px 7px 2px 7px;
+        margin-top: 5px;
+    }
 }
 
 /* Body */
@@ -171,35 +92,37 @@
 }
 
 .friend-row {
-    transition: .5s;
-}
+    transition: 0.5s;
 
-.friend-row:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    transition: .5s;
-}
+    .friends-user-icon {
+        height: 30px;
+        width: 35px;
+        border-radius: 50%;
+        position: relative;
+        top: 11px;
+    }
 
-.friends-user-icon {
-    height: 30px;
-    width: 35px;
-    border-radius: 50%;
-    position: relative;
-    top: 11px;
-}
+    .friends-username {
+        color: $TEXT_PRIMARY;
+        font-weight: bold;
+        font-size: 12px;
+    }
 
-.friends-username {
-    color: #666666;
-    font-weight: bold;
-    font-size: 12px;
-}
+    .friends-status-container {
+        padding-top: 5px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+    }
 
-.friends-status-container {
-    padding-top: 5px;
-    padding-bottom: 10px;
-    padding-left: 5px;
-}
+    .friends-actions-container {
+        padding-right: 30px;
+        padding-top: 15px;
+    }
 
-.friends-actions-container {
-    padding-right: 30px;
-    padding-top: 15px
+    &:hover {
+        .friend-row:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transition: 0.5s;
+        }
+    }
 }

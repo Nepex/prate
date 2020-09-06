@@ -1,12 +1,12 @@
 .message-col {
     margin-top: 16px;
     margin-bottom: 0px;
+
+    .email-input {
+        margin-top: 16px;
+    }
 }
 
-.email-input {
-    margin-top: 16px;
-}
-
-.send-btn-container  {
+.send-btn-container {
     margin-bottom: 20px;
 }
