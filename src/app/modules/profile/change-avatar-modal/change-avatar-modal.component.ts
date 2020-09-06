@@ -63,7 +63,6 @@ export class ChangeAvatarModalComponent implements OnInit {
         { name: 'female12.png' },
         { name: 'female13.png' },
         { name: 'female14.png' }
-
     ];
 
     constructor(public activeModal: NgbActiveModal, private userService: UserService, private modal: NgbModal, private friendService: FriendService) { }

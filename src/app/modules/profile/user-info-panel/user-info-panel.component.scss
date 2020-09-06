@@ -1,206 +1,183 @@
-/* User */ 
-.user-icon {
-    height: 55px;
-    width: 60px;
-    border-radius: 50%;
-}
+@import "../../../../assets/scss/utils/variables";
 
+/* User */
 .user-icon-container {
     padding-right: 10px;
+
+    .user-icon {
+        @media (min-width: 344px) {
+            position: relative;
+            top: 0px;
+            margin-right: 5px;
+            padding-bottom: 0px;
+        }
+
+        @media (min-width: 992px) {
+            position: relative;
+            top: 3px;
+            margin-right: 0px;
+            padding-bottom: 3px;
+        }
+    }
 }
 
-.user-badge-desktop {
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    right: 9.5px;
-    bottom: 0px;
-}
+.browser-container {
+    .user-badge-desktop {
+        right: 15px;
+        bottom: 0px;
+    }
 
-.user-badge-mobile {
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    right: 15px;
-    bottom: .5px;
-    pointer-events: none;
-}
+    .user-status {
+        font-weight: 100;
+        font-size: 9px;
+        padding-left: 5px;
+        position: relative;
+        top: -1px;
 
-.user-status {
-    font-weight: 100;
-    font-size: 9px;
-    padding-left: 5px;
-    position: relative;
-    top: -1px;
-}
+        &.matchinged-status-color {
+            color: $PRIMARY;
+        }
 
-.matchinged-status-color {
-    color: #00AFF0;
-}
+        &.online-status-color {
+            color: $GREEN;
+        }
 
-.online-status-color {
-    color: rgb(3, 160, 3);
-}
+        &.away-status-color {
+            color: $YELLOW;
+        }
+        &.dnd-status-color {
+            color: $RED;
+        }
+    }
 
-.away-status-color {
-    color: rgb(214, 200, 4);
-}
+    .user-level-container {
+        line-height: 15px;
 
-.dnd-status-color {
-    color: red;
-}
+        .user-level {
+            padding-bottom: 3px;
+        }
+    }
 
-.user-level-container {
-    line-height: 15px;
-}
+    /* Navigation */
+    .lg-nav-container {
+        position: absolute;
+        right: 15px;
+        top: 4px;
 
-.user-level {
-    color: #ffffff;
-    font-size: 11px;
-    padding-bottom: 3px;
-}
+        .lg-nav-icon {
+            margin-right: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.5s;
 
-.progress-container {
-    margin: 0;
-    padding: 5px 18px 0px 0px;
-}
+            &:hover {
+                color: $WHITE;
+                transition: 0.5s;
+            }
+        }
 
-.progress-container:hover .exp-text-container {
-    transition: .5s ease;
-    opacity: 1;
-}
+        .unread-msg-indicator {
+            color: $ORANGE;
+            position: absolute;
+            top: -10px;
+            left: 39px;
+            font-size: 8px;
+        }
 
-.exp-text-container {
-    opacity: 0;
-    font-size: 11px;
-    color: #111111;
-    position: absolute;
-    left: 45%;
-    transform: translate(-45%, -100%);
-    pointer-events: none;
-}
+        .friend-request-indicator {
+            color: $ORANGE;
+            position: absolute;
+            top: -10px;
+            left: 27px;
+            font-size: 8px;
+        }
+    }
 
-/* Navigation */
-.lg-nav-icon {
-    margin-right: 8px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.lg-nav-icon-container {
-    position: absolute;
-    right: 15px;
-    top: 4px;
-}
-
-.lg-nav-icon:hover {
-    color: #ffffff;
-}
-
-.sm-nav-icon {
-    margin-right: 5px;
-    color: #666666;
-}
-
-.friends-mobile-icon-pad {
-    padding-right: 1px;
-}
-
-.logout-mobile-icon-pad {
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
-.nav-items {
-    background-color: #eee;
-    z-index: 1;
-    position: absolute;
-    right: 45px;
-    top: 55px;
-    width: 130px;
-    padding: 10px;
-    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-}
-
-.unread-msg-indicator {
-    color: rgb(235, 152, 0);
-    position: absolute;
-    top: -10px;
-    left: 39px;
-    font-size: 8px;
-}
-
-.friend-request-indicator {
-    color: rgb(235, 152, 0);
-    position: absolute;
-    top: -10px;
-    left: 27px;
-    font-size: 8px;
-}
-
-.unread-msg-indicator-mobile {
-    color: rgb(235, 152, 0);
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    right: 11px;
-    bottom: 22px;
-    z-index: 899;
-}
-
-.friend-request-indicator-mobile {
-    color: rgb(235, 152, 0);
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    right: 11px;
-    bottom: 42px;
-    z-index: 899;
-}
-
-.sm-nav-link>span {
-    color: #666666;
-    text-decoration: none;
-    padding-left: 5px;
-}
-
-::ng-deep>>>.dropdown-menu {
-    background-color: #eeeeee;
-    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
-    width: 50px !important;
-}
-
-/* Mobile */
-@media (min-width: 344px) {
-    .browser-container {
+    @media (min-width: 344px) {
         display: none;
         position: relative;
         top: -3px;
     }
-    .mobile-container {
+
+    @media (min-width: 992px) {
         display: flex;
-    }
-    .user-icon {
-        position: relative;
-        top: 0px;
-        margin-right: 5px;
-        padding-bottom: 0px;
     }
 }
 
-/* Desktop */
-@media (min-width: 992px) {
-    .browser-container {
+.mobile-container {
+    .sm-nav-container {
+        .user-badge-mobile {
+            right: 18px;
+            bottom: 0.5px;
+            pointer-events: none;
+        }
+
+        .sm-nav-items {
+            background-color: $GRAY_THREE;
+            z-index: 1;
+            position: absolute;
+            right: 45px;
+            top: 55px;
+            width: 130px;
+            padding: 10px;
+            box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+
+            .sm-nav-icon {
+                margin-right: 5px;
+                color: $TEXT_PRIMARY;
+            }
+
+            .friends-mobile-icon-pad {
+                padding-right: 1px;
+            }
+
+            .logout-mobile-icon-pad {
+                padding-left: 2px;
+                padding-right: 2px;
+            }
+
+            .sm-nav-link > span {
+                color: $TEXT_PRIMARY;
+                text-decoration: none;
+                padding-left: 5px;
+            }
+        }
+
+        .unread-msg-indicator-mobile {
+            color: $ORANGE;
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            right: 11px;
+            bottom: 22px;
+            z-index: 899;
+        }
+
+        .friend-request-indicator-mobile {
+            color: $ORANGE;
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            right: 11px;
+            bottom: 42px;
+            z-index: 899;
+        }
+    }
+
+    @media (min-width: 344px) {
         display: flex;
     }
-    .mobile-container {
+
+    @media (min-width: 992px) {
         display: none;
     }
-    .user-icon {
-        position: relative;
-        top: 3px;
-        margin-right: 0px;
-        padding-bottom: 3px;
+}
+
+::ng-deep {
+    .dropdown-menu {
+        background-color: $GRAY_THREE;
+        box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
+        width: 50px !important;
     }
 }

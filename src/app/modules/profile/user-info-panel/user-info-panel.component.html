@@ -4,7 +4,7 @@
         <!-- User Avatar/Badge -->
         <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right">
 
-        <img src="../../../assets/images/badges/{{levelInfo.badge}}" class="user-badge-desktop">
+        <img src="../../../assets/images/badges/{{levelInfo.badge}}" class="user-badge user-badge-desktop">
     </div>
     <div class="col-9" *ngIf="user">
         <div class="row">
@@ -25,16 +25,18 @@
                 </div>
 
                 <!-- Navigation Icons -->
-                <div class="lg-nav-icon-container">
+                <div class="lg-nav-container">
                     <i class="fas fa-cog lg-nav-icon" (click)="openSettingsModal()" title="User Settings"></i>
                     <i class="fas fa-user-friends lg-nav-icon" (click)="toggleFriendlist()" title="Friends"></i>
-                    <span class="unread-msg-indicator cursor-pointer" *ngIf="friendsWithUnreadMessages.length > 0" (click)="toggleFriendlist()">
+                    <span class="unread-msg-indicator cursor-pointer" *ngIf="friendsWithUnreadMessages.length > 0"
+                        (click)="toggleFriendlist()">
                         <i class="fas fa-comment-dots" ngbTooltip="New Messages" placement="bottom"
                             container="body"></i>
                     </span>
-                    <span class="friend-request-indicator cursor-pointer" *ngIf="user.friend_requests" (click)="openFriendRequestsModal()">
-                        <i class="fas fa-user-plus" ngbTooltip="New Friend Requests" placement="bottom"
-                            container="body" *ngIf="user.friend_requests.length > 0"></i>
+                    <span class="friend-request-indicator cursor-pointer" *ngIf="user.friend_requests"
+                        (click)="openFriendRequestsModal()">
+                        <i class="fas fa-user-plus" ngbTooltip="New Friend Requests" placement="bottom" container="body"
+                            *ngIf="user.friend_requests.length > 0"></i>
                     </span>
                     <i class="fas fa-question-circle lg-nav-icon" (click)="openHelpModal()" title="Help"></i>
                     <i class="fas fas fa-bug lg-nav-icon" (click)="openBugReportModal()" title="Bug Report"></i>
@@ -56,15 +58,18 @@
 
 <!-- Mobile View -->
 <div class="row mobile-container">
-    <div class="col-12 my-auto user-icon-container" *ngIf="user">
+    <div class="col-12 my-auto user-icon-container sm-nav-container" *ngIf="user">
         <!-- Unread message indicator-->
-        <div class="unread-msg-indicator-mobile cursor-pointer" *ngIf="friendsWithUnreadMessages.length > 0" (click)="toggleFriendlist()">
+        <div class="unread-msg-indicator-mobile cursor-pointer" *ngIf="friendsWithUnreadMessages.length > 0"
+            (click)="toggleFriendlist()">
             <i class="fas fa-comment-dots" ngbTooltip="New Messages" placement="left" container="body"></i>
         </div>
 
         <!-- Friend request indicator-->
-        <div class="friend-request-indicator-mobile cursor-pointer" *ngIf="user.friend_requests" (click)="openFriendRequestsModal()">
-            <i class="fas fa-user-plus" ngbTooltip="New Friend Requests" placement="left" container="body" *ngIf="user.friend_requests.length > 0"></i>
+        <div class="friend-request-indicator-mobile cursor-pointer" *ngIf="user.friend_requests"
+            (click)="openFriendRequestsModal()">
+            <i class="fas fa-user-plus" ngbTooltip="New Friend Requests" placement="left" container="body"
+                *ngIf="user.friend_requests.length > 0"></i>
         </div>
 
         <img src="../../../assets/images/avatars/{{user.avatar}}" class="user-icon float-right cursor-pointer"
@@ -73,11 +78,11 @@
             (offClick)="navIsCollapsed ? navIsCollapsed : navIsCollapsed = !navIsCollapsed" />
 
         <!-- User Avatar/Badge -->
-        <img src="../../../assets/images/badges/{{levelInfo.badge}}" class="user-badge-mobile">
+        <img src="../../../assets/images/badges/{{levelInfo.badge}}" class="user-badge user-badge-mobile">
 
         <!-- Navigation Dropdown -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="navIsCollapsed">
-            <ul class="navbar-nav mr-auto nav-items">
+            <ul class="navbar-nav mr-auto sm-nav-items">
                 <ul class="navbar-nav mr-auto">
                     <li class="sm-nav-link cursor-pointer" (click)="openSettingsModal()">
                         <span>
