@@ -1,9 +1,21 @@
 .light-icon-img {
     filter: brightness(100%);
+    transition: 0.5s;
+
+    &:hover {
+        filter: brightness(130%);
+        transition: 0.5s;
+    }
 }
 
 .dark-icon-img {
     filter: brightness(110%);
+    transition: 0.5s;
+
+    &:hover {
+        filter: brightness(175%);
+        transition: 0.5s;
+    }
 }
 
 .light-pop-container {
@@ -24,4 +36,22 @@
 .dark-general-colors {
     background-color: $BLACK_GRAY !important;
     color: $GRAY_THREE !important;
+}
+
+.light-message-input {
+    background-color: $GRAY_FIVE !important;
+    color: $BLACK !important;
+}
+
+.dark-message-input {
+    background-color: $BLACK_GRAY !important;
+    color: $GRAY_THREE !important;
+}
+
+.light-theme-status-msg {
+    color: $TEXT_PRIMARY;
+}
+
+.dark-theme-status-msg {
+    color: $GRAY_THREE;
 }

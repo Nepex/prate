@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // NPM
 import { AngularDraggableModule } from 'angular2-draggable';
+import { AngularResizedEventModule } from 'angular-resize-event';
 import { MomentModule } from 'ngx-moment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -26,6 +27,7 @@ import { FriendListComponent } from './friendlist/friendlist.component';
     ],
     imports: [
         AngularDraggableModule,
+        AngularResizedEventModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
