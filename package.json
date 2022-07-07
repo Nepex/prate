@@ -30,7 +30,7 @@
     "angular2-draggable": "^2.3.2",
     "bootstrap": "^4.4.1",
     "core-js": "^2.5.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-chips": "2.0.2",
     "ngx-color-picker": "^7.5.0",
     "ngx-moment": "^3.4.0",
